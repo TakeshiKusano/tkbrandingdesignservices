@@ -1,0 +1,8 @@
+node_modules/
+output/
+generate_resume.js
+generate_resume_en.js
+package.json
+package-lock.json
+参考/
+Github/
