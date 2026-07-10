@@ -107,6 +107,19 @@ nav { display: flex; justify-content: space-between; align-items: center; }
   transition: var(--transition);
 }
 .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 20px var(--accent-glow); }
+.nav-cta-outline {
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  color: var(--text-main);
+  padding: 0.6rem 1.4rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: var(--transition);
+  display: inline-flex; align-items: center; gap: 0.4rem;
+}
+.nav-cta-outline:hover { border-color: #FF0000; color: #FF0000; }
 
 /* Hero */
 .hero {
@@ -417,6 +430,10 @@ footer .container {
       <li><a href="#author" class="nav-link">著者</a></li>
     </ul>
     <a href="https://www.amazon.co.jp/dp/B0GX2Y4MY8" target="_blank" rel="noopener noreferrer" class="nav-cta">Amazonで見る</a>
+    <a href="https://youtu.be/knE1P4wzb2Y" target="_blank" rel="noopener noreferrer" class="nav-cta-outline">
+      <i data-lucide="youtube" style="width:16px;height:16px;"></i>
+      Youtubeで視る
+    </a>
   </div>
 </header>
 
@@ -439,6 +456,10 @@ footer .container {
           <a href="https://www.amazon.co.jp/dp/B0GX2Y4MY8" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
             <i data-lucide="book-open" style="width:20px;height:20px;"></i>
             Amazonで購入する
+          </a>
+          <a href="https://youtu.be/knE1P4wzb2Y" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+            <i data-lucide="youtube" style="width:20px;height:20px;"></i>
+            Youtubeで視る
           </a>
           <a href="#concept" class="btn btn-outline">
             <i data-lucide="arrow-down" style="width:18px;height:18px;"></i>
@@ -768,10 +789,16 @@ footer .container {
           経験がなくても、想定さえあれば落ち着いていられる。今日からできる診断クイズと30日トレーニングで、本書は「想定力」を鍛える具体的な手順を示していく。<br>
           巻末には想定力チェックリストも収録。
         </p>
-        <a href="https://www.amazon.co.jp/dp/B0GX2Y4MY8" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-          <i data-lucide="book-open" style="width:20px;height:20px;"></i>
-          Kindleストアで『想定力』を読む
-        </a>
+        <div class="hero-actions" style="justify-content:center;">
+          <a href="https://www.amazon.co.jp/dp/B0GX2Y4MY8" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            <i data-lucide="book-open" style="width:20px;height:20px;"></i>
+            Kindleストアで『想定力』を読む
+          </a>
+          <a href="https://youtu.be/knE1P4wzb2Y" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+            <i data-lucide="youtube" style="width:20px;height:20px;"></i>
+            Youtubeで視る
+          </a>
+        </div>
       </div>
     </div>
   </section>

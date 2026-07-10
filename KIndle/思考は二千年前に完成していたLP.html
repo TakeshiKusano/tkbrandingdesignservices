@@ -107,6 +107,19 @@ nav { display: flex; justify-content: space-between; align-items: center; }
   transition: var(--transition);
 }
 .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 20px var(--accent-glow); }
+.nav-cta-outline {
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  color: var(--text-main);
+  padding: 0.6rem 1.4rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: var(--transition);
+  display: inline-flex; align-items: center; gap: 0.4rem;
+}
+.nav-cta-outline:hover { border-color: #FF0000; color: #FF0000; }
 
 /* Hero */
 .hero {
@@ -436,6 +449,10 @@ footer .container {
       <li><a href="#author" class="nav-link">著者</a></li>
     </ul>
     <a href="https://www.amazon.co.jp/dp/B0GXLBBJRJ" target="_blank" rel="noopener noreferrer" class="nav-cta">Amazonで見る</a>
+    <a href="https://youtu.be/zi-4-b2b23U" target="_blank" rel="noopener noreferrer" class="nav-cta-outline">
+      <i data-lucide="youtube" style="width:16px;height:16px;"></i>
+      Youtubeで視る
+    </a>
   </div>
 </header>
 
@@ -459,6 +476,10 @@ footer .container {
           <a href="https://www.amazon.co.jp/dp/B0GXLBBJRJ" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
             <i data-lucide="book-open" style="width:20px;height:20px;"></i>
             Amazonで購入する
+          </a>
+          <a href="https://youtu.be/zi-4-b2b23U" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+            <i data-lucide="youtube" style="width:20px;height:20px;"></i>
+            Youtubeで視る
           </a>
           <a href="#concept" class="btn btn-outline">
             <i data-lucide="arrow-down" style="width:18px;height:18px;"></i>
@@ -806,10 +827,16 @@ footer .container {
         <p>
           クリエイティブの入門書ではない。後漢の学者・許慎が『説文解字』で体系化した「六書」を、Apple・Dyson・Uber・ChatGPTといった現代のプロダクトに当てはめながら、観察→抽象化→結合→構造化→拡張→借用という新しい思考の型を、本書は具体的な手順で示していく。
         </p>
-        <a href="https://www.amazon.co.jp/dp/B0GXLBBJRJ" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-          <i data-lucide="book-open" style="width:20px;height:20px;"></i>
-          Kindleストアで『思考は二千年前に完成していた』を読む
-        </a>
+        <div class="hero-actions" style="justify-content:center;">
+          <a href="https://www.amazon.co.jp/dp/B0GXLBBJRJ" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            <i data-lucide="book-open" style="width:20px;height:20px;"></i>
+            Kindleストアで『思考は二千年前に完成していた』を読む
+          </a>
+          <a href="https://youtu.be/zi-4-b2b23U" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+            <i data-lucide="youtube" style="width:20px;height:20px;"></i>
+            Youtubeで視る
+          </a>
+        </div>
       </div>
     </div>
   </section>
