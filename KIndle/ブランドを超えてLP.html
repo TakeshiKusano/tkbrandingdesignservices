@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="『ブランドを超えて──世界は何を「価値」として選んできたのか』Kindleにて発売。ブランドを実体ではなく「選ばれる理由」として捉え直し、欧米・日本・中国・中東・インド5つの文化圏を比較しながら、経営学・心理学・文化人類学・行動経済学を横断して「人はなぜ、何かを信じて選ぶのか」に迫る一冊。">
+<title>ブランドを超えて | 世界は何を「価値」として選んできたのか</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Noto+Sans+JP:wght@400;500;700&family=Outfit:wght@400;600;800&family=Shippori+Mincho:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root {
+  --primary: #0f172a;
+  --accent: #d4af37;
+  --accent-glow: rgba(212, 175, 55, 0.4);
+  --accent2: #38bdf8;
+  --accent2-glow: rgba(56, 189, 248, 0.35);
+  --text-main: #f8fafc;
+  --text-sub: #94a3b8;
+  --bg-dark: #020617;
+  --glass-bg: rgba(15, 23, 42, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --card-bg: #1e293b;
+  --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Noto Sans JP', 'Shippori Mincho', serif;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  line-height: 1.85;
+  overflow-x: hidden;
+}
+
+.bg-mesh {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(15, 23, 42, 0.8) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(30, 41, 59, 0.8) 0%, transparent 40%),
+    rgba(2, 6, 23, 1);
+}
+
+h1, h2, h3 {
+  font-family: 'Shippori Mincho', serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.title-accent {
+  background: linear-gradient(90deg, #d4af37, #fde68a);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.title-accent2 {
+  background: linear-gradient(90deg, #38bdf8, #bae6fd);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+section { padding: 100px 0; }
+
+/* Header */
+header {
+  position: fixed; top: 0; left: 0; width: 100%;
+  padding: 1.5rem 0;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  z-index: 1000;
+  border-bottom: 1px solid var(--glass-border);
+  transition: var(--transition);
+}
+nav { display: flex; justify-content: space-between; align-items: center; }
+.logo {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 1.05rem; font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--text-main);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-link {
+  color: var(--text-sub); text-decoration: none;
+  font-size: 0.86rem; font-weight: 500;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+.nav-link:hover { color: var(--accent); }
+.nav-cta {
+  background: var(--accent);
+  color: #000;
+  padding: 0.6rem 1.4rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+.nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 20px var(--accent-glow); }
+
+/* Hero */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  position: relative;
+  padding: 160px 0 100px;
+}
+.hero .container {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 4rem;
+  align-items: center;
+}
+.hero-tag {
+  display: inline-block;
+  padding: 0.5rem 1.1rem;
+  background: var(--glass-border);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.05em;
+}
+.hero-title {
+  font-size: 2.05rem;
+  line-height: 1.6;
+  margin-bottom: 1.2rem;
+}
+.hero-kicker {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-sub);
+  margin-bottom: 2rem;
+  font-family: 'Noto Sans JP', sans-serif;
+  border-left: 3px solid var(--accent2);
+  padding-left: 1rem;
+}
+.hero-subtitle {
+  font-size: 1rem;
+  color: var(--text-sub);
+  max-width: 580px;
+  margin-bottom: 2.5rem;
+}
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+.hero-note { margin-top: 1.2rem; font-size: 0.8rem; color: var(--text-sub); }
+
+.hero-cover {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.hero-cover img {
+  width: 100%;
+  max-width: 340px;
+  border-radius: 10px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px var(--glass-border);
+  transition: var(--transition);
+}
+.hero-cover img:hover { transform: translateY(-8px) rotate(-1deg); }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  padding: 1.1rem 2.2rem;
+  border-radius: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: var(--transition);
+  cursor: pointer;
+  border: none;
+  font-size: 0.95rem;
+}
+.btn-primary {
+  background: var(--accent);
+  color: #000;
+  box-shadow: 0 10px 30px var(--accent-glow);
+}
+.btn-primary:hover { transform: translateY(-4px); box-shadow: 0 15px 40px var(--accent-glow); }
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  color: var(--text-main);
+}
+.btn-outline:hover { border-color: var(--accent2); color: var(--accent2); }
+
+/* Section shared */
+.section-title { text-align: center; margin-bottom: 4.5rem; }
+.section-title h2 { font-size: 2rem; margin-bottom: 1rem; }
+.section-title p { color: var(--text-sub); font-size: 1.05rem; }
+
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 2rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+.grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.75rem; }
+
+.glass-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  padding: 2.4rem;
+  border-radius: 20px;
+  backdrop-filter: blur(5px);
+  transition: var(--transition);
+}
+.glass-card:hover { border-color: var(--accent); transform: translateY(-8px); }
+
+.card-icon {
+  width: 52px; height: 52px;
+  background: var(--glass-border);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.25rem;
+  color: var(--accent);
+}
+
+/* Problem section */
+#problem { background: rgba(15, 23, 42, 0.4); }
+.problem-quote {
+  font-size: 1.05rem;
+  color: var(--text-main);
+  font-style: normal;
+  line-height: 1.9;
+}
+
+/* Concept two-axis */
+.axis-card { position: relative; padding-top: 2.8rem; }
+.axis-card.yoko { border-left: 4px solid var(--accent); }
+.axis-card.tate { border-left: 4px solid var(--accent2); }
+.axis-label {
+  position: absolute; top: 2.4rem; right: 2.4rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem; letter-spacing: 0.1em;
+  color: var(--text-sub);
+  text-transform: uppercase;
+}
+.axis-card h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+.axis-card .sub { color: var(--text-sub); font-size: 0.9rem; margin-bottom: 1.5rem; }
+.axis-card ul { list-style: none; display: grid; gap: 0.75rem; }
+.axis-card ul li { display: flex; gap: 0.6rem; font-size: 0.92rem; color: var(--text-main); }
+.axis-card.yoko ul li span { color: var(--accent); }
+.axis-card.tate ul li span { color: var(--accent2); }
+
+/* Pull quote banner */
+.quote-banner {
+  background: linear-gradient(135deg, rgba(212,175,55,0.08), rgba(56,189,248,0.05));
+  border-top: 1px solid var(--glass-border);
+  border-bottom: 1px solid var(--glass-border);
+  text-align: center;
+}
+.quote-banner p {
+  font-size: 1.4rem;
+  line-height: 1.95;
+  max-width: 780px;
+  margin: 0 auto;
+  font-family: 'Shippori Mincho', serif;
+}
+.quote-banner .source {
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  color: var(--text-sub);
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+/* For whom */
+.whom-list { display: grid; gap: 1rem; max-width: 760px; margin: 0 auto; }
+.whom-item {
+  display: flex; align-items: flex-start; gap: 1rem;
+  padding: 1.4rem 1.6rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+}
+.whom-item i { color: var(--accent2); flex-shrink: 0; margin-top: 0.15rem; }
+
+/* Contents / timeline */
+.toc-list { max-width: 820px; margin: 0 auto; display: grid; gap: 0; }
+.toc-item {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 1.5rem;
+  padding: 1.6rem 0;
+  border-bottom: 1px solid var(--glass-border);
+}
+.toc-item:last-child { border-bottom: none; }
+.toc-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding-top: 0.2rem;
+}
+.toc-item h3 { font-size: 1.15rem; margin-bottom: 0.5rem; }
+.toc-item p { color: var(--text-sub); font-size: 0.9rem; }
+
+/* Method / numbered cards */
+.method-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--accent2);
+  opacity: 0.5;
+  margin-bottom: 0.5rem;
+}
+
+/* English sub-label on framework cards */
+.compass-en {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--text-sub);
+  text-transform: uppercase;
+  margin-left: 0.5rem;
+}
+
+/* Cycle steps */
+.cycle-wrap { max-width: 900px; margin: 0 auto; display: grid; gap: 1rem; }
+.cycle-step {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 1.4rem 1.8rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+}
+.cycle-step-num {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+}
+.cycle-step h3 { font-size: 1.05rem; margin-bottom: 0.2rem; }
+.cycle-step p { color: var(--text-sub); font-size: 0.88rem; }
+.cycle-step.is-goal { border-color: var(--accent); background: linear-gradient(135deg, rgba(212,175,55,0.1), transparent); }
+.cycle-step.is-goal .cycle-step-num { background: var(--accent); color: #000; }
+
+/* Correspondence / diagram image */
+.table-frame {
+  max-width: 900px; margin: 0 auto;
+  background: #f8fafc;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px var(--glass-border);
+}
+.table-frame img { width: 100%; display: block; border-radius: 8px; }
+
+/* Functions (7 brand functions cards) */
+.position-card { position: relative; }
+.position-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem; letter-spacing: 0.12em;
+  color: var(--accent2); text-transform: uppercase;
+  margin-bottom: 0.6rem; display: block;
+}
+.position-card h3 { font-size: 1.15rem; margin-bottom: 0.7rem; }
+.position-card p { color: var(--text-sub); font-size: 0.88rem; margin-bottom: 1rem; }
+.position-quote {
+  border-top: 1px dashed var(--glass-border);
+  padding-top: 0.9rem;
+  font-size: 0.82rem;
+  color: var(--accent);
+  font-family: 'Shippori Mincho', serif;
+  line-height: 1.7;
+}
+
+/* Eight theories grid */
+.theory-card { text-align: left; }
+.theory-card h3 { font-size: 1rem; margin-bottom: 0.5rem; color: var(--accent2); }
+.theory-card p { color: var(--text-sub); font-size: 0.86rem; }
+
+/* Author */
+#author { background: rgba(15, 23, 42, 0.4); }
+.author-wrap {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 3rem;
+  align-items: start;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.author-badge {
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(212,175,55,0.2), rgba(56,189,248,0.15));
+  border: 1px solid var(--glass-border);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Shippori Mincho', serif;
+  font-size: 1.4rem;
+  text-align: center;
+  color: var(--accent);
+}
+.author-name { font-size: 1.4rem; margin-bottom: 0.3rem; }
+.author-role { color: var(--accent2); font-size: 0.9rem; margin-bottom: 1.5rem; display: block; }
+.author-list { list-style: none; color: var(--text-sub); font-size: 0.9rem; display: grid; gap: 0.5rem; margin-top: 1.5rem; }
+.author-list li { display: flex; gap: 0.6rem; }
+.author-list span { color: var(--accent); }
+
+/* Final CTA */
+#cta { background: linear-gradient(180deg, transparent, rgba(212, 175, 55, 0.06)); }
+.cta-card { text-align: center; padding: 5rem 2rem; }
+.cta-card h2 { font-size: 2.1rem; margin-bottom: 1.2rem; }
+.cta-card p { color: var(--text-sub); max-width: 620px; margin: 0 auto 2.5rem; }
+
+/* Appendix template preview */
+.tpl-row { display: flex; justify-content: space-between; font-size: 0.82rem; padding: 0.55rem 0; border-bottom: 1px dashed var(--glass-border); color: var(--text-sub); }
+.tpl-row:last-child { border-bottom: none; }
+.tpl-row strong { color: var(--text-main); font-weight: 500; }
+.tpl-box { margin-top: 1.4rem; }
+
+footer { border-top: 1px solid var(--glass-border); padding: 3rem 0; }
+footer .container {
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+  font-size: 0.85rem; color: var(--text-sub);
+}
+
+/* Animations */
+.reveal { opacity: 0; transform: translateY(24px); transition: all 0.8s cubic-bezier(0.16,1,0.3,1); }
+.reveal-active { opacity: 1 !important; transform: translateY(0) !important; }
+
+@media (max-width: 992px) {
+  .hero .container { grid-template-columns: 1fr; }
+  .hero-cover { order: -1; }
+  .nav-links { display: none; }
+  .hero-title { font-size: 1.55rem; }
+  .author-wrap { grid-template-columns: 1fr; text-align: center; }
+  .author-badge { margin: 0 auto; }
+  .author-list { justify-content: center; }
+  .cycle-step { grid-template-columns: 44px 1fr; gap: 1rem; padding: 1.2rem; }
+  .toc-item { grid-template-columns: 80px 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="bg-mesh"></div>
+
+<header>
+  <div class="container nav">
+    <a href="#" class="logo">ブランドを超えて<span>。</span></a>
+    <ul class="nav-links">
+      <li><a href="#problem" class="nav-link">こんな違和感</a></li>
+      <li><a href="#concept" class="nav-link">コンセプト</a></li>
+      <li><a href="#model" class="nav-link">循環モデル</a></li>
+      <li><a href="#culture" class="nav-link">文化比較</a></li>
+      <li><a href="#functions" class="nav-link">7つの機能</a></li>
+      <li><a href="#contents" class="nav-link">目次</a></li>
+      <li><a href="#author" class="nav-link">著者</a></li>
+    </ul>
+    <a href="https://www.amazon.co.jp/dp/B0H83FDCQ6" target="_blank" rel="noopener noreferrer" class="nav-cta">Amazonで見る</a>
+  </div>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="hero-content">
+        <span class="hero-tag">Kindleストアで発売 ／ ブランド論・マーケティング・文化人類学・比較思考</span>
+        <h1 class="hero-title">
+          「ブランド」という言葉に、<br>
+          違和感を覚えたことはありませんか？<br>
+          <span class="title-accent">その答えは、暖簾・面子・名誉という、もう一つの歴史の中にあった。</span>
+        </h1>
+        <p class="hero-kicker">日本語には、もともと「ブランド」に完全に対応する言葉はなかった。私たちが古くから持っていたのは、暖簾であり、信用であり、老舗という感覚だった。</p>
+        <p class="hero-subtitle">
+          私たちは「ブランド力」「ブランディング」を、まるで大昔から世界中に存在した普遍的な概念であるかのように使っている。しかし本書は、この現代的で、実はきわめてローカルな「ブランド」という概念を、一度徹底的に解体するところから始める一冊。マーケティングの教科書としてではなく、経営学・心理学・文化人類学・歴史学・宗教学・行動経済学という複数の視点を横断しながら、「人はなぜ、何かを信じて選ぶのか」という、もっと大きな問いに迫っていく。
+        </p>
+        <div class="hero-actions">
+          <a href="https://www.amazon.co.jp/dp/B0H83FDCQ6" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            <i data-lucide="book-open" style="width:20px;height:20px;"></i>
+            Amazonで購入する
+          </a>
+          <a href="#concept" class="btn btn-outline">
+            <i data-lucide="arrow-down" style="width:18px;height:18px;"></i>
+            コンセプトを見る
+          </a>
+        </div>
+        <p class="hero-note">著者：たけ＠モダンロジック ／ Kindle版 ／ 比較思考シリーズ</p>
+      </div>
+      <div class="hero-cover">
+        <img src="BeyondBran.jpg" alt="『ブランドを超えて──世界は何を「価値」として選んできたのか』表紙">
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem -->
+  <section id="problem">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag" style="border-color:#ef4444; color:#ef4444;">Reality Check</span>
+        <h2>こんな感覚、ありませんか？</h2>
+        <p>「ブランド」という言葉を使うたび、どこかで感じてきた小さな違和感。その正体を、あなたはまだ言語化できていないだけかもしれない</p>
+      </div>
+      <div class="grid-3">
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="tag"></i></div>
+          <p class="problem-quote">「ブランド力」「ブランディング」という言葉を、なんとなく分かった気になって使ってしまっている</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="circle-help"></i></div>
+          <p class="problem-quote">高級ブランドより、結局は口コミや紹介で人や店を信じている自分がいることに気づく</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="star"></i></div>
+          <p class="problem-quote">SNSのレビューや星評価を、どこまで信じていいものか、判断がつかなくなってきた</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="sparkles"></i></div>
+          <p class="problem-quote">AIが作ったデザインやコピーが増え、何を根拠に「良いもの」と判断すればいいのか迷う</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="scroll-text"></i></div>
+          <p class="problem-quote">老舗や暖簾という日本的な感覚と、欧米発のブランド論が、どこかズレている気がする</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="puzzle"></i></div>
+          <p class="problem-quote">マーケティングを学んでも、「なぜ人はこれを選ぶのか」という本質がつかめないままでいる</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Concept -->
+  <section id="concept">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Core Concept</span>
+        <h2>ブランドを実体として見るか、構造として見るか</h2>
+        <p>同じ「ブランド」でも、選ばれる理由という構造を手にした人だけが、本質を見失わずに済む</p>
+      </div>
+      <div class="grid-2" style="align-items:stretch;">
+        <div class="glass-card axis-card yoko reveal">
+          <span class="axis-label">The Trap</span>
+          <h3>ブランドを実体だと思い込む<span style="color:var(--accent);">（多くの人がハマる罠）</span></h3>
+          <p class="sub">ロゴや広告、知名度こそがブランドの本体だと錯覚してしまう</p>
+          <ul>
+            <li><span>✓</span>ロゴや広告、知名度をブランドそのものだと思い込んでしまう</li>
+            <li><span>✓</span>欧米発のブランド論だけが、唯一の正解だと信じ込んでしまう</li>
+            <li><span>✓</span>「信頼・約束・体験・物語…」と乱立する定義に振り回される</li>
+            <li><span>✓</span>AIが表層をいくらでも量産する時代に、見た目の完成度で判断してしまう</li>
+          </ul>
+        </div>
+        <div class="glass-card axis-card tate reveal">
+          <span class="axis-label">The Strategy</span>
+          <h3>「選ばれる理由」の構造として読み解く<span style="color:var(--accent2);">（本書のアプローチ）</span></h3>
+          <p class="sub">才能や広告費ではなく、比較という方法で共通の骨格を取り出す</p>
+          <ul>
+            <li><span>✓</span>暖簾・面子・名誉・共同体——世界5地域の「選ばれる理由」を比較する</li>
+            <li><span>✓</span>安心・保証・所属など、ブランドが果たす7つの機能に分解する</li>
+            <li><span>✓</span>乱立する8つのブランド論を、一つの山を見る角度の違いとして統合する</li>
+            <li><span>✓</span>文化→価値観→信頼装置→評判→選択→継続という循環で捉え直す</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Circulation model -->
+  <section id="model" style="background: rgba(15, 23, 42, 0.4);">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Not a Marketing Textbook</span>
+        <h2>マーケティング論でも文化人類学でもない、比較という方法</h2>
+        <p>この本の価値は「ブランドを紹介すること」ではない。世界各地の「選ばれる理由」を並べることで、初めて見えてくる共通の骨格がある</p>
+      </div>
+      <div class="table-frame reveal">
+        <img src="図版/図6-1_選ばれる理由の循環モデル.png" alt="選ばれる理由の循環モデル図解">
+      </div>
+      <p style="text-align:center; color:var(--text-sub); font-size:0.92rem; max-width:640px; margin:2.5rem auto 0;">
+        文化が価値観を生み、価値観が信頼装置を生み、信頼装置が評判を生み、評判がブランドとなって選択へとつながり、選択が積み重なることで、ふたたび文化へと還っていく。8つの段階からなるこの循環こそが、本書の核となる仮説である。
+      </p>
+    </div>
+  </section>
+
+  <!-- Quote banner -->
+  <section class="quote-banner">
+    <div class="container reveal">
+      <p>
+        ブランドとは、<br>
+        人間社会が生み出した「信頼のインターフェース」である。<br>
+        <span class="title-accent">複雑な内部を、一瞬で扱えるようにする境界面――それが焼印であり、暖簾であり、名誉であり、そしてブランドだ。</span>
+      </p>
+      <p class="source">――『ブランドを超えて』第6章より</p>
+    </div>
+  </section>
+
+  <!-- For whom -->
+  <section id="whom">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">For You</span>
+        <h2>こんな方におすすめです</h2>
+      </div>
+      <div class="whom-list">
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>「ブランド」という言葉に、うまく言葉にできない違和感を持っている方</span></div>
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>マーケティングを学んでいるが、教科書的な説明にどこか物足りなさを感じている方</span></div>
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>AIが表層をいくらでも生成できる時代に、「結局何が信頼されるのか」を考えたい経営者・個人事業主の方</span></div>
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>易経や比較思考など、異なる文化を比較して本質をつかむ思考法に興味がある方</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Culture comparison -->
+  <section id="culture" style="background: rgba(15, 23, 42, 0.4);">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Core Method</span>
+        <h2>世界5地域が育てた「選ばれる理由」</h2>
+        <p>同じ「見知らぬ相手を信じて選ぶ」という営みに対して、世界の各地域はまったく違う答えを育ててきた</p>
+      </div>
+      <div class="table-frame reveal" style="margin-bottom:3rem;">
+        <img src="図版/図2-1_文化ごとの選ばれる理由比較_v2.png" alt="文化ごとの選ばれる理由比較図解">
+      </div>
+      <div class="cycle-wrap">
+        <div class="cycle-step reveal">
+          <div class="cycle-step-num">01</div>
+          <div><h3>欧米<span class="compass-en">Identity &amp; Choice</span></h3><p>ブランド・アイデンティティ・個性・自由・挑戦。信頼の根拠は「個人の選択」そのものにある。</p></div>
+        </div>
+        <div class="cycle-step reveal">
+          <div class="cycle-step-num">02</div>
+          <div><h3>日本<span class="compass-en">Heritage &amp; Trust</span></h3><p>暖簾・信用・老舗・格式・職人・紹介。信頼の根拠は「時間の蓄積」にある。</p></div>
+        </div>
+        <div class="cycle-step reveal">
+          <div class="cycle-step-num">03</div>
+          <div><h3>中国<span class="compass-en">Guanxi &amp; Face</span></h3><p>面子・信誉・関係（グアンシ）。信頼の根拠は「関係の網の目」にある。</p></div>
+        </div>
+        <div class="cycle-step reveal">
+          <div class="cycle-step-num">04</div>
+          <div><h3>中東<span class="compass-en">Honor &amp; Lineage</span></h3><p>名誉・一族・伝統。信頼の根拠は「一族の看板」にある。</p></div>
+        </div>
+        <div class="cycle-step reveal">
+          <div class="cycle-step-num">05</div>
+          <div><h3>インド<span class="compass-en">Community &amp; Faith</span></h3><p>共同体・血統・宗教。信頼の根拠は「共同体と宗教の枠組み」にある。</p></div>
+        </div>
+        <div class="cycle-step is-goal reveal">
+          <div class="cycle-step-num">06</div>
+          <div><h3>比較すると見えるもの<span class="compass-en">Compared Structure</span></h3><p>中身は文化によってまったく異なるのに、「見知らぬ相手を、なぜ信じてよいのかを説明する仕組みを必要としてきた」という点だけは共通している。</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seven functions -->
+  <section id="functions">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Function Map</span>
+        <h2>ブランドが果たす、7つの機能</h2>
+        <p>名前や由来の違いを一度脇に置き、「実際に何をしているか」に注目すると、驚くほど共通した働きが見えてくる</p>
+      </div>
+      <div class="grid-4">
+        <div class="glass-card position-card reveal">
+          <span class="position-num">01 ／ Security</span>
+          <h3>安心</h3>
+          <p>見知らぬ商品を前にした不安を軽減する、もっとも基本的な機能。</p>
+          <div class="position-quote">「聞いたことのある名前は、それだけで『大丈夫だろう』という感覚を生む」</div>
+        </div>
+        <div class="glass-card position-card reveal">
+          <span class="position-num">02 ／ Quality</span>
+          <h3>品質保証</h3>
+          <p>過去に一定の水準を満たしてきたという実績が、未知の品質を推測させる。</p>
+          <div class="position-quote">「暖簾が『代々この味を守ってきた』と保証する働きと、同じ構造」</div>
+        </div>
+        <div class="glass-card position-card reveal">
+          <span class="position-num">03 ／ Belonging</span>
+          <h3>所属</h3>
+          <p>特定のブランドを使うことが、「この集団に属している」という無言のメッセージになる。</p>
+          <div class="position-quote">「同じ法被を着た氏子たちが、互いを仲間だと瞬時に認識する」</div>
+        </div>
+        <div class="glass-card position-card reveal">
+          <span class="position-num">04 ／ Identity</span>
+          <h3>アイデンティティ</h3>
+          <p>何を選ぶかによって、その人の価値観や生き方が伝わる。</p>
+          <div class="position-quote">「一族の名誉を背負って生きることが、人格そのものを説明する仕組みと似ている」</div>
+        </div>
+        <div class="glass-card position-card reveal">
+          <span class="position-num">05 ／ Differentiation</span>
+          <h3>差別化</h3>
+          <p>似た商品が並ぶ中で、選ぶ理由を作り出す。</p>
+          <div class="position-quote">「差別化は、ブランドという仕組みの、もっとも古い起源に近い機能」</div>
+        </div>
+        <div class="glass-card position-card reveal">
+          <span class="position-num">06 ／ Accumulation</span>
+          <h3>信頼の蓄積</h3>
+          <p>一度きりではなく、繰り返しの取引によって、少しずつ積み上がっていく。</p>
+          <div class="position-quote">「どれほど資金を投じても、時間を飛び越えて手に入れることはできない」</div>
+        </div>
+        <div class="glass-card position-card reveal">
+          <span class="position-num">07 ／ Narrative</span>
+          <h3>物語</h3>
+          <p>創業の経緯や乗り越えてきた困難など、理念や葛藤を伴う物語が記憶され、語り継がれる。</p>
+          <div class="position-quote">「人は、スペックの羅列よりも、物語の方を強く記憶し、信頼する」</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Eight theories -->
+  <section id="theories" style="background: rgba(15, 23, 42, 0.4);">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">One Mountain, Many Views</span>
+        <h2>乱立する、8つのブランド論</h2>
+        <p>対立しているように見えて、実はどれも同じ山を、違う場所から眺めているだけだった</p>
+      </div>
+      <div class="table-frame reveal" style="margin-bottom:3rem;">
+        <img src="図版/図5-1_8つのブランド論と視点_v2.png" alt="8つのブランド論と視点の図解">
+      </div>
+      <div class="grid-4">
+        <div class="glass-card theory-card reveal"><h3>ブランド＝信頼</h3><p>企業と顧客の間に交わされた、目に見えない契約のようなもの</p></div>
+        <div class="glass-card theory-card reveal"><h3>ブランド＝約束</h3><p>期待を裏切らないという、繰り返し表明されてきた約束の蓄積</p></div>
+        <div class="glass-card theory-card reveal"><h3>ブランド＝体験</h3><p>広告よりも、実際に使った瞬間・対応された瞬間の積み重ね</p></div>
+        <div class="glass-card theory-card reveal"><h3>ブランド＝物語</h3><p>スペックより記憶され、他人へと語り継がれる小さな物語</p></div>
+        <div class="glass-card theory-card reveal"><h3>ブランド＝文化</h3><p>顧客のコミュニティが、独自の作法とともに自ら育てていくもの</p></div>
+        <div class="glass-card theory-card reveal"><h3>ブランド＝評判</h3><p>企業自身の発信ではなく、第三者の評価が積み重なったもの</p></div>
+        <div class="glass-card theory-card reveal"><h3>ブランド＝記憶</h3><p>ある名前を聞いたときに思い浮かぶ、頭の中の連想のネットワーク</p></div>
+        <div class="glass-card theory-card reveal"><h3>ブランド＝資産</h3><p>貸借対照表には表れなくても、将来収益を左右する無形の資産</p></div>
+      </div>
+      <p style="text-align:center; color:var(--text-sub); font-size:0.92rem; max-width:680px; margin:2.5rem auto 0;">
+        信頼は関係性を、約束は倫理性を、体験は接点を、物語は伝達の方法を、文化は集団の力学を、評判は第三者の視点を、記憶は脳内の処理を、資産は財務上の帰結を見ている。同じ山を、違う立ち位置から報告し合っているにすぎない。
+      </p>
+    </div>
+  </section>
+
+  <!-- Contents -->
+  <section id="contents">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Contents</span>
+        <h2>目次</h2>
+        <p>はじめに・序章・全7章・終章・おわりにで構成</p>
+      </div>
+      <div class="toc-list">
+        <div class="toc-item reveal">
+          <div class="toc-num">はじめに</div>
+          <div><h3>「ブランド」という言葉への、小さな違和感</h3><p>暖簾・信用・老舗という、もう一つの答え／これはブランドを学ぶ本ではなく、人間を学ぶ本である</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">序章</div>
+          <div><h3>ブランドという「答え」を疑うことから</h3><p>ロゴでも広告でもない、選ばれる理由という本質／文化を超えて共通する一つの循環構造</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第1章</div>
+          <div><h3>ブランドは世界共通なのか</h3><p>語源は「焼印」／欧米で発達した理由、日本で言葉が後から入ってきた理由</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第2章</div>
+          <div><h3>文化によって「選ばれる理由」は違う</h3><p>欧米・日本・中国・中東・インド、5つの地域が育てた信頼の仕組みを比較する</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第3章</div>
+          <div><h3>ブランドとは何をしているのか</h3><p>安心・品質保証・所属・アイデンティティ・差別化・信頼の蓄積・物語という7つの機能</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第4章</div>
+          <div><h3>人はなぜ信じるのか</h3><p>心理学・神経科学・行動経済学・社会学・宗教・共同体・口コミ・信用、8つの回路</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第5章</div>
+          <div><h3>ブランド論を比較する</h3><p>乱立する8つの定義を、一つの山を見る角度の違いとして整理する</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第6章</div>
+          <div><h3>選ばれる理由のモデル</h3><p>文化→価値観→信頼装置→評判→ブランド→選択→継続→文化、という循環仮説</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">終章／おわりに</div>
+          <div><h3>ブランドを超えて</h3><p>AIの時代に、なお複製できずに残るもの／比較して本質を取り出す、という方法のこれから</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Appendix takeaways -->
+  <section id="appendix" style="background: rgba(15, 23, 42, 0.4);">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Ready to Use</span>
+        <h2>読み終えたあとに残る、3つの視点</h2>
+        <p>読むだけで終わらせない。日々の選択の場面に、そのまま当てはめられる比較の視点</p>
+      </div>
+      <div class="grid-3">
+        <div class="glass-card reveal">
+          <div class="method-num">01</div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.8rem;">信頼のインターフェース仮説</h3>
+          <p style="color:var(--text-sub); font-size:0.88rem; margin-bottom:1rem;">あなたが何かを信じ、選ぶときに、その奥で働いている構造を見抜く視点。</p>
+          <div class="tpl-box">
+            <div class="tpl-row"><span>文化</span><strong>価値観を生む土台</strong></div>
+            <div class="tpl-row"><span>信頼装置</span><strong>価値観を目に見える形に</strong></div>
+            <div class="tpl-row"><span>評判／選択</span><strong>積み重ねが文化へ還る</strong></div>
+          </div>
+        </div>
+        <div class="glass-card reveal">
+          <div class="method-num">02</div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.8rem;">8つのブランド論という地図</h3>
+          <p style="color:var(--text-sub); font-size:0.88rem; margin-bottom:1rem;">どの立場から語られても、ブランドの一部を正しく捉えていると分かる比較の地図。</p>
+          <div class="tpl-box">
+            <div class="tpl-row"><span>信頼／約束</span><strong>関係性と倫理性</strong></div>
+            <div class="tpl-row"><span>体験／物語</span><strong>接点と伝達</strong></div>
+            <div class="tpl-row"><span>文化／評判／記憶／資産</span><strong>集団・外部・脳・財務</strong></div>
+          </div>
+        </div>
+        <div class="glass-card reveal">
+          <div class="method-num">03</div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.8rem;">AI時代に残るもの</h3>
+          <p style="color:var(--text-sub); font-size:0.88rem; margin-bottom:1rem;">表層がいくらでも複製できる時代に、最後まで模倣できずに残る中身。</p>
+          <div class="tpl-box">
+            <div class="tpl-row"><span>信用</span><strong>約束を守った記録</strong></div>
+            <div class="tpl-row"><span>体験／共同体</span><strong>一次情報と人間関係</strong></div>
+            <div class="tpl-row"><span>物語／文化</span><strong>実話と、時間をかけた作法</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Author -->
+  <section id="author">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Author</span>
+        <h2>著者について</h2>
+      </div>
+      <div class="author-wrap reveal">
+        <div class="author-badge">たけ＠<br>モダンロジック</div>
+        <div>
+          <h3 class="author-name">たけ＠モダンロジック</h3>
+          <span class="author-role">比較思考／ブランド・マーケティング／東洋思想の現代応用</span>
+          <p style="color:var(--text-sub); font-size:0.95rem;">
+            ブランド・マーケティング、プロセス改革、人材・組織マネジメントを軸に、30年以上にわたり企業の変革と構造設計に携わる。
+            物事を分野ごとに捉えるのではなく、異なる領域の共通構造を見出す「比較の癖」を持ち、易経・六書・思考ゲームといったテーマで「比較すること」から本質を取り出してきた、著者にとっての比較思考シリーズの延長線上に本書は位置づけられる。
+            マーケティングの教科書としてではなく、経営学・心理学・文化人類学を横断しながら「選ばれる理由」の構造を翻訳することをテーマとしている。
+          </p>
+          <ul class="author-list">
+            <li><span>•</span>ブランド・マーケティング領域で30年以上の実務経験</li>
+            <li><span>•</span>異なる領域の共通構造を見出す「比較の癖」を軸にした分析</li>
+            <li><span>•</span>易経・六書・思考ゲームに続く、比較思考シリーズの一冊</li>
+            <li><span>•</span>人間の信頼と選択の構造を再編集することがテーマ</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section id="cta">
+    <div class="container">
+      <div class="glass-card cta-card reveal">
+        <span class="hero-tag" style="margin-bottom:1.5rem;">Get Started</span>
+        <h2>必要なのは、ブランドの作り方ではない。<br>人類が磨き上げてきた、選ばれる理由の構造である。</h2>
+        <p>
+          マーケティングの教科書ではない。ブランドの入門書でもない。焼印、暖簾、面子、名誉、共同体——名前も国もまったく異なる仕組みを比較することで見えてくる、たった一つの構造。読み終えたとき、あなたの手元に残るのは「ブランドの作り方」ではなく、人類が何千年もかけて磨き上げてきた「選ばれる理由」の構造そのものである。
+        </p>
+        <a href="https://www.amazon.co.jp/dp/B0H83FDCQ6" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+          <i data-lucide="book-open" style="width:20px;height:20px;"></i>
+          Kindleストアで『ブランドを超えて』を読む
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="logo" style="font-size:0.95rem;">ブランドを超えて<span>。</span></div>
+    <div>著者：たけ＠モダンロジック　© たけ＠モダンロジック All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  lucide.createIcons();
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('reveal-active');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { root: null, threshold: 0.1, rootMargin: "0px" });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const targetId = this.getAttribute('href');
+      if (targetId === '#' || !document.querySelector(targetId)) return;
+      e.preventDefault();
+      window.scrollTo({ top: document.querySelector(targetId).offsetTop - 80, behavior: 'smooth' });
+    });
+  });
+
+  window.addEventListener('scroll', () => {
+    const header = document.querySelector('header');
+    if (window.scrollY > 50) {
+      header.style.padding = '0.9rem 0';
+      header.style.boxShadow = '0 10px 40px rgba(0,0,0,0.5)';
+    } else {
+      header.style.padding = '1.5rem 0';
+      header.style.boxShadow = 'none';
+    }
+  });
+</script>
+</body>
+</html>

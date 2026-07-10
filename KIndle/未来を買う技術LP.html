@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="『未来を買う技術――株・競馬の分析術を移植した、現代アート投資の新モデル』Kindleにて発売。「この作品は、将来値上がりしますか？」に、センスではなく分析で答える。AFA→ATA→APE→ACMという4層モデルで、現代アートという未来市場を読み解く一冊。">
+<title>未来を買う技術 | 株・競馬の分析術を移植した、現代アート投資の新モデル</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Noto+Sans+JP:wght@400;500;700&family=Outfit:wght@400;600;800&family=Shippori+Mincho:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root {
+  --primary: #0f172a;
+  --accent: #d4af37;
+  --accent-glow: rgba(212, 175, 55, 0.4);
+  --accent2: #38bdf8;
+  --accent2-glow: rgba(56, 189, 248, 0.35);
+  --text-main: #f8fafc;
+  --text-sub: #94a3b8;
+  --bg-dark: #020617;
+  --glass-bg: rgba(15, 23, 42, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --card-bg: #1e293b;
+  --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Noto Sans JP', 'Shippori Mincho', serif;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  line-height: 1.85;
+  overflow-x: hidden;
+}
+
+.bg-mesh {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(15, 23, 42, 0.8) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(30, 41, 59, 0.8) 0%, transparent 40%),
+    rgba(2, 6, 23, 1);
+}
+
+h1, h2, h3 {
+  font-family: 'Shippori Mincho', serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.title-accent {
+  background: linear-gradient(90deg, #d4af37, #fde68a);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.title-accent2 {
+  background: linear-gradient(90deg, #38bdf8, #bae6fd);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+section { padding: 100px 0; }
+
+/* Header */
+header {
+  position: fixed; top: 0; left: 0; width: 100%;
+  padding: 1.5rem 0;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  z-index: 1000;
+  border-bottom: 1px solid var(--glass-border);
+  transition: var(--transition);
+}
+nav { display: flex; justify-content: space-between; align-items: center; }
+.logo {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 1.05rem; font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--text-main);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 2.2rem; list-style: none; }
+.nav-link {
+  color: var(--text-sub); text-decoration: none;
+  font-size: 0.88rem; font-weight: 500;
+  transition: var(--transition);
+}
+.nav-link:hover { color: var(--accent); }
+.nav-cta {
+  background: var(--accent);
+  color: #000;
+  padding: 0.6rem 1.4rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: var(--transition);
+}
+.nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 20px var(--accent-glow); }
+
+/* Hero */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  position: relative;
+  padding: 160px 0 100px;
+}
+.hero .container {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 4rem;
+  align-items: center;
+}
+.hero-tag {
+  display: inline-block;
+  padding: 0.5rem 1.1rem;
+  background: var(--glass-border);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.05em;
+}
+.hero-title {
+  font-size: 2.3rem;
+  line-height: 1.5;
+  margin-bottom: 1.2rem;
+}
+.hero-kicker {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-sub);
+  margin-bottom: 2rem;
+  font-family: 'Noto Sans JP', sans-serif;
+  border-left: 3px solid var(--accent2);
+  padding-left: 1rem;
+}
+.hero-subtitle {
+  font-size: 1rem;
+  color: var(--text-sub);
+  max-width: 560px;
+  margin-bottom: 2.5rem;
+}
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+.hero-note { margin-top: 1.2rem; font-size: 0.8rem; color: var(--text-sub); }
+
+.hero-cover {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.hero-cover img {
+  width: 100%;
+  max-width: 340px;
+  border-radius: 10px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px var(--glass-border);
+  transition: var(--transition);
+}
+.hero-cover img:hover { transform: translateY(-8px) rotate(-1deg); }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  padding: 1.1rem 2.2rem;
+  border-radius: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: var(--transition);
+  cursor: pointer;
+  border: none;
+  font-size: 0.95rem;
+}
+.btn-primary {
+  background: var(--accent);
+  color: #000;
+  box-shadow: 0 10px 30px var(--accent-glow);
+}
+.btn-primary:hover { transform: translateY(-4px); box-shadow: 0 15px 40px var(--accent-glow); }
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  color: var(--text-main);
+}
+.btn-outline:hover { border-color: var(--accent2); color: var(--accent2); }
+
+/* Section shared */
+.section-title { text-align: center; margin-bottom: 4.5rem; }
+.section-title h2 { font-size: 2rem; margin-bottom: 1rem; }
+.section-title p { color: var(--text-sub); font-size: 1.05rem; }
+
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 2rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+.grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.75rem; }
+
+.glass-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  padding: 2.4rem;
+  border-radius: 20px;
+  backdrop-filter: blur(5px);
+  transition: var(--transition);
+}
+.glass-card:hover { border-color: var(--accent); transform: translateY(-8px); }
+
+.card-icon {
+  width: 52px; height: 52px;
+  background: var(--glass-border);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.25rem;
+  color: var(--accent);
+}
+
+/* Problem section */
+#problem { background: rgba(15, 23, 42, 0.4); }
+.problem-quote {
+  font-size: 1.05rem;
+  color: var(--text-main);
+  font-style: normal;
+  line-height: 1.9;
+}
+
+/* Concept two-axis */
+.axis-card { position: relative; padding-top: 2.8rem; }
+.axis-card.yoko { border-left: 4px solid var(--accent); }
+.axis-card.tate { border-left: 4px solid var(--accent2); }
+.axis-label {
+  position: absolute; top: 2.4rem; right: 2.4rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem; letter-spacing: 0.1em;
+  color: var(--text-sub);
+  text-transform: uppercase;
+}
+.axis-card h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+.axis-card .sub { color: var(--text-sub); font-size: 0.9rem; margin-bottom: 1.5rem; }
+.axis-card ul { list-style: none; display: grid; gap: 0.75rem; }
+.axis-card ul li { display: flex; gap: 0.6rem; font-size: 0.92rem; color: var(--text-main); }
+.axis-card.yoko ul li span { color: var(--accent); }
+.axis-card.tate ul li span { color: var(--accent2); }
+
+/* Pull quote banner */
+.quote-banner {
+  background: linear-gradient(135deg, rgba(212,175,55,0.08), rgba(56,189,248,0.05));
+  border-top: 1px solid var(--glass-border);
+  border-bottom: 1px solid var(--glass-border);
+  text-align: center;
+}
+.quote-banner p {
+  font-size: 1.5rem;
+  line-height: 1.9;
+  max-width: 780px;
+  margin: 0 auto;
+  font-family: 'Shippori Mincho', serif;
+}
+.quote-banner .source {
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  color: var(--text-sub);
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+/* For whom */
+.whom-list { display: grid; gap: 1rem; max-width: 760px; margin: 0 auto; }
+.whom-item {
+  display: flex; align-items: flex-start; gap: 1rem;
+  padding: 1.4rem 1.6rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+}
+.whom-item i { color: var(--accent2); flex-shrink: 0; margin-top: 0.15rem; }
+
+/* Contents / timeline */
+.toc-list { max-width: 820px; margin: 0 auto; display: grid; gap: 0; }
+.toc-item {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 1.5rem;
+  padding: 1.6rem 0;
+  border-bottom: 1px solid var(--glass-border);
+}
+.toc-item:last-child { border-bottom: none; }
+.toc-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding-top: 0.2rem;
+}
+.toc-item h3 { font-size: 1.15rem; margin-bottom: 0.5rem; }
+.toc-item p { color: var(--text-sub); font-size: 0.9rem; }
+
+/* Method / numbered cards */
+.method-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--accent2);
+  opacity: 0.5;
+  margin-bottom: 0.5rem;
+}
+
+/* English sub-label on framework cards */
+.compass-en {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--text-sub);
+  text-transform: uppercase;
+  margin-left: 0.5rem;
+}
+
+/* Cycle steps */
+.cycle-wrap { max-width: 900px; margin: 0 auto; display: grid; gap: 1rem; }
+.cycle-step {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 1.4rem 1.8rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+}
+.cycle-step-num {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+}
+.cycle-step h3 { font-size: 1.05rem; margin-bottom: 0.2rem; }
+.cycle-step p { color: var(--text-sub); font-size: 0.88rem; }
+.cycle-arrow { text-align: center; color: var(--text-sub); font-size: 0.8rem; }
+.cycle-step.is-goal { border-color: var(--accent); background: linear-gradient(135deg, rgba(212,175,55,0.1), transparent); }
+.cycle-step.is-goal .cycle-step-num { background: var(--accent); color: #000; }
+
+/* Author */
+#author { background: rgba(15, 23, 42, 0.4); }
+.author-wrap {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 3rem;
+  align-items: start;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.author-badge {
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(212,175,55,0.2), rgba(56,189,248,0.15));
+  border: 1px solid var(--glass-border);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Shippori Mincho', serif;
+  font-size: 1.4rem;
+  text-align: center;
+  color: var(--accent);
+}
+.author-name { font-size: 1.4rem; margin-bottom: 0.3rem; }
+.author-role { color: var(--accent2); font-size: 0.9rem; margin-bottom: 1.5rem; display: block; }
+.author-list { list-style: none; color: var(--text-sub); font-size: 0.9rem; display: grid; gap: 0.5rem; margin-top: 1.5rem; }
+.author-list li { display: flex; gap: 0.6rem; }
+.author-list span { color: var(--accent); }
+
+/* Final CTA */
+#cta { background: linear-gradient(180deg, transparent, rgba(212, 175, 55, 0.06)); }
+.cta-card { text-align: center; padding: 5rem 2rem; }
+.cta-card h2 { font-size: 2.2rem; margin-bottom: 1.2rem; }
+.cta-card p { color: var(--text-sub); max-width: 620px; margin: 0 auto 2.5rem; }
+
+/* Appendix template preview */
+.tpl-row { display: flex; justify-content: space-between; font-size: 0.82rem; padding: 0.55rem 0; border-bottom: 1px dashed var(--glass-border); color: var(--text-sub); }
+.tpl-row:last-child { border-bottom: none; }
+.tpl-row strong { color: var(--text-main); font-weight: 500; }
+.tpl-box { margin-top: 1.4rem; }
+
+footer { border-top: 1px solid var(--glass-border); padding: 3rem 0; }
+footer .container {
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+  font-size: 0.85rem; color: var(--text-sub);
+}
+
+/* Animations */
+.reveal { opacity: 0; transform: translateY(24px); transition: all 0.8s cubic-bezier(0.16,1,0.3,1); }
+.reveal-active { opacity: 1 !important; transform: translateY(0) !important; }
+
+@media (max-width: 992px) {
+  .hero .container { grid-template-columns: 1fr; }
+  .hero-cover { order: -1; }
+  .nav-links { display: none; }
+  .hero-title { font-size: 1.7rem; }
+  .author-wrap { grid-template-columns: 1fr; text-align: center; }
+  .author-badge { margin: 0 auto; }
+  .author-list { justify-content: center; }
+  .cycle-step { grid-template-columns: 44px 1fr; gap: 1rem; padding: 1.2rem; }
+}
+</style>
+</head>
+<body>
+<div class="bg-mesh"></div>
+
+<header>
+  <div class="container nav">
+    <a href="#" class="logo">未来を買う技術<span>。</span></a>
+    <ul class="nav-links">
+      <li><a href="#problem" class="nav-link">こんな悩み</a></li>
+      <li><a href="#concept" class="nav-link">コンセプト</a></li>
+      <li><a href="#markets" class="nav-link">3つの市場</a></li>
+      <li><a href="#method" class="nav-link">4層モデル</a></li>
+      <li><a href="#contents" class="nav-link">目次</a></li>
+      <li><a href="#author" class="nav-link">著者</a></li>
+    </ul>
+    <a href="https://www.amazon.co.jp/dp/B0H7Y23JZ4" target="_blank" rel="noopener noreferrer" class="nav-cta">Amazonで見る</a>
+  </div>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="hero-content">
+        <span class="hero-tag">Kindleストアで発売 ／ 投資・アート教養</span>
+        <h1 class="hero-title">
+          「この作品は、将来値上がりしますか？」<br>
+          <span class="title-accent">その問いに、"センスです"以外の言葉で答える技術。</span>
+        </h1>
+        <p class="hero-kicker">株は企業を見る。競馬は馬を見る。現代アートは人を見る。見ている対象は違っても、やっていることは同じである。</p>
+        <p class="hero-subtitle">
+          数千万円、時には数億円という値がつく市場でありながら、その価格がなぜ形成されるのかを説明できる人は驚くほど少ない。
+          株式投資には「企業分析」があり、競馬には「能力評価」がある。では、なぜ現代アートだけに、それに相当する「型」が存在しないのか。
+          本書は、すでに体系化されたこの2つの分析思考を現代アートに移植し、AFA→ATA→APE→ACMという4層モデルで「作家の未来」を分析する、初めての思考の型を提案する。
+        </p>
+        <div class="hero-actions">
+          <a href="https://www.amazon.co.jp/dp/B0H7Y23JZ4" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            <i data-lucide="book-open" style="width:20px;height:20px;"></i>
+            Amazonで購入する
+          </a>
+          <a href="#concept" class="btn btn-outline">
+            <i data-lucide="arrow-down" style="width:18px;height:18px;"></i>
+            コンセプトを見る
+          </a>
+        </div>
+        <p class="hero-note">著者：たけ＠モダンロジック ／ Kindle版</p>
+      </div>
+      <div class="hero-cover">
+        <img src="Miraiwokau.jpg" alt="『未来を買う技術――株・競馬の分析術を移植した、現代アート投資の新モデル』表紙">
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem -->
+  <section id="problem">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag" style="border-color:#ef4444; color:#ef4444;">Reality Check</span>
+        <h2>こんな感覚、ありませんか？</h2>
+        <p>現代アートに興味を持つ人が、必ずどこかでぶつかる壁。その違和感の正体を、あなたはまだ言語化できていないだけかもしれない</p>
+      </div>
+      <div class="grid-3">
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="circle-help"></i></div>
+          <p class="problem-quote">「センスです」「経験を積むしかありません」としか言われたことがない</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="trending-up"></i></div>
+          <p class="problem-quote">この作品が将来値上がりするかどうか、自分では判断できない</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="line-chart"></i></div>
+          <p class="problem-quote">株式投資や競馬で培った分析力を、アートに活かせないかと気になっている</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="triangle-alert"></i></div>
+          <p class="problem-quote">数百万円という意思決定を、感性だけに頼ることに怖さを感じる</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="layers"></i></div>
+          <p class="problem-quote">「良い作品」と「値上がりする作品」の違いが、そもそもわからない</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="user-search"></i></div>
+          <p class="problem-quote">実績のない、まだ無名の作家をどう評価すればいいのかわからない</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Concept -->
+  <section id="concept">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Core Concept</span>
+        <h2>センスで見るか、分析で読み解くか</h2>
+        <p>同じ作品を見ていても、分析という視点を持てる人だけが、次の一手を選び取れる</p>
+      </div>
+      <div class="grid-2" style="align-items:stretch;">
+        <div class="glass-card axis-card yoko reveal">
+          <span class="axis-label">The Trap</span>
+          <h3>感性とセンスだけでアートを見る<span style="color:var(--accent);">（多くの人がハマる罠）</span></h3>
+          <p class="sub">「たくさん作品を見れば、いつかわかるようになる」と思い込んでしまう</p>
+          <ul>
+            <li><span>✓</span>作品の価値は、才能ある一部の人だけが感じ取れるものだと思い込む</li>
+            <li><span>✓</span>値上がりの理由を、後から「話題になったから」としか説明できない</li>
+            <li><span>✓</span>株や競馬なら分析するのに、アートだけは感覚に頼ってしまう</li>
+            <li><span>✓</span>実績のない作家を前にすると、判断材料がなく思考が止まる</li>
+          </ul>
+        </div>
+        <div class="glass-card axis-card tate reveal">
+          <span class="axis-label">The Strategy</span>
+          <h3>株・競馬の分析思考を移植して読む<span style="color:var(--accent2);">（本書のアプローチ）</span></h3>
+          <p class="sub">作品ではなく、その作品を生み出した「アーティストの未来」を分析する</p>
+          <ul>
+            <li><span>✓</span>センスではなく、AFA→ATA→APE→ACMという「思考の型」を使う</li>
+            <li><span>✓</span>当てるためではなく、自分の言葉で説明できるようになるために分析する</li>
+            <li><span>✓</span>企業分析・能力評価という、すでに確立された型を土台にする</li>
+            <li><span>✓</span>この型は、アートだけでなく採用や起業、AIの評価にも応用できる</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 markets -->
+  <section id="markets" style="background: rgba(15, 23, 42, 0.4);">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">One Structure, Three Markets</span>
+        <h2>私たちは、いつも「まだ起きていない未来」を値付けしている</h2>
+        <p>対象はまったく違っても、株式投資・競馬・現代アートは同じゲームをしている</p>
+      </div>
+      <div class="grid-3">
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="trending-up"></i></div>
+          <h3 style="font-size:1.1rem; margin-bottom:0.5rem;">株式投資というゲーム</h3>
+          <p style="color:var(--text-sub); font-size:0.9rem;">財務諸表とチャートを読み、「企業の未来の成長」をいま値付けする。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="medal"></i></div>
+          <h3 style="font-size:1.1rem; margin-bottom:0.5rem;">競馬というゲーム</h3>
+          <p style="color:var(--text-sub); font-size:0.9rem;">血統とタイムを読み、「まだ走っていない馬の走り」をいま値付けする。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="palette"></i></div>
+          <h3 style="font-size:1.1rem; margin-bottom:0.5rem;">現代アートというゲーム</h3>
+          <p style="color:var(--text-sub); font-size:0.9rem;">私たちは作品ではなく、「アーティストの未来の評価」をいま値付けしている。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="lock"></i></div>
+          <h3 style="font-size:1.1rem; margin-bottom:0.5rem;">情報の非対称性という壁</h3>
+          <p style="color:var(--text-sub); font-size:0.9rem;">決算書や血統登録に相当する、整理された公開情報がアートにはまだ存在しない。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="wrench"></i></div>
+          <h3 style="font-size:1.1rem; margin-bottom:0.5rem;">「型がない」は「作れない」ではない</h3>
+          <p style="color:var(--text-sub); font-size:0.9rem;">材料は十分にある。あとは、それをどう組み立てて見るかという型がないだけである。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="sparkles"></i></div>
+          <h3 style="font-size:1.1rem; margin-bottom:0.5rem;">未来を買う技術</h3>
+          <p style="color:var(--text-sub); font-size:0.9rem;">株式投資の企業分析と競馬の能力評価を移植した、現代アートのための新しい思考の型。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quote banner -->
+  <section class="quote-banner">
+    <div class="container reveal">
+      <p>
+        「良い作品かどうか」ではなく、<br>
+        <span class="title-accent">「この作家の未来はどこまで伸びるか」を、自分の言葉で説明できるようになる。</span>
+      </p>
+      <p class="source">――『未来を買う技術』はじめにより</p>
+    </div>
+  </section>
+
+  <!-- For whom -->
+  <section id="whom">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">For You</span>
+        <h2>こんな方におすすめです</h2>
+      </div>
+      <div class="whom-list">
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>現代アートに興味はあるが、価格の仕組みが理解できずにいる方</span></div>
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>「センス」以外の言葉で、アートの価値を語れるようになりたい方</span></div>
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>株式投資や競馬で培った分析経験を、新しい対象に応用してみたい方</span></div>
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>将来性のある人・事業・技術を見極める視点を養いたいビジネスパーソン</span></div>
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>数百万円単位の意思決定を、感性だけに頼りたくない方</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4-layer model -->
+  <section id="method" style="background: rgba(15, 23, 42, 0.4);">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Core Method</span>
+        <h2>作家の未来を読み解く、4層モデル</h2>
+        <p>企業分析と能力評価という、すでに確立された2つの分析思考を移植した、現代アートのための新しいフレームワーク</p>
+      </div>
+      <div class="cycle-wrap">
+        <div class="cycle-step reveal">
+          <div class="cycle-step-num">01</div>
+          <div><h3>AFA<span class="compass-en">Art Fundamental Analysis</span></h3><p>作家そのものの「本質的価値」を見る。株式投資の企業分析にあたる。</p></div>
+        </div>
+        <div class="cycle-step reveal">
+          <div class="cycle-step-num">02</div>
+          <div><h3>ATA<span class="compass-en">Art Technical Analysis</span></h3><p>価格推移・販売速度・市場人気という「市場の動き」を見る。株価チャートにあたる。</p></div>
+        </div>
+        <div class="cycle-step reveal">
+          <div class="cycle-step-num">03</div>
+          <div><h3>APE<span class="compass-en">Art Potential Evaluation</span></h3><p>まだ実績の定まっていない作家の「伸びしろ」を見る。競馬の能力指数にあたる。</p></div>
+        </div>
+        <div class="cycle-step reveal">
+          <div class="cycle-step-num">04</div>
+          <div><h3>ACM<span class="compass-en">Art Comparison Model</span></h3><p>同価格帯・同年代・同キャリアの作家を横に並べ、比較したうえで意思決定する。</p></div>
+        </div>
+        <div class="cycle-step is-goal reveal">
+          <div class="cycle-step-num">05</div>
+          <div><h3>BUY<span class="compass-en">Decision</span></h3><p>感覚ではなく、自分の言葉で説明できる意思決定にたどり着く。</p></div>
+        </div>
+      </div>
+      <p style="text-align:center; color:var(--text-sub); font-size:0.92rem; max-width:640px; margin:2.5rem auto 0;">
+        AFA→ATA→APE→ACM→BUY。読者が手にするのは個別の作品知識ではなく、実績のないどんな対象にも応用できる「未来を分析する型」である。
+      </p>
+    </div>
+  </section>
+
+  <!-- 6 AFA scores -->
+  <section id="scores">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">The Toolkit</span>
+        <h2>AFAを支える、6つのスコア</h2>
+        <p>決算書のない作家を、どう分析するか。才能ではなく手順で、作家の本質的価値を見積もる</p>
+      </div>
+      <div class="grid-3">
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="history"></i></div>
+          <h3 style="font-size:1.1rem; margin-bottom:0.5rem;">①キャリアスコア</h3>
+          <p style="color:var(--text-sub); font-size:0.9rem;">どれだけ、継続して活動してきたか。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="building-2"></i></div>
+          <h3 style="font-size:1.1rem; margin-bottom:0.5rem;">②ギャラリースコア</h3>
+          <p style="color:var(--text-sub); font-size:0.9rem;">どこに「上場」しているか。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="landmark"></i></div>
+          <h3 style="font-size:1.1rem; margin-bottom:0.5rem;">③コレクター・美術館スコア</h3>
+          <p style="color:var(--text-sub); font-size:0.9rem;">誰が、どんな理由で持っているか。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="globe"></i></div>
+          <h3 style="font-size:1.1rem; margin-bottom:0.5rem;">④国際性スコア</h3>
+          <p style="color:var(--text-sub); font-size:0.9rem;">ローカルか、グローバルか。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="gem"></i></div>
+          <h3 style="font-size:1.1rem; margin-bottom:0.5rem;">⑤希少性スコア</h3>
+          <p style="color:var(--text-sub); font-size:0.9rem;">どれだけ「品薄」か。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="megaphone"></i></div>
+          <h3 style="font-size:1.1rem; margin-bottom:0.5rem;">⑥発信力スコア</h3>
+          <p style="color:var(--text-sub); font-size:0.9rem;">物語（ナラティブ）を広める力があるか。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contents -->
+  <section id="contents" style="background: rgba(15, 23, 42, 0.4);">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Contents</span>
+        <h2>目次</h2>
+        <p>はじめに・全10章・おわりにで構成</p>
+      </div>
+      <div class="toc-list">
+        <div class="toc-item reveal">
+          <div class="toc-num">はじめに</div>
+          <div><h3>未来を買う技術と呼ぶことにする</h3><p>「この作品は、将来値上がりしますか？」に誰も答えられない／AFA・ATA・APE・ACMという新フレームワーク</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第1章</div>
+          <div><h3>未来は分析できるのか</h3><p>私たちはいつも「まだ起きていないこと」に賭けている／情報の非対称性という壁</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第2章</div>
+          <div><h3>株式投資が教えてくれる分析思考</h3><p>ファンダメンタル分析／テクニカル分析／比較という思考の土台</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第3章</div>
+          <div><h3>競馬は未来をどう読むのか</h3><p>指数化・POG・能力評価――「まだ見ぬ力」を見積もる技術</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第4章</div>
+          <div><h3>現代アート市場という未来市場</h3><p>一次市場と二次市場／価格形成のメカニズム／コラム：初心者が市場に参加する場合</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第5章</div>
+          <div><h3>AFA――作家を分析する</h3><p>Art Fundamental Scoreを構成する6つのスコアと配点例</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第6章</div>
+          <div><h3>ATA――市場を分析する</h3><p>価格推移・出来高・ボラティリティ／コラム：価格はなぜ突然動くのか</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第7章</div>
+          <div><h3>APE――未来の才能を数値化する</h3><p>Career Index・Talent Index・Potential Scoreという3つの指数</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第8章</div>
+          <div><h3>ACM――比較して意思決定する</h3><p>比較対象の選び方／ケーススタディ／ACM実践ノート6ステップ</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第9章</div>
+          <div><h3>会社員でも始められる実践編</h3><p>予算・購入先・保管・保険・出口戦略まで、小さく始める具体策</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第10章／おわりに</div>
+          <div><h3>未来を見る力は人生を変える</h3><p>採用・起業・AI・教育にも応用できる汎用的な思考技術として</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Appendix templates -->
+  <section id="appendix">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Ready to Use</span>
+        <h2>今日から使える実践ツール</h2>
+        <p>読むだけで終わらせない。目の前の作家に当てはめるだけで、そのまま使える実践フレーム</p>
+      </div>
+      <div class="grid-3">
+        <div class="glass-card reveal">
+          <div class="method-num">01</div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.8rem;">Art Fundamental Score 配点表</h3>
+          <p style="color:var(--text-sub); font-size:0.88rem; margin-bottom:1rem;">6つのスコアを一つの点数に統合し、作家Aと作家Bを横並びで比較する。</p>
+          <div class="tpl-box">
+            <div class="tpl-row"><span>キャリア／ギャラリー</span><strong>活動歴と所属先を採点</strong></div>
+            <div class="tpl-row"><span>コレクター／国際性</span><strong>保有層と展開範囲を採点</strong></div>
+            <div class="tpl-row"><span>希少性／発信力</span><strong>品薄度と物語の強さを採点</strong></div>
+          </div>
+        </div>
+        <div class="glass-card reveal">
+          <div class="method-num">02</div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.8rem;">ACM実践ノート 6ステップ</h3>
+          <p style="color:var(--text-sub); font-size:0.88rem; margin-bottom:1rem;">点数がついても、決断はできない。比較と仮説検証を型にする。</p>
+          <div class="tpl-box">
+            <div class="tpl-row"><span>Step1-2</span><strong>ペアを選ぶ／ざっくり採点</strong></div>
+            <div class="tpl-row"><span>Step3-4</span><strong>仮説を一行で書く／寝かせる</strong></div>
+            <div class="tpl-row"><span>Step5-6</span><strong>答え合わせをする／次のペアへ</strong></div>
+          </div>
+        </div>
+        <div class="glass-card reveal">
+          <div class="method-num">03</div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.8rem;">初心者のための5ステップ</h3>
+          <p style="color:var(--text-sub); font-size:0.88rem; margin-bottom:1rem;">買う前に、まず市場を見る。少額作品から始めるための行動フレーム。</p>
+          <div class="tpl-box">
+            <div class="tpl-row"><span>観察する／記録する</span><strong>市場を見る／データを残す</strong></div>
+            <div class="tpl-row"><span>比較する／予測する</span><strong>横並びで見る／仮説を持つ</strong></div>
+            <div class="tpl-row"><span>投資する</span><strong>少額・長期を前提に始める</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Author -->
+  <section id="author">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Author</span>
+        <h2>著者について</h2>
+      </div>
+      <div class="author-wrap reveal">
+        <div class="author-badge">たけ＠<br>モダンロジック</div>
+        <div>
+          <h3 class="author-name">たけ＠モダンロジック</h3>
+          <span class="author-role">ブランド戦略／組織開発／プロセス改革</span>
+          <p style="color:var(--text-sub); font-size:0.95rem;">
+            ブランド・マーケティング、プロセス改革、人材・組織マネジメントを軸に、30年以上にわたり企業の変革と構造設計に携わる。
+            物事を分野ごとに捉えるのではなく、異なる領域の共通構造を見出す「比較の癖」と、複数領域を横断して本質を抽出する視点を持つ。
+            人間の行動や意思決定の背後にあるパターンを捉え、それを再編集することに関心を持ち、大企業で培われた戦略・ブランド設計・業務プロセスの知見を、中小企業支援の現場に適合させる形で展開している。
+          </p>
+          <ul class="author-list">
+            <li><span>•</span>ブランド・マーケティング領域で30年以上の実務経験</li>
+            <li><span>•</span>異なる領域の共通構造を見出す「比較の癖」を軸にした分析</li>
+            <li><span>•</span>企業の戦略・ブランド設計・業務プロセス知見を中小企業支援へ展開</li>
+            <li><span>•</span>人間の認知と意思決定の構造を再編集することがテーマ</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section id="cta">
+    <div class="container">
+      <div class="glass-card cta-card reveal">
+        <span class="hero-tag" style="margin-bottom:1.5rem;">Get Started</span>
+        <h2>必要なのは、センスでも生まれつきの才能でもない。<br>株・競馬の「型」を移植した、未来を読む技術である。</h2>
+        <p>
+          アート投資の入門書ではない。株式投資の「企業分析」と競馬の「能力評価」という、すでに体系化された2つの分析思考を現代アートに移植し、AFA→ATA→APE→ACM→BUYという新しい思考の型を、本書は具体的な手順で示していく。
+        </p>
+        <a href="https://www.amazon.co.jp/dp/B0H7Y23JZ4" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+          <i data-lucide="book-open" style="width:20px;height:20px;"></i>
+          Kindleストアで『未来を買う技術』を読む
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="logo" style="font-size:0.95rem;">未来を買う技術<span>。</span></div>
+    <div>著者：たけ＠モダンロジック　© たけ＠モダンロジック All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  lucide.createIcons();
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('reveal-active');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { root: null, threshold: 0.1, rootMargin: "0px" });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const targetId = this.getAttribute('href');
+      if (targetId === '#' || !document.querySelector(targetId)) return;
+      e.preventDefault();
+      window.scrollTo({ top: document.querySelector(targetId).offsetTop - 80, behavior: 'smooth' });
+    });
+  });
+
+  window.addEventListener('scroll', () => {
+    const header = document.querySelector('header');
+    if (window.scrollY > 50) {
+      header.style.padding = '0.9rem 0';
+      header.style.boxShadow = '0 10px 40px rgba(0,0,0,0.5)';
+    } else {
+      header.style.padding = '1.5rem 0';
+      header.style.boxShadow = 'none';
+    }
+  });
+</script>
+</body>
+</html>

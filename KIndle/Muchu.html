@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="『夢中ってどういうこと？ ―― 人生の夢中をデザインする、没頭の科学』Kindleにて発売。「社会」「組織」「個人」という3つの層が夢中を奪う構造を解き明かし、夢中を生む5つの条件から、仕事や日常を再設計する方法を提示する一冊。">
+<title>夢中ってどういうこと？ | 人生の夢中をデザインする、没頭の科学</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Noto+Sans+JP:wght@400;500;700&family=Outfit:wght@400;600;800&family=Shippori+Mincho:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root {
+  --primary: #0f172a;
+  --accent: #d4af37;
+  --accent-glow: rgba(212, 175, 55, 0.4);
+  --accent2: #38bdf8;
+  --accent2-glow: rgba(56, 189, 248, 0.35);
+  --text-main: #f8fafc;
+  --text-sub: #94a3b8;
+  --bg-dark: #020617;
+  --glass-bg: rgba(15, 23, 42, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --card-bg: #1e293b;
+  --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Noto Sans JP', 'Shippori Mincho', serif;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  line-height: 1.85;
+  overflow-x: hidden;
+}
+
+.bg-mesh {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(15, 23, 42, 0.8) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(30, 41, 59, 0.8) 0%, transparent 40%),
+    rgba(2, 6, 23, 1);
+}
+
+h1, h2, h3 {
+  font-family: 'Shippori Mincho', serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.title-accent {
+  background: linear-gradient(90deg, #d4af37, #fde68a);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.title-accent2 {
+  background: linear-gradient(90deg, #38bdf8, #bae6fd);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+section { padding: 100px 0; }
+
+/* Header */
+header {
+  position: fixed; top: 0; left: 0; width: 100%;
+  padding: 1.5rem 0;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  z-index: 1000;
+  border-bottom: 1px solid var(--glass-border);
+  transition: var(--transition);
+}
+nav { display: flex; justify-content: space-between; align-items: center; }
+.logo {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 1.1rem; font-weight: 800;
+  letter-spacing: 0.05em;
+  color: var(--text-main);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 2.2rem; list-style: none; }
+.nav-link {
+  color: var(--text-sub); text-decoration: none;
+  font-size: 0.88rem; font-weight: 500;
+  transition: var(--transition);
+}
+.nav-link:hover { color: var(--accent); }
+.nav-cta {
+  background: var(--accent);
+  color: #000;
+  padding: 0.6rem 1.4rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: var(--transition);
+}
+.nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 20px var(--accent-glow); }
+
+/* Hero */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  position: relative;
+  padding: 160px 0 100px;
+}
+.hero .container {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 4rem;
+  align-items: center;
+}
+.hero-tag {
+  display: inline-block;
+  padding: 0.5rem 1.1rem;
+  background: var(--glass-border);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.05em;
+}
+.hero-title {
+  font-size: 2.7rem;
+  line-height: 1.4;
+  margin-bottom: 1.2rem;
+}
+.hero-kicker {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-sub);
+  margin-bottom: 2rem;
+  font-family: 'Noto Sans JP', sans-serif;
+  border-left: 3px solid var(--accent2);
+  padding-left: 1rem;
+}
+.hero-subtitle {
+  font-size: 1rem;
+  color: var(--text-sub);
+  max-width: 560px;
+  margin-bottom: 2.5rem;
+}
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+.hero-note { margin-top: 1.2rem; font-size: 0.8rem; color: var(--text-sub); }
+
+.hero-cover {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.hero-cover img {
+  width: 100%;
+  max-width: 340px;
+  border-radius: 10px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px var(--glass-border);
+  transition: var(--transition);
+}
+.hero-cover img:hover { transform: translateY(-8px) rotate(-1deg); }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  padding: 1.1rem 2.2rem;
+  border-radius: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: var(--transition);
+  cursor: pointer;
+  border: none;
+  font-size: 0.95rem;
+}
+.btn-primary {
+  background: var(--accent);
+  color: #000;
+  box-shadow: 0 10px 30px var(--accent-glow);
+}
+.btn-primary:hover { transform: translateY(-4px); box-shadow: 0 15px 40px var(--accent-glow); }
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  color: var(--text-main);
+}
+.btn-outline:hover { border-color: var(--accent2); color: var(--accent2); }
+
+/* Section shared */
+.section-title { text-align: center; margin-bottom: 4.5rem; }
+.section-title h2 { font-size: 2rem; margin-bottom: 1rem; }
+.section-title p { color: var(--text-sub); font-size: 1.05rem; }
+
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 2rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+.grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.75rem; }
+
+.glass-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  padding: 2.4rem;
+  border-radius: 20px;
+  backdrop-filter: blur(5px);
+  transition: var(--transition);
+}
+.glass-card:hover { border-color: var(--accent); transform: translateY(-8px); }
+
+.card-icon {
+  width: 52px; height: 52px;
+  background: var(--glass-border);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.25rem;
+  color: var(--accent);
+}
+
+/* Problem section */
+#problem { background: rgba(15, 23, 42, 0.4); }
+.problem-quote {
+  font-size: 1.05rem;
+  color: var(--text-main);
+  font-style: normal;
+  line-height: 1.9;
+}
+
+/* Concept two-axis */
+.axis-card { position: relative; padding-top: 2.8rem; }
+.axis-card.yoko { border-left: 4px solid var(--accent); }
+.axis-card.tate { border-left: 4px solid var(--accent2); }
+.axis-label {
+  position: absolute; top: 2.4rem; right: 2.4rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem; letter-spacing: 0.1em;
+  color: var(--text-sub);
+  text-transform: uppercase;
+}
+.axis-card h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+.axis-card .sub { color: var(--text-sub); font-size: 0.9rem; margin-bottom: 1.5rem; }
+.axis-card ul { list-style: none; display: grid; gap: 0.75rem; }
+.axis-card ul li { display: flex; gap: 0.6rem; font-size: 0.92rem; color: var(--text-main); }
+.axis-card.yoko ul li span { color: var(--accent); }
+.axis-card.tate ul li span { color: var(--accent2); }
+
+/* Pull quote banner */
+.quote-banner {
+  background: linear-gradient(135deg, rgba(212,175,55,0.08), rgba(56,189,248,0.05));
+  border-top: 1px solid var(--glass-border);
+  border-bottom: 1px solid var(--glass-border);
+  text-align: center;
+}
+.quote-banner p {
+  font-size: 1.5rem;
+  line-height: 1.9;
+  max-width: 780px;
+  margin: 0 auto;
+  font-family: 'Shippori Mincho', serif;
+}
+.quote-banner .source {
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  color: var(--text-sub);
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+/* For whom */
+.whom-list { display: grid; gap: 1rem; max-width: 760px; margin: 0 auto; }
+.whom-item {
+  display: flex; align-items: flex-start; gap: 1rem;
+  padding: 1.4rem 1.6rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+}
+.whom-item i { color: var(--accent2); flex-shrink: 0; margin-top: 0.15rem; }
+
+/* Contents / timeline */
+.toc-list { max-width: 820px; margin: 0 auto; display: grid; gap: 0; }
+.toc-item {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 1.5rem;
+  padding: 1.6rem 0;
+  border-bottom: 1px solid var(--glass-border);
+}
+.toc-item:last-child { border-bottom: none; }
+.toc-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding-top: 0.2rem;
+}
+.toc-item h3 { font-size: 1.15rem; margin-bottom: 0.5rem; }
+.toc-item p { color: var(--text-sub); font-size: 0.9rem; }
+
+/* Method / numbered cards */
+.method-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--accent2);
+  opacity: 0.5;
+  margin-bottom: 0.5rem;
+}
+
+/* English sub-label on framework cards */
+.compass-en {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--text-sub);
+  text-transform: uppercase;
+  margin-left: 0.5rem;
+}
+
+/* Author */
+#author { background: rgba(15, 23, 42, 0.4); }
+.author-wrap {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 3rem;
+  align-items: start;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.author-badge {
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(212,175,55,0.2), rgba(56,189,248,0.15));
+  border: 1px solid var(--glass-border);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Shippori Mincho', serif;
+  font-size: 1.4rem;
+  text-align: center;
+  color: var(--accent);
+}
+.author-name { font-size: 1.4rem; margin-bottom: 0.3rem; }
+.author-role { color: var(--accent2); font-size: 0.9rem; margin-bottom: 1.5rem; display: block; }
+.author-list { list-style: none; color: var(--text-sub); font-size: 0.9rem; display: grid; gap: 0.5rem; margin-top: 1.5rem; }
+.author-list li { display: flex; gap: 0.6rem; }
+.author-list span { color: var(--accent); }
+
+/* Final CTA */
+#cta { background: linear-gradient(180deg, transparent, rgba(212, 175, 55, 0.06)); }
+.cta-card { text-align: center; padding: 5rem 2rem; }
+.cta-card h2 { font-size: 2.2rem; margin-bottom: 1.2rem; }
+.cta-card p { color: var(--text-sub); max-width: 620px; margin: 0 auto 2.5rem; }
+
+footer { border-top: 1px solid var(--glass-border); padding: 3rem 0; }
+footer .container {
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+  font-size: 0.85rem; color: var(--text-sub);
+}
+
+/* Animations */
+.reveal { opacity: 0; transform: translateY(24px); transition: all 0.8s cubic-bezier(0.16,1,0.3,1); }
+.reveal-active { opacity: 1 !important; transform: translateY(0) !important; }
+
+@media (max-width: 992px) {
+  .hero .container { grid-template-columns: 1fr; }
+  .hero-cover { order: -1; }
+  .nav-links { display: none; }
+  .hero-title { font-size: 2rem; }
+  .author-wrap { grid-template-columns: 1fr; text-align: center; }
+  .author-badge { margin: 0 auto; }
+  .author-list { justify-content: center; }
+}
+</style>
+</head>
+<body>
+<div class="bg-mesh"></div>
+
+<header>
+  <div class="container nav">
+    <a href="#" class="logo">夢中って、<span>どういうこと？</span></a>
+    <ul class="nav-links">
+      <li><a href="#problem" class="nav-link">こんな感覚</a></li>
+      <li><a href="#concept" class="nav-link">コンセプト</a></li>
+      <li><a href="#framework" class="nav-link">5条件</a></li>
+      <li><a href="#contents" class="nav-link">目次</a></li>
+      <li><a href="#author" class="nav-link">著者</a></li>
+    </ul>
+    <a href="https://www.amazon.co.jp/dp/B0GX32RY2P" target="_blank" rel="noopener noreferrer" class="nav-cta">Amazonで見る</a>
+  </div>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="hero-content">
+        <span class="hero-tag">Kindleストアで発売 ／ 自己啓発・心理学</span>
+        <h1 class="hero-title">
+          「昔は夢中になれたのに」<br>
+          <span class="title-accent">今は、こなすだけになっていないか。</span>
+        </h1>
+        <p class="hero-kicker">夢中とは、条件さえ揃えば、誰にでも再現できる「設計可能な状態」である。</p>
+        <p class="hero-subtitle">
+          子どもの頃、時間を忘れて何かに没頭した経験は誰にでもある。ところが大人になると、仕事は「こなす」ものになり、休日でさえ心から楽しめず、なんとなくスマホを眺めて一日が終わってしまう。
+          この差を生んでいるのは、才能でも運でもない。「社会」「組織」「個人」という3つの層が、静かに夢中を奪う構造を作っているからである。
+        </p>
+        <div class="hero-actions">
+          <a href="https://www.amazon.co.jp/dp/B0GX32RY2P" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            <i data-lucide="book-open" style="width:20px;height:20px;"></i>
+            Amazonで購入する
+          </a>
+          <a href="#concept" class="btn btn-outline">
+            <i data-lucide="arrow-down" style="width:18px;height:18px;"></i>
+            コンセプトを見る
+          </a>
+        </div>
+        <p class="hero-note">著者：たけ＠モダンロジック ／ Kindle版</p>
+      </div>
+      <div class="hero-cover">
+        <img src="Muchuu.jpg" alt="『夢中ってどういうこと？』表紙">
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem -->
+  <section id="problem">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag" style="border-color:#ef4444; color:#ef4444;">Reality Check</span>
+        <h2>こんな感覚、ありませんか？</h2>
+        <p>真面目に生きている人ほど、ある日ふとこの違和感にぶつかる</p>
+      </div>
+      <div class="grid-3">
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="briefcase"></i></div>
+          <p class="problem-quote">仕事は、いつのまにか「こなす」ものになった</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="coffee"></i></div>
+          <p class="problem-quote">休日でさえ、心から楽しめない</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="smartphone"></i></div>
+          <p class="problem-quote">気づけばスマホを眺めて、一日が終わっている</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="frown"></i></div>
+          <p class="problem-quote">頑張っているはずなのに、なぜか満たされない</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="sparkles"></i></div>
+          <p class="problem-quote">子どもの「夢中になる力」を、育んであげたい</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="bot"></i></div>
+          <p class="problem-quote">AI時代に代替されない、自分だけの価値を見つけたい</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Concept -->
+  <section id="concept">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Core Concept</span>
+        <h2>仕事を変えるか、遊び方を変えるか</h2>
+        <p>同じ毎日を過ごしても、遊び方を変えた人だけが、夢中を取り戻し続ける</p>
+      </div>
+      <div class="grid-2" style="align-items:stretch;">
+        <div class="glass-card axis-card yoko reveal">
+          <span class="axis-label">The Trap</span>
+          <h3>ゲームチェンジ思考<span style="color:var(--accent);">（多くの人がハマる罠）</span></h3>
+          <p class="sub">隣の芝は青く見える ― 環境を変えても、「こなす」感覚はついてくる</p>
+          <ul>
+            <li><span>✓</span>転職・独立という大きな決断に踏み切る</li>
+            <li><span>✓</span>環境さえ変われば夢中になれると期待する</li>
+            <li><span>✓</span>新しい場所でも、同じ壁にすぐぶつかる</li>
+            <li><span>✓</span>変えるほど、消耗していく</li>
+          </ul>
+        </div>
+        <div class="glass-card axis-card tate reveal">
+          <span class="axis-label">The Strategy</span>
+          <h3>ゲームデザイン思考<span style="color:var(--accent2);">（本書のアプローチ）</span></h3>
+          <p class="sub">同じ仕事でも、遊び方を変えれば、景色は変わる</p>
+          <ul>
+            <li><span>✓</span>好奇心・成長・自由・意味・仲間の5条件を、今の環境に組み込む</li>
+            <li><span>✓</span>「今の仕事」に、小さな工夫を積み重ねる</li>
+            <li><span>✓</span>転職も独立もしなくても、夢中は取り戻せる</li>
+            <li><span>✓</span>小さな再設計が、驚くほど大きな変化に変わる</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 Walls -->
+  <section id="walls" style="background: rgba(15, 23, 42, 0.4);">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Why We Lose It</span>
+        <h2>夢中を奪う、3つの壁</h2>
+        <p>社会・組織・個人 ―― 見えない構造が、静かに夢中を奪っている</p>
+      </div>
+      <div class="grid-3">
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="globe"></i></div>
+          <h3 style="font-size:1.1rem; margin-bottom:0.5rem;">社会の壁<span class="compass-en">Society</span></h3>
+          <p style="color:var(--text-sub); font-size:0.9rem;">正解社会、効率至上主義、SNS比較、選択肢過多、成果主義が、夢中になる余白を奪う。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="building-2"></i></div>
+          <h3 style="font-size:1.1rem; margin-bottom:0.5rem;">組織の壁<span class="compass-en">Organization</span></h3>
+          <p style="color:var(--text-sub); font-size:0.9rem;">裁量のなさ、仕事の細切れ化、遅いフィードバック、失敗を許さない文化が、没入を止める。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="user"></i></div>
+          <h3 style="font-size:1.1rem; margin-bottom:0.5rem;">個人の壁<span class="compass-en">Self</span></h3>
+          <p style="color:var(--text-sub); font-size:0.9rem;">他人の期待、完璧主義、疲労、情報過多が、自分の中の好奇心に蓋をする。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quote banner -->
+  <section class="quote-banner">
+    <div class="container reveal">
+      <p>
+        情熱が足りないのではない。<span class="title-accent">環境が、夢中を奪っているだけだ。</span><br>
+        人生は、何を成し遂げたかではなく<span class="title-accent2">何に夢中になれたか</span>で決まる。
+      </p>
+      <p class="source">──『夢中ってどういうこと？』はじめに・おわりにより</p>
+    </div>
+  </section>
+
+  <!-- For whom -->
+  <section id="whom">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">For You</span>
+        <h2>こんな方におすすめです</h2>
+      </div>
+      <div class="whom-list">
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>仕事に「こなしている」感覚しかなく、以前のような熱中を取り戻したい人</span></div>
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>頑張っているはずなのに、なぜか満たされないと感じているビジネスパーソン</span></div>
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>子育てや教育の中で、子どもの「夢中になる力」を育みたい人</span></div>
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>AI時代に代替されない、自分だけの価値を見つけたい人</span></div>
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>人生後半戦、これから何に情熱を注ぐか考えたい人</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 Conditions Framework -->
+  <section id="framework" style="background: rgba(15, 23, 42, 0.4);">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Original Framework</span>
+        <h2>夢中を生む5条件</h2>
+        <p>好奇心・成長・自由・意味・仲間 ―― 5つが重なる場所に、夢中は生まれる</p>
+      </div>
+      <div class="grid-3">
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="search"></i></div>
+          <h3 style="font-size:1.1rem; margin-bottom:0.5rem;">好奇心<span class="compass-en">Curiosity</span></h3>
+          <p style="color:var(--text-sub); font-size:0.9rem;">「知りたい」という小さな疑問が、夢中の出発点になる。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="trending-up"></i></div>
+          <h3 style="font-size:1.1rem; margin-bottom:0.5rem;">成長<span class="compass-en">Growth</span></h3>
+          <p style="color:var(--text-sub); font-size:0.9rem;">昨日より少し上達した実感が、続ける力を生む。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="unlock"></i></div>
+          <h3 style="font-size:1.1rem; margin-bottom:0.5rem;">自由<span class="compass-en">Freedom</span></h3>
+          <p style="color:var(--text-sub); font-size:0.9rem;">自分でやり方を決められることが、没入を後押しする。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="heart-handshake"></i></div>
+          <h3 style="font-size:1.1rem; margin-bottom:0.5rem;">意味<span class="compass-en">Meaning</span></h3>
+          <p style="color:var(--text-sub); font-size:0.9rem;">誰かの役に立っている実感が、続ける理由になる。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="users"></i></div>
+          <h3 style="font-size:1.1rem; margin-bottom:0.5rem;">仲間<span class="compass-en">Fellowship</span></h3>
+          <p style="color:var(--text-sub); font-size:0.9rem;">共感してくれる誰かがいると、夢中は長続きする。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contents -->
+  <section id="contents">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Contents</span>
+        <h2>目次</h2>
+        <p>はじめに・4部13章・おわりに、そして巻末特典の25問診断で構成</p>
+      </div>
+      <div class="toc-list">
+        <div class="toc-item reveal">
+          <div class="toc-num">はじめに</div>
+          <div><h3>「夢中だった頃」を覚えていますか？</h3><p>本書の読み方／3つの問い／夢中は誰にでも取り戻せる</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第1章</div>
+          <div><h3>夢中とは何か</h3><p>「好き」「集中」「趣味」「ハマる」「フロー」との違い／夢中のサイン</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第2章</div>
+          <div><h3>夢中の脳科学・心理学</h3><p>好奇心・達成感・新奇性・自己決定・没入感、5つの仕組み</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第3章</div>
+          <div><h3>子どもはなぜ夢中になれるのか</h3><p>意味を考えない／比べる相手がいない／失敗を気にしない／時間を区切らない</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第4章</div>
+          <div><h3>夢中の10タイプ診断</h3><p>創る・解く・極める・勝つ・発見する・教える・集める・表現する・仕組みを作る・楽しませる</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第5章</div>
+          <div><h3>社会の壁</h3><p>正解社会／効率至上主義／SNS比較社会／選択肢過多／成果主義</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第6章</div>
+          <div><h3>組織の壁</h3><p>裁量がない／仕事の細切れ化／フィードバックがない／失敗できない文化</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第7章</div>
+          <div><h3>個人の壁</h3><p>他人の期待で生きる／完璧主義／疲労／情報過多</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第8章</div>
+          <div><h3>夢中を生む5条件</h3><p>好奇心／成長／自由／意味／仲間</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第9章</div>
+          <div><h3>夢中をつくる5つのレベル</h3><p>認知設計／ジョブ・クラフティング／難易度設計／環境を変える／人生全体の設計</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第10章</div>
+          <div><h3>仕事を「ゲーム化」する技術</h3><p>トップ営業・プログラマー・教師の実例／ゲームチェンジより、ゲームデザイン</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第11章</div>
+          <div><h3>今日からできる10の習慣</h3><p>15分ルール／初心者になる／小さく始める</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第12章</div>
+          <div><h3>夢中は人生を変える</h3><p>幸福度・健康・学び続ける力・ロンジェビティ</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第13章</div>
+          <div><h3>AI時代に夢中が持つ価値</h3><p>「こなす人」より「夢中になる人」になる</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">おわりに</div>
+          <div><h3>何に夢中になれたかで、人生は決まる</h3><p>人生は「何を成し遂げたか」だけでなく「何に夢中になれたか」でもできている。</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">巻末特典</div>
+          <div><h3>あなたは何に夢中になれる人？　25問診断</h3><p>5条件を基準に、今のあなたに足りない条件がわかるチェックリスト</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 Types -->
+  <section id="types" style="background: rgba(15, 23, 42, 0.4);">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">10 Types</span>
+        <h2>本書オリジナル「夢中の10タイプ診断」</h2>
+        <p>職業ではなく、「どんな行為に夢中になりやすいか」で、自分を知る</p>
+      </div>
+      <div class="grid-4">
+        <div class="glass-card reveal">
+          <div class="method-num">01</div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.6rem;">創る人</h3>
+          <p style="color:var(--text-sub); font-size:0.88rem;">ゼロから何かを生み出す過程に夢中になる。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="method-num">02</div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.6rem;">解く人</h3>
+          <p style="color:var(--text-sub); font-size:0.88rem;">難しい問題を解くことが、ゲームのように楽しい。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="method-num">03</div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.6rem;">極める人</h3>
+          <p style="color:var(--text-sub); font-size:0.88rem;">技術をひたすら磨く反復に、喜びを感じる。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="method-num">04</div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.6rem;">勝つ人</h3>
+          <p style="color:var(--text-sub); font-size:0.88rem;">勝ち負けや数字がはっきりしていると燃える。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="method-num">05</div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.6rem;">発見する人</h3>
+          <p style="color:var(--text-sub); font-size:0.88rem;">知らないことを知る過程そのものが楽しい。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="method-num">06</div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.6rem;">教える人</h3>
+          <p style="color:var(--text-sub); font-size:0.88rem;">人が成長する姿を見るのが、一番嬉しい。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="method-num">07</div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.6rem;">集める人</h3>
+          <p style="color:var(--text-sub); font-size:0.88rem;">集めて、整理し、体系立てることが楽しい。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="method-num">08</div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.6rem;">表現する人</h3>
+          <p style="color:var(--text-sub); font-size:0.88rem;">自分の中にあるものを、外に出すことが楽しい。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="method-num">09</div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.6rem;">仕組みを作る人</h3>
+          <p style="color:var(--text-sub); font-size:0.88rem;">物事が回る仕組みを整えることに、達成感を覚える。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="method-num">10</div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.6rem;">楽しませる人</h3>
+          <p style="color:var(--text-sub); font-size:0.88rem;">人を喜ばせること自体が、報酬になる。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Author -->
+  <section id="author">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Author</span>
+        <h2>著者について</h2>
+      </div>
+      <div class="author-wrap reveal">
+        <div class="author-badge">たけ＠<br>モダンロジック</div>
+        <div>
+          <h3 class="author-name">たけ＠モダンロジック</h3>
+          <span class="author-role">ブランディング／組織開発／キャリアコンサルタント</span>
+          <p style="color:var(--text-sub); font-size:0.95rem;">
+            イオンネクスト、イオントップバリュ ブランドマネジメント部部長、デイモンワールドワイドジャパン、インターブランド／ランドーアソシエイツを経て、大企業レベルの経営戦略と組織変革を中小企業に伴走支援。
+            企業のブランド戦略や組織開発で培った知見と、心理学におけるフロー理論や自己決定理論を組み合わせ、個人が日常の中で「夢中」を再設計するための独自フレームワーク「夢中を生む5条件」を提唱し、本書にまとめた。
+          </p>
+          <ul class="author-list">
+            <li><span>•</span>E-MBA 経営管理学修士 / 経済学士</li>
+            <li><span>•</span>国家資格キャリアコンサルタント登録</li>
+            <li><span>•</span>大阪商工会議所 メンタルヘルス・マネジメント2種検定</li>
+            <li><span>•</span>東北大学主催 産学連携教育イノベーター育成プログラム 修了</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section id="cta">
+    <div class="container">
+      <div class="glass-card cta-card reveal">
+        <span class="hero-tag" style="margin-bottom:1.5rem;">Get Started</span>
+        <h2>必要なのは、大きな決断ではない。<br>夢中の遊び方を、少しだけ変えることである。</h2>
+        <p>
+          転職も、独立も、劇的な変化も必要ない。今の仕事、今の生活の中に、夢中を取り戻す方法を、本書は具体的な手順で示していく。<br>
+          巻末には25問診断チェックリストと、夢中を仕事にした4人の物語も収録。
+        </p>
+        <a href="https://www.amazon.co.jp/dp/B0GX32RY2P" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+          <i data-lucide="book-open" style="width:20px;height:20px;"></i>
+          Kindleストアで『夢中ってどういうこと？』を読む
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="logo" style="font-size:0.95rem;">夢中って、<span>どういうこと？</span></div>
+    <div>著者：たけ＠モダンロジック　© たけ＠モダンロジック All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  lucide.createIcons();
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('reveal-active');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { root: null, threshold: 0.1, rootMargin: "0px" });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const targetId = this.getAttribute('href');
+      if (targetId === '#' || !document.querySelector(targetId)) return;
+      e.preventDefault();
+      window.scrollTo({ top: document.querySelector(targetId).offsetTop - 80, behavior: 'smooth' });
+    });
+  });
+
+  window.addEventListener('scroll', () => {
+    const header = document.querySelector('header');
+    if (window.scrollY > 50) {
+      header.style.padding = '0.9rem 0';
+      header.style.boxShadow = '0 10px 40px rgba(0,0,0,0.5)';
+    } else {
+      header.style.padding = '1.5rem 0';
+      header.style.boxShadow = 'none';
+    }
+  });
+</script>
+</body>
+</html>
