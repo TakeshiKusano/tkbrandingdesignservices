@@ -1,0 +1,742 @@
+<title>Vertical × Horizontal Growth — 縦軸・横軸の成長フレームワーク</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Outfit:wght@400;600;800&family=Shippori+Mincho:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary: #0f172a;
+    --accent: #d4af37;
+    --accent-glow: rgba(212, 175, 55, 0.4);
+    --accent2: #38bdf8;
+    --accent2-glow: rgba(56, 189, 248, 0.35);
+    --text-main: #f8fafc;
+    --text-sub: #94a3b8;
+    --bg-dark: #020617;
+    --glass-bg: rgba(15, 23, 42, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --card-bg: #1e293b;
+
+    --m1-c: #d4af37;
+    --m2-c: #e0895a;
+    --m3-c: #9d7fd6;
+    --m4-c: #4fae7a;
+    --m5-c: #38bdf8;
+
+    --serif: 'Shippori Mincho', 'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+    --sans: 'Noto Sans JP', -apple-system, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Segoe UI', sans-serif;
+    --display: 'Outfit', -apple-system, sans-serif;
+
+    --maxw: 780px;
+    --radius: 14px;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ background: var(--bg-dark); }
+  body{
+    margin: 0;
+    background: var(--bg-dark);
+    color: var(--text-main);
+    font-family: var(--sans);
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    position: relative;
+  }
+  ::selection{ background: var(--accent); color: #000; }
+
+  .bg-mesh{
+    position: fixed; inset: 0; z-index: -1;
+    background:
+      radial-gradient(circle at 8% 15%, rgba(212,175,55,0.07) 0%, transparent 42%),
+      radial-gradient(circle at 92% 78%, rgba(56,189,248,0.07) 0%, transparent 42%),
+      radial-gradient(circle at 50% 50%, rgba(30,41,59,0.5) 0%, transparent 60%),
+      var(--bg-dark);
+  }
+
+  a{ color: var(--accent); }
+  h1,h2,h3{
+    font-family: var(--serif);
+    font-weight: 700;
+    text-wrap: balance;
+    letter-spacing: -0.01em;
+    margin: 0;
+    color: var(--text-main);
+  }
+  .eyebrow{
+    display: inline-block;
+    font-family: var(--display);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 0.45rem 1.05rem;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    border-radius: 50px;
+    background: rgba(212,175,55,0.06);
+  }
+  .num{ font-family: var(--display); font-variant-numeric: tabular-nums; }
+
+  .rail{
+    position: fixed; left: 0; top: 0;
+    width: 3px; height: 100vh;
+    background: rgba(255,255,255,0.08);
+    z-index: 40;
+  }
+  .rail-fill{
+    width: 100%; height: 0%;
+    background: linear-gradient(180deg, var(--m1-c), var(--m2-c), var(--m3-c), var(--m4-c), var(--m5-c));
+    box-shadow: 0 0 12px rgba(212,175,55,0.5);
+    transition: height 0.08s linear;
+  }
+
+  .wrap{ max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+  .wide{ max-width: 960px; margin: 0 auto; padding: 0 28px; }
+
+  section{ padding: 108px 0; border-bottom: 1px solid var(--glass-border); position: relative; }
+  section:last-of-type{ border-bottom: none; }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    min-height: 92vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 80px 0 60px;
+    border-bottom: 1px solid var(--glass-border);
+  }
+  .hero .kicker{ opacity: 0; animation: rise 0.8s 0.1s cubic-bezier(.16,1,.3,1) forwards; }
+  .hero h1{
+    font-size: clamp(2.5rem, 6.6vw, 4.3rem);
+    line-height: 1.32;
+    margin-top: 26px;
+    opacity: 0;
+    animation: rise 0.9s 0.25s cubic-bezier(.16,1,.3,1) forwards;
+  }
+  .hero h1 span{
+    background: linear-gradient(90deg, var(--accent), #fde68a);
+    background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero .sub{
+    font-size: clamp(1rem, 1.8vw, 1.14rem);
+    color: var(--text-sub);
+    margin-top: 22px;
+    max-width: 40em;
+    opacity: 0;
+    animation: rise 0.9s 0.4s cubic-bezier(.16,1,.3,1) forwards;
+  }
+  .hero-en{
+    font-family: var(--display);
+    font-size: 0.8rem;
+    color: var(--text-sub);
+    letter-spacing: 0.06em;
+    margin-top: 28px;
+    opacity: 0;
+    animation: rise 0.9s 0.55s cubic-bezier(.16,1,.3,1) forwards;
+  }
+  @keyframes rise{ from{ opacity:0; transform: translateY(16px); } to{ opacity:1; transform: translateY(0); } }
+
+  .demo{ margin-top: 60px; opacity: 0; animation: rise 1s 0.75s cubic-bezier(.16,1,.3,1) forwards; }
+  .demo-row{ display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+  .demo-state{
+    font-family: var(--display); font-size: 0.92rem;
+    padding: 14px 18px;
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    background: var(--glass-bg);
+    backdrop-filter: blur(6px);
+    min-width: 176px; text-align: center;
+    transition: border-color .3s, color .3s;
+  }
+  .demo-state.on{ border-color: var(--m1-c); color: var(--m1-c); }
+  .demo-arrow{ position: relative; width: 84px; height: 2px; background: var(--glass-border); flex: 0 0 auto; }
+  .demo-arrow::after{
+    content:""; position:absolute; right:-1px; top:50%; transform: translateY(-50%);
+    width:0;height:0; border-top:4px solid transparent; border-bottom:4px solid transparent;
+    border-left: 7px solid var(--text-sub);
+  }
+  .demo-arrow .fill{ position:absolute; left:0; top:0; height:100%; width:0%; background: var(--m1-c); transition: width 1.6s cubic-bezier(.65,0,.35,1); }
+  .demo-meter{ font-family: var(--display); font-size: 0.8rem; color: var(--text-sub); }
+  .demo-meter b{ font-size: 1.05rem; color: var(--m1-c); }
+
+  /* ---------- section headers ---------- */
+  .shead{ margin-bottom: 48px; }
+  .shead h2{ font-size: clamp(1.6rem, 3.6vw, 2.2rem); margin-top: 16px; line-height: 1.5; }
+  .shead .lede{ margin-top: 18px; color: var(--text-sub); font-size: 1.02rem; max-width: 42em; }
+
+  .reveal{ opacity: 0; transform: translateY(24px); transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1); }
+  .reveal.in{ opacity: 1; transform: translateY(0); }
+  .reveal-d1{ transition-delay: .08s; } .reveal-d2{ transition-delay: .16s; } .reveal-d3{ transition-delay: .24s; } .reveal-d4{ transition-delay: .32s; }
+
+  /* ---------- thesis rows ---------- */
+  .trow{
+    display: grid; grid-template-columns: 1fr 40px 1fr 40px 1fr;
+    align-items: center; gap: 10px; padding: 18px 4px;
+    border-top: 1px solid var(--glass-border);
+    font-family: var(--display); font-size: 0.9rem;
+  }
+  .trow:last-child{ border-bottom: 1px solid var(--glass-border); }
+  .trow .a{ color: var(--text-sub); }
+  .trow .b{ text-align: center; color: var(--m4-c); font-weight: 600; }
+  .trow .c{ color: var(--text-main); font-weight: 600; }
+  .trow .arr{ text-align:center; color: var(--text-sub); opacity: .5; }
+
+  /* ---------- methods radar ---------- */
+  .hsbs-grid{ display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: center; }
+  @media (max-width: 780px){ .hsbs-grid{ grid-template-columns: 1fr; } }
+  .legend{ display:flex; flex-direction:column; gap: 8px; }
+  .legend-item{ display:flex; align-items:baseline; gap: 12px; padding: 11px 14px; border-radius: 10px; cursor: default; transition: background .25s; }
+  .legend-item:hover{ background: var(--glass-bg); }
+  .legend-dot{ width: 10px; height: 10px; border-radius: 50%; flex: none; margin-top: 5px; }
+  .legend-jp{ font-weight: 700; }
+  .legend-en{ font-family: var(--display); font-size: 0.7rem; color: var(--text-sub); letter-spacing: 0.06em; }
+  .legend-words{ font-size: 0.82rem; color: var(--text-sub); margin-left: auto; text-align: right; }
+
+  canvas#radar{ width: 100%; height: auto; display:block; }
+
+  .anchor-scale{ margin-top: 18px; display: grid; grid-template-columns: repeat(5, 1fr); font-family: var(--display); font-size: 0.72rem; border-top: 1px solid var(--glass-border); }
+  .anchor-scale div{ padding: 12px 8px 0; border-left: 1px solid var(--glass-border); color: var(--text-sub); }
+  .anchor-scale div:first-child{ border-left: none; }
+  .anchor-scale b{ display:block; color: var(--m1-c); font-size: 0.9rem; margin-bottom: 4px; }
+
+  /* ---------- profile gauges ---------- */
+  .formula{
+    font-family: var(--display); font-weight: 600;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    font-size: 0.98rem;
+    overflow-x: auto;
+    backdrop-filter: blur(6px);
+  }
+  .gauges{ display:flex; flex-direction:column; gap: 18px; margin-top: 32px; }
+  .gauge-row{ display:grid; grid-template-columns: 200px 1fr 40px; gap: 14px; align-items:center; }
+  .gauge-label{ font-size: 0.86rem; color: var(--text-sub); }
+  .gauge-track{ height: 9px; background: rgba(255,255,255,0.08); border-radius: 5px; overflow:hidden; }
+  .gauge-fill{ height:100%; width:0%; border-radius: 5px; transition: width 1.1s cubic-bezier(.65,0,.35,1); }
+  .gauge-val{ font-family: var(--display); font-size: 0.9rem; text-align:right; }
+
+  .toggle-row{ display:flex; gap:10px; margin-top: 30px; flex-wrap: wrap; }
+  .toggle{
+    font-family: var(--display); font-size: 0.82rem; font-weight: 600;
+    padding: 10px 18px; border: 1px solid var(--glass-border);
+    border-radius: 999px; background: transparent; color: var(--text-sub);
+    cursor: pointer; transition: all .2s;
+  }
+  .toggle.active{ background: var(--accent); color: #000; border-color: var(--accent); }
+  .toggle:focus-visible, a:focus-visible{ outline: 2px solid var(--accent2); outline-offset: 3px; }
+
+  .result-card{
+    margin-top: 22px; padding: 28px 30px; border-radius: var(--radius);
+    background: linear-gradient(135deg, rgba(212,175,55,0.1), rgba(56,189,248,0.05));
+    border: 1px solid var(--glass-border);
+    display:flex; align-items:baseline; gap:20px; flex-wrap:wrap;
+  }
+  .result-card .big{ font-family: var(--display); font-size: 1.5rem; font-weight: 800; color: var(--accent); }
+  .result-card .cap{ color: var(--text-sub); font-size: 0.9rem; max-width: 34em; }
+  .result-card .cap b{ color: var(--text-main); }
+
+  /* ---------- question swap ---------- */
+  .swap-wrap{ display:flex; align-items:flex-start; gap: 40px; flex-wrap: wrap; }
+  .swap-col h3{ font-size: 1.05rem; font-weight: 700; margin-bottom: 16px; font-family: var(--sans); }
+  .swap-col.old{ color: var(--text-sub); }
+  .chip-list{ display:flex; flex-direction:column; gap:8px; }
+  .chip{ font-family: var(--display); font-size: 0.82rem; padding: 10px 16px; border: 1px solid var(--glass-border); border-radius: 10px; background: var(--glass-bg); width: fit-content; }
+  .swap-col.new .chip{ border-color: var(--m4-c); color: var(--m4-c); }
+  .swap-divider{ font-family: var(--serif); font-size: 1.6rem; color: var(--text-sub); opacity: .6; align-self: center; }
+
+  /* ---------- diagnostic matrix + peek ---------- */
+  .diagnose-grid{ display:grid; grid-template-columns: 1fr 300px; gap: 48px; align-items:start; margin-top: 40px; }
+  @media (max-width: 860px){ .diagnose-grid{ grid-template-columns: 1fr; } }
+  .matrix{ display:grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 2px; background: var(--glass-border); border: 1px solid var(--glass-border); aspect-ratio: 1.5/1; border-radius: var(--radius); overflow: hidden; }
+  .mcell{ background: var(--card-bg); padding: 18px 20px; display:flex; flex-direction:column; justify-content:center; }
+  .mcell b{ display:block; margin-bottom: 6px; font-family: var(--sans); font-size: 0.95rem; }
+  .mcell span{ font-size: 0.76rem; color: var(--text-sub); font-family: var(--display); line-height: 1.5; }
+  .mcell.go{ background: linear-gradient(135deg, rgba(212,175,55,0.16), rgba(30,41,59,0.4)); }
+  .mcell.go b{ color: var(--accent); }
+  .maxis{ display:flex; justify-content: space-between; font-family: var(--display); font-size: 0.7rem; color: var(--text-sub); margin-top: 10px; }
+
+  .peek-card{
+    position: relative;
+    width: 100%; max-width: 300px;
+    aspect-ratio: 3/4;
+    border-radius: 10px;
+    overflow: hidden;
+    transform: rotate(3deg);
+    box-shadow: 0 22px 50px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.08);
+    background: #fdfaf2;
+    margin: 0 auto;
+    transition: transform .5s cubic-bezier(.16,1,.3,1);
+  }
+  .peek-card:hover{ transform: rotate(0deg) scale(1.03); }
+  .peek-card img{
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 220%;
+    object-fit: cover; object-position: top;
+  }
+  .peek-fade{
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(2,6,23,0) 45%, rgba(2,6,23,0.55) 78%, rgba(2,6,23,0.94) 100%);
+  }
+  .peek-tag{
+    position: absolute; left: 14px; bottom: 14px;
+    font-family: var(--display); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.04em;
+    color: var(--text-main);
+    background: rgba(2,6,23,0.6);
+    border: 1px solid var(--glass-border);
+    padding: 6px 12px; border-radius: 999px;
+    backdrop-filter: blur(4px);
+  }
+  .peek-cap{ margin-top: 16px; text-align:center; font-size: 0.8rem; color: var(--text-sub); }
+
+  /* ---------- life phase bars ---------- */
+  .org-bars{ display:flex; flex-direction:column; gap: 24px; margin-top: 36px; }
+  .org-row{ display:grid; grid-template-columns: 130px 1fr; gap: 18px; align-items:center; }
+  .org-name{ font-weight: 700; font-size: 0.92rem; font-family: var(--sans); }
+  .org-track{ height: 32px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 8px; position:relative; overflow:hidden; }
+  .org-fill{ position:absolute; left:0; top:0; height:100%; width:0%; transition: width 1.3s cubic-bezier(.65,0,.35,1); display:flex; align-items:center; padding-left: 12px; }
+  .org-fill span{ font-family: var(--display); font-size: 0.76rem; font-weight: 600; color: #06111f; white-space:nowrap; }
+  .org-detail{ font-family: var(--display); font-size: 0.72rem; color: var(--text-sub); margin-top: 5px; }
+
+  .npv-strip{ display:grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 36px; }
+  @media (max-width: 700px){ .npv-strip{ grid-template-columns: 1fr; } }
+  .npv-card{ border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 20px 22px; background: var(--glass-bg); backdrop-filter: blur(6px); }
+  .npv-card .k{ font-family: var(--display); font-size: 0.72rem; color: var(--text-sub); letter-spacing:.05em; text-transform:uppercase; }
+  .npv-card .v{ font-family: var(--sans); font-weight: 700; font-size: 1.05rem; margin-top: 8px; color: var(--text-main); line-height: 1.5; }
+
+  blockquote{
+    font-family: var(--serif); font-size: clamp(1.3rem, 2.8vw, 1.65rem);
+    line-height: 1.75; margin: 0; padding: 0; color: var(--text-main); border: none;
+  }
+  blockquote .accentline{ color: var(--accent); }
+  blockquote cite{ display:block; font-family: var(--display); font-style: normal; font-size: 0.76rem; color: var(--text-sub); margin-top: 20px; }
+
+  .footline{ padding: 90px 0 120px; text-align: left; }
+  .footline .wrap > *:not(:first-child){ margin-top: 24px; }
+
+  p{ margin: 0; }
+  .stack > * + *{ margin-top: 16px; }
+
+  @media (prefers-reduced-motion: reduce){
+    *, *::before, *::after{ animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  }
+</style>
+<noscript><style>
+  .reveal{ opacity: 1 !important; transform: none !important; }
+  .hero .kicker, .hero h1, .hero .sub, .hero-en, .demo{ opacity: 1 !important; animation: none !important; }
+</style></noscript>
+
+<div class="bg-mesh"></div>
+<div class="rail"><div class="rail-fill" id="railFill"></div></div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker eyebrow">A methodology for reading growth on two axes</div>
+    <h1>スキルは、老いる。<br>だから、<span>縦軸</span>を育てる。</h1>
+    <p class="sub">横に広がるだけの成長は、やがて燃え尽きに向かう。縦に深まるだけの成長は、現実との乖離を生む。二つの軸が交差したとき、初めて「唯一無二の価値」が生まれる。</p>
+    <div class="hero-en">VERTICAL × HORIZONTAL GROWTH — Why Reskilling Alone Is Not Enough</div>
+
+    <div class="demo">
+      <div class="demo-row">
+        <div class="demo-state" id="demoBefore">Aさん：横軸だけ<br><span style="opacity:.65">資格はトップ、でも深夜に虚しさと向き合う</span></div>
+        <div class="demo-arrow"><div class="fill" id="demoFill"></div></div>
+        <div class="demo-state" id="demoAfter">縦軸が育った状態<br><span style="opacity:.65">積み上げに、意味と影響力が伴う</span></div>
+      </div>
+      <div class="demo-meter" style="margin-top:14px;">内的キャリアの実感スコア　現在 <b id="demoNum">0</b> → 85</div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ 01 THESIS ============ -->
+  <section id="thesis">
+    <div class="wrap">
+      <div class="shead reveal">
+        <div class="eyebrow">Chapter 01 · 成長には、二つの軸がある</div>
+        <h2>横軸は、見える。<br>縦軸は、支える。</h2>
+        <p class="lede">横軸はスキル・知識・経験の幅。縦軸はものの見方の深さ・価値観の成熟・思考の質。どちらが優れているという話ではない。車の両輪だ。</p>
+      </div>
+
+      <div class="reveal reveal-d1">
+        <div class="trow"><div class="a">横軸だけの成長</div><div class="arr">→</div><div class="b">続けると</div><div class="arr">→</div><div class="c">燃え尽きに向かう</div></div>
+        <div class="trow"><div class="a">縦軸だけの成長</div><div class="arr">→</div><div class="b">続けると</div><div class="arr">→</div><div class="c">現実との乖離を生む</div></div>
+        <div class="trow"><div class="a">横軸 × 縦軸</div><div class="arr">→</div><div class="b">交差すると</div><div class="arr">→</div><div class="c">唯一無二の価値が生まれる</div></div>
+        <div class="trow"><div class="a">リスキリング</div><div class="arr">→</div><div class="b">縦軸に届けば</div><div class="arr">→</div><div class="c">何度でも適応できる</div></div>
+      </div>
+
+      <div class="reveal reveal-d2" style="margin-top:56px;">
+        <blockquote>
+          「スキルを付け替えることと、<span class="accentline">人間として成長すること</span>は、同じだろうか。」
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 02 METHODS RADAR ============ -->
+  <section id="methods">
+    <div class="wrap">
+      <div class="shead reveal">
+        <div class="eyebrow">Chapter 02 · 縦軸を深める5つのメソッド</div>
+        <h2>「深める」ことは、<br>意図しないと起きない。</h2>
+        <p class="lede">横軸の成長は、仕事を続けていれば自然に積み上がる。しかし縦軸は違う。経験から学ぶための「回路」を、意図的に設計する必要がある。</p>
+      </div>
+
+      <div class="hsbs-grid reveal reveal-d1">
+        <div><canvas id="radar" width="560" height="560"></canvas></div>
+        <div class="legend" id="legend">
+          <div class="legend-item" data-layer="m1"><span class="legend-dot" style="background:var(--m1-c)"></span><span><span class="legend-jp">批判的内省</span><br><span class="legend-en">CRITICAL REFLECTION</span></span><span class="legend-words">前提を問い直す</span></div>
+          <div class="legend-item" data-layer="m2"><span class="legend-dot" style="background:var(--m2-c)"></span><span><span class="legend-jp">アンラーニング</span><br><span class="legend-en">UNLEARNING</span></span><span class="legend-words">古い知識を手放す</span></div>
+          <div class="legend-item" data-layer="m3"><span class="legend-dot" style="background:var(--m3-c)"></span><span><span class="legend-jp">メンタルモデル書換</span><br><span class="legend-en">MENTAL MODEL</span></span><span class="legend-words">暗黙の地図を更新</span></div>
+          <div class="legend-item" data-layer="m4"><span class="legend-dot" style="background:var(--m4-c)"></span><span><span class="legend-jp">多様なフィードバック</span><br><span class="legend-en">FEEDBACK</span></span><span class="legend-words">自分の盲点を知る</span></div>
+          <div class="legend-item" data-layer="m5"><span class="legend-dot" style="background:var(--m5-c)"></span><span><span class="legend-jp">経験の質</span><br><span class="legend-en">QUALITY OF EXPERIENCE</span></span><span class="legend-words">少し難しい領域へ</span></div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-d2">
+        <p class="lede" style="margin-top:56px;">実践は、週1回15分の「内省ノート」から。5つの問いに答えるだけでいい。</p>
+        <div class="anchor-scale">
+          <div><b>Q1</b>今週、最も印象に<br>残った判断は？</div>
+          <div><b>Q2</b>なぜそう考え、<br>そう動いたか？</div>
+          <div><b>Q3</b>その判断の前提は<br>正しかったか？</div>
+          <div><b>Q4</b>別の前提なら、<br>どう動いたか？</div>
+          <div><b>Q5</b>ものの見方は<br>どう変わったか？</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 03 SELF-CHECK GAUGES ============ -->
+  <section id="check">
+    <div class="wrap">
+      <div class="shead reveal">
+        <div class="eyebrow">Chapter 03 · 自分の「現在地」を確認する</div>
+        <h2>横軸の問いに答えやすく、<br>縦軸の問いに詰まっていないか。</h2>
+        <p class="lede">同じ4項目の自己診断でも、何を積み上げてきたかで、答えられる問いはまったく違う。</p>
+      </div>
+
+      <div class="reveal reveal-d1 formula">
+        横軸の確認 ＝ 直近3年のスキル習得・担当範囲・社外通用力。片翼だけが伸びていないか、まず自分の答え方を観察する。
+      </div>
+
+      <div class="reveal reveal-d2">
+        <div class="gauges" id="gauges">
+          <div class="gauge-row"><div class="gauge-label">新しいスキルを習得したか</div><div class="gauge-track"><div class="gauge-fill" data-target="90" style="background:var(--m1-c)"></div></div><div class="gauge-val" data-num="90">0</div></div>
+          <div class="gauge-row"><div class="gauge-label">担当範囲は広がったか</div><div class="gauge-track"><div class="gauge-fill" data-target="85" style="background:var(--m2-c)"></div></div><div class="gauge-val" data-num="85">0</div></div>
+          <div class="gauge-row"><div class="gauge-label">社外に通用するスキルか</div><div class="gauge-track"><div class="gauge-fill" data-target="80" style="background:var(--m3-c)"></div></div><div class="gauge-val" data-num="80">0</div></div>
+          <div class="gauge-row"><div class="gauge-label">ものの見方は変わったか</div><div class="gauge-track"><div class="gauge-fill" data-target="30" style="background:var(--m4-c)"></div></div><div class="gauge-val" data-num="30">0</div></div>
+        </div>
+
+        <div class="toggle-row">
+          <button class="toggle active" id="btnA">Aさん：横軸偏重タイプ</button>
+          <button class="toggle" id="btnB">Bさん：縦軸偏重タイプ</button>
+        </div>
+
+        <div class="result-card">
+          <div class="big" id="resultLabel">横軸への回答は淀みない</div>
+          <div class="cap" id="resultCap">資格・担当範囲・社外通用力にはすぐ答えられるのに、「ものの見方が変わった経験」には言葉が詰まる。<b>成長の重心が横に偏っている</b>サイン。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 04 QUESTION SWAP ============ -->
+  <section id="questions">
+    <div class="wrap">
+      <div class="shead reveal">
+        <div class="eyebrow">Chapter 04 · 自己診断の問い</div>
+        <h2>問いを変えると、<br>見える現在地が変わる。</h2>
+        <p class="lede">横軸の問いには誰でも答えられる。縦軸の問いは、意図して振り返っていない限り、言葉が出てこない。</p>
+      </div>
+
+      <div class="reveal reveal-d1 swap-wrap">
+        <div class="swap-col old">
+          <h3>横軸の確認</h3>
+          <div class="chip-list">
+            <div class="chip">直近3年で、新たに習得したスキルは？</div>
+            <div class="chip">担当できる仕事の範囲は広がったか？</div>
+            <div class="chip">社外に通用するスキルを持っているか？</div>
+          </div>
+        </div>
+        <div class="swap-divider">→</div>
+        <div class="swap-col new">
+          <h3>縦軸の確認</h3>
+          <div class="chip-list">
+            <div class="chip">「ものの見方が変わった」と感じた経験は？</div>
+            <div class="chip">複雑な問題を、構造を整理して考えられるか？</div>
+            <div class="chip">自分の「当たり前」を疑い、問い直したか？</div>
+            <div class="chip">「なぜこれをしているのか」を語れるか？</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 05 DIAGNOSTIC MATRIX + APPENDIX PEEK ============ -->
+  <section id="matrix">
+    <div class="wrap">
+      <div class="shead reveal">
+        <div class="eyebrow">Chapter 05 · 縦軸・横軸 自己診断シート</div>
+        <h2>スコアで見れば、<br>4つの型に分かれる。</h2>
+        <p class="lede">横軸スコアと縦軸スコアを、それぞれ60%を基準に見る。自分がどの型かで、次に踏み出す章が変わる。</p>
+      </div>
+
+      <div class="reveal reveal-d1 diagnose-grid">
+        <div>
+          <div class="matrix">
+            <div class="mcell go"><b>バランス型</b><span>横60%以上 × 縦60%以上 ―― 次は交差点の価値（第4章）を意識する段階</span></div>
+            <div class="mcell"><b>横軸優位型</b><span>横70%以上 × 縦50%未満 ―― スキルは豊富だが「なぜ」が薄い。第3章のメソッドを今すぐ</span></div>
+            <div class="mcell"><b>縦軸優位型</b><span>縦70%以上 × 横50%未満 ―― 思考は深いが経験の幅が狭い。第2章のルートを踏み出す</span></div>
+            <div class="mcell"><b>両軸発展途上型</b><span>横50%未満 × 縦50%未満 ―― 今がチャンス。まず1つのメソッドだけ始める</span></div>
+          </div>
+          <div class="maxis"><span>← 縦軸スコア</span><span>横軸スコア →</span></div>
+        </div>
+
+        <div>
+          <div class="peek-card">
+            <img src="assets/縦横軸診断シートA.png" alt="巻末付録A：縦軸・横軸 自己診断シート">
+            <div class="peek-fade"></div>
+            <div class="peek-tag">巻末付録A・自己診断シート</div>
+          </div>
+          <p class="peek-cap">本編には、実際に採点できるシートを収録</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 06 LIFE PHASES ============ -->
+  <section id="phases">
+    <div class="wrap">
+      <div class="shead reveal">
+        <div class="eyebrow">Chapter 06 · 人生100年時代のポートフォリオ成長</div>
+        <h2>フェーズごとに、<br>成長の重心を移す。</h2>
+        <p class="lede">常にバランスよく両軸を伸ばし続けるのではない。フェーズによって重心を移動させながら、長期的には両軸を育てる。</p>
+      </div>
+
+      <div class="reveal reveal-d1">
+        <div class="org-bars" id="orgBars">
+          <div class="org-row"><div class="org-name">探索期<br><span style="font-weight:400;color:var(--text-sub);font-size:0.78rem;">20代〜30代前半</span></div><div><div class="org-track"><div class="org-fill" data-target="30" style="background:var(--m1-c)"><span>横軸の開拓</span></div></div><div class="org-detail">できるだけ多く経験し、自分に合う領域を探す。内省の習慣だけは早めに確立する</div></div></div>
+          <div class="org-row"><div class="org-name">深化期<br><span style="font-weight:400;color:var(--text-sub);font-size:0.78rem;">30代後半〜40代</span></div><div><div class="org-track"><div class="org-fill" data-target="55" style="background:var(--m2-c)"><span>縦軸の深化</span></div></div><div class="org-detail">責任が増し、判断が問われる。批判的内省が最も効果を発揮する時期</div></div></div>
+          <div class="org-row"><div class="org-name">統合期<br><span style="font-weight:400;color:var(--text-sub);font-size:0.78rem;">50代</span></div><div><div class="org-track"><div class="org-fill" data-target="78" style="background:var(--m3-c)"><span>経験の統合</span></div></div><div class="org-detail">蓄積を新しい文脈に適応させる。他者の成長支援が縦軸成長の源泉になる</div></div></div>
+          <div class="org-row"><div class="org-name">還元期<br><span style="font-weight:400;color:var(--text-sub);font-size:0.78rem;">60代以降</span></div><div><div class="org-track"><div class="org-fill" data-target="96" style="background:var(--m5-c)"><span>知恵の循環</span></div></div><div class="org-detail">何ができるかより、何を大切にしてきたかが価値を決める</div></div></div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-d2">
+        <p class="lede" style="margin-top:64px;">横軸のスキルは時代とともに陳腐化しうる。しかし縦軸は、老いない。</p>
+        <div class="npv-strip">
+          <div class="npv-card"><div class="k">本質を見抜く力</div><div class="v">時代が変わっても残る</div></div>
+          <div class="npv-card"><div class="k">複雑な状況を整理する力</div><div class="v">AIが進化しても残る</div></div>
+          <div class="npv-card"><div class="k">人を動かす言葉と姿勢</div><div class="v">何歳になっても育てられる</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CLOSE ============ -->
+  <section class="footline">
+    <div class="wrap stack">
+      <blockquote class="reveal">
+        「横軸はスキルの掛け合わせを生み、<span class="accentline">縦軸</span>はそれを思想に変える。」
+        <cite>二つの軸が交差するところに、何歳になっても「自分だけの価値」が宿る。</cite>
+      </blockquote>
+      <p class="reveal reveal-d1" style="color:var(--text-sub); max-width:38em;">
+        本ページで紹介した「縦軸・横軸の成長フレームワーク」「批判的内省」「アンラーニング」「#型人材」は、書籍『リスキリングだけでは足りない――「縦軸の成長」が、AI時代の唯一無二の武器になる』で、巻末付録（自己診断シート・内省ノート・成長実験シート・目標設定シート）とあわせて手順として解説しています。
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<script>
+(function(){
+  var railFill = document.getElementById('railFill');
+  function onScroll(){
+    var h = document.documentElement;
+    var scrolled = h.scrollTop || document.body.scrollTop;
+    var height = (h.scrollHeight || document.body.scrollHeight) - h.clientHeight;
+    var pct = height > 0 ? (scrolled/height)*100 : 0;
+    railFill.style.height = pct + '%';
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  var reveals = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); } });
+  }, {threshold: 0.16});
+  reveals.forEach(function(el){ io.observe(el); });
+
+  function runDemo(){
+    var fill = document.getElementById('demoFill');
+    var num = document.getElementById('demoNum');
+    var after = document.getElementById('demoAfter');
+    fill.style.width = '100%';
+    after.classList.add('on');
+    var start = null; var dur = 1500;
+    function step(ts){
+      if(!start) start = ts;
+      var p = Math.min((ts-start)/dur, 1);
+      num.textContent = Math.round(p*85);
+      if(p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  setTimeout(runDemo, 900);
+
+  function getVar(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+
+  var layers = [
+    {key:'m1', label:'内省', color: getVar('--m1-c'), current: 75, desired: 90},
+    {key:'m2', label:'手放す', color: getVar('--m2-c'), current: 55, desired: 85},
+    {key:'m3', label:'書換', color: getVar('--m3-c'), current: 40, desired: 80},
+    {key:'m4', label:'受信', color: getVar('--m4-c'), current: 60, desired: 85},
+    {key:'m5', label:'挑戦', color: getVar('--m5-c'), current: 65, desired: 90}
+  ];
+
+  var canvas = document.getElementById('radar');
+  var ctx = canvas.getContext('2d');
+  var DPR = window.devicePixelRatio || 1;
+  var CSS_SIZE = 460;
+  canvas.width = CSS_SIZE*DPR; canvas.height = CSS_SIZE*DPR;
+  canvas.style.width = CSS_SIZE+'px'; canvas.style.height = CSS_SIZE+'px';
+  ctx.scale(DPR, DPR);
+  var cx = CSS_SIZE/2, cy = CSS_SIZE/2, R = CSS_SIZE*0.36;
+  var N = layers.length;
+
+  function pt(i, r){
+    var ang = (Math.PI*2*i/N) - Math.PI/2;
+    return [cx + r*Math.cos(ang), cy + r*Math.sin(ang)];
+  }
+
+  var lineColor = 'rgba(255,255,255,0.12)';
+  var accent = getVar('--accent2');
+
+  function drawStatic(){
+    ctx.clearRect(0,0,CSS_SIZE,CSS_SIZE);
+    for(var ring=1; ring<=4; ring++){
+      ctx.beginPath();
+      for(var i=0;i<=N;i++){
+        var p = pt(i%N, R*ring/4);
+        if(i===0) ctx.moveTo(p[0],p[1]); else ctx.lineTo(p[0],p[1]);
+      }
+      ctx.strokeStyle = lineColor; ctx.lineWidth = 1; ctx.stroke();
+    }
+    for(var i=0;i<N;i++){
+      var p0 = pt(i,0), p1 = pt(i,R);
+      ctx.beginPath(); ctx.moveTo(p0[0],p0[1]); ctx.lineTo(p1[0],p1[1]);
+      ctx.strokeStyle = lineColor; ctx.lineWidth = 1; ctx.stroke();
+      var lp = pt(i, R*1.16);
+      ctx.fillStyle = layers[i].color;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.font = '700 15px sans-serif';
+      ctx.fillText(layers[i].label, lp[0], lp[1]);
+    }
+  }
+
+  function polygon(values, alphaFill, strokeColor, dashed){
+    ctx.beginPath();
+    for(var i=0;i<=N;i++){
+      var idx = i%N;
+      var r = R*(values[idx]/100);
+      var p = pt(idx, r);
+      if(i===0) ctx.moveTo(p[0],p[1]); else ctx.lineTo(p[0],p[1]);
+    }
+    ctx.closePath();
+    if(alphaFill){ ctx.fillStyle = alphaFill; ctx.fill(); }
+    if(dashed) ctx.setLineDash([4,4]); else ctx.setLineDash([]);
+    ctx.strokeStyle = strokeColor; ctx.lineWidth = 2; ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  var animStart = null; var animDur = 1200; var animated = false;
+  function frame(ts){
+    if(!animStart) animStart = ts;
+    var p = Math.min((ts-animStart)/animDur, 1);
+    var ease = 1 - Math.pow(1-p, 3);
+    drawStatic();
+    var curVals = layers.map(function(l){ return l.current*ease; });
+    var desVals = layers.map(function(l){ return l.desired*ease; });
+    polygon(desVals, accent + '22', accent, true);
+    polygon(curVals, 'rgba(248,250,252,0.12)', '#f8fafc', false);
+    if(p < 1) requestAnimationFrame(frame);
+  }
+  function startRadarAnim(){ if(animated) return; animated = true; animStart = null; requestAnimationFrame(frame); }
+  drawStatic();
+  var radarIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting) startRadarAnim(); });
+  }, {threshold:0.3});
+  radarIO.observe(canvas);
+
+  document.querySelectorAll('.legend-item').forEach(function(item, idx){
+    item.addEventListener('mouseenter', function(){
+      drawStatic();
+      var curVals = layers.map(function(l){ return l.current; });
+      var desVals = layers.map(function(l){ return l.desired; });
+      polygon(desVals, accent+'18', accent, true);
+      polygon(curVals, 'rgba(248,250,252,0.10)', '#f8fafc', false);
+      var p = pt(idx, R*(layers[idx].current/100));
+      ctx.beginPath(); ctx.arc(p[0], p[1], 5, 0, Math.PI*2);
+      ctx.fillStyle = layers[idx].color; ctx.fill();
+    });
+    item.addEventListener('mouseleave', function(){
+      drawStatic();
+      var curVals = layers.map(function(l){ return l.current; });
+      var desVals = layers.map(function(l){ return l.desired; });
+      polygon(desVals, accent+'22', accent, true);
+      polygon(curVals, 'rgba(248,250,252,0.12)', '#f8fafc', false);
+    });
+  });
+
+  function animateNum(el, from, to, dur){
+    var start=null;
+    function step(ts){
+      if(!start) start=ts;
+      var p = Math.min((ts-start)/dur,1);
+      el.textContent = Math.round(from + (to-from)*p);
+      if(p<1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  var gauges = document.getElementById('gauges');
+  var gaugeIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.querySelectorAll('.gauge-fill').forEach(function(f){ f.style.width = f.getAttribute('data-target') + '%'; });
+        e.target.querySelectorAll('.gauge-val').forEach(function(v){ animateNum(v, 0, parseInt(v.getAttribute('data-num'),10), 900); });
+        gaugeIO.unobserve(e.target);
+      }
+    });
+  }, {threshold:0.4});
+  gaugeIO.observe(gauges);
+
+  var profiles = {
+    A: {vals:[90,85,80,30], label:'横軸への回答は淀みない', cap:'資格・担当範囲・社外通用力にはすぐ答えられるのに、「ものの見方が変わった経験」には言葉が詰まる。<b>成長の重心が横に偏っている</b>サイン。'},
+    B: {vals:[35,30,40,85], label:'縦軸への回答は淀みない', cap:'ものの見方の変化はすぐ語れるのに、「新しいスキル」「担当範囲」には答えが薄い。<b>思考は深いが、現実との回路が細い</b>サイン。'}
+  };
+  var gaugeFills = document.querySelectorAll('#gauges .gauge-fill');
+  var gaugeVals = document.querySelectorAll('#gauges .gauge-val');
+  var resultLabel = document.getElementById('resultLabel');
+  var resultCap = document.getElementById('resultCap');
+  function setProfile(key){
+    var p = profiles[key];
+    gaugeFills.forEach(function(f, i){ f.style.width = p.vals[i] + '%'; });
+    gaugeVals.forEach(function(v, i){ animateNum(v, parseInt(v.textContent||'0',10), p.vals[i], 600); });
+    resultLabel.textContent = p.label;
+    resultCap.innerHTML = p.cap;
+  }
+  var btnA = document.getElementById('btnA');
+  var btnB = document.getElementById('btnB');
+  btnA.addEventListener('click', function(){ btnA.classList.add('active'); btnB.classList.remove('active'); setProfile('A'); });
+  btnB.addEventListener('click', function(){ btnB.classList.add('active'); btnA.classList.remove('active'); setProfile('B'); });
+
+  var orgBars = document.getElementById('orgBars');
+  var orgIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.querySelectorAll('.org-fill').forEach(function(f){ f.style.width = f.getAttribute('data-target') + '%'; });
+        orgIO.unobserve(e.target);
+      }
+    });
+  }, {threshold:0.4});
+  orgIO.observe(orgBars);
+})();
+</script>

@@ -1,0 +1,694 @@
+<title>Attention Competency Model — 気づく力を評価する</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Outfit:wght@400;600;800&family=Shippori+Mincho:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary: #0f172a;
+    --accent: #d4af37;
+    --accent-glow: rgba(212, 175, 55, 0.4);
+    --accent2: #38bdf8;
+    --accent2-glow: rgba(56, 189, 248, 0.35);
+    --text-main: #f8fafc;
+    --text-sub: #94a3b8;
+    --bg-dark: #020617;
+    --glass-bg: rgba(15, 23, 42, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --card-bg: #1e293b;
+
+    --obs-c:  #d4af37;
+    --det-c:  #e0895a;
+    --cmp-c:  #9d7fd6;
+    --pri-c:  #4fae7a;
+    --des-c:  #38bdf8;
+
+    --serif: 'Shippori Mincho', 'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+    --sans: 'Noto Sans JP', -apple-system, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Segoe UI', sans-serif;
+    --display: 'Outfit', -apple-system, sans-serif;
+
+    --maxw: 780px;
+    --radius: 14px;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ background: var(--bg-dark); }
+  body{
+    margin: 0;
+    background: var(--bg-dark);
+    color: var(--text-main);
+    font-family: var(--sans);
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    position: relative;
+  }
+  ::selection{ background: var(--accent); color: #000; }
+
+  .bg-mesh{
+    position: fixed; inset: 0; z-index: -1;
+    background:
+      radial-gradient(circle at 8% 15%, rgba(212,175,55,0.07) 0%, transparent 42%),
+      radial-gradient(circle at 92% 78%, rgba(56,189,248,0.07) 0%, transparent 42%),
+      radial-gradient(circle at 50% 50%, rgba(30,41,59,0.5) 0%, transparent 60%),
+      var(--bg-dark);
+  }
+
+  a{ color: var(--accent); }
+  h1,h2,h3{
+    font-family: var(--serif);
+    font-weight: 700;
+    text-wrap: balance;
+    letter-spacing: -0.01em;
+    margin: 0;
+    color: var(--text-main);
+  }
+  .eyebrow{
+    display: inline-block;
+    font-family: var(--display);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 0.45rem 1.05rem;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    border-radius: 50px;
+    background: rgba(212,175,55,0.06);
+  }
+  .num{ font-family: var(--display); font-variant-numeric: tabular-nums; }
+
+  .rail{
+    position: fixed; left: 0; top: 0;
+    width: 3px; height: 100vh;
+    background: rgba(255,255,255,0.08);
+    z-index: 40;
+  }
+  .rail-fill{
+    width: 100%; height: 0%;
+    background: linear-gradient(180deg, var(--obs-c), var(--det-c), var(--cmp-c), var(--pri-c), var(--des-c));
+    box-shadow: 0 0 12px rgba(212,175,55,0.5);
+    transition: height 0.08s linear;
+  }
+
+  .wrap{ max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+  .wide{ max-width: 960px; margin: 0 auto; padding: 0 28px; }
+
+  section{ padding: 108px 0; border-bottom: 1px solid var(--glass-border); position: relative; }
+  section:last-of-type{ border-bottom: none; }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    min-height: 92vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 80px 0 60px;
+    border-bottom: 1px solid var(--glass-border);
+  }
+  .hero .kicker{ opacity: 0; animation: rise 0.8s 0.1s cubic-bezier(.16,1,.3,1) forwards; }
+  .hero h1{
+    font-size: clamp(2.5rem, 6.6vw, 4.3rem);
+    line-height: 1.32;
+    margin-top: 26px;
+    opacity: 0;
+    animation: rise 0.9s 0.25s cubic-bezier(.16,1,.3,1) forwards;
+  }
+  .hero h1 span{
+    background: linear-gradient(90deg, var(--accent), #fde68a);
+    background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero .sub{
+    font-size: clamp(1rem, 1.8vw, 1.14rem);
+    color: var(--text-sub);
+    margin-top: 22px;
+    max-width: 40em;
+    opacity: 0;
+    animation: rise 0.9s 0.4s cubic-bezier(.16,1,.3,1) forwards;
+  }
+  .hero-en{
+    font-family: var(--display);
+    font-size: 0.8rem;
+    color: var(--text-sub);
+    letter-spacing: 0.06em;
+    margin-top: 28px;
+    opacity: 0;
+    animation: rise 0.9s 0.55s cubic-bezier(.16,1,.3,1) forwards;
+  }
+  @keyframes rise{ from{ opacity:0; transform: translateY(16px); } to{ opacity:1; transform: translateY(0); } }
+
+  .demo{ margin-top: 60px; opacity: 0; animation: rise 1s 0.75s cubic-bezier(.16,1,.3,1) forwards; }
+  .demo-row{ display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+  .demo-state{
+    font-family: var(--display); font-size: 0.92rem;
+    padding: 14px 18px;
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    background: var(--glass-bg);
+    backdrop-filter: blur(6px);
+    min-width: 176px; text-align: center;
+    transition: border-color .3s, color .3s;
+  }
+  .demo-state.on{ border-color: var(--obs-c); color: var(--obs-c); }
+  .demo-arrow{ position: relative; width: 84px; height: 2px; background: var(--glass-border); flex: 0 0 auto; }
+  .demo-arrow::after{
+    content:""; position:absolute; right:-1px; top:50%; transform: translateY(-50%);
+    width:0;height:0; border-top:4px solid transparent; border-bottom:4px solid transparent;
+    border-left: 7px solid var(--text-sub);
+  }
+  .demo-arrow .fill{ position:absolute; left:0; top:0; height:100%; width:0%; background: var(--obs-c); transition: width 1.6s cubic-bezier(.65,0,.35,1); }
+  .demo-meter{ font-family: var(--display); font-size: 0.8rem; color: var(--text-sub); }
+  .demo-meter b{ font-size: 1.05rem; color: var(--obs-c); }
+
+  /* ---------- section headers ---------- */
+  .shead{ margin-bottom: 48px; }
+  .shead h2{ font-size: clamp(1.6rem, 3.6vw, 2.2rem); margin-top: 16px; line-height: 1.5; }
+  .shead .lede{ margin-top: 18px; color: var(--text-sub); font-size: 1.02rem; max-width: 42em; }
+
+  .reveal{ opacity: 0; transform: translateY(24px); transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1); }
+  .reveal.in{ opacity: 1; transform: translateY(0); }
+  .reveal-d1{ transition-delay: .08s; } .reveal-d2{ transition-delay: .16s; } .reveal-d3{ transition-delay: .24s; } .reveal-d4{ transition-delay: .32s; }
+
+  /* ---------- thesis section: attention rows ---------- */
+  .trow{
+    display: grid; grid-template-columns: 1fr 40px 1fr 40px 1fr;
+    align-items: center; gap: 10px; padding: 18px 4px;
+    border-top: 1px solid var(--glass-border);
+    font-family: var(--display); font-size: 0.9rem;
+  }
+  .trow:last-child{ border-bottom: 1px solid var(--glass-border); }
+  .trow .a{ color: var(--text-sub); }
+  .trow .b{ text-align: center; color: var(--pri-c); font-weight: 600; }
+  .trow .c{ color: var(--text-main); font-weight: 600; }
+  .trow .arr{ text-align:center; color: var(--text-sub); opacity: .5; }
+
+  /* ---------- ACM radar ---------- */
+  .hsbs-grid{ display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: center; }
+  @media (max-width: 780px){ .hsbs-grid{ grid-template-columns: 1fr; } }
+  .legend{ display:flex; flex-direction:column; gap: 8px; }
+  .legend-item{ display:flex; align-items:baseline; gap: 12px; padding: 11px 14px; border-radius: 10px; cursor: default; transition: background .25s; }
+  .legend-item:hover{ background: var(--glass-bg); }
+  .legend-dot{ width: 10px; height: 10px; border-radius: 50%; flex: none; margin-top: 5px; }
+  .legend-jp{ font-weight: 700; }
+  .legend-en{ font-family: var(--display); font-size: 0.7rem; color: var(--text-sub); letter-spacing: 0.06em; }
+  .legend-words{ font-size: 0.82rem; color: var(--text-sub); margin-left: auto; text-align: right; }
+
+  canvas#radar{ width: 100%; height: auto; display:block; }
+
+  .anchor-scale{ margin-top: 18px; display: grid; grid-template-columns: repeat(5, 1fr); font-family: var(--display); font-size: 0.74rem; border-top: 1px solid var(--glass-border); }
+  .anchor-scale div{ padding: 12px 8px 0; border-left: 1px solid var(--glass-border); color: var(--text-sub); }
+  .anchor-scale div:first-child{ border-left: none; }
+  .anchor-scale b{ display:block; color: var(--obs-c); font-size: 0.98rem; margin-bottom: 4px; }
+
+  /* ---------- Attention Profile gauges ---------- */
+  .formula{
+    font-family: var(--display); font-weight: 600;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    font-size: 0.98rem;
+    overflow-x: auto;
+    backdrop-filter: blur(6px);
+  }
+  .gauges{ display:flex; flex-direction:column; gap: 18px; margin-top: 32px; }
+  .gauge-row{ display:grid; grid-template-columns: 150px 1fr 40px; gap: 14px; align-items:center; }
+  .gauge-label{ font-size: 0.86rem; color: var(--text-sub); }
+  .gauge-track{ height: 9px; background: rgba(255,255,255,0.08); border-radius: 5px; overflow:hidden; }
+  .gauge-fill{ height:100%; width:0%; border-radius: 5px; transition: width 1.1s cubic-bezier(.65,0,.35,1); }
+  .gauge-val{ font-family: var(--display); font-size: 0.9rem; text-align:right; }
+
+  .toggle-row{ display:flex; gap:10px; margin-top: 30px; flex-wrap: wrap; }
+  .toggle{
+    font-family: var(--display); font-size: 0.82rem; font-weight: 600;
+    padding: 10px 18px; border: 1px solid var(--glass-border);
+    border-radius: 999px; background: transparent; color: var(--text-sub);
+    cursor: pointer; transition: all .2s;
+  }
+  .toggle.active{ background: var(--accent); color: #000; border-color: var(--accent); }
+  .toggle:focus-visible, a:focus-visible{ outline: 2px solid var(--accent2); outline-offset: 3px; }
+
+  .result-card{
+    margin-top: 22px; padding: 28px 30px; border-radius: var(--radius);
+    background: linear-gradient(135deg, rgba(212,175,55,0.1), rgba(56,189,248,0.05));
+    border: 1px solid var(--glass-border);
+    display:flex; align-items:baseline; gap:20px; flex-wrap:wrap;
+  }
+  .result-card .big{ font-family: var(--display); font-size: 1.7rem; font-weight: 800; color: var(--accent); }
+  .result-card .cap{ color: var(--text-sub); font-size: 0.9rem; max-width: 34em; }
+  .result-card .cap b{ color: var(--text-main); }
+
+  /* ---------- instruction swap ---------- */
+  .swap-wrap{ display:flex; align-items:center; gap: 40px; flex-wrap: wrap; }
+  .swap-col h3{ font-size: 1.05rem; font-weight: 700; margin-bottom: 16px; font-family: var(--sans); }
+  .swap-col.old{ color: var(--text-sub); }
+  .swap-col.old h3{ text-decoration: line-through; text-decoration-color: rgba(255,255,255,0.25); }
+  .chip-list{ display:flex; flex-direction:column; gap:8px; }
+  .chip{ font-family: var(--display); font-size: 0.84rem; padding: 10px 16px; border: 1px solid var(--glass-border); border-radius: 10px; background: var(--glass-bg); width: fit-content; }
+  .swap-col.new .chip{ border-color: var(--pri-c); color: var(--pri-c); }
+  .swap-divider{ font-family: var(--serif); font-size: 1.6rem; color: var(--text-sub); opacity: .6; }
+
+  /* ---------- typing matrix ---------- */
+  .matrix{ display:grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 2px; background: var(--glass-border); border: 1px solid var(--glass-border); margin-top: 40px; aspect-ratio: 1.6/1; border-radius: var(--radius); overflow: hidden; }
+  .mcell{ background: var(--card-bg); padding: 20px 22px; display:flex; flex-direction:column; justify-content:center; }
+  .mcell b{ display:block; margin-bottom: 6px; font-family: var(--sans); }
+  .mcell span{ font-size: 0.82rem; color: var(--text-sub); font-family: var(--display); }
+  .mcell.go{ background: linear-gradient(135deg, rgba(212,175,55,0.16), rgba(30,41,59,0.4)); }
+  .mcell.go b{ color: var(--accent); }
+  .maxis{ display:flex; justify-content: space-between; font-family: var(--display); font-size: 0.7rem; color: var(--text-sub); margin-top: 10px; }
+
+  /* ---------- role scope bars ---------- */
+  .org-bars{ display:flex; flex-direction:column; gap: 24px; margin-top: 36px; }
+  .org-row{ display:grid; grid-template-columns: 120px 1fr; gap: 18px; align-items:center; }
+  .org-name{ font-weight: 700; font-size: 0.92rem; font-family: var(--sans); }
+  .org-track{ height: 32px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 8px; position:relative; overflow:hidden; }
+  .org-fill{ position:absolute; left:0; top:0; height:100%; width:0%; transition: width 1.3s cubic-bezier(.65,0,.35,1); display:flex; align-items:center; padding-left: 12px; }
+  .org-fill span{ font-family: var(--display); font-size: 0.78rem; font-weight: 600; color: #06111f; white-space:nowrap; }
+  .org-detail{ font-family: var(--display); font-size: 0.72rem; color: var(--text-sub); margin-top: 5px; }
+
+  .npv-strip{ display:grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 36px; }
+  @media (max-width: 700px){ .npv-strip{ grid-template-columns: 1fr; } }
+  .npv-card{ border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 20px 22px; background: var(--glass-bg); backdrop-filter: blur(6px); }
+  .npv-card .k{ font-family: var(--display); font-size: 0.72rem; color: var(--text-sub); letter-spacing:.05em; text-transform:uppercase; }
+  .npv-card .v{ font-family: var(--display); font-weight: 700; font-size: 1.3rem; margin-top: 6px; }
+  .npv-card.pos .v{ color: var(--pri-c); }
+
+  blockquote{
+    font-family: var(--serif); font-size: clamp(1.3rem, 2.8vw, 1.65rem);
+    line-height: 1.75; margin: 0; padding: 0; color: var(--text-main); border: none;
+  }
+  blockquote .accentline{ color: var(--accent); }
+  blockquote cite{ display:block; font-family: var(--display); font-style: normal; font-size: 0.76rem; color: var(--text-sub); margin-top: 20px; }
+
+  .footline{ padding: 90px 0 120px; text-align: left; }
+  .footline .wrap > *:not(:first-child){ margin-top: 24px; }
+
+  p{ margin: 0; }
+  .stack > * + *{ margin-top: 16px; }
+
+  @media (prefers-reduced-motion: reduce){
+    *, *::before, *::after{ animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  }
+</style>
+<noscript><style>
+  .reveal{ opacity: 1 !important; transform: none !important; }
+  .hero .kicker, .hero h1, .hero .sub, .hero-en, .demo{ opacity: 1 !important; animation: none !important; }
+</style></noscript>
+
+<div class="bg-mesh"></div>
+<div class="rail"><div class="rail-fill" id="railFill"></div></div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker eyebrow">A methodology for evaluating what people notice before they act</div>
+    <h1>気づく力は、測れる。<br>だから、<span>人事評価</span>は設計できる。</h1>
+    <p class="sub">優秀な人ほど、自分の強みを言語化できない。知識でも行動量でもなく、差を生んでいるのは「何に注意を向けていたか」である。</p>
+    <div class="hero-en">ATTENTION COMPETENCY MODEL — Turning What People Notice into Performance and Evaluation</div>
+
+    <div class="demo">
+      <div class="demo-row">
+        <div class="demo-state" id="demoBefore">Aさん：気づいていない<br><span style="opacity:.65">自分の準備内容しか見ていない</span></div>
+        <div class="demo-arrow"><div class="fill" id="demoFill"></div></div>
+        <div class="demo-state" id="demoAfter">Bさん：気づいている<br><span style="opacity:.65">相手の反応の変化を見ている</span></div>
+      </div>
+      <div class="demo-meter" style="margin-top:14px;">Observation（観察力）— 成約率スコア　現在 <b id="demoNum">0</b> → 85</div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ 01 THESIS ============ -->
+  <section id="thesis">
+    <div class="wrap">
+      <div class="shead reveal">
+        <div class="eyebrow">Chapter 01 · 成果評価の「一歩手前」を評価する</div>
+        <h2>行動の前に、<br>注意がある。</h2>
+        <p class="lede">売上・行動量・スキルという従来の評価軸は、すべて「結果」か「行動」でしかない。その手前にある「何に気づいたか」を評価しない限り、人は再現性を持って育たない。</p>
+      </div>
+
+      <div class="reveal reveal-d1">
+        <div class="trow"><div class="a">相槌のタイミングの変化</div><div class="arr">→</div><div class="b">気づく</div><div class="arr">→</div><div class="c">提案の質が上がる</div></div>
+        <div class="trow"><div class="a">資料の数字の違和感</div><div class="arr">→</div><div class="b">気づく</div><div class="arr">→</div><div class="c">ミスを未然に防ぐ</div></div>
+        <div class="trow"><div class="a">チームの空気の違和感</div><div class="arr">→</div><div class="b">気づく</div><div class="arr">→</div><div class="c">早期に対処できる</div></div>
+        <div class="trow"><div class="a">市場のかすかな兆候</div><div class="arr">→</div><div class="b">気づく</div><div class="arr">→</div><div class="c">半年早く動ける</div></div>
+      </div>
+
+      <div class="reveal reveal-d2" style="margin-top:56px;">
+        <blockquote>
+          「気づかなければ、比較も仮説も生まれない。行動を評価しても、行動の質を生む<span class="accentline">注意</span>を評価しなければ、人は育たない。」
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 02 ACM RADAR ============ -->
+  <section id="acm">
+    <div class="wrap">
+      <div class="shead reveal">
+        <div class="eyebrow">Chapter 02 · Attention Competency Model（ACM）</div>
+        <h2>「見る力」を、五つの軸で測る。</h2>
+        <p class="lede">Attention Mapが「何を見るか」の地図だとすれば、ACMは「見たものをどう活かすか」を評価する物差しである。5つは独立ではなく、階段状につながっている。</p>
+      </div>
+
+      <div class="hsbs-grid reveal reveal-d1">
+        <div><canvas id="radar" width="560" height="560"></canvas></div>
+        <div class="legend" id="legend">
+          <div class="legend-item" data-layer="obs"><span class="legend-dot" style="background:var(--obs-c)"></span><span><span class="legend-jp">観察力</span><br><span class="legend-en">OBSERVATION</span></span><span class="legend-words">変化に気づく</span></div>
+          <div class="legend-item" data-layer="det"><span class="legend-dot" style="background:var(--det-c)"></span><span><span class="legend-jp">異常検知力</span><br><span class="legend-en">DETECTION</span></span><span class="legend-words">違和感を見つける</span></div>
+          <div class="legend-item" data-layer="cmp"><span class="legend-dot" style="background:var(--cmp-c)"></span><span><span class="legend-jp">比較力</span><br><span class="legend-en">COMPARISON</span></span><span class="legend-words">違いを見る</span></div>
+          <div class="legend-item" data-layer="pri"><span class="legend-dot" style="background:var(--pri-c)"></span><span><span class="legend-jp">注意配分力</span><br><span class="legend-en">PRIORITIZATION</span></span><span class="legend-words">何を見ないか決める</span></div>
+          <div class="legend-item" data-layer="des"><span class="legend-dot" style="background:var(--des-c)"></span><span><span class="legend-jp">注意設計力</span><br><span class="legend-en">ATTENTION DESIGN</span></span><span class="legend-words">他者の注意を動かす</span></div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-d2">
+        <p class="lede" style="margin-top:56px;">各コンピテンシーは5段階で評価する。例えば「Observation（観察力）」なら —</p>
+        <div class="anchor-scale">
+          <div><b>Lv.1</b>表情の変化に<br>気づく</div>
+          <div><b>Lv.2</b>なぜ変化が起きたか<br>説明できる</div>
+          <div><b>Lv.3</b>気づきをもとに<br>提案を改善できる</div>
+          <div><b>Lv.4</b>後輩に<br>教えられる</div>
+          <div><b>Lv.5</b>チーム文化に<br>できる</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 03 ATTENTION PROFILE ============ -->
+  <section id="profile">
+    <div class="wrap">
+      <div class="shead reveal">
+        <div class="eyebrow">Chapter 03 · Attention Profile</div>
+        <h2>個人の「注意の癖」を、診断する。</h2>
+        <p class="lede">5つのコンピテンシーをレーダーチャートではなく数値で並べると、個人の「注意の癖」が浮かび上がる。全部を同時に伸ばそうとする計画は、たいてい実行されない。</p>
+      </div>
+
+      <div class="reveal reveal-d1 formula">
+        Attention Profile ＝ 5つのコンピテンシーの現在地。穴を探すための地図であり、総合点を競うものではない。
+      </div>
+
+      <div class="reveal reveal-d2">
+        <div class="gauges" id="gauges">
+          <div class="gauge-row"><div class="gauge-label">Observation 観察力</div><div class="gauge-track"><div class="gauge-fill" data-target="90" style="background:var(--obs-c)"></div></div><div class="gauge-val" data-num="90">0</div></div>
+          <div class="gauge-row"><div class="gauge-label">Detection 異常検知力</div><div class="gauge-track"><div class="gauge-fill" data-target="70" style="background:var(--det-c)"></div></div><div class="gauge-val" data-num="70">0</div></div>
+          <div class="gauge-row"><div class="gauge-label">Comparison 比較力</div><div class="gauge-track"><div class="gauge-fill" data-target="50" style="background:var(--cmp-c)"></div></div><div class="gauge-val" data-num="50">0</div></div>
+          <div class="gauge-row"><div class="gauge-label">Prioritization 注意配分力</div><div class="gauge-track"><div class="gauge-fill" data-target="25" style="background:var(--pri-c)"></div></div><div class="gauge-val" data-num="25">0</div></div>
+          <div class="gauge-row"><div class="gauge-label">Attention Design 注意設計力</div><div class="gauge-track"><div class="gauge-fill" data-target="50" style="background:var(--des-c)"></div></div><div class="gauge-val" data-num="50">0</div></div>
+        </div>
+
+        <div class="toggle-row">
+          <button class="toggle active" id="btnSales">プロファイル例：営業職</button>
+          <button class="toggle" id="btnManager">プロファイル例：新任管理職</button>
+        </div>
+
+        <div class="result-card">
+          <div class="big">課題は Prioritization</div>
+          <div class="cap">両プロファイルとも「気づく力」は高いのに、<b>何を優先すべきかを決める力</b>が最も低い。総合力の底上げではなく、この一点だけを鍛える研修の方が、はるかに育成効率が高い。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 04 INSTRUCTION SWAP ============ -->
+  <section id="map">
+    <div class="wrap">
+      <div class="shead reveal">
+        <div class="eyebrow">Chapter 04 · Attention Map</div>
+        <h2>精神論ではなく、<br>観察対象の指示に変える。</h2>
+        <p class="lede">「察しろ」は再現性がない。「相手の相槌のタイミングの変化を見よう」は、誰でも練習できる。Attention Mapが完成すると、育成の言葉が変わる。</p>
+      </div>
+
+      <div class="reveal reveal-d1 swap-wrap">
+        <div class="swap-col old">
+          <h3>従来の指導</h3>
+          <div class="chip-list">
+            <div class="chip">営業力を上げろ</div>
+            <div class="chip">もっと気を配れ</div>
+            <div class="chip">察しろ</div>
+          </div>
+        </div>
+        <div class="swap-divider">→</div>
+        <div class="swap-col new">
+          <h3>Attention Map後の指導</h3>
+          <div class="chip-list">
+            <div class="chip">相手の相槌のタイミングの変化に注意を向けよう</div>
+            <div class="chip">資料を見せた3秒後の視線の動きを見よう</div>
+            <div class="chip">画面越しの相槌の間を見よう（オンライン商談）</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 05 TYPING MATRIX ============ -->
+  <section id="matrix">
+    <div class="wrap">
+      <div class="shead reveal">
+        <div class="eyebrow">Chapter 05 · 誰を、どう育てるか</div>
+        <h2>気づく力と、絞り込む力。</h2>
+        <p class="lede">Observation（気づく力）とPrioritization（絞り込む力）を掛け合わせると、育成の打ち手はまったく違うものになる。</p>
+      </div>
+
+      <div class="reveal reveal-d1">
+        <div class="matrix">
+          <div class="mcell go"><b>即戦力・エース人材</b><span>気づく力 高 × 絞り込む力 高</span></div>
+          <div class="mcell"><b>気づきすぎて疲弊するタイプ</b><span>気づく力 高 × 絞り込む力 低</span></div>
+          <div class="mcell"><b>型通りに強いタイプ</b><span>気づく力 低 × 絞り込む力 高</span></div>
+          <div class="mcell"><b>Attention Map導入で伸びる</b><span>気づく力 低 × 絞り込む力 低</span></div>
+        </div>
+        <div class="maxis"><span>← Prioritization（絞り込む力）</span><span>Observation（気づく力）→</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 06 ROLE SCOPE ============ -->
+  <section id="role">
+    <div class="wrap">
+      <div class="shead reveal">
+        <div class="eyebrow">Chapter 06 · 役職別Attention設計</div>
+        <h2>昇進しても、<br>見るものは自動的に変わらない。</h2>
+        <p class="lede">「あなたは今日から、何を見なくてよくなり、何を新しく見るべきになりましたか」——昇進のたびに、この問いを言語化する必要がある。</p>
+      </div>
+
+      <div class="reveal reveal-d1">
+        <div class="org-bars" id="orgBars">
+          <div class="org-row"><div class="org-name">現場・プレイヤー</div><div><div class="org-track"><div class="org-fill" data-target="25" style="background:var(--obs-c)"><span>今日〜今週</span></div></div><div class="org-detail">自分の作業・目の前の顧客</div></div></div>
+          <div class="org-row"><div class="org-name">主任・班長</div><div><div class="org-track"><div class="org-fill" data-target="50" style="background:var(--det-c)"><span>チーム単位</span></div></div><div class="org-detail">チームの状態・ライン全体の滞留</div></div></div>
+          <div class="org-row"><div class="org-name">部長</div><div><div class="org-track"><div class="org-fill" data-target="75" style="background:var(--cmp-c)"><span>四半期〜半年</span></div></div><div class="org-detail">部門間の連携・組織の歪み</div></div></div>
+          <div class="org-row"><div class="org-name">役員・経営層</div><div><div class="org-track"><div class="org-fill" data-target="95" style="background:var(--des-c)"><span>1〜3年</span></div></div><div class="org-detail">市場のかすかな兆候・未来の変化</div></div></div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-d2">
+        <p class="lede" style="margin-top:64px;">導入事例（架空のモデルケース：中堅卸売業）——ハイパフォーマー3名へのヒアリングからAttention Mapを作成し、若手に「言い淀みメモ」の習慣を課した半年後。</p>
+        <div class="npv-strip">
+          <div class="npv-card pos"><div class="k">成約率</div><div class="v">↑ 改善</div></div>
+          <div class="npv-card pos"><div class="k">「何を見ればいいか」相談件数</div><div class="v">↓ 大幅減</div></div>
+          <div class="npv-card pos"><div class="k">若手の離職傾向</div><div class="v">↓ 改善</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CLOSE ============ -->
+  <section class="footline">
+    <div class="wrap stack">
+      <blockquote class="reveal">
+        「優秀さとは、知識やスキルの差ではない。何に注意を向けているか、その差である。」
+        <cite>気づく力を可視化する企業が、育成の言葉を取り戻す。</cite>
+      </blockquote>
+      <p class="reveal reveal-d1" style="color:var(--text-sub); max-width:38em;">
+        本ページで紹介した Attention Map・Attention Competency Model（ACM）・Attention Profile・役職別Attention設計は、書籍『見る力（実践編）――注意力を成果に変える。』で、評価シートやワークショップの進め方まで含めて手順として解説しています。
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<script>
+(function(){
+  var railFill = document.getElementById('railFill');
+  function onScroll(){
+    var h = document.documentElement;
+    var scrolled = h.scrollTop || document.body.scrollTop;
+    var height = (h.scrollHeight || document.body.scrollHeight) - h.clientHeight;
+    var pct = height > 0 ? (scrolled/height)*100 : 0;
+    railFill.style.height = pct + '%';
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  var reveals = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); } });
+  }, {threshold: 0.16});
+  reveals.forEach(function(el){ io.observe(el); });
+
+  function runDemo(){
+    var fill = document.getElementById('demoFill');
+    var num = document.getElementById('demoNum');
+    var after = document.getElementById('demoAfter');
+    fill.style.width = '100%';
+    after.classList.add('on');
+    var start = null; var dur = 1500;
+    function step(ts){
+      if(!start) start = ts;
+      var p = Math.min((ts-start)/dur, 1);
+      num.textContent = Math.round(p*85);
+      if(p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  setTimeout(runDemo, 900);
+
+  function getVar(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+
+  var layers = [
+    {key:'obs', label:'観察', color: getVar('--obs-c'), current: 90, desired: 80},
+    {key:'det', label:'検知', color: getVar('--det-c'), current: 70, desired: 80},
+    {key:'cmp', label:'比較', color: getVar('--cmp-c'), current: 50, desired: 80},
+    {key:'pri', label:'配分', color: getVar('--pri-c'), current: 25, desired: 80},
+    {key:'des', label:'設計', color: getVar('--des-c'), current: 50, desired: 80}
+  ];
+
+  var canvas = document.getElementById('radar');
+  var ctx = canvas.getContext('2d');
+  var DPR = window.devicePixelRatio || 1;
+  var CSS_SIZE = 460;
+  canvas.width = CSS_SIZE*DPR; canvas.height = CSS_SIZE*DPR;
+  canvas.style.width = CSS_SIZE+'px'; canvas.style.height = CSS_SIZE+'px';
+  ctx.scale(DPR, DPR);
+  var cx = CSS_SIZE/2, cy = CSS_SIZE/2, R = CSS_SIZE*0.36;
+  var N = layers.length;
+
+  function pt(i, r){
+    var ang = (Math.PI*2*i/N) - Math.PI/2;
+    return [cx + r*Math.cos(ang), cy + r*Math.sin(ang)];
+  }
+
+  var lineColor = 'rgba(255,255,255,0.12)';
+  var accent = getVar('--accent2');
+
+  function drawStatic(){
+    ctx.clearRect(0,0,CSS_SIZE,CSS_SIZE);
+    for(var ring=1; ring<=4; ring++){
+      ctx.beginPath();
+      for(var i=0;i<=N;i++){
+        var p = pt(i%N, R*ring/4);
+        if(i===0) ctx.moveTo(p[0],p[1]); else ctx.lineTo(p[0],p[1]);
+      }
+      ctx.strokeStyle = lineColor; ctx.lineWidth = 1; ctx.stroke();
+    }
+    for(var i=0;i<N;i++){
+      var p0 = pt(i,0), p1 = pt(i,R);
+      ctx.beginPath(); ctx.moveTo(p0[0],p0[1]); ctx.lineTo(p1[0],p1[1]);
+      ctx.strokeStyle = lineColor; ctx.lineWidth = 1; ctx.stroke();
+      var lp = pt(i, R*1.16);
+      ctx.fillStyle = layers[i].color;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.font = '700 15px sans-serif';
+      ctx.fillText(layers[i].label, lp[0], lp[1]);
+    }
+  }
+
+  function polygon(values, alphaFill, strokeColor, dashed){
+    ctx.beginPath();
+    for(var i=0;i<=N;i++){
+      var idx = i%N;
+      var r = R*(values[idx]/100);
+      var p = pt(idx, r);
+      if(i===0) ctx.moveTo(p[0],p[1]); else ctx.lineTo(p[0],p[1]);
+    }
+    ctx.closePath();
+    if(alphaFill){ ctx.fillStyle = alphaFill; ctx.fill(); }
+    if(dashed) ctx.setLineDash([4,4]); else ctx.setLineDash([]);
+    ctx.strokeStyle = strokeColor; ctx.lineWidth = 2; ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  var animStart = null; var animDur = 1200; var animated = false;
+  function frame(ts){
+    if(!animStart) animStart = ts;
+    var p = Math.min((ts-animStart)/animDur, 1);
+    var ease = 1 - Math.pow(1-p, 3);
+    drawStatic();
+    var curVals = layers.map(function(l){ return l.current*ease; });
+    var desVals = layers.map(function(l){ return l.desired*ease; });
+    polygon(desVals, accent + '22', accent, true);
+    polygon(curVals, 'rgba(248,250,252,0.12)', '#f8fafc', false);
+    if(p < 1) requestAnimationFrame(frame);
+  }
+  function startRadarAnim(){ if(animated) return; animated = true; animStart = null; requestAnimationFrame(frame); }
+  drawStatic();
+  var radarIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting) startRadarAnim(); });
+  }, {threshold:0.3});
+  radarIO.observe(canvas);
+
+  document.querySelectorAll('.legend-item').forEach(function(item, idx){
+    item.addEventListener('mouseenter', function(){
+      drawStatic();
+      var curVals = layers.map(function(l){ return l.current; });
+      var desVals = layers.map(function(l){ return l.desired; });
+      polygon(desVals, accent+'18', accent, true);
+      polygon(curVals, 'rgba(248,250,252,0.10)', '#f8fafc', false);
+      var p = pt(idx, R*(layers[idx].current/100));
+      ctx.beginPath(); ctx.arc(p[0], p[1], 5, 0, Math.PI*2);
+      ctx.fillStyle = layers[idx].color; ctx.fill();
+    });
+    item.addEventListener('mouseleave', function(){
+      drawStatic();
+      var curVals = layers.map(function(l){ return l.current; });
+      var desVals = layers.map(function(l){ return l.desired; });
+      polygon(desVals, accent+'22', accent, true);
+      polygon(curVals, 'rgba(248,250,252,0.12)', '#f8fafc', false);
+    });
+  });
+
+  var gauges = document.getElementById('gauges');
+  function animateNum(el, from, to, dur){
+    var start=null;
+    function step(ts){
+      if(!start) start=ts;
+      var p = Math.min((ts-start)/dur,1);
+      el.textContent = Math.round(from + (to-from)*p);
+      if(p<1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  var gaugeIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.querySelectorAll('.gauge-fill').forEach(function(f){ f.style.width = f.getAttribute('data-target') + '%'; });
+        e.target.querySelectorAll('.gauge-val').forEach(function(v){ animateNum(v, 0, parseInt(v.getAttribute('data-num'),10), 900); });
+        gaugeIO.unobserve(e.target);
+      }
+    });
+  }, {threshold:0.4});
+  gaugeIO.observe(gauges);
+
+  var profiles = {
+    sales:   [90, 70, 50, 25, 50],
+    manager: [70, 90, 70, 25, 50]
+  };
+  var gaugeFills = document.querySelectorAll('#gauges .gauge-fill');
+  var gaugeVals = document.querySelectorAll('#gauges .gauge-val');
+  function setProfile(name){
+    var vals = profiles[name];
+    gaugeFills.forEach(function(f, i){ f.style.width = vals[i] + '%'; });
+    gaugeVals.forEach(function(v, i){ animateNum(v, parseInt(v.textContent||'0',10), vals[i], 600); });
+  }
+  var btnSales = document.getElementById('btnSales');
+  var btnManager = document.getElementById('btnManager');
+  btnSales.addEventListener('click', function(){ btnSales.classList.add('active'); btnManager.classList.remove('active'); setProfile('sales'); });
+  btnManager.addEventListener('click', function(){ btnManager.classList.add('active'); btnSales.classList.remove('active'); setProfile('manager'); });
+
+  var orgBars = document.getElementById('orgBars');
+  var orgIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.querySelectorAll('.org-fill').forEach(function(f){ f.style.width = f.getAttribute('data-target') + '%'; });
+        orgIO.unobserve(e.target);
+      }
+    });
+  }, {threshold:0.4});
+  orgIO.observe(orgBars);
+})();
+</script>
