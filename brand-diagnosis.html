@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="全492問・6つの観点でブランドの現在地を可視化する無料診断ツール。顧客理解、戦略設計、エクイティ、組織体制、マーケティング活動、デジタル展開をスコアとレーダーチャートで確認できます。">
+  <title>ブランド診断 | ModernLogic</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Noto+Sans+JP:wght@400;500;700&family=Outfit:wght@400;600;800&family=Shippori+Mincho:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    /* ---- Brand Diagnosis page-specific styles ---- */
+    #home.hero { min-height: auto; padding: 180px 0 60px; }
+
+    .diag-intro-card { max-width: 760px; margin: 0 auto; }
+    .intro-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin: 2.5rem 0; }
+    .intro-stat { text-align: center; padding: 1.5rem 1rem; background: var(--glass-border); border-radius: 16px; }
+    .intro-stat .num { font-size: 2.2rem; font-weight: 800; color: var(--accent); font-family: 'Outfit', sans-serif; }
+    .intro-stat .lbl { font-size: 0.85rem; color: var(--text-sub); margin-top: 0.25rem; }
+
+    .field-label { display: block; font-size: 0.9rem; color: var(--text-sub); margin-bottom: 0.5rem; }
+    .text-input {
+      width: 100%; padding: 0.9rem 1.1rem; border-radius: 12px;
+      background: rgba(2, 6, 23, 0.6); border: 1px solid var(--glass-border);
+      color: var(--text-main); font-size: 1rem; font-family: inherit;
+    }
+    .text-input:focus { outline: none; border-color: var(--accent); }
+
+    .group-legend { display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; margin: 1.5rem 0 0; }
+    .group-legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--text-sub); }
+    .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+    /* Quiz screen */
+    #quiz-screen, #result-screen { display: none; }
+
+    .progress-shell { position: sticky; top: 90px; z-index: 50; background: var(--bg-dark); padding: 1rem 0 1.5rem; }
+    .overall-progress-track {
+      width: 100%; height: 8px; border-radius: 99px; background: var(--glass-border); overflow: hidden;
+    }
+    .overall-progress-fill {
+      height: 100%; background: linear-gradient(90deg, var(--accent), #fde68a); width: 0%;
+      transition: width 0.3s ease;
+    }
+    .overall-progress-text { font-size: 0.85rem; color: var(--text-sub); margin-top: 0.6rem; }
+
+    .quiz-layout { display: grid; grid-template-columns: 280px 1fr; gap: 2.5rem; align-items: start; }
+
+    .cat-nav-list { display: flex; flex-direction: column; gap: 0.4rem; max-height: 70vh; overflow-y: auto; padding-right: 0.5rem; }
+    .cat-nav-item {
+      display: flex; align-items: center; gap: 0.6rem; width: 100%; text-align: left;
+      padding: 0.7rem 0.9rem; border-radius: 10px; border: 1px solid transparent;
+      background: transparent; color: var(--text-sub); cursor: pointer; font-family: inherit; font-size: 0.85rem;
+      transition: var(--transition);
+    }
+    .cat-nav-item:hover { background: var(--glass-border); }
+    .cat-nav-item.is-active { background: var(--glass-bg); border-color: var(--accent); color: var(--text-main); }
+    .cat-nav-num {
+      flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; background: var(--glass-border);
+      display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700;
+    }
+    .cat-nav-item.is-done .cat-nav-num { background: var(--accent); color: #000; }
+    .cat-nav-label { flex: 1; line-height: 1.3; }
+    .cat-nav-count { flex-shrink: 0; font-size: 0.7rem; color: var(--text-sub); font-family: 'Outfit', sans-serif; }
+
+    #cat-panel { min-width: 0; }
+    .cat-title-block { margin-bottom: 2rem; }
+    #cat-title-index { display: block; font-size: 0.8rem; color: var(--text-sub); margin-bottom: 0.4rem; }
+    #cat-title-group { display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem; }
+    #cat-title-main { font-size: 1.6rem; }
+
+    .q-row {
+      padding: 1.75rem 0; border-bottom: 1px solid var(--glass-border);
+      display: grid; grid-template-columns: 1fr; gap: 1rem;
+    }
+    .q-row:first-child { padding-top: 0; }
+    .q-text { font-size: 0.98rem; line-height: 1.7; }
+    .q-num { color: var(--accent); font-weight: 700; font-family: 'Outfit', sans-serif; margin-right: 0.5rem; }
+    .q-note-toggle {
+      display: inline-flex; align-items: center; gap: 0.3rem; margin-left: 0.6rem;
+      background: none; border: 1px solid var(--glass-border); color: var(--text-sub);
+      font-size: 0.75rem; padding: 0.15rem 0.6rem; border-radius: 99px; cursor: pointer; vertical-align: middle;
+    }
+    .q-note-toggle:hover { border-color: var(--accent); color: var(--accent); }
+    .q-note-toggle i { width: 12px; height: 12px; }
+    .q-note {
+      margin-top: 0.75rem; padding: 0.9rem 1.1rem; background: rgba(2, 6, 23, 0.5);
+      border-left: 2px solid var(--accent); border-radius: 4px; font-size: 0.85rem; color: var(--text-sub);
+    }
+
+    .q-scale { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 1rem; }
+    .scale-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .scale-option {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      width: 88px; padding: 0.6rem 0.4rem; border-radius: 10px; border: 1px solid var(--glass-border);
+      cursor: pointer; text-align: center; transition: var(--transition); position: relative;
+    }
+    .scale-option input { position: absolute; opacity: 0; pointer-events: none; }
+    .scale-option .scale-num { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1.1rem; color: var(--text-sub); }
+    .scale-option .scale-label { font-size: 0.65rem; color: var(--text-sub); line-height: 1.3; margin-top: 0.2rem; }
+    .scale-option:hover { border-color: var(--accent); }
+    .scale-option.is-selected { background: var(--accent); border-color: var(--accent); }
+    .scale-option.is-selected .scale-num,
+    .scale-option.is-selected .scale-label { color: #000; }
+
+    .na-option {
+      display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 0.9rem;
+      border-radius: 10px; border: 1px dashed var(--glass-border); color: var(--text-sub);
+      font-size: 0.78rem; cursor: pointer; position: relative;
+    }
+    .na-option input { position: absolute; opacity: 0; pointer-events: none; }
+    .na-option:hover { border-color: var(--text-sub); }
+    .na-option.is-selected { border-color: var(--accent); color: var(--accent); background: rgba(212,175,55,0.08); }
+
+    .quiz-footer-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 2.5rem; gap: 1rem; }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 0.5rem; padding: 1rem 1.75rem; border-radius: 12px;
+      background: transparent; border: 1px solid var(--glass-border); color: var(--text-main);
+      font-weight: 600; cursor: pointer; font-family: inherit; font-size: 0.95rem; transition: var(--transition);
+    }
+    .btn-secondary:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+    .btn-secondary:disabled { opacity: 0.35; cursor: not-allowed; }
+    button.btn.btn-primary { font-family: inherit; font-size: 0.95rem; }
+
+    /* Result screen */
+    .result-hero { text-align: center; max-width: 700px; margin: 0 auto 3rem; }
+    #result-completion { color: var(--text-sub); font-size: 0.9rem; margin-top: 0.5rem; }
+    .incomplete-warning {
+      display: none; align-items: center; gap: 0.6rem; justify-content: center; margin-top: 1rem;
+      padding: 0.8rem 1.2rem; background: rgba(251, 146, 60, 0.1); border: 1px solid rgba(251, 146, 60, 0.4);
+      border-radius: 10px; color: #fb923c; font-size: 0.82rem; max-width: 560px; margin-left: auto; margin-right: auto;
+    }
+    .incomplete-warning i { width: 16px; height: 16px; flex-shrink: 0; }
+
+    .overall-score-block { margin: 2rem 0; }
+    #overall-score-num { font-size: 5rem; font-weight: 800; font-family: 'Outfit', sans-serif; color: var(--text-main); line-height: 1; }
+    #overall-score-num::after { content: ' / 100'; font-size: 1.5rem; color: var(--text-sub); font-weight: 500; }
+    #overall-score-label { display: block; font-size: 1.2rem; font-weight: 700; margin-top: 0.5rem; }
+
+    .radar-section { display: flex; justify-content: center; margin: 2rem 0 3rem; }
+    .radar-svg { width: 100%; max-width: 480px; height: auto; overflow: visible; }
+    .radar-grid-ring { fill: none; stroke: var(--glass-border); stroke-width: 1; }
+    .radar-axis-line { stroke: var(--glass-border); stroke-width: 1; }
+    .radar-data-polygon { fill: rgba(212, 175, 55, 0.25); stroke: var(--accent); stroke-width: 2; }
+    .radar-dot { fill: var(--accent); }
+    .radar-label { font-size: 12px; font-weight: 700; font-family: 'Noto Sans JP', sans-serif; }
+    .radar-label-score { font-size: 11px; fill: var(--text-sub); font-family: 'Outfit', sans-serif; }
+
+    .group-bar-row { margin-bottom: 1.4rem; }
+    .group-bar-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.4rem; }
+    .group-bar-name { font-weight: 700; font-size: 0.95rem; }
+    .group-bar-score { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1.1rem; }
+    .group-bar-score small { color: var(--text-sub); font-weight: 400; font-size: 0.75rem; }
+    .group-bar-track { width: 100%; height: 10px; border-radius: 99px; background: var(--glass-border); overflow: hidden; }
+    .group-bar-fill { height: 100%; border-radius: 99px; }
+
+    .rank-columns { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 1rem; }
+    .rank-list-title { display: flex; align-items: center; gap: 0.5rem; font-size: 1.05rem; margin-bottom: 1rem; }
+    .rank-row { display: flex; align-items: center; gap: 0.7rem; padding: 0.75rem 0; border-bottom: 1px solid var(--glass-border); font-size: 0.9rem; }
+    .rank-title { flex: 1; }
+    .rank-score { font-family: 'Outfit', sans-serif; font-weight: 800; color: var(--accent); }
+
+    .full-cat-table-wrap { overflow-x: auto; margin-top: 1rem; }
+    table.cat-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    table.cat-table th, table.cat-table td { text-align: left; padding: 0.7rem 0.8rem; border-bottom: 1px solid var(--glass-border); }
+    table.cat-table th { color: var(--text-sub); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .muted { color: var(--text-sub); }
+
+    .result-actions { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-top: 3rem; }
+
+    @media (max-width: 900px) {
+      .quiz-layout { grid-template-columns: 1fr; }
+      .cat-nav-list { max-height: none; flex-direction: row; flex-wrap: wrap; }
+      .cat-nav-item { width: auto; }
+      .cat-nav-label { display: none; }
+      .progress-shell { top: 0; position: static; }
+      .intro-stats { grid-template-columns: 1fr; }
+    }
+
+    @media print {
+      header, footer, .result-actions, #intro-screen, #quiz-screen { display: none !important; }
+      body { background: #fff; color: #111; }
+      .glass-card { border: 1px solid #ccc; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-mesh"></div>
+
+  <header>
+    <div class="container nav">
+      <a href="index.html" class="logo" style="font-size: 1rem;"><img src="modernlogic.png" alt="Modern Logic" style="height: 2em;"></a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">トップへ</a></li>
+        <li><a href="index.html#contact" class="nav-link">お問い合わせ</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container">
+        <div class="hero-content" style="max-width: 900px;">
+          <span class="hero-tag">Free Brand Diagnosis</span>
+          <h1 class="hero-title" style="font-size: 2.8rem; margin-bottom: 1rem;">
+            <span class="title-accent">ブランド診断</span>
+          </h1>
+          <p class="hero-subtitle" style="max-width: 800px;">
+            492の設問で自社ブランドの現在地を6つの観点から可視化します。回答は5段階評価で、最後にスコアとレーダーチャートによる診断結果が表示されます。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Intro Screen -->
+    <section id="intro-screen">
+      <div class="container">
+        <div class="glass-card diag-intro-card">
+          <h2 style="font-size: 1.4rem; margin-bottom: 1rem;">診断について</h2>
+          <p style="color: var(--text-sub);">
+            このチェックリストは、ブランド論の代表的な体系（顧客理解・競合分析・ブランド戦略設計・アイデンティティ・エクイティ・組織体制・マーケティング活動・グローバル/デジタル展開）を網羅した本格的なセルフ診断ツールです。すべての設問に回答すると、より精度の高い診断結果が得られます。
+          </p>
+
+          <div class="intro-stats">
+            <div class="intro-stat">
+              <div class="num" id="intro-total-count">492</div>
+              <div class="lbl">設問数</div>
+            </div>
+            <div class="intro-stat">
+              <div class="num" id="intro-cat-count">18</div>
+              <div class="lbl">診断分野</div>
+            </div>
+            <div class="intro-stat">
+              <div class="num">6</div>
+              <div class="lbl">評価カテゴリ</div>
+            </div>
+          </div>
+
+          <div class="group-legend">
+            <span class="group-legend-item"><span class="dot" style="background:#38bdf8"></span>顧客とインサイト</span>
+            <span class="group-legend-item"><span class="dot" style="background:#d4af37"></span>戦略・アイデンティティ設計</span>
+            <span class="group-legend-item"><span class="dot" style="background:#a78bfa"></span>エクイティの構築と測定</span>
+            <span class="group-legend-item"><span class="dot" style="background:#34d399"></span>組織・マネジメント・法務</span>
+            <span class="group-legend-item"><span class="dot" style="background:#fb923c"></span>マーケティング活動と顧客体験</span>
+            <span class="group-legend-item"><span class="dot" style="background:#f472b6"></span>グローバル・デジタル展開</span>
+          </div>
+
+          <p style="color: var(--text-sub); font-size: 0.85rem; margin-top: 1.5rem;">
+            全問に回答する場合、目安として30〜45分ほどかかります。途中経過は保存されないため、時間のある時にまとめて進めることをおすすめします。回答が難しい設問は「対象外・わからない」を選べます。
+          </p>
+
+          <div style="margin: 2rem 0;">
+            <label class="field-label" for="brand-name-input">診断対象のブランド名・会社名（任意）</label>
+            <input type="text" id="brand-name-input" class="text-input" placeholder="例：株式会社〇〇 / ブランド名">
+          </div>
+
+          <button id="start-diagnosis-btn" class="btn btn-primary" style="width: 100%; justify-content: center;">
+            診断をはじめる
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quiz Screen -->
+    <section id="quiz-screen" class="no-reveal">
+      <div class="container">
+        <div class="progress-shell">
+          <div class="overall-progress-track">
+            <div class="overall-progress-fill" id="overall-progress-fill"></div>
+          </div>
+          <div class="overall-progress-text" id="overall-progress-text"></div>
+        </div>
+
+        <div class="quiz-layout">
+          <nav class="cat-nav-list" id="cat-nav-list" aria-label="診断分野一覧"></nav>
+
+          <div id="cat-panel" class="glass-card">
+            <div class="cat-title-block">
+              <span id="cat-title-index"></span>
+              <span id="cat-title-group"></span>
+              <h2 id="cat-title-main"></h2>
+            </div>
+
+            <div id="cat-questions"></div>
+
+            <div class="quiz-footer-nav">
+              <button id="prev-cat-btn" class="btn-secondary">
+                <i data-lucide="arrow-left"></i> 前の分野へ
+              </button>
+              <button id="next-cat-btn" class="btn btn-primary">次の分野へ</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Result Screen -->
+    <section id="result-screen" class="no-reveal">
+      <div class="container">
+        <div class="result-hero">
+          <span class="hero-tag">Diagnosis Result</span>
+          <h2 id="result-heading" style="font-size: 2rem; margin: 1rem 0 0;"></h2>
+          <p id="result-completion"></p>
+          <div class="incomplete-warning" id="result-incomplete-warning">
+            <i data-lucide="alert-triangle"></i>
+            回答率が50%未満です。回答数が少ない分野はスコアの信頼性が下がります。参考値としてご覧ください。
+          </div>
+
+          <div class="overall-score-block">
+            <div id="overall-score-num">—</div>
+            <span id="overall-score-label"></span>
+          </div>
+        </div>
+
+        <div class="radar-section" id="radar-container"></div>
+
+        <div class="glass-card" style="max-width: 760px; margin: 0 auto 3rem;">
+          <h3 style="font-size: 1.2rem; margin-bottom: 1.5rem;">6分野のスコア内訳</h3>
+          <div id="group-breakdown"></div>
+        </div>
+
+        <div class="container" style="max-width: 1000px; padding: 0;">
+          <div class="rank-columns">
+            <div class="glass-card">
+              <div class="rank-list-title"><i data-lucide="trending-down" style="color:#f87171;"></i>優先的に着手したい分野（下位5）</div>
+              <div id="weak-list"></div>
+            </div>
+            <div class="glass-card">
+              <div class="rank-list-title"><i data-lucide="trending-up" style="color:#34d399;"></i>強みとなっている分野（上位5）</div>
+              <div id="strong-list"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="container" style="max-width: 1000px; padding-top: 3rem;">
+          <div class="glass-card">
+            <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;">18分野すべてのスコア</h3>
+            <div class="full-cat-table-wrap">
+              <table class="cat-table">
+                <thead>
+                  <tr><th>分野</th><th>カテゴリ</th><th>スコア</th><th>回答数</th></tr>
+                </thead>
+                <tbody id="full-cat-table"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="result-actions">
+          <button id="print-btn" class="btn-secondary"><i data-lucide="printer"></i> 結果を印刷 / PDF保存</button>
+          <button id="retry-btn" class="btn-secondary"><i data-lucide="rotate-ccw"></i> もう一度診断する</button>
+          <a href="index.html#contact" class="btn btn-primary">
+            <i data-lucide="message-square" style="width: 20px; height: 20px; margin-right: 0.75rem;"></i>
+            専門家に相談する
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container" style="padding: 4rem 0;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
+        <div class="logo" style="font-size: 1rem;">T*Kusano Branding & Design <span class="title-accent">Services</span></div>
+        <div style="display: flex; gap: 2rem; font-size: 0.9rem; color: var(--text-sub); align-items: center;">
+          <a href="index.html" style="color: inherit; text-decoration: none;">トップへ戻る</a>
+        </div>
+      </div>
+      <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--glass-border); text-align: center; color: var(--text-sub); font-size: 0.8rem;">
+        &copy; 2024 T*Kusano Branding & Design Services. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script src="brand-diagnosis/data.js"></script>
+  <script src="brand-diagnosis/app.js"></script>
+</body>
+</html>

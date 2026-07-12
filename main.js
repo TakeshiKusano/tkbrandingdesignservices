@@ -17,8 +17,10 @@ const observer = new IntersectionObserver((entries, observer) => {
   });
 }, observerOptions);
 
-// Select sections and cards to observe
-const revealElements = document.querySelectorAll('section, .glass-card, .timeline-item');
+// Select sections and cards to observe (skip elements inside .no-reveal containers,
+// e.g. JS-toggled step screens that start hidden with display:none)
+const revealElements = Array.from(document.querySelectorAll('section, .glass-card, .timeline-item'))
+  .filter(el => !el.closest('.no-reveal'));
 revealElements.forEach(el => {
   el.style.opacity = '0';
   el.style.transform = 'translateY(30px)';
