@@ -18,6 +18,9 @@
 | `gallery-01.jpg` | ギャラリー1枚目 |
 | `gallery-02.jpg` | ギャラリー2枚目 |
 | `gallery-03.jpg` | ギャラリー3枚目 |
+| `gallery-04.jpg` | ギャラリー4枚目 |
+| `gallery-05.jpg` | ギャラリー5枚目 |
+| `gallery-06.jpg` | ギャラリー6枚目 |
 
 ## 画像・カードを追加したい場合
 
