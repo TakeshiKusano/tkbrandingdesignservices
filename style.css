@@ -162,14 +162,14 @@ nav {
 .hero-image {
   position: absolute;
   top: 50%;
-  right: -10%;
+  right: 5%;
   transform: translateY(-50%);
-  width: 60%;
-  height: 70%;
+  width: 65%;
+  height: 80%;
   z-index: 1;
-  opacity: 0.4;
-  mask-image: linear-gradient(to left, black, transparent);
-  -webkit-mask-image: linear-gradient(to left, black, transparent);
+  opacity: 0.45;
+  mask-image: linear-gradient(to left, black 40%, transparent);
+  -webkit-mask-image: linear-gradient(to left, black 40%, transparent);
 }
 
 .hero-image img,
