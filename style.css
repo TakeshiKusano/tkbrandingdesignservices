@@ -172,7 +172,8 @@ nav {
   -webkit-mask-image: linear-gradient(to left, black, transparent);
 }
 
-.hero-image img {
+.hero-image img,
+.hero-image video {
   width: 100%;
   height: 100%;
   object-fit: cover;
