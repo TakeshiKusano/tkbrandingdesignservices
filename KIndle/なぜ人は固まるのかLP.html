@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="『リスキリングだけでは足りない ── 縦軸の成長が、AI時代の唯一無二の武器になる』Kindleにて発売中。スキルを増やしても満たされない理由と、AI時代に価値を持ち続けるための「縦軸の成長」を解き明かす一冊。">
-<title>リスキリングだけでは足りない | 縦軸の成長が、AI時代の唯一無二の武器になる</title>
+<meta name="description" content="『なぜ人は固まるのか ── 人生は反応OSのバグ』Kindleにて発売中。会話力＝話す能力－自己防衛。固まるのも、照れるのも、お酒を飲むと話せるのも、すべて「反応OS」という一つの仕組みで説明する一冊。">
+<title>なぜ人は固まるのか | 人生は反応OSのバグ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Noto+Sans+JP:wght@400;500;700&family=Outfit:wght@400;600;800&family=Shippori+Mincho:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -96,6 +96,16 @@ nav { display: flex; justify-content: space-between; align-items: center; }
   transition: var(--transition);
 }
 .nav-link:hover { color: var(--accent); }
+.nav-badge {
+  border: 1px solid var(--glass-border);
+  color: var(--text-sub);
+  padding: 0.5rem 1.2rem;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.nav-badge span { color: var(--accent); }
 .nav-cta {
   background: var(--accent);
   color: #000;
@@ -105,21 +115,9 @@ nav { display: flex; justify-content: space-between; align-items: center; }
   font-weight: 700;
   text-decoration: none;
   transition: var(--transition);
+  white-space: nowrap;
 }
 .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 20px var(--accent-glow); }
-.nav-cta-outline {
-  background: transparent;
-  border: 1px solid var(--glass-border);
-  color: var(--text-main);
-  padding: 0.6rem 1.4rem;
-  border-radius: 50px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  text-decoration: none;
-  transition: var(--transition);
-  display: inline-flex; align-items: center; gap: 0.4rem;
-}
-.nav-cta-outline:hover { border-color: #FF0000; color: #FF0000; }
 
 /* Hero */
 .hero {
@@ -147,12 +145,12 @@ nav { display: flex; justify-content: space-between; align-items: center; }
   letter-spacing: 0.05em;
 }
 .hero-title {
-  font-size: 3rem;
-  line-height: 1.35;
+  font-size: 2.6rem;
+  line-height: 1.4;
   margin-bottom: 1.2rem;
 }
 .hero-kicker {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 600;
   color: var(--text-sub);
   margin-bottom: 2rem;
@@ -227,6 +225,19 @@ nav { display: flex; justify-content: space-between; align-items: center; }
 }
 .glass-card:hover { border-color: var(--accent); transform: translateY(-8px); }
 
+/* Video */
+.video-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  aspect-ratio: 16 / 9;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px var(--glass-border);
+}
+.video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
 .card-icon {
   width: 52px; height: 52px;
   background: var(--glass-border);
@@ -262,12 +273,6 @@ nav { display: flex; justify-content: space-between; align-items: center; }
 .axis-card ul li { display: flex; gap: 0.6rem; font-size: 0.92rem; color: var(--text-main); }
 .axis-card.yoko ul li span { color: var(--accent); }
 .axis-card.tate ul li span { color: var(--accent2); }
-
-.axis-vs {
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Outfit', sans-serif;
-  font-size: 1.5rem; color: var(--text-sub);
-}
 
 /* Pull quote banner */
 .quote-banner {
@@ -322,33 +327,39 @@ nav { display: flex; justify-content: space-between; align-items: center; }
 .toc-item h3 { font-size: 1.15rem; margin-bottom: 0.5rem; }
 .toc-item p { color: var(--text-sub); font-size: 0.9rem; }
 
-/* Method */
-.method-num {
+/* English sub-label on framework cards */
+.compass-en {
   font-family: 'Outfit', sans-serif;
-  font-size: 2.2rem;
-  font-weight: 800;
-  color: var(--accent2);
-  opacity: 0.5;
-  margin-bottom: 0.5rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--text-sub);
+  text-transform: uppercase;
+  margin-left: 0.5rem;
 }
 
-/* Appendix */
-.appendix-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.75rem; }
-.appendix-card {
-  border-radius: 16px;
-  overflow: hidden;
-  border: 1px solid var(--glass-border);
+/* Cycle / filter steps */
+.cycle-wrap { max-width: 900px; margin: 0 auto; display: grid; gap: 1rem; }
+.cycle-step {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 1.4rem 1.8rem;
   background: var(--glass-bg);
-  transition: var(--transition);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
 }
-.appendix-card img {
-  width: 100%; aspect-ratio: 3 / 4; object-fit: cover; object-position: top;
-  display: block;
+.cycle-step-num {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
 }
-.appendix-card:hover { border-color: var(--accent2); transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.4); }
-.appendix-caption { padding: 1.2rem 1.3rem; }
-.appendix-caption h4 { font-size: 0.95rem; margin-bottom: 0.3rem; }
-.appendix-caption p { font-size: 0.8rem; color: var(--text-sub); }
+.cycle-step h3 { font-size: 1.05rem; margin-bottom: 0.2rem; }
+.cycle-step p { color: var(--text-sub); font-size: 0.88rem; }
 
 /* Author */
 #author { background: rgba(15, 23, 42, 0.4); }
@@ -397,10 +408,11 @@ footer .container {
   .hero .container { grid-template-columns: 1fr; }
   .hero-cover { order: -1; }
   .nav-links { display: none; }
-  .hero-title { font-size: 2.2rem; }
+  .hero-title { font-size: 2rem; }
   .author-wrap { grid-template-columns: 1fr; text-align: center; }
   .author-badge { margin: 0 auto; }
   .author-list { justify-content: center; }
+  .cycle-step { grid-template-columns: 44px 1fr; gap: 1rem; padding: 1.2rem; }
 }
 </style>
 </head>
@@ -409,20 +421,16 @@ footer .container {
 
 <header>
   <div class="container nav">
-    <a href="#" class="logo">リスキリングだけでは<span>足りない</span></a>
+    <a href="#" class="logo">なぜ人は固まるのか<span>。</span></a>
     <ul class="nav-links">
       <li><a href="../index.html" class="nav-link">← サイトトップ</a></li>
-      <li><a href="#problem" class="nav-link">こんな感覚</a></li>
+      <li><a href="#problem" class="nav-link">こんな悩み</a></li>
       <li><a href="#concept" class="nav-link">コンセプト</a></li>
+      <li><a href="#filters" class="nav-link">五つのフィルター</a></li>
       <li><a href="#contents" class="nav-link">目次</a></li>
-      <li><a href="#method" class="nav-link">メソッド</a></li>
       <li><a href="#author" class="nav-link">著者</a></li>
     </ul>
-    <a href="https://www.amazon.co.jp/dp/B0H7K2CMC1" target="_blank" rel="noopener noreferrer" class="nav-cta">Amazonで見る</a>
-    <a href="https://youtu.be/kjc_3t9nMb8" target="_blank" rel="noopener noreferrer" class="nav-cta-outline">
-      <i data-lucide="youtube" style="width:16px;height:16px;"></i>
-      Youtubeで視る
-    </a>
+    <a href="https://www.amazon.co.jp/dp/B0H9F13NV8" target="_blank" rel="noopener noreferrer" class="nav-cta">Amazonで見る</a>
   </div>
 </header>
 
@@ -431,25 +439,20 @@ footer .container {
   <section class="hero" id="home">
     <div class="container">
       <div class="hero-content">
-        <span class="hero-tag">Kindleストアで発売中 ／ キャリア論・自己成長</span>
+        <span class="hero-tag">Kindleストアで発売中 ／ 心理学・自己啓発</span>
         <h1 class="hero-title">
-          スキルは増えているのに、<br>
-          <span class="title-accent">なぜか満たされない。</span>
+          なぜ人は固まるのか<br>
+          <span class="title-accent">人生は、反応OSのバグだった。</span>
         </h1>
-        <p class="hero-kicker">「縦軸の成長」が、AI時代の唯一無二の武器になる。</p>
+        <p class="hero-kicker">人生は、最初の0.5秒で決まっている。</p>
         <p class="hero-subtitle">
-          資格を取った。新しいツールを使えるようになった。担当範囲も広がった。
-          それでも消えない空洞感の正体は、「横軸」だけを積み上げ、「縦軸」を置き去りにしてきたことにある。
-          AIが横軸のスキルを代替するほど、縦に深まった人間の価値は上がる――逆説的な時代の中で、キャリアと人生を設計し直すための一冊。
+          会議で質問された瞬間、頭が真っ白になる。飲み会の帰り道、ひとりで反省会が始まる。なのに、お酒が入ると急に話せるようになる自分がいる。
+          もしそうだとしたら、足りないのは「話す能力」ではない。本書は、無意識のうちに働く「反応OS」という視点から、固まる理由の正体を解き明かす一冊である。
         </p>
         <div class="hero-actions">
-          <a href="https://www.amazon.co.jp/dp/B0H7K2CMC1" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+          <a href="https://www.amazon.co.jp/dp/B0H9F13NV8" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
             <i data-lucide="book-open" style="width:20px;height:20px;"></i>
             Amazonで購入する
-          </a>
-          <a href="https://youtu.be/kjc_3t9nMb8" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
-            <i data-lucide="youtube" style="width:20px;height:20px;"></i>
-            Youtubeで視る
           </a>
           <a href="#concept" class="btn btn-outline">
             <i data-lucide="arrow-down" style="width:18px;height:18px;"></i>
@@ -459,7 +462,20 @@ footer .container {
         <p class="hero-note">著者：たけ＠モダンロジック ／ Kindle版</p>
       </div>
       <div class="hero-cover">
-        <img src="reskilling.jpg" alt="『リスキリングだけでは足りない』表紙">
+        <img src="ReactionOS.jpg" alt="『なぜ人は固まるのか』表紙">
+      </div>
+    </div>
+  </section>
+
+  <!-- Video -->
+  <section id="video">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Trailer</span>
+        <h2>本書の紹介動画</h2>
+      </div>
+      <div class="video-wrap reveal">
+        <iframe src="https://www.youtube.com/embed/xTWRLQf8E_E" title="『なぜ人は固まるのか』紹介動画" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
     </div>
   </section>
@@ -470,32 +486,32 @@ footer .container {
       <div class="section-title reveal">
         <span class="hero-tag" style="border-color:#ef4444; color:#ef4444;">Reality Check</span>
         <h2>こんな感覚、ありませんか？</h2>
-        <p>まじめに、一生懸命に働いてきた人ほど、ある日突然この問いと向き合うことになる</p>
+        <p>性格のせいだと思っていたことが、実は「反応」の仕組みだったとしたら</p>
       </div>
       <div class="grid-3">
         <div class="glass-card reveal">
-          <div class="card-icon"><i data-lucide="battery-low"></i></div>
-          <p class="problem-quote">「これだけ頑張っているのに、なぜか満たされない」</p>
+          <div class="card-icon"><i data-lucide="message-square-warning"></i></div>
+          <p class="problem-quote">会議で質問された瞬間、頭の中にあったはずの言葉が出てこない</p>
         </div>
         <div class="glass-card reveal">
-          <div class="card-icon"><i data-lucide="repeat"></i></div>
-          <p class="problem-quote">「スキルは増えているのに、成長している気がしない」</p>
+          <div class="card-icon"><i data-lucide="moon"></i></div>
+          <p class="problem-quote">飲み会の帰り道、ひとりで「なんで黙ってしまったんだろう」と反省会が始まる</p>
         </div>
         <div class="glass-card reveal">
-          <div class="card-icon"><i data-lucide="compass"></i></div>
-          <p class="problem-quote">「このまま走り続けて、どこへ向かっているのだろう」</p>
+          <div class="card-icon"><i data-lucide="video"></i></div>
+          <p class="problem-quote">オンライン商談、カメラ越しの沈黙がやけに長く感じる</p>
         </div>
         <div class="glass-card reveal">
-          <div class="card-icon"><i data-lucide="graduation-cap"></i></div>
-          <p class="problem-quote">リスキリングを終えたのに、次に何を学べばいいかわからない</p>
+          <div class="card-icon"><i data-lucide="users"></i></div>
+          <p class="problem-quote">家族や親友の前では饒舌なのに、初対面だと言葉に詰まる</p>
         </div>
         <div class="glass-card reveal">
-          <div class="card-icon"><i data-lucide="bot"></i></div>
-          <p class="problem-quote">AIに任せられる仕事ばかりこなしている、という焦り</p>
+          <div class="card-icon"><i data-lucide="wine"></i></div>
+          <p class="problem-quote">お酒が入ると、急に自分が別人のように話せることに違和感がある</p>
         </div>
         <div class="glass-card reveal">
-          <div class="card-icon"><i data-lucide="award"></i></div>
-          <p class="problem-quote">昇進しても、肩書きが増えても、虚しさが消えない</p>
+          <div class="card-icon"><i data-lucide="help-circle"></i></div>
+          <p class="problem-quote">「自分はコミュニケーション能力が低いのだろうか」と、繰り返し考えてしまう</p>
         </div>
       </div>
     </div>
@@ -506,30 +522,30 @@ footer .container {
     <div class="container">
       <div class="section-title reveal">
         <span class="hero-tag">Core Concept</span>
-        <h2>成長には、「縦」と「横」がある</h2>
-        <p>車の両輪のように、どちらも欠かせない。しかし現代の職場は「横軸」しか評価しない</p>
+        <h2>足りないのは、能力ではなかった。</h2>
+        <p>会話力＝話す能力－自己防衛。本書はこの一つの式で、固まる理由を説明する</p>
       </div>
       <div class="grid-2" style="align-items:stretch;">
         <div class="glass-card axis-card yoko reveal">
-          <span class="axis-label">Horizontal</span>
-          <h3>横軸の成長<span style="color:var(--accent);">（広がり）</span></h3>
-          <p class="sub">スキル・知識・経験の幅。外から見えやすく、評価されやすい成長。</p>
+          <span class="axis-label">The Misconception</span>
+          <h3>能力不足という思い込み<span style="color:var(--accent);">（多くの人がハマる罠）</span></h3>
+          <p class="sub">「自分は口下手だ」と信じ込み、話し方の本を読み続けてしまう</p>
           <ul>
-            <li><span>✓</span>取得した資格、習得したツール</li>
-            <li><span>✓</span>担当できる業務の範囲</li>
-            <li><span>✓</span>関わったプロジェクトの数と種類</li>
-            <li><span>✓</span>転職・異動による業界・職種の幅</li>
+            <li><span>✓</span>話し方の本を読む、雑談術のセミナーに通う</li>
+            <li><span>✓</span>それでも初対面や評価される場面では変わらない</li>
+            <li><span>✓</span>「性格だから仕方ない」と諦める</li>
+            <li><span>✓</span>頭ではわかっているのに、言葉が出ない自分を責め続ける</li>
           </ul>
         </div>
         <div class="glass-card axis-card tate reveal">
-          <span class="axis-label">Vertical</span>
-          <h3>縦軸の成長<span style="color:var(--accent2);">（深まり）</span></h3>
-          <p class="sub">ものの見方の深さ・思考の質・人間性の成熟。数値化しにくいが、長期を支える土台。</p>
+          <span class="axis-label">The Reframe</span>
+          <h3>反応OSという視点<span style="color:var(--accent2);">（本書のアプローチ）</span></h3>
+          <p class="sub">刺激から言葉が出るまでには、目に見えない処理が走っている</p>
           <ul>
-            <li><span>✓</span>物事の本質を捉える力（概念化能力）</li>
-            <li><span>✓</span>複雑な状況を構造化して考える力</li>
-            <li><span>✓</span>異なる価値観を受け入れ、統合する力</li>
-            <li><span>✓</span>自分の前提を問い直す力（批判的内省）</li>
+            <li><span>✓</span>刺激→意味づけ→危険判定→自己監視→感情→防衛→反応、七つの通過点</li>
+            <li><span>✓</span>邪魔しているのは能力ではなく「自己防衛」というマイナス項</li>
+            <li><span>✓</span>防衛の感度は後天的に「インストール」されたものだから書き換えられる</li>
+            <li><span>✓</span>鍛えるべきは話術ではなく、不要なフィルターを減らすこと</li>
           </ul>
         </div>
       </div>
@@ -540,142 +556,145 @@ footer .container {
   <section class="quote-banner">
     <div class="container reveal">
       <p>
-        横に広がるだけの成長は、やがて<span class="title-accent">「燃え尽き」</span>に向かう。<br>
-        縦に深まるだけの成長は、<span class="title-accent2">「現実との乖離」</span>を生む。<br>
-        二つの軸が交差したとき、初めて「唯一無二の価値」が生まれる。
+        会話力＝話す能力－自己防衛。<br>
+        <span class="title-accent">多くの人に足りないのは、能力ではなく、防衛を外す技術である。</span>
       </p>
-      <p class="source">──『リスキリングだけでは足りない』本文より</p>
+      <p class="source">──『なぜ人は固まるのか』第6章より</p>
+    </div>
+  </section>
+
+  <!-- Where it comes from -->
+  <section id="upload" style="background: rgba(15, 23, 42, 0.4);">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Where It Comes From</span>
+        <h2>反応OSは、誰が作ったのか</h2>
+        <p>性格だと思っていたものの多くは、人生の中で少しずつインストールされたプログラムだった</p>
+      </div>
+      <div class="grid-4">
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="home"></i></div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.6rem;">親というインストーラー</h3>
+          <p style="color:var(--text-sub); font-size:0.88rem;">「失敗するな」「恥ずかしいことはやめて」――愛情から出た言葉が、危険判定の基準値を書き換えていく。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="graduation-cap"></i></div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.6rem;">学校・会社という追加アップデート</h3>
+          <p style="color:var(--text-sub); font-size:0.88rem;">一度の強烈な失敗より、百回の小さな「変な顔をされた」の方が、強固な回路を作る。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="smartphone"></i></div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.6rem;">SNS・恋愛という新しい入力経路</h3>
+          <p style="color:var(--text-sub); font-size:0.88rem;">評価が可視化され、記録が残り続ける環境が、危険判定をさらに過敏にする。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="scale"></i></div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.6rem;">成功体験と失敗体験の非対称性</h3>
+          <p style="color:var(--text-sub); font-size:0.88rem;">一度の強烈な失敗は、十回の成功体験よりも強く、反応パターンに刻まれる。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Five filters -->
+  <section id="filters">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Original Framework</span>
+        <h2>反応を止める五つのフィルター</h2>
+        <p>刺激が言葉に変わるまでに、必ず通過する五つの関門。多くの人は、このうち一つか二つが突出して強い</p>
+      </div>
+      <div class="cycle-wrap">
+        <div class="cycle-step reveal">
+          <div class="cycle-step-num">01</div>
+          <div><h3>危険判定<span class="compass-en">Risk Check</span></h3><p>これを言って大丈夫か。安全か危険かを、最初に計算する。</p></div>
+        </div>
+        <div class="cycle-step reveal">
+          <div class="cycle-step-num">02</div>
+          <div><h3>自己監視<span class="compass-en">Self-Monitor</span></h3><p>自分は今どう見えているか。声・表情・見え方を確認し続ける。</p></div>
+        </div>
+        <div class="cycle-step reveal">
+          <div class="cycle-step-num">03</div>
+          <div><h3>完璧主義<span class="compass-en">Perfectionism</span></h3><p>理想の発言と比較し、六〜七割の出来では出力を止めてしまう。</p></div>
+        </div>
+        <div class="cycle-step reveal">
+          <div class="cycle-step-num">04</div>
+          <div><h3>他者評価<span class="compass-en">Social Rank</span></h3><p>浮いていないか、評価が下がらないか。集団内の序列を計算する。</p></div>
+        </div>
+        <div class="cycle-step reveal">
+          <div class="cycle-step-num">05</div>
+          <div><h3>防衛本能<span class="compass-en">Defense</span></h3><p>黙る・そらす・ごまかす・取り繕う。最終的な出力を書き換える。</p></div>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- For whom -->
-  <section id="whom">
+  <section id="whom" style="background: rgba(15, 23, 42, 0.4);">
     <div class="container">
       <div class="section-title reveal">
         <span class="hero-tag">For You</span>
         <h2>こんな方におすすめです</h2>
       </div>
       <div class="whom-list">
-        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>スキルや資格は増えているのに、成長の実感が薄れてきたビジネスパーソン</span></div>
-        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>リスキリングやスキルアップに励んできたが、「次は何をすべきか」迷っている人</span></div>
-        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>AI時代に、自分の存在価値をどう再定義すればいいか考えたい人</span></div>
-        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>マネジメント職・専門職として、キャリアの中期に差しかかっている人</span></div>
-        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>複数の専門性を掛け合わせ、「#（シャープ）型人材」として自分の価値を築きたい人</span></div>
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>初対面や評価される場面になると、急に言葉が出なくなる人</span></div>
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>会議で発言のタイミングを逃し続ける人</span></div>
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>「話し方」の本を読んでも、根本的には変わらなかった人</span></div>
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>人と話す前に、考えすぎて疲れてしまう人</span></div>
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>お酒が入ったときの自分と、素面の自分の落差に違和感がある人</span></div>
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>自分の反応の仕組みを、客観的に知りたい人</span></div>
       </div>
     </div>
   </section>
 
   <!-- Contents -->
-  <section id="contents" style="background: rgba(15, 23, 42, 0.4);">
+  <section id="contents">
     <div class="container">
       <div class="section-title reveal">
         <span class="hero-tag">Contents</span>
         <h2>目次</h2>
-        <p>序章・5つの章・終章、そして巻末付録で構成</p>
+        <p>はじめに・全7章・終章・特別収録で構成</p>
       </div>
       <div class="toc-list">
         <div class="toc-item reveal">
-          <div class="toc-num">序章</div>
-          <div><h3>あなたの成長は、どちらに偏っていないか？</h3><p>成長には二つの軸がある／「リスキリング」だけでは足りない理由／「ポジションが人を育てる」の正体</p></div>
+          <div class="toc-num">はじめに</div>
+          <div><h3>あなたは話せない人ではない。反応できないだけだ。</h3><p>会話力＝話す能力－自己防衛。本書の中心にある式を提示する</p></div>
         </div>
         <div class="toc-item reveal">
           <div class="toc-num">第1章</div>
-          <div><h3>「キャリアの縦軸・横軸」とは何か</h3><p>AIが突きつけた横軸の限界／ハーズバーグが気づいていたこと／「#型人材」という新しい人間像</p></div>
+          <div><h3>人は「反応」でできている</h3><p>反応とは何か／「反応OS」という考え方／刺激から言葉が出るまでの七つの通過点</p></div>
         </div>
         <div class="toc-item reveal">
           <div class="toc-num">第2章</div>
-          <div><h3>横軸を広げる：スキルと可能性の拡張戦略</h3><p>リスキリングの正体／横軸を広げる3つのルート／リスキリングで縦軸に届かせる技術</p></div>
+          <div><h3>あなたの反応は誰が作ったのか</h3><p>親というインストーラー／学校・友達・会社という追加アップデート／SNS・恋愛という新しい入力経路</p></div>
         </div>
         <div class="toc-item reveal">
           <div class="toc-num">第3章</div>
-          <div><h3>縦軸を深める：思考と人間性の深化メソッド</h3><p>縦軸の成長が止まる3つの罠／5つの実践メソッド／縦軸の成長は、孤独ではなくなってきた</p></div>
+          <div><h3>反応を止める五つのフィルター</h3><p>危険判定・自己監視・完璧主義・他者評価・防衛本能／五つは独立していない、直列している</p></div>
         </div>
         <div class="toc-item reveal">
           <div class="toc-num">第4章</div>
-          <div><h3>2軸を交差させ、唯一無二の価値を生む</h3><p>「T型」の次へ／自分の「交差点」を発見する3ステップ／「#型人材」への道</p></div>
+          <div><h3>なぜ人は固まるのか</h3><p>反射神経には三つの種類がある／反応速度＝思考速度ではない／反応が速い人は「頭がいい」のではない</p></div>
         </div>
         <div class="toc-item reveal">
           <div class="toc-num">第5章</div>
-          <div><h3>人生100年時代の「ポートフォリオ成長」</h3><p>人生のフェーズと成長の重心／マルチステージの人生を生きる／「縦軸は老いない」</p></div>
+          <div><h3>照れの正体</h3><p>「うれしい」と「見られたくない」の同時発火／照れ・恥・謙遜・シャイの境界線</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第6章</div>
+          <div><h3>酒を飲むとなぜ話せるのか</h3><p>自己監視・危険判定・完璧主義が緩む理由／会話力＝話す能力－自己防衛</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第7章</div>
+          <div><h3>反応OSを書き換える</h3><p>安心を増やす・想定を増やす・即興練習・失敗体験・自己監視を弱める、五つのレベル</p></div>
         </div>
         <div class="toc-item reveal">
           <div class="toc-num">終章</div>
-          <div><h3>成長は、キャリアの通過点ではない</h3><p>「成長」の目的は何か／「器」が大きくなるとき／あなたへのエール</p></div>
+          <div><h3>人生は反応で決まる</h3><p>反応は性格ではない、設計できる／「反応の設計図」を手にしたあなたへ</p></div>
         </div>
         <div class="toc-item reveal">
-          <div class="toc-num">巻末<br>付録</div>
-          <div><h3>実践ワークシート A〜D</h3><p>自己診断シート／批判的内省ノート／成長実験設計シート／2軸型目標設定シート</p></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Method -->
-  <section id="method">
-    <div class="container">
-      <div class="section-title reveal">
-        <span class="hero-tag">5 Methods</span>
-        <h2>縦軸を鍛える、5つの実践メソッド</h2>
-        <p>海外赴任も昇進も必要ない。今日から、日常の中で実践できる技術</p>
-      </div>
-      <div class="grid-3">
-        <div class="glass-card reveal">
-          <div class="method-num">01</div>
-          <h3 style="font-size:1.1rem; margin-bottom:0.75rem;">批判的内省を習慣にする</h3>
-          <p style="color:var(--text-sub); font-size:0.9rem;">週1回、10〜15分の「内省ノート」で、判断の前提を問い直す。</p>
-        </div>
-        <div class="glass-card reveal">
-          <div class="method-num">02</div>
-          <h3 style="font-size:1.1rem; margin-bottom:0.75rem;">アンラーニングで思考を更新する</h3>
-          <p style="color:var(--text-sub); font-size:0.9rem;">「当たり前チェックリスト」で、過去の成功体験を意識的に手放す。</p>
-        </div>
-        <div class="glass-card reveal">
-          <div class="method-num">03</div>
-          <h3 style="font-size:1.1rem; margin-bottom:0.75rem;">メンタルモデルを書き換える</h3>
-          <p style="color:var(--text-sub); font-size:0.9rem;">「なぜ」を5回掘り、見えない天井の正体を意識の表面に浮かび上がらせる。</p>
-        </div>
-        <div class="glass-card reveal">
-          <div class="method-num">04</div>
-          <h3 style="font-size:1.1rem; margin-bottom:0.75rem;">多様なフィードバックで盲点を知る</h3>
-          <p style="color:var(--text-sub); font-size:0.9rem;">四方向（上位者・同僚・部下・社外）から、自分では気づけない癖を知る。</p>
-        </div>
-        <div class="glass-card reveal">
-          <div class="method-num">05</div>
-          <h3 style="font-size:1.1rem; margin-bottom:0.75rem;">経験の「質」を意図的に高める</h3>
-          <p style="color:var(--text-sub); font-size:0.9rem;">四半期に一度の「成長実験」で、少し難しい領域に踏み込み続ける。</p>
-        </div>
-        <div class="glass-card reveal" style="display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; background:linear-gradient(135deg, rgba(212,175,55,0.08), rgba(56,189,248,0.05));">
-          <i data-lucide="sparkles" style="color:var(--accent); width:32px; height:32px; margin-bottom:1rem;"></i>
-          <p style="font-size:0.95rem;">5つのメソッドはすべて、本書第3章で具体的な実践ステップとともに解説</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Appendix -->
-  <section id="appendix" style="background: rgba(15, 23, 42, 0.4);">
-    <div class="container">
-      <div class="section-title reveal">
-        <span class="hero-tag">Appendix</span>
-        <h2>読み終えた翌日から使える、巻末付録</h2>
-        <p>本を読み終えたその日から、自分の現在地を確認し、成長を設計するためのワークシート</p>
-      </div>
-      <div class="appendix-grid">
-        <div class="appendix-card reveal">
-          <img src="付録デザイン/A.png" alt="付録A 縦軸・横軸 自己診断シート">
-          <div class="appendix-caption"><h4>付録A</h4><p>縦軸・横軸　自己診断シート</p></div>
-        </div>
-        <div class="appendix-card reveal">
-          <img src="付録デザイン/B.png" alt="付録B 週次 批判的内省ノート">
-          <div class="appendix-caption"><h4>付録B</h4><p>週次　批判的内省ノート　テンプレート</p></div>
-        </div>
-        <div class="appendix-card reveal">
-          <img src="付録デザイン/C.png" alt="付録C 四半期 成長実験 設計シート">
-          <div class="appendix-caption"><h4>付録C</h4><p>四半期　成長実験　設計シート</p></div>
-        </div>
-        <div class="appendix-card reveal">
-          <img src="付録デザイン/D.png" alt="付録D 2軸型 目標設定シート">
-          <div class="appendix-caption"><h4>付録D</h4><p>2軸型　目標設定シート（個人・組織向け）</p></div>
+          <div class="toc-num">特別収録</div>
+          <div><h3>反応OS診断テスト（20問）</h3><p>自分がどのフィルターに強く支配されているかを、20の質問でセルフチェック</p></div>
         </div>
       </div>
     </div>
@@ -695,7 +714,7 @@ footer .container {
           <span class="author-role">ブランディング／組織開発／キャリアコンサルタント</span>
           <p style="color:var(--text-sub); font-size:0.95rem;">
             イオンネクスト、イオントップバリュ ブランドマネジメント部部長、デイモンワールドワイドジャパン、インターブランド／ランドーアソシエイツを経て、大企業レベルの経営戦略と組織変革を中小企業に伴走支援。
-            国家資格キャリアコンサルタントの学びをきっかけに、キャリアの中で至らなかった反省と関心を「縦軸・横軸」の成長フレームワークとしてまとめたのが本書。
+            心理学・脳科学・行動経済学の知見を横断し、人間の反応を一つのOSとして捉え直す独自フレームワーク「反応OS」を提唱し、本書にまとめた。
           </p>
           <ul class="author-list">
             <li><span>•</span>E-MBA 経営管理学修士 / 経済学士</li>
@@ -713,19 +732,15 @@ footer .container {
     <div class="container">
       <div class="glass-card cta-card reveal">
         <span class="hero-tag" style="margin-bottom:1.5rem;">Get Started</span>
-        <h2>横軸と縦軸、両方の成長を手に入れる旅を始めよう</h2>
+        <h2>必要なのは、話術ではない。<br>防衛が作動しない状態を、どうつくるかである。</h2>
         <p>
-          必要なのは、才能でも、海外赴任でも、劇的な転機でもない。<br>
-          日常の仕事の中で少し立ち止まり、少し問い直す。その積み重ねが「縦軸の成長」を引き起こす。
+          会話力＝話す能力－自己防衛。本書は、心理学・脳科学の知見を一つの理論に統合し、反応OSを書き換える具体的な方法まで示していく。<br>
+          巻末には20問の反応OS診断テストも収録。
         </p>
         <div class="hero-actions" style="justify-content:center;">
-          <a href="https://www.amazon.co.jp/dp/B0H7K2CMC1" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+          <a href="https://www.amazon.co.jp/dp/B0H9F13NV8" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
             <i data-lucide="book-open" style="width:20px;height:20px;"></i>
-            Kindleストアで『リスキリングだけでは足りない』を読む
-          </a>
-          <a href="https://youtu.be/kjc_3t9nMb8" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
-            <i data-lucide="youtube" style="width:20px;height:20px;"></i>
-            Youtubeで視る
+            Kindleストアで『なぜ人は固まるのか』を読む
           </a>
         </div>
       </div>
@@ -735,7 +750,7 @@ footer .container {
 
 <footer>
   <div class="container">
-    <div class="logo" style="font-size:0.95rem;">リスキリングだけでは<span>足りない</span></div>
+    <div class="logo" style="font-size:0.95rem;">なぜ人は固まるのか<span>。</span></div>
     <a href="../index.html" class="nav-link">← サイトトップへ戻る</a>
     <div>著者：たけ＠モダンロジック　© たけ＠モダンロジック All rights reserved.</div>
   </div>
