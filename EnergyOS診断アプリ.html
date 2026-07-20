@@ -1,0 +1,991 @@
+<title>Energy OS診断 ― 『人生はエネルギーで決まる』特典ツール</title>
+<style>
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+
+  :root {
+    color-scheme: light;
+    --page:        #f1efe4;
+    --surface:     #faf8f0;
+    --surface-2:   #eeeadb;
+    --ink:         #201d15;
+    --ink-2:       #5c5747;
+    --ink-muted:   #8b8571;
+    --hairline:    #ddd7c3;
+    --hairline-2:  #cec7ad;
+    --accent:      #a85a1c;
+    --accent-2:    #8a4a15;
+    --accent-soft: rgba(168, 90, 28, 0.12);
+    --ring:        rgba(32, 29, 21, 0.12);
+    --seq-1: #f4e6cf;
+    --seq-2: #e9cd9d;
+    --seq-3: #dcac68;
+    --seq-4: #c88938;
+    --seq-5: #a86c26;
+    --seq-6: #82501a;
+    --seq-7: #5c3711;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --page:        #17150e;
+      --surface:     #201d15;
+      --surface-2:   #2a261a;
+      --ink:         #f5f1e4;
+      --ink-2:       #c7c0a9;
+      --ink-muted:   #948d76;
+      --hairline:    #362f20;
+      --hairline-2:  #443b27;
+      --accent:      #e8a35a;
+      --accent-2:    #f0ba7f;
+      --accent-soft: rgba(232, 163, 90, 0.16);
+      --ring:        rgba(245, 241, 228, 0.14);
+      --seq-1: #362d1e;
+      --seq-2: #574627;
+      --seq-3: #7c612f;
+      --seq-4: #a17a37;
+      --seq-5: #c6953f;
+      --seq-6: #e2ac52;
+      --seq-7: #f4c580;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --page:        #17150e;
+    --surface:     #201d15;
+    --surface-2:   #2a261a;
+    --ink:         #f5f1e4;
+    --ink-2:       #c7c0a9;
+    --ink-muted:   #948d76;
+    --hairline:    #362f20;
+    --hairline-2:  #443b27;
+    --accent:      #e8a35a;
+    --accent-2:    #f0ba7f;
+    --accent-soft: rgba(232, 163, 90, 0.16);
+    --ring:        rgba(245, 241, 228, 0.14);
+    --seq-1: #362d1e;
+    --seq-2: #574627;
+    --seq-3: #7c612f;
+    --seq-4: #a17a37;
+    --seq-5: #c6953f;
+    --seq-6: #e2ac52;
+    --seq-7: #f4c580;
+  }
+  :root[data-theme="light"] {
+    color-scheme: light;
+    --page:        #f1efe4;
+    --surface:     #faf8f0;
+    --surface-2:   #eeeadb;
+    --ink:         #201d15;
+    --ink-2:       #5c5747;
+    --ink-muted:   #8b8571;
+    --hairline:    #ddd7c3;
+    --hairline-2:  #cec7ad;
+    --accent:      #a85a1c;
+    --accent-2:    #8a4a15;
+    --accent-soft: rgba(168, 90, 28, 0.12);
+    --ring:        rgba(32, 29, 21, 0.12);
+    --seq-1: #f4e6cf;
+    --seq-2: #e9cd9d;
+    --seq-3: #dcac68;
+    --seq-4: #c88938;
+    --seq-5: #a86c26;
+    --seq-6: #82501a;
+    --seq-7: #5c3711;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--page);
+    color: var(--ink);
+    font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic Medium", "Yu Gothic", "Noto Sans JP", sans-serif;
+    font-size: 16px;
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  .serif {
+    font-family: "Hiragino Mincho ProN", "YuMincho", "Yu Mincho", "Noto Serif JP", serif;
+  }
+  h1, h2, h3 { text-wrap: balance; margin: 0; font-weight: 600; }
+  p { margin: 0; }
+  button { font-family: inherit; }
+  ::selection { background: var(--accent-soft); }
+  a { color: var(--accent-2); }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  .shell { max-width: 900px; margin: 0 auto; padding: 0 24px 96px; }
+
+  /* ---------- top bar ---------- */
+  .topbar {
+    position: sticky; top: 0; z-index: 20;
+    background: color-mix(in srgb, var(--page) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .topbar-inner {
+    max-width: 900px; margin: 0 auto; padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
+  .brand { display: flex; flex-direction: column; gap: 1px; }
+  .brand .eyebrow { font-size: 0.68rem; letter-spacing: 0.14em; color: var(--ink-muted); }
+  .brand .title { font-size: 1rem; }
+  .brand .title b { font-weight: 600; }
+  .tabs { display: flex; gap: 4px; background: var(--surface-2); border-radius: 999px; padding: 3px; border: 1px solid var(--hairline); }
+  .tab-btn {
+    border: none; background: transparent; color: var(--ink-2);
+    font-size: 0.84rem; padding: 7px 16px; border-radius: 999px; cursor: pointer;
+    transition: background .15s ease, color .15s ease;
+  }
+  .tab-btn.active { background: var(--accent); color: var(--surface); font-weight: 600; }
+  .tab-btn:not(.active):hover { background: var(--hairline); color: var(--ink); }
+
+  /* ---------- generic pieces ---------- */
+  .eyebrow-label {
+    font-size: 0.7rem; letter-spacing: 0.16em; color: var(--accent-2); font-weight: 700;
+  }
+  .card {
+    background: var(--surface); border: 1px solid var(--hairline); border-radius: 18px;
+  }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    border-radius: 999px; border: 1px solid transparent; cursor: pointer;
+    font-size: 0.94rem; padding: 13px 28px; font-weight: 600;
+    transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+  }
+  .btn:active { transform: scale(0.98); }
+  .btn-primary { background: var(--accent); color: var(--surface); }
+  .btn-primary:hover { background: var(--accent-2); }
+  .btn-ghost { background: transparent; color: var(--ink); border-color: var(--hairline-2); }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent-2); }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn[disabled]:hover { background: var(--accent); }
+
+  .quote-block {
+    border-left: 3px solid var(--accent); padding: 4px 0 4px 20px; color: var(--ink-2);
+    font-style: normal;
+  }
+
+  /* ---------- HERO / INTRO ---------- */
+  .hero { padding: 72px 0 40px; }
+  .hero .kicker { display:flex; align-items:center; gap:10px; margin-bottom: 22px; }
+  .kicker-mark {
+    width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.95rem; color: var(--accent-2);
+  }
+  .hero h1 {
+    font-size: clamp(1.9rem, 4.6vw, 2.9rem); line-height: 1.35;
+  }
+  .hero .lede { margin-top: 20px; max-width: 54ch; color: var(--ink-2); font-size: 1.02rem; }
+  .hero-meta {
+    margin-top: 30px; display: flex; flex-wrap: wrap; gap: 10px 28px;
+    font-size: 0.86rem; color: var(--ink-muted);
+  }
+  .hero-meta span { display:flex; align-items:center; gap:7px; }
+  .dot { width:5px; height:5px; border-radius:50%; background: var(--accent); flex: none; }
+  .hero-cta { margin-top: 38px; display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+  .hero-note { font-size: 0.82rem; color: var(--ink-muted); }
+
+  .energy-preview {
+    margin-top: 56px; display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px;
+  }
+  .preview-chip {
+    border: 1px solid var(--hairline); border-radius: 14px; padding: 14px 6px;
+    text-align: center; background: var(--surface);
+  }
+  .preview-chip .badge {
+    width: 34px; height: 34px; border-radius: 50%; margin: 0 auto 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: "Hiragino Mincho ProN","YuMincho","Yu Mincho",serif;
+    font-size: 1rem; color: var(--surface); background: var(--seq-5);
+  }
+  .preview-chip .name { font-size: 0.72rem; color: var(--ink-2); }
+
+  /* ---------- QUIZ ---------- */
+  .quiz-wrap { padding: 44px 0; }
+  .progress-track { display: flex; gap: 6px; margin-bottom: 30px; }
+  .progress-seg { flex: 1; height: 4px; border-radius: 2px; background: var(--hairline); overflow: hidden; }
+  .progress-seg > i { display:block; height: 100%; width: 0%; background: var(--accent); transition: width .25s ease; }
+  .progress-seg.done > i { width: 100%; }
+  .progress-seg.current > i { width: 100%; }
+
+  .cat-head { display: flex; align-items: center; gap: 16px; margin-bottom: 8px; }
+  .cat-badge {
+    width: 54px; height: 54px; border-radius: 50%; flex: none;
+    display: flex; align-items: center; justify-content: center;
+    font-family: "Hiragino Mincho ProN","YuMincho","Yu Mincho",serif;
+    font-size: 1.5rem; color: var(--surface); background: var(--accent);
+  }
+  .cat-head .cat-eyebrow { font-size: 0.72rem; color: var(--ink-muted); letter-spacing: 0.08em; }
+  .cat-head h2 { font-size: 1.5rem; margin-top: 2px; }
+  .cat-head .cat-sub { font-size: 0.86rem; color: var(--ink-2); margin-top: 2px; }
+
+  .q-list { margin-top: 32px; display: flex; flex-direction: column; gap: 26px; }
+  .q-item { padding-bottom: 26px; border-bottom: 1px solid var(--hairline); }
+  .q-item:last-child { border-bottom: none; }
+  .q-text { font-size: 1rem; margin-bottom: 16px; }
+  .likert { display: flex; align-items: center; gap: 8px; }
+  .likert-scale { display: flex; gap: 8px; flex: none; }
+  .likert-opt {
+    width: 42px; height: 42px; border-radius: 50%; border: 1.5px solid var(--hairline-2);
+    background: var(--surface); cursor: pointer; color: var(--ink-muted);
+    font-size: 0.8rem; display:flex; align-items:center; justify-content:center;
+    transition: all .12s ease;
+  }
+  .likert-opt:hover { border-color: var(--accent); color: var(--accent-2); }
+  .likert-opt.picked { background: var(--accent); border-color: var(--accent); color: var(--surface); font-weight: 700; }
+  .likert-labels { display: flex; justify-content: space-between; margin-top: 8px; font-size: 0.72rem; color: var(--ink-muted); }
+
+  .quiz-nav { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; }
+  .quiz-nav .step-count { font-size: 0.8rem; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+
+  /* ---------- RESULTS ---------- */
+  .results-wrap { padding: 44px 0; }
+  .results-head { text-align: center; margin-bottom: 8px; }
+  .results-head .eyebrow-label { display:block; margin-bottom: 10px; }
+  .results-head h2 { font-size: clamp(1.6rem, 3.6vw, 2.1rem); }
+
+  .radar-panel {
+    margin-top: 36px; padding: 28px 12px 8px; display: flex; flex-direction: column; align-items: center; gap: 18px;
+  }
+  .radar-callouts { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 4px; }
+  .callout-chip {
+    display: flex; align-items: center; gap: 10px; border: 1px solid var(--hairline);
+    border-radius: 14px; padding: 10px 16px; background: var(--surface-2);
+    font-size: 0.84rem;
+  }
+  .callout-chip .cc-label { color: var(--ink-muted); }
+  .callout-chip .cc-val { font-weight: 700; color: var(--accent-2); }
+
+  .balance-line { max-width: 62ch; text-align: center; margin: 22px auto 0; color: var(--ink-2); font-size: 0.94rem; }
+
+  .card-grid {
+    margin-top: 40px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;
+  }
+  .e-card { padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+  .e-card-top { display: flex; align-items: center; gap: 12px; }
+  .e-badge {
+    width: 42px; height: 42px; border-radius: 50%; flex: none;
+    display: flex; align-items: center; justify-content: center;
+    font-family: "Hiragino Mincho ProN","YuMincho","Yu Mincho",serif; font-size: 1.15rem; color: var(--surface);
+  }
+  .e-name { font-size: 1.02rem; font-weight: 600; }
+  .e-sub { font-size: 0.74rem; color: var(--ink-muted); }
+  .e-score-row { margin-left: auto; text-align: right; }
+  .e-score { font-size: 1.5rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--accent-2); }
+  .e-score small { font-size: 0.7rem; color: var(--ink-muted); font-weight: 400; }
+  .e-bar-track { height: 6px; border-radius: 3px; background: var(--hairline); overflow: hidden; }
+  .e-bar-fill { height: 100%; border-radius: 3px; background: var(--accent); }
+  .e-tier { display: inline-block; align-self: flex-start; font-size: 0.68rem; letter-spacing: 0.04em; padding: 3px 10px; border-radius: 999px; background: var(--surface-2); color: var(--ink-2); border: 1px solid var(--hairline); }
+  .e-text { font-size: 0.86rem; color: var(--ink-2); }
+
+  .closing-quote { margin-top: 52px; padding: 30px 32px; }
+  .closing-quote p { font-size: 1.05rem; }
+  .closing-quote .src { display:block; margin-top: 14px; font-size: 0.78rem; color: var(--ink-muted); }
+
+  .results-actions { margin-top: 34px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  /* ---------- JOURNAL ---------- */
+  .journal-wrap { padding: 44px 0; }
+  .journal-head h2 { font-size: 1.7rem; }
+  .journal-head .lede { margin-top: 10px; color: var(--ink-2); font-size: 0.94rem; max-width: 60ch; }
+  .save-note { margin-top: 14px; display: inline-flex; align-items: center; gap: 8px; font-size: 0.78rem; color: var(--ink-muted); border: 1px dashed var(--hairline-2); border-radius: 999px; padding: 6px 14px; }
+
+  .step-block { margin-top: 40px; }
+  .step-tag { display:flex; align-items:baseline; gap: 10px; margin-bottom: 14px; }
+  .step-num { font-family: "Hiragino Mincho ProN","YuMincho","Yu Mincho",serif; font-size: 1.3rem; color: var(--accent-2); }
+  .step-title { font-size: 1.08rem; font-weight: 600; }
+  .step-body { padding: 22px; }
+
+  .balance-slider-row input[type=range] { width: 100%; accent-color: var(--accent); height: 26px; }
+  .balance-scale-labels { display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--ink-muted); margin-top: 4px; }
+  .balance-readout { display:flex; align-items:baseline; gap: 10px; margin-top: 14px; }
+  .balance-readout .bv { font-size: 1.8rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .balance-readout .bl { font-size: 0.92rem; color: var(--ink-2); }
+
+  .checklist-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .checklist-col h4 { font-size: 0.86rem; color: var(--ink-2); margin-bottom: 12px; font-weight: 600; }
+  .chk-item { display: flex; align-items: center; gap: 10px; padding: 7px 0; font-size: 0.9rem; cursor: pointer; }
+  .chk-item input { accent-color: var(--accent); width: 16px; height: 16px; }
+  .chk-other { margin-top: 8px; width: 100%; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--hairline-2); background: var(--page); color: var(--ink); font-size: 0.86rem; }
+
+  .step4-layout { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 28px; align-items: center; }
+  .mini-sliders { display: flex; flex-direction: column; gap: 16px; }
+  .mini-slider-row { display: grid; grid-template-columns: 28px 1fr 30px; align-items: center; gap: 10px; }
+  .mini-slider-row .msr-badge {
+    width: 26px; height: 26px; border-radius: 50%; display:flex; align-items:center; justify-content:center;
+    font-family: "Hiragino Mincho ProN","YuMincho","Yu Mincho",serif; font-size: 0.78rem; color: var(--surface); background: var(--accent);
+  }
+  .mini-slider-row input[type=range] { width: 100%; accent-color: var(--accent); }
+  .mini-slider-row .msr-val { text-align: right; font-variant-numeric: tabular-nums; font-size: 0.86rem; color: var(--ink-2); }
+  .mini-radar-box { display: flex; align-items: center; justify-content: center; }
+
+  textarea.journal-input {
+    width: 100%; min-height: 84px; resize: vertical; border-radius: 12px; border: 1px solid var(--hairline-2);
+    background: var(--page); color: var(--ink); font-family: inherit; font-size: 0.94rem; padding: 14px; line-height: 1.7;
+  }
+  .suggestion-row { margin-top: 14px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .suggestion-chip {
+    font-size: 0.84rem; color: var(--ink-2); background: var(--surface-2); border: 1px solid var(--hairline);
+    border-radius: 12px; padding: 10px 14px; flex: 1; min-width: 200px;
+  }
+  .suggestion-chip b { color: var(--accent-2); }
+  .shuffle-btn {
+    border: 1px solid var(--hairline-2); background: transparent; color: var(--ink-2); border-radius: 999px;
+    padding: 9px 16px; font-size: 0.8rem; cursor: pointer;
+  }
+  .shuffle-btn:hover { border-color: var(--accent); color: var(--accent-2); }
+
+  .receipt {
+    margin-top: 48px; padding: 28px; border: 1px dashed var(--hairline-2); border-radius: 18px; background: var(--surface-2);
+  }
+  .receipt h3 { font-size: 1rem; margin-bottom: 18px; }
+  .receipt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 28px; font-size: 0.86rem; }
+  .receipt-row dt { color: var(--ink-muted); font-size: 0.72rem; letter-spacing: 0.04em; margin-bottom: 4px; }
+  .receipt-row dd { margin: 0; color: var(--ink); }
+
+  footer.app-footer {
+    max-width: 900px; margin: 0 auto; padding: 40px 24px 60px; color: var(--ink-muted); font-size: 0.76rem;
+    border-top: 1px solid var(--hairline); margin-top: 40px;
+  }
+
+  svg text { font-family: "Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",sans-serif; }
+  .radar-score-label { font-variant-numeric: tabular-nums; }
+
+  @media (max-width: 720px) {
+    .energy-preview { grid-template-columns: repeat(4, 1fr); }
+    .card-grid { grid-template-columns: 1fr; }
+    .checklist-cols { grid-template-columns: 1fr; }
+    .step4-layout { grid-template-columns: 1fr; }
+    .likert-opt { width: 36px; height: 36px; }
+    .topbar-inner { flex-wrap: wrap; }
+  }
+</style>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="eyebrow">ENERGY OS TOOLKIT</span>
+      <span class="title serif">人生はエネルギーで決まる ― <b>特典ツール</b></span>
+    </div>
+    <div class="tabs">
+      <button class="tab-btn" id="tabDiag" onclick="setView('diagnosis')">診断ツール</button>
+      <button class="tab-btn" id="tabJournal" onclick="setView('journal')">デイリーチェック</button>
+    </div>
+  </div>
+</div>
+
+<div class="shell" id="app"></div>
+
+<footer class="app-footer">
+  本ツールは書籍『人生はエネルギーで決まる』第3章「あなたの現在地を知る」の内容をもとに構成された、読者向けの自己理解ワークです。診断結果は医学的・心理学的な評価ではありません。入力内容はこの端末上でのみ処理され、どこにも送信・保存されません。
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var ENERGIES = [
+    { key:'body',        kanji:'身', name:'身体', sub:'すべての土台' },
+    { key:'thought',     kanji:'思', name:'思考', sub:'集中し、判断する力' },
+    { key:'emotion',     kanji:'感', name:'感情', sub:'喜びや安心を生み出す力' },
+    { key:'relation',    kanji:'関', name:'関係', sub:'人とのつながりから得る力' },
+    { key:'meaning',     kanji:'意', name:'意味', sub:'「何のために」を支える力' },
+    { key:'environment', kanji:'環', name:'環境', sub:'空間や情報から受ける影響' },
+    { key:'creation',    kanji:'創', name:'創造', sub:'未来を生み出す力' }
+  ];
+
+  var QUESTIONS = {
+    body: [
+      'ここ最近、睡眠時間や睡眠の質に満足している',
+      '朝、太陽の光を浴びる習慣がある',
+      '日常的によく歩いている、または軽く体を動かしている',
+      '食事はよく噛んで、規則正しく取れている',
+      '体の疲れは、休めばきちんと回復していると感じる'
+    ],
+    thought: [
+      '一つの作業に集中できる時間がある',
+      'スマホやメールの通知に振り回されずにいられる',
+      '考えごとが頭の中でぐるぐる回り続けることは少ない',
+      '何も考えない、ぼんやりする時間を意識的に取れている',
+      '判断や決断をスムーズに行えている'
+    ],
+    emotion: [
+      '最近、嬉しいことや楽しいことがあった',
+      '怒りや不安を感じても、それを否定せずに受け止められる',
+      '感謝の気持ちを感じる場面が日常にある',
+      '感情的になっても、比較的早く落ち着きを取り戻せる',
+      '自分を責めすぎることは少ない'
+    ],
+    relation: [
+      '本音を話せる相手がいる',
+      '最近、誰かに「ありがとう」を伝えた',
+      '人と会った後、疲れよりも元気をもらうことが多い',
+      '無理に「いい人」を演じていないと感じる',
+      '困ったときに助けを求められる人がいる'
+    ],
+    meaning: [
+      '今取り組んでいることの「なぜ」を自分の言葉で説明できる',
+      '自分が誰かの役に立てていると感じる瞬間がある',
+      '今の努力は未来につながっていると感じる',
+      '「何のためにやっているのか」を見失うことは少ない',
+      '自分らしい選択ができていると感じる'
+    ],
+    environment: [
+      '机やデスクトップは片付いていて、気持ちよく作業できる',
+      '寝室は静かで、休むのに適した環境になっている',
+      '身の回りの音・光・情報の量に、あまりストレスを感じない',
+      '集中したいときに集中できる環境を自分で作れている',
+      '家や職場の空間に、心地よさを感じる'
+    ],
+    creation: [
+      '最近、初めての場所・本・体験に触れた',
+      '新しいことを学ぶのが楽しいと感じる',
+      '遊びや趣味の時間を後ろめたさなく取れている',
+      '好奇心を感じる瞬間が日常にある',
+      '未来に対してワクワクする気持ちがある'
+    ]
+  };
+
+  var LIKERT_LABELS = ['全くあてはまらない', 'あまりあてはまらない', 'どちらともいえない', 'ややあてはまる', 'とてもあてはまる'];
+
+  var TIER_TEXT = {
+    body: {
+      low:  '身体エネルギーが不足気味です。他の6つのエネルギーを支える土台が揺らいでいるサインかもしれません。まずは睡眠を最優先にし、朝の光を浴びる、少し歩くなど、小さな充電から始めましょう。',
+      mid:  '疲れが完全には抜けきっていないようです。特別なことをする前に、睡眠・食事・呼吸という基本を整えることが、いちばんの近道です。',
+      good: '身体という土台はしっかり機能しています。この状態を保ちながら、他のエネルギーを育てる余力として活かしていきましょう。',
+      high: '身体エネルギーは満ちています。人生という車のエンジンが安定して動いている状態です。この土台を大切に、無理のない範囲で挑戦を広げていけます。'
+    },
+    thought: {
+      low:  '情報や判断に追われ、思考エネルギーが底をついているようです。「考える」ではなく「考え続ける」思考のアイドリングに陥っていないか確認してみましょう。通知を切る時間や、ぼんやりする時間が効果的です。',
+      mid:  '頭の中が少し忙しい状態のようです。一つの作業に集中できる余白を意識的につくることで、判断力や集中力が戻ってきます。',
+      good: '思考エネルギーは安定しています。情報に振り回されず、必要な判断ができている状態です。',
+      high: '頭が冴え、集中も判断もスムーズな状態です。この余白を活かして、新しいことを学ぶのにも良いタイミングです。'
+    },
+    emotion: {
+      low:  '感情エネルギーがかなり消耗しているようです。感情を否定せず、まずは「今、自分は何を感じているか」を受け止めることから始めてみましょう。感謝や小さな喜びを思い出す時間も効果的です。',
+      mid:  '感情に少し余裕がなくなっているサインです。自分を責めすぎず、嬉しかったことを一つ思い出す時間を持ってみてください。',
+      good: '感情エネルギーは比較的安定しています。喜びや感謝を感じる場面を大切にしながら過ごせています。',
+      high: '感情エネルギーが満ちています。人間らしく生きるための土台がしっかりしている状態です。'
+    },
+    relation: {
+      low:  '人間関係でかなり消耗しているようです。「いい人」を演じ続けることは大きなエネルギーリークになります。無理な関係を少し手放す、本音を話せる相手に頼ることも大切です。',
+      mid:  '関係エネルギーが少し減っているようです。「ありがとう」を一人に伝える、話を最後まで聞くといった小さな行動が回復のきっかけになります。',
+      good: '信頼できる関係が、あなたのエネルギー源になっています。この関係を大切に育てていきましょう。',
+      high: '関係エネルギーが満ちています。人とのつながりが、あなたの大きな力になっている状態です。'
+    },
+    meaning: {
+      low:  '「何のためにやっているのか」を見失いかけているようです。意味エネルギーの低下は、身体が元気でも動けなくなる最大の要因です。「今日、誰の役に立てたか」を問いかけることから始めてみましょう。',
+      mid:  '目的や意義が少し見えにくくなっているサインです。今取り組んでいることの「なぜ」を、自分の言葉にしてみることが助けになります。',
+      good: '自分らしい選択ができており、意味エネルギーは安定しています。',
+      high: '意味エネルギーが満ちています。目的が苦労を超える力になっている状態です。困難にも折れにくいでしょう。'
+    },
+    environment: {
+      low:  '身の回りの環境が、知らず知らずのうちにエネルギーを奪っているかもしれません。散らかった机や終わらない通知は、思考エネルギーまで消耗させます。10分だけでも身の回りを整えてみましょう。',
+      mid:  '環境から受ける影響が、やや負担になっているようです。集中したい場所、休みたい場所を少しずつ分けて整えることが効果的です。',
+      good: '環境エネルギーは安定しています。空間が、あなたの力を静かに支えてくれています。',
+      high: '環境エネルギーが満ちています。身の回りの空間が、あなたを自然と後押ししてくれる状態です。'
+    },
+    creation: {
+      low:  '新しいことに触れる余裕がなくなっているようです。創造エネルギーの低下は、未来への意欲そのものを弱らせます。初めての本、初めての道など、小さな「初めて」を生活に取り戻してみましょう。',
+      mid:  '好奇心を発揮する場面が少し減っているようです。遊びや趣味の時間は浪費ではなく、未来への投資です。',
+      good: '創造エネルギーは安定しています。新しいことへの興味を、無理なく生活に取り入れられています。',
+      high: '創造エネルギーが満ちています。未来に可能性を感じ、自然と挑戦したくなる状態です。'
+    }
+  };
+
+  var TODAY_STEPS = {
+    body:        ['就寝時間を30分だけ早める', '朝5分、太陽の光を浴びる', '一駅分だけ歩く'],
+    thought:     ['通知を1時間オフにする', 'ノートに考えを書き出す', '10分だけ何もしない時間をつくる'],
+    emotion:     ['今日うれしかったことを3つ書く', '「今、自分は何を感じている？」と自分に問いかける', '一人で静かに深呼吸する時間を持つ'],
+    relation:    ['「ありがとう」を一人に伝える', '誰かの話を最後まで遮らずに聞く', '一つだけ無理な頼みを断ってみる'],
+    meaning:     ['「今日、私は誰の役に立てただろうか」と問いかけてみる'],
+    environment: ['机を10分だけ片づける', 'スマートフォンを寝室に持ち込まない', '観葉植物や花を一つ置く'],
+    creation:    ['初めての店に入ってみる', '普段読まないジャンルの本を開く', '新しい趣味を30分だけ試す']
+  };
+
+  var INCREASE_ITEMS = ['よく眠れた', '運動した', '家族と話した', '読書した', '自然に触れた', '人に感謝された', '新しいことを学んだ', '趣味を楽しんだ', '部屋を片付けた'];
+  var DECREASE_ITEMS = ['睡眠不足', '長時間会議', '苦手な人との会話', 'SNS', '将来への不安', '他人との比較', '散らかった部屋', '完璧主義', '忙しすぎた'];
+
+  function tierOf(score) {
+    if (score < 4) return 'low';
+    if (score < 6.5) return 'mid';
+    if (score < 8.5) return 'good';
+    return 'high';
+  }
+  var TIER_LABEL = { low: '枯渇気味', mid: 'やや不足', good: '整っている', high: '満ちている' };
+
+  function seqColor(score) {
+    var steps = ['--seq-1','--seq-2','--seq-3','--seq-4','--seq-5','--seq-6','--seq-7'];
+    var idx = Math.round((score / 10) * (steps.length - 1));
+    idx = Math.max(0, Math.min(steps.length - 1, idx));
+    return 'var(' + steps[idx] + ')';
+  }
+
+  function escapeHtml(s) {
+    return String(s || '').replace(/[&<>"']/g, function (c) {
+      return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
+    });
+  }
+
+  /* ---------------- state ---------------- */
+  var state = {
+    view: 'diagnosis',
+    stage: 'intro',
+    qIndex: 0,
+    answers: {},
+    results: null,
+    journal: {
+      balance: 0,
+      inc: {}, dec: {}, incOther: '', decOther: '',
+      scores: (function () { var o = {}; ENERGIES.forEach(function (e) { o[e.key] = 5; }); return o; })(),
+      word: '', tomorrow: '',
+      tipEnergy: null, tipIndex: 0
+    }
+  };
+
+  /* ---------------- radar chart ---------------- */
+  function polar(cx, cy, angleDeg, r) {
+    var a = (angleDeg - 90) * Math.PI / 180;
+    return { x: cx + r * Math.cos(a), y: cy + r * Math.sin(a) };
+  }
+
+  function radarSVG(data, opts) {
+    opts = opts || {};
+    var size = opts.size || 380;
+    var showScores = opts.showScores !== false;
+    var cx = size / 2, cy = size / 2, R = size * 0.34;
+    var n = data.length;
+    var step = 360 / n;
+    var rings = [0.2, 0.4, 0.6, 0.8, 1.0];
+
+    var gridPolys = rings.map(function (frac) {
+      var pts = data.map(function (d, i) {
+        var p = polar(cx, cy, i * step, R * frac);
+        return p.x.toFixed(1) + ',' + p.y.toFixed(1);
+      }).join(' ');
+      return '<polygon points="' + pts + '" fill="none" stroke="var(--hairline)" stroke-width="1"/>';
+    }).join('');
+
+    var spokes = data.map(function (d, i) {
+      var p = polar(cx, cy, i * step, R);
+      return '<line x1="' + cx + '" y1="' + cy + '" x2="' + p.x.toFixed(1) + '" y2="' + p.y.toFixed(1) + '" stroke="var(--hairline)" stroke-width="1"/>';
+    }).join('');
+
+    var shapePts = data.map(function (d, i) {
+      var p = polar(cx, cy, i * step, R * (d.score / 10));
+      return p.x.toFixed(1) + ',' + p.y.toFixed(1);
+    }).join(' ');
+
+    var dots = data.map(function (d, i) {
+      var p = polar(cx, cy, i * step, R * (d.score / 10));
+      return '<circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="4.5" fill="var(--accent)" stroke="var(--surface)" stroke-width="1.5"/>';
+    }).join('');
+
+    var labels = data.map(function (d, i) {
+      var p = polar(cx, cy, i * step, R + (opts.labelGap || 34));
+      var anchor = 'middle';
+      if (p.x < cx - 10) anchor = 'end';
+      else if (p.x > cx + 10) anchor = 'start';
+      var lines = '<text x="' + p.x.toFixed(1) + '" y="' + (p.y - 2).toFixed(1) + '" text-anchor="' + anchor + '" font-size="13" font-weight="700" fill="var(--ink)">' + escapeHtml(d.name) + '</text>';
+      if (showScores) {
+        lines += '<text x="' + p.x.toFixed(1) + '" y="' + (p.y + 14).toFixed(1) + '" text-anchor="' + anchor + '" font-size="11" class="radar-score-label" fill="var(--accent-2)">' + d.score.toFixed(1) + '</text>';
+      }
+      return lines;
+    }).join('');
+
+    return '' +
+      '<svg viewBox="0 0 ' + size + ' ' + size + '" width="' + size + '" height="' + size + '" role="img" aria-label="7つのエネルギーのレーダーチャート">' +
+      gridPolys + spokes +
+      '<polygon points="' + shapePts + '" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2.5" stroke-linejoin="round"/>' +
+      dots + labels +
+      '</svg>';
+  }
+
+  /* ---------------- routing / render ---------------- */
+  function setView(v) {
+    state.view = v;
+    document.getElementById('tabDiag').classList.toggle('active', v === 'diagnosis');
+    document.getElementById('tabJournal').classList.toggle('active', v === 'journal');
+    render();
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }
+
+  function render() {
+    var app = document.getElementById('app');
+    if (state.view === 'diagnosis') {
+      if (state.stage === 'intro') app.innerHTML = renderIntro();
+      else if (state.stage === 'quiz') app.innerHTML = renderQuiz();
+      else app.innerHTML = renderResults();
+    } else {
+      app.innerHTML = renderJournal();
+      wireJournalEvents();
+    }
+  }
+
+  /* ---------------- intro ---------------- */
+  function renderIntro() {
+    var chips = ENERGIES.map(function (e) {
+      return '<div class="preview-chip"><div class="badge">' + e.kanji + '</div><div class="name">' + e.name + '</div></div>';
+    }).join('');
+
+    return '' +
+    '<section class="hero">' +
+      '<div class="kicker"><div class="kicker-mark serif">診</div><span class="eyebrow-label">CHAPTER 3 ｜ あなたの現在地を知る</span></div>' +
+      '<h1 class="serif">地図を持たずに、<br>人生という旅に出ていませんか。</h1>' +
+      '<p class="lede">現在地が分からなければ、どんなアドバイスも役に立ちません。この診断は、あなたを評価するためのものではなく、7つのエネルギーの「今の状態」を映す地図です。35の質問に答えると、あなた専用のレーダーチャートが完成します。</p>' +
+      '<div class="hero-meta">' +
+        '<span><i class="dot"></i>質問数　35問</span>' +
+        '<span><i class="dot"></i>所要時間　約5分</span>' +
+        '<span><i class="dot"></i>この端末上でのみ計算・保存はされません</span>' +
+      '</div>' +
+      '<div class="hero-cta">' +
+        '<button class="btn btn-primary" onclick="startQuiz()">診断をはじめる →</button>' +
+        '<span class="hero-note">正解・不正解はありません。直感で答えてください。</span>' +
+      '</div>' +
+      '<div class="energy-preview">' + chips + '</div>' +
+    '</section>';
+  }
+
+  function startQuiz() {
+    state.stage = 'quiz';
+    state.qIndex = 0;
+    state.answers = {};
+    render();
+  }
+
+  /* ---------------- quiz ---------------- */
+  function renderQuiz() {
+    var idx = state.qIndex;
+    var e = ENERGIES[idx];
+    var qs = QUESTIONS[e.key];
+    var ans = state.answers[e.key] || [];
+
+    var segs = ENERGIES.map(function (_, i) {
+      var cls = i < idx ? 'done' : (i === idx ? 'current' : '');
+      return '<div class="progress-seg ' + cls + '"><i></i></div>';
+    }).join('');
+
+    var qHtml = qs.map(function (q, qi) {
+      var picked = ans[qi];
+      var opts = [0, 1, 2, 3, 4].map(function (v) {
+        var cls = picked === v ? 'picked' : '';
+        return '<button class="likert-opt ' + cls + '" onclick="pick(\'' + e.key + '\',' + qi + ',' + v + ')" aria-label="' + LIKERT_LABELS[v] + '">' + (v + 1) + '</button>';
+      }).join('');
+      return '' +
+        '<div class="q-item">' +
+          '<p class="q-text">' + escapeHtml(q) + '</p>' +
+          '<div class="likert"><div class="likert-scale">' + opts + '</div></div>' +
+          '<div class="likert-labels"><span>あてはまらない</span><span>とてもあてはまる</span></div>' +
+        '</div>';
+    }).join('');
+
+    var allAnswered = ans.length === 5 && ans.every(function (v) { return typeof v === 'number'; });
+    var isLast = idx === ENERGIES.length - 1;
+
+    return '' +
+    '<section class="quiz-wrap">' +
+      '<div class="progress-track">' + segs + '</div>' +
+      '<div class="cat-head">' +
+        '<div class="cat-badge">' + e.kanji + '</div>' +
+        '<div><div class="cat-eyebrow">CATEGORY ' + (idx + 1) + ' / ' + ENERGIES.length + '</div><h2 class="serif">' + e.name + 'エネルギー</h2><div class="cat-sub">' + e.sub + '</div></div>' +
+      '</div>' +
+      '<div class="q-list">' + qHtml + '</div>' +
+      '<div class="quiz-nav">' +
+        (idx > 0 ? '<button class="btn btn-ghost" onclick="prevCat()">← 戻る</button>' : '<span></span>') +
+        '<span class="step-count">' + ans.filter(function(v){return typeof v==='number';}).length + ' / 5 回答済み</span>' +
+        '<button class="btn btn-primary" onclick="nextCat()" ' + (allAnswered ? '' : 'disabled') + '>' + (isLast ? '結果を見る →' : '次へ →') + '</button>' +
+      '</div>' +
+    '</section>';
+  }
+
+  function pick(key, qi, val) {
+    if (!state.answers[key]) state.answers[key] = [];
+    state.answers[key][qi] = val;
+    render();
+  }
+
+  function prevCat() {
+    if (state.qIndex > 0) { state.qIndex -= 1; render(); }
+  }
+
+  function nextCat() {
+    var e = ENERGIES[state.qIndex];
+    var ans = state.answers[e.key] || [];
+    if (ans.length < 5 || ans.some(function (v) { return typeof v !== 'number'; })) return;
+    if (state.qIndex < ENERGIES.length - 1) {
+      state.qIndex += 1;
+      render();
+    } else {
+      computeResults();
+      state.stage = 'results';
+      render();
+    }
+  }
+
+  function computeResults() {
+    var scores = ENERGIES.map(function (e) {
+      var ans = state.answers[e.key] || [];
+      var sum = ans.reduce(function (a, b) { return a + b; }, 0);
+      return { key: e.key, name: e.name, kanji: e.kanji, sub: e.sub, score: sum / 2 };
+    });
+    state.results = scores;
+  }
+
+  /* ---------------- results ---------------- */
+  function renderResults() {
+    var scores = state.results;
+    var max = scores.reduce(function (a, b) { return b.score > a.score ? b : a; });
+    var min = scores.reduce(function (a, b) { return b.score < a.score ? b : a; });
+    var gap = max.score - min.score;
+
+    var balanceMsg;
+    if (gap <= 2) balanceMsg = '7つのエネルギーが、穏やかにバランスよく循環している状態です。今の循環を保つことを意識してみましょう。';
+    else if (gap <= 4) balanceMsg = 'ややバランスに偏りがあります。低いところを少し底上げすると、全体の循環がなめらかになりそうです。';
+    else balanceMsg = '大きな偏りが出ています。高いエネルギーはそのままに、最も低いところから少しずつ手当てしてみましょう。一つが整うと、他のエネルギーも連鎖的に良くなっていきます。';
+
+    var radar = radarSVG(scores, { size: 400 });
+
+    var cards = scores.map(function (s) {
+      var tier = tierOf(s.score);
+      var color = seqColor(s.score);
+      return '' +
+      '<div class="card e-card">' +
+        '<div class="e-card-top">' +
+          '<div class="e-badge" style="background:' + color + ';">' + s.kanji + '</div>' +
+          '<div><div class="e-name">' + s.name + '</div><div class="e-sub">' + s.sub + '</div></div>' +
+          '<div class="e-score-row"><div class="e-score">' + s.score.toFixed(1) + '<small> / 10</small></div></div>' +
+        '</div>' +
+        '<div class="e-bar-track"><div class="e-bar-fill" style="width:' + (s.score * 10) + '%; background:' + color + ';"></div></div>' +
+        '<span class="e-tier">' + TIER_LABEL[tier] + '</span>' +
+        '<p class="e-text">' + TIER_TEXT[s.key][tier] + '</p>' +
+      '</div>';
+    }).join('');
+
+    return '' +
+    '<section class="results-wrap">' +
+      '<div class="results-head">' +
+        '<span class="eyebrow-label">YOUR ENERGY OS</span>' +
+        '<h2 class="serif">あなたの現在地</h2>' +
+      '</div>' +
+      '<div class="card radar-panel">' +
+        radar +
+        '<div class="radar-callouts">' +
+          '<div class="callout-chip"><span class="cc-label">最も満ちている</span><span class="cc-val">' + max.name + ' ' + max.score.toFixed(1) + '</span></div>' +
+          '<div class="callout-chip"><span class="cc-label">最も低い</span><span class="cc-val">' + min.name + ' ' + min.score.toFixed(1) + '</span></div>' +
+        '</div>' +
+        '<p class="balance-line">' + balanceMsg + '</p>' +
+      '</div>' +
+      '<div class="card-grid">' + cards + '</div>' +
+      '<div class="card closing-quote">' +
+        '<p class="serif">レーダーチャートは、足りないものを責めるためのものではありません。どこを整えれば全体の循環が良くなるかを教えてくれる地図です。</p>' +
+        '<span class="src">――『人生はエネルギーで決まる』第3章より</span>' +
+      '</div>' +
+      '<div class="results-actions">' +
+        '<button class="btn btn-ghost" onclick="startQuiz()">↺ もう一度診断する</button>' +
+        '<button class="btn btn-primary" onclick="setView(\'journal\')">今日のデイリーチェックをする →</button>' +
+      '</div>' +
+    '</section>';
+  }
+
+  /* ---------------- journal ---------------- */
+  var BALANCE_BANDS = [
+    { max: -50, label: '枯渇' },
+    { max: 0,   label: '消耗' },
+    { max: 50,  label: '普通' },
+    { max: 90,  label: '良好' },
+    { max: 100, label: '最高' }
+  ];
+  function balanceLabel(v) {
+    for (var i = 0; i < BALANCE_BANDS.length; i++) if (v <= BALANCE_BANDS[i].max) return BALANCE_BANDS[i].label;
+    return '最高';
+  }
+
+  function renderJournal() {
+    var j = state.journal;
+
+    var incHtml = INCREASE_ITEMS.map(function (label, i) {
+      var checked = j.inc[i] ? 'checked' : '';
+      return '<label class="chk-item"><input type="checkbox" data-kind="inc" data-idx="' + i + '" ' + checked + '>' + label + '</label>';
+    }).join('');
+    var decHtml = DECREASE_ITEMS.map(function (label, i) {
+      var checked = j.dec[i] ? 'checked' : '';
+      return '<label class="chk-item"><input type="checkbox" data-kind="dec" data-idx="' + i + '" ' + checked + '>' + label + '</label>';
+    }).join('');
+
+    var miniSliders = ENERGIES.map(function (e) {
+      var v = j.scores[e.key];
+      return '' +
+      '<div class="mini-slider-row">' +
+        '<div class="msr-badge" style="background:' + seqColor(v) + ';">' + e.kanji + '</div>' +
+        '<input type="range" min="0" max="10" step="1" value="' + v + '" data-energy="' + e.key + '" id="slider-' + e.key + '">' +
+        '<span class="msr-val" id="val-' + e.key + '">' + v + '</span>' +
+      '</div>';
+    }).join('');
+
+    var radarData = ENERGIES.map(function (e) { return { key: e.key, name: e.name, score: j.scores[e.key] }; });
+
+    return '' +
+    '<section class="journal-wrap">' +
+      '<div class="journal-head">' +
+        '<span class="eyebrow-label">ENERGY JOURNAL</span>' +
+        '<h2 class="serif">今日のあなたを記録する</h2>' +
+        '<p class="lede">正解はありません。大切なのは、自分を評価することではなく、観察することです。</p>' +
+        '<div class="save-note">この記録はこの画面上だけのものです。ページを閉じると消えます。</div>' +
+      '</div>' +
+
+      '<div class="step-block">' +
+        '<div class="step-tag"><span class="step-num serif">STEP 2</span><span class="step-title">今日のエネルギー残高</span></div>' +
+        '<div class="card step-body">' +
+          '<div class="balance-slider-row">' +
+            '<input type="range" id="balanceSlider" min="-100" max="100" step="5" value="' + j.balance + '">' +
+            '<div class="balance-scale-labels"><span>-100 枯渇</span><span>0 普通</span><span>+100 最高</span></div>' +
+          '</div>' +
+          '<div class="balance-readout"><span class="bv" id="balanceValue">' + (j.balance > 0 ? '+' : '') + j.balance + '</span><span class="bl" id="balanceLabel">' + balanceLabel(j.balance) + '</span></div>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="step-block">' +
+        '<div class="step-tag"><span class="step-num serif">STEP 3</span><span class="step-title">増えたもの・減ったもの</span></div>' +
+        '<div class="card step-body">' +
+          '<div class="checklist-cols">' +
+            '<div class="checklist-col"><h4>今日、エネルギーを増やしたもの</h4>' + incHtml + '<input class="chk-other" placeholder="その他" id="incOther" value="' + escapeHtml(j.incOther) + '"></div>' +
+            '<div class="checklist-col"><h4>今日、エネルギーを奪ったもの</h4>' + decHtml + '<input class="chk-other" placeholder="その他" id="decOther" value="' + escapeHtml(j.decOther) + '"></div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="step-block">' +
+        '<div class="step-tag"><span class="step-num serif">STEP 4</span><span class="step-title">7つのエネルギー採点</span></div>' +
+        '<div class="card step-body step4-layout">' +
+          '<div class="mini-sliders">' + miniSliders + '</div>' +
+          '<div class="mini-radar-box" id="miniRadarBox">' + radarSVG(radarData, { size: 260, labelGap: 22, showScores: false }) + '</div>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="step-block">' +
+        '<div class="step-tag"><span class="step-num serif">STEP 5</span><span class="step-title">今日の一言</span></div>' +
+        '<div class="card step-body"><textarea class="journal-input" id="wordInput" placeholder="今日はどんな一日でしたか？">' + escapeHtml(j.word) + '</textarea></div>' +
+      '</div>' +
+
+      '<div class="step-block">' +
+        '<div class="step-tag"><span class="step-num serif">STEP 6</span><span class="step-title">明日は何を変えますか？</span></div>' +
+        '<div class="card step-body">' +
+          '<textarea class="journal-input" id="tomorrowInput" placeholder="たった一つだけ改善するとしたら？">' + escapeHtml(j.tomorrow) + '</textarea>' +
+          '<div class="suggestion-row">' +
+            '<div class="suggestion-chip" id="suggestionChip">' + suggestionHtml() + '</div>' +
+            '<button class="shuffle-btn" onclick="shuffleSuggestion()">他の提案を見る ↻</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="receipt" id="receiptBox">' + renderReceipt() + '</div>' +
+    '</section>';
+  }
+
+  function lowestEnergyKey() {
+    var j = state.journal;
+    var lowest = ENERGIES[0].key;
+    ENERGIES.forEach(function (e) { if (j.scores[e.key] < j.scores[lowest]) lowest = e.key; });
+    return lowest;
+  }
+
+  function suggestionHtml() {
+    var j = state.journal;
+    var key = j.tipEnergy || lowestEnergyKey();
+    var eObj = ENERGIES.filter(function (e) { return e.key === key; })[0];
+    var list = TODAY_STEPS[key];
+    var idx = j.tipIndex % list.length;
+    return '今の最低スコアは<b>' + eObj.name + '</b>です。今日の一歩の提案：「' + list[idx] + '」';
+  }
+
+  function shuffleSuggestion() {
+    var j = state.journal;
+    var key = j.tipEnergy || lowestEnergyKey();
+    j.tipEnergy = key;
+    var list = TODAY_STEPS[key];
+    j.tipIndex = (j.tipIndex + 1) % list.length;
+    document.getElementById('suggestionChip').innerHTML = suggestionHtml();
+  }
+
+  function renderReceipt() {
+    var j = state.journal;
+    var incList = INCREASE_ITEMS.filter(function (_, i) { return j.inc[i]; });
+    if (j.incOther) incList.push(j.incOther);
+    var decList = DECREASE_ITEMS.filter(function (_, i) { return j.dec[i]; });
+    if (j.decOther) decList.push(j.decOther);
+
+    return '' +
+    '<h3 class="serif">今日の記録まとめ</h3>' +
+    '<dl class="receipt-grid">' +
+      '<div class="receipt-row"><dt>ENERGY BALANCE</dt><dd>' + (j.balance > 0 ? '+' : '') + j.balance + '（' + balanceLabel(j.balance) + '）</dd></div>' +
+      '<div class="receipt-row"><dt>最も低いエネルギー</dt><dd>' + ENERGIES.filter(function(e){return e.key===lowestEnergyKey();})[0].name + '</dd></div>' +
+      '<div class="receipt-row"><dt>増えたもの</dt><dd>' + (incList.length ? escapeHtml(incList.join('、')) : '―') + '</dd></div>' +
+      '<div class="receipt-row"><dt>減ったもの</dt><dd>' + (decList.length ? escapeHtml(decList.join('、')) : '―') + '</dd></div>' +
+      '<div class="receipt-row"><dt>今日の一言</dt><dd>' + (j.word ? escapeHtml(j.word) : '―') + '</dd></div>' +
+      '<div class="receipt-row"><dt>明日変えること</dt><dd>' + (j.tomorrow ? escapeHtml(j.tomorrow) : '―') + '</dd></div>' +
+    '</dl>';
+  }
+
+  function refreshReceipt() {
+    document.getElementById('receiptBox').innerHTML = renderReceipt();
+  }
+
+  function wireJournalEvents() {
+    var j = state.journal;
+
+    var bs = document.getElementById('balanceSlider');
+    bs.addEventListener('input', function () {
+      j.balance = parseInt(bs.value, 10);
+      document.getElementById('balanceValue').textContent = (j.balance > 0 ? '+' : '') + j.balance;
+      document.getElementById('balanceLabel').textContent = balanceLabel(j.balance);
+      refreshReceipt();
+    });
+
+    Array.prototype.forEach.call(document.querySelectorAll('input[type=checkbox][data-kind]'), function (cb) {
+      cb.addEventListener('change', function () {
+        var kind = cb.getAttribute('data-kind');
+        var idx = cb.getAttribute('data-idx');
+        j[kind][idx] = cb.checked;
+        refreshReceipt();
+      });
+    });
+
+    document.getElementById('incOther').addEventListener('input', function (e) { j.incOther = e.target.value; refreshReceipt(); });
+    document.getElementById('decOther').addEventListener('input', function (e) { j.decOther = e.target.value; refreshReceipt(); });
+    document.getElementById('wordInput').addEventListener('input', function (e) { j.word = e.target.value; refreshReceipt(); });
+    document.getElementById('tomorrowInput').addEventListener('input', function (e) { j.tomorrow = e.target.value; refreshReceipt(); });
+
+    ENERGIES.forEach(function (en) {
+      var sl = document.getElementById('slider-' + en.key);
+      sl.addEventListener('input', function () {
+        j.scores[en.key] = parseInt(sl.value, 10);
+        document.getElementById('val-' + en.key).textContent = j.scores[en.key];
+        document.querySelector('#slider-' + en.key).previousElementSibling.style.background = seqColor(j.scores[en.key]);
+        var radarData = ENERGIES.map(function (e) { return { key: e.key, name: e.name, score: j.scores[e.key] }; });
+        document.getElementById('miniRadarBox').innerHTML = radarSVG(radarData, { size: 260, labelGap: 22, showScores: false });
+        j.tipEnergy = null;
+        document.getElementById('suggestionChip').innerHTML = suggestionHtml();
+        refreshReceipt();
+      });
+    });
+  }
+
+  window.setView = setView;
+  window.startQuiz = startQuiz;
+  window.pick = pick;
+  window.prevCat = prevCat;
+  window.nextCat = nextCat;
+  window.shuffleSuggestion = shuffleSuggestion;
+
+  setView('diagnosis');
+})();
+</script>
