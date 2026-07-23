@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Attention Design — 注意という資源を、設計する。</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Outfit:wght@400;600;800&family=Shippori+Mincho:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary: #0f172a;
+    --accent: #d4af37;
+    --accent-glow: rgba(212, 175, 55, 0.4);
+    --accent2: #38bdf8;
+    --accent2-glow: rgba(56, 189, 248, 0.35);
+    --text-main: #f8fafc;
+    --text-sub: #94a3b8;
+    --bg-dark: #020617;
+    --glass-bg: rgba(15, 23, 42, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --card-bg: #1e293b;
+
+    --p1: #d4af37; /* 一点集中 FOCUS */
+    --p2: #e0895a; /* ギャップ GAP */
+    --p3: #e0648f; /* 感情 EMOTION */
+    --p4: #9d7fd6; /* ストーリー STORY */
+    --p5: #4fae7a; /* タイミング TIMING */
+    --p6: #38bdf8; /* 動き MOTION */
+    --p7: #7d8aa0; /* 余白 SPACE */
+    --p8: #2dd4bf; /* 参加 PARTICIPATION */
+
+    --serif: 'Shippori Mincho', 'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+    --sans: 'Noto Sans JP', -apple-system, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Segoe UI', sans-serif;
+    --display: 'Outfit', -apple-system, sans-serif;
+
+    --maxw: 780px;
+    --radius: 14px;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ background: var(--bg-dark); }
+  body{
+    margin: 0;
+    background: var(--bg-dark);
+    color: var(--text-main);
+    font-family: var(--sans);
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    position: relative;
+  }
+  ::selection{ background: var(--accent); color: #000; }
+
+  .bg-mesh{
+    position: fixed; inset: 0; z-index: -1;
+    background:
+      radial-gradient(circle at 8% 15%, rgba(212,175,55,0.07) 0%, transparent 42%),
+      radial-gradient(circle at 92% 78%, rgba(56,189,248,0.07) 0%, transparent 42%),
+      radial-gradient(circle at 50% 50%, rgba(30,41,59,0.5) 0%, transparent 60%),
+      var(--bg-dark);
+  }
+
+  a{ color: var(--accent); }
+  h1,h2,h3{
+    font-family: var(--serif);
+    font-weight: 700;
+    text-wrap: balance;
+    letter-spacing: -0.01em;
+    margin: 0;
+    color: var(--text-main);
+  }
+  .eyebrow{
+    display: inline-block;
+    font-family: var(--display);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 0.45rem 1.05rem;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    border-radius: 50px;
+    background: rgba(212,175,55,0.06);
+  }
+  .num{ font-family: var(--display); font-variant-numeric: tabular-nums; }
+
+  .rail{
+    position: fixed; left: 0; top: 0;
+    width: 3px; height: 100vh;
+    background: rgba(255,255,255,0.08);
+    z-index: 40;
+  }
+  .rail-fill{
+    width: 100%; height: 0%;
+    background: linear-gradient(180deg, var(--p1), var(--p2), var(--p4), var(--p5), var(--p8));
+    box-shadow: 0 0 12px rgba(212,175,55,0.5);
+    transition: height 0.08s linear;
+  }
+
+  .wrap{ max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+  .wide{ max-width: 960px; margin: 0 auto; padding: 0 28px; }
+
+  section{ padding: 108px 0; border-bottom: 1px solid var(--glass-border); position: relative; }
+  section:last-of-type{ border-bottom: none; }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    min-height: 92vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 80px 0 60px;
+    border-bottom: 1px solid var(--glass-border);
+  }
+  .hero .kicker{ opacity: 0; animation: rise 0.8s 0.1s cubic-bezier(.16,1,.3,1) forwards; }
+  .hero h1{
+    font-size: clamp(2.5rem, 6.6vw, 4.3rem);
+    line-height: 1.32;
+    margin-top: 26px;
+    opacity: 0;
+    animation: rise 0.9s 0.25s cubic-bezier(.16,1,.3,1) forwards;
+  }
+  .hero h1 span{
+    background: linear-gradient(90deg, var(--accent), #fde68a);
+    background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero .sub{
+    font-size: clamp(1rem, 1.8vw, 1.14rem);
+    color: var(--text-sub);
+    margin-top: 22px;
+    max-width: 40em;
+    opacity: 0;
+    animation: rise 0.9s 0.4s cubic-bezier(.16,1,.3,1) forwards;
+  }
+  .hero-en{
+    font-family: var(--display);
+    font-size: 0.8rem;
+    color: var(--text-sub);
+    letter-spacing: 0.06em;
+    margin-top: 28px;
+    opacity: 0;
+    animation: rise 0.9s 0.55s cubic-bezier(.16,1,.3,1) forwards;
+  }
+  @keyframes rise{ from{ opacity:0; transform: translateY(16px); } to{ opacity:1; transform: translateY(0); } }
+
+  .demo{ margin-top: 60px; opacity: 0; animation: rise 1s 0.75s cubic-bezier(.16,1,.3,1) forwards; }
+  .demo-row{ display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+  .demo-state{
+    font-family: var(--display); font-size: 0.92rem;
+    padding: 14px 18px;
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    background: var(--glass-bg);
+    backdrop-filter: blur(6px);
+    min-width: 200px; text-align: center;
+    transition: border-color .3s, color .3s;
+  }
+  .demo-state.on{ border-color: var(--p1); color: var(--p1); }
+  .demo-arrow{ position: relative; width: 84px; height: 2px; background: var(--glass-border); flex: 0 0 auto; }
+  .demo-arrow::after{
+    content:""; position:absolute; right:-1px; top:50%; transform: translateY(-50%);
+    width:0;height:0; border-top:4px solid transparent; border-bottom:4px solid transparent;
+    border-left: 7px solid var(--text-sub);
+  }
+  .demo-arrow .fill{ position:absolute; left:0; top:0; height:100%; width:0%; background: var(--p1); transition: width 1.6s cubic-bezier(.65,0,.35,1); }
+  .demo-meter{ font-family: var(--display); font-size: 0.8rem; color: var(--text-sub); }
+  .demo-meter b{ font-size: 1.05rem; color: var(--p1); }
+
+  /* ---------- section headers ---------- */
+  .shead{ margin-bottom: 48px; }
+  .shead h2{ font-size: clamp(1.6rem, 3.6vw, 2.2rem); margin-top: 16px; line-height: 1.5; }
+  .shead .lede{ margin-top: 18px; color: var(--text-sub); font-size: 1.02rem; max-width: 42em; }
+
+  .reveal{ opacity: 0; transform: translateY(24px); transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1); }
+  .reveal.in{ opacity: 1; transform: translateY(0); }
+  .reveal-d1{ transition-delay: .08s; } .reveal-d2{ transition-delay: .16s; } .reveal-d3{ transition-delay: .24s; } .reveal-d4{ transition-delay: .32s; }
+
+  /* ---------- thesis section: attention rows ---------- */
+  .trow{
+    display: grid; grid-template-columns: 1fr 40px 1fr 40px 1fr;
+    align-items: center; gap: 10px; padding: 18px 4px;
+    border-top: 1px solid var(--glass-border);
+    font-family: var(--display); font-size: 0.9rem;
+  }
+  .trow:last-child{ border-bottom: 1px solid var(--glass-border); }
+  .trow .a{ color: var(--text-sub); }
+  .trow .b{ text-align: center; color: var(--p2); font-weight: 600; }
+  .trow .c{ color: var(--text-main); font-weight: 600; }
+  .trow .arr{ text-align:center; color: var(--text-sub); opacity: .5; }
+
+  /* ---------- 8 principles radar ---------- */
+  .hsbs-grid{ display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: center; }
+  @media (max-width: 780px){ .hsbs-grid{ grid-template-columns: 1fr; } }
+  .legend{ display:flex; flex-direction:column; gap: 6px; }
+  .legend-item{ display:flex; align-items:baseline; gap: 12px; padding: 9px 14px; border-radius: 10px; cursor: default; transition: background .25s; }
+  .legend-item:hover{ background: var(--glass-bg); }
+  .legend-dot{ width: 10px; height: 10px; border-radius: 50%; flex: none; margin-top: 5px; }
+  .legend-jp{ font-weight: 700; }
+  .legend-en{ font-family: var(--display); font-size: 0.68rem; color: var(--text-sub); letter-spacing: 0.06em; }
+  .legend-words{ font-size: 0.8rem; color: var(--text-sub); margin-left: auto; text-align: right; }
+
+  canvas#radar{ width: 100%; height: auto; display:block; }
+
+  .anchor-scale{ margin-top: 18px; display: grid; grid-template-columns: repeat(5, 1fr); font-family: var(--display); font-size: 0.72rem; border-top: 1px solid var(--glass-border); }
+  .anchor-scale div{ padding: 12px 8px 0; border-left: 1px solid var(--glass-border); color: var(--text-sub); }
+  .anchor-scale div:first-child{ border-left: none; }
+  .anchor-scale b{ display:block; color: var(--p1); font-size: 0.95rem; margin-bottom: 4px; }
+
+  /* ---------- Attention Score gauges ---------- */
+  .formula{
+    font-family: var(--display); font-weight: 600;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    font-size: 0.95rem;
+    overflow-x: auto;
+    backdrop-filter: blur(6px);
+  }
+  .gauges{ display:flex; flex-direction:column; gap: 15px; margin-top: 32px; }
+  .gauge-row{ display:grid; grid-template-columns: 168px 1fr 40px; gap: 14px; align-items:center; }
+  .gauge-label{ font-size: 0.84rem; color: var(--text-sub); }
+  .gauge-track{ height: 9px; background: rgba(255,255,255,0.08); border-radius: 5px; overflow:hidden; }
+  .gauge-fill{ height:100%; width:0%; border-radius: 5px; transition: width 1.1s cubic-bezier(.65,0,.35,1); }
+  .gauge-val{ font-family: var(--display); font-size: 0.9rem; text-align:right; }
+
+  .toggle-row{ display:flex; gap:10px; margin-top: 30px; flex-wrap: wrap; }
+  .toggle{
+    font-family: var(--display); font-size: 0.82rem; font-weight: 600;
+    padding: 10px 18px; border: 1px solid var(--glass-border);
+    border-radius: 999px; background: transparent; color: var(--text-sub);
+    cursor: pointer; transition: all .2s;
+  }
+  .toggle.active{ background: var(--accent); color: #000; border-color: var(--accent); }
+  .toggle:focus-visible, a:focus-visible{ outline: 2px solid var(--accent2); outline-offset: 3px; }
+
+  .result-card{
+    margin-top: 22px; padding: 28px 30px; border-radius: var(--radius);
+    background: linear-gradient(135deg, rgba(212,175,55,0.1), rgba(56,189,248,0.05));
+    border: 1px solid var(--glass-border);
+    display:flex; align-items:baseline; gap:20px; flex-wrap:wrap;
+  }
+  .result-card .big{ font-family: var(--display); font-size: 1.6rem; font-weight: 800; color: var(--accent); }
+  .result-card .cap{ color: var(--text-sub); font-size: 0.9rem; max-width: 34em; }
+  .result-card .cap b{ color: var(--text-main); }
+
+  /* ---------- instruction swap ---------- */
+  .swap-wrap{ display:flex; align-items:center; gap: 40px; flex-wrap: wrap; }
+  .swap-col h3{ font-size: 1.05rem; font-weight: 700; margin-bottom: 16px; font-family: var(--sans); }
+  .swap-col.old{ color: var(--text-sub); }
+  .swap-col.old h3{ text-decoration: line-through; text-decoration-color: rgba(255,255,255,0.25); }
+  .chip-list{ display:flex; flex-direction:column; gap:8px; }
+  .chip{ font-family: var(--display); font-size: 0.84rem; padding: 10px 16px; border: 1px solid var(--glass-border); border-radius: 10px; background: var(--glass-bg); width: fit-content; }
+  .swap-col.new .chip{ border-color: var(--p5); color: var(--p5); }
+  .swap-divider{ font-family: var(--serif); font-size: 1.6rem; color: var(--text-sub); opacity: .6; }
+
+  /* ---------- 2x2 matrix ---------- */
+  .matrix{ display:grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 2px; background: var(--glass-border); border: 1px solid var(--glass-border); margin-top: 40px; aspect-ratio: 1.6/1; border-radius: var(--radius); overflow: hidden; }
+  .mcell{ background: var(--card-bg); padding: 20px 22px; display:flex; flex-direction:column; justify-content:center; }
+  .mcell b{ display:block; margin-bottom: 6px; font-family: var(--sans); }
+  .mcell span{ font-size: 0.82rem; color: var(--text-sub); font-family: var(--display); }
+  .mcell.go{ background: linear-gradient(135deg, rgba(212,175,55,0.16), rgba(30,41,59,0.4)); }
+  .mcell.go b{ color: var(--accent); }
+  .maxis{ display:flex; justify-content: space-between; font-family: var(--display); font-size: 0.7rem; color: var(--text-sub); margin-top: 10px; }
+
+  /* ---------- process bars ---------- */
+  .org-bars{ display:flex; flex-direction:column; gap: 22px; margin-top: 36px; }
+  .org-row{ display:grid; grid-template-columns: 168px 1fr; gap: 18px; align-items:center; }
+  .org-name{ font-weight: 700; font-size: 0.9rem; font-family: var(--sans); }
+  .org-track{ height: 32px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 8px; position:relative; overflow:hidden; }
+  .org-fill{ position:absolute; left:0; top:0; height:100%; width:0%; transition: width 1.3s cubic-bezier(.65,0,.35,1); display:flex; align-items:center; padding-left: 12px; }
+  .org-fill span{ font-family: var(--display); font-size: 0.76rem; font-weight: 600; color: #06111f; white-space:nowrap; }
+  .org-detail{ font-family: var(--display); font-size: 0.7rem; color: var(--text-sub); margin-top: 5px; }
+
+  .npv-strip{ display:grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 36px; }
+  @media (max-width: 700px){ .npv-strip{ grid-template-columns: 1fr; } }
+  .npv-card{ border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 20px 22px; background: var(--glass-bg); backdrop-filter: blur(6px); }
+  .npv-card .k{ font-family: var(--display); font-size: 0.72rem; color: var(--text-sub); letter-spacing:.05em; text-transform:uppercase; }
+  .npv-card .v{ font-family: var(--display); font-weight: 700; font-size: 1.3rem; margin-top: 6px; }
+  .npv-card.pos .v{ color: var(--p5); }
+
+  blockquote{
+    font-family: var(--serif); font-size: clamp(1.3rem, 2.8vw, 1.65rem);
+    line-height: 1.75; margin: 0; padding: 0; color: var(--text-main); border: none;
+  }
+  blockquote .accentline{ color: var(--accent); }
+  blockquote cite{ display:block; font-family: var(--display); font-style: normal; font-size: 0.76rem; color: var(--text-sub); margin-top: 20px; }
+
+  .footline{ padding: 90px 0 120px; text-align: left; }
+  .footline .wrap > *:not(:first-child){ margin-top: 24px; }
+
+  .cta-row{ display:flex; gap: 14px; flex-wrap: wrap; margin-top: 8px; }
+  .btn{
+    display: inline-flex; align-items: center;
+    padding: 1rem 2.1rem; border-radius: 12px;
+    font-family: var(--sans); font-weight: 600; font-size: 0.92rem;
+    text-decoration: none; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); cursor: pointer; border: 1px solid transparent;
+  }
+  .btn-primary{ background: var(--accent); color: #000; box-shadow: 0 10px 30px var(--accent-glow); }
+  .btn-primary:hover{ transform: translateY(-4px); box-shadow: 0 15px 40px var(--accent-glow); }
+  .btn-ghost{ border-color: var(--glass-border); color: var(--text-main); }
+  .btn-ghost:hover{ border-color: var(--accent); color: var(--accent); }
+
+  p{ margin: 0; }
+  .stack > * + *{ margin-top: 16px; }
+
+  @media (prefers-reduced-motion: reduce){
+    *, *::before, *::after{ animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  }
+</style>
+<noscript><style>
+  .reveal{ opacity: 1 !important; transform: none !important; }
+  .hero .kicker, .hero h1, .hero .sub, .hero-en, .demo{ opacity: 1 !important; animation: none !important; }
+</style></noscript>
+</head>
+<body>
+<div class="bg-mesh"></div>
+<a href="../index.html" style="position:fixed; top:1.25rem; left:1.25rem; z-index:9999; display:inline-flex; align-items:center; gap:0.4rem; padding:0.5rem 1rem; border-radius:99px; background:rgba(15,23,42,0.75); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,0.15); color:#f8fafc; text-decoration:none; font-size:0.8rem; font-family:'Noto Sans JP',sans-serif;">&larr; ModernLogicサイトへ戻る</a>
+<div class="rail"><div class="rail-fill" id="railFill"></div></div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker eyebrow">A structural approach to where human attention goes — from magicians to marketers</div>
+    <h1>情報は、無限に増えた。<br>注意は、<span>設計できる。</span></h1>
+    <p class="sub">AIが誰でもコンテンツを量産できる時代、勝敗を分けるのは「何を作るか」ではない。相手の注意を、どこへ、どんな順番で向けさせるか、である。</p>
+    <div class="hero-en">ATTENTION DESIGN — A Structural Method for Directing Human Attention, Learned from Magic, Psychology and Marketing</div>
+
+    <div class="demo">
+      <div class="demo-row">
+        <div class="demo-state" id="demoBefore">観客：気づいていない<br><span style="opacity:.65">パスの回数だけを数えている</span></div>
+        <div class="demo-arrow"><div class="fill" id="demoFill"></div></div>
+        <div class="demo-state" id="demoAfter">観客：気づいている<br><span style="opacity:.65">9秒間、画面を横切ったゴリラに気づく</span></div>
+      </div>
+      <div class="demo-meter" style="margin-top:14px;">Attention Design適用 — 資料の読了率スコア　現在 <b id="demoNum">0</b> → 68</div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ 01 THESIS ============ -->
+  <section id="thesis">
+    <div class="wrap">
+      <div class="shead reveal">
+        <div class="eyebrow">Chapter 01 · 見ていることと、気づいていることは違う</div>
+        <h2>人は、注意した世界だけを、<br>見ている。</h2>
+        <p class="lede">脳は、目に入る情報のすべてを処理してはいない。「見えないゴリラ実験」では、パスの回数を数えていた被験者の約半数が、9秒間画面を堂々と横切るゴリラにまったく気づかなかった。この非注意性盲目という現象こそ、Attention Design全体の出発点である。</p>
+      </div>
+
+      <div class="reveal reveal-d1">
+        <div class="trow"><div class="a">広告のコピー</div><div class="arr">→</div><div class="b">気づかれない</div><div class="arr">→</div><div class="c">存在しないのと同じ</div></div>
+        <div class="trow"><div class="a">良いプレゼン資料</div><div class="arr">→</div><div class="b">注意が向かない</div><div class="arr">→</div><div class="c">決裁が通らない</div></div>
+        <div class="trow"><div class="a">優れた商品</div><div class="arr">→</div><div class="b">注意を奪われる</div><div class="arr">→</div><div class="c">価格でしか選ばれない</div></div>
+        <div class="trow"><div class="a">丁寧なSNS投稿</div><div class="arr">→</div><div class="b">指がスクロールする</div><div class="arr">→</div><div class="c">誰にも届かない</div></div>
+      </div>
+
+      <div class="reveal reveal-d2" style="margin-top:56px;">
+        <blockquote>
+          「マジシャンが騙しているのは、目ではない。あなたの中にある、<span class="accentline">注意</span>という名のOSそのものなのである。」
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 02 8 PRINCIPLES RADAR ============ -->
+  <section id="principles">
+    <div class="wrap">
+      <div class="shead reveal">
+        <div class="eyebrow">Chapter 02 · Attention Designの8原則</div>
+        <h2>「注意を動かす力」を、<br>八つの軸で見る。</h2>
+        <p class="lede">マジック、心理学、マーケティング、映画、デザインを横断して整理した、注意を設計するための8つの原理。独立した技ではなく、組み合わさって機能する。</p>
+      </div>
+
+      <div class="hsbs-grid reveal reveal-d1">
+        <div><canvas id="radar" width="560" height="560"></canvas></div>
+        <div class="legend" id="legend">
+          <div class="legend-item" data-layer="p1"><span class="legend-dot" style="background:var(--p1)"></span><span><span class="legend-jp">一点集中</span><br><span class="legend-en">FOCUS</span></span><span class="legend-words">絞り込む</span></div>
+          <div class="legend-item" data-layer="p2"><span class="legend-dot" style="background:var(--p2)"></span><span><span class="legend-jp">ギャップ</span><br><span class="legend-en">GAP</span></span><span class="legend-words">ズレをつくる</span></div>
+          <div class="legend-item" data-layer="p3"><span class="legend-dot" style="background:var(--p3)"></span><span><span class="legend-jp">感情</span><br><span class="legend-en">EMOTION</span></span><span class="legend-words">心を動かす</span></div>
+          <div class="legend-item" data-layer="p4"><span class="legend-dot" style="background:var(--p4)"></span><span><span class="legend-jp">ストーリー</span><br><span class="legend-en">STORY</span></span><span class="legend-words">先を知りたくさせる</span></div>
+          <div class="legend-item" data-layer="p5"><span class="legend-dot" style="background:var(--p5)"></span><span><span class="legend-jp">タイミング</span><br><span class="legend-en">TIMING</span></span><span class="legend-words">間で見せる</span></div>
+          <div class="legend-item" data-layer="p6"><span class="legend-dot" style="background:var(--p6)"></span><span><span class="legend-jp">動き</span><br><span class="legend-en">MOTION</span></span><span class="legend-words">視線を引く</span></div>
+          <div class="legend-item" data-layer="p7"><span class="legend-dot" style="background:var(--p7)"></span><span><span class="legend-jp">余白</span><br><span class="legend-en">SPACE</span></span><span class="legend-words">何も置かない</span></div>
+          <div class="legend-item" data-layer="p8"><span class="legend-dot" style="background:var(--p8)"></span><span><span class="legend-jp">参加</span><br><span class="legend-en">PARTICIPATION</span></span><span class="legend-words">自分ごとにする</span></div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-d2">
+        <p class="lede" style="margin-top:56px;">各原則は5段階で評価する。スコアが高いほど、意図的に設計された状態だ。</p>
+        <div class="anchor-scale">
+          <div><b>Lv.1</b>原則が<br>使われていない</div>
+          <div><b>Lv.2</b>部分的に<br>機能している</div>
+          <div><b>Lv.3</b>一貫して<br>使われている</div>
+          <div><b>Lv.4</b>数値で効果が<br>確認できる</div>
+          <div><b>Lv.5</b>型として<br>再現できる</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 03 ATTENTION SCORE ============ -->
+  <section id="score">
+    <div class="wrap">
+      <div class="shead reveal">
+        <div class="eyebrow">Chapter 03 · Attention Score</div>
+        <h2>8原則を数値にすると、<br>弱点が一つに絞られる。</h2>
+        <p class="lede">Attention Auditでは、8原則それぞれを5点満点でスコアリングし、40点満点の「Attention Score」として提示する。改善前後を数値で比較できるため、施策の効果検証にもそのまま使える。</p>
+      </div>
+
+      <div class="reveal reveal-d1 formula">
+        Attention Score ＝ 8原則 × 5点満点の現在地。総合点を競うものではなく、穴を見つけるための地図である。
+      </div>
+
+      <div class="reveal reveal-d2">
+        <div class="gauges" id="gauges">
+          <div class="gauge-row"><div class="gauge-label">①一点集中 Focus</div><div class="gauge-track"><div class="gauge-fill" data-target="80" style="background:var(--p1)"></div></div><div class="gauge-val" data-num="80">0</div></div>
+          <div class="gauge-row"><div class="gauge-label">②ギャップ Gap</div><div class="gauge-track"><div class="gauge-fill" data-target="40" style="background:var(--p2)"></div></div><div class="gauge-val" data-num="40">0</div></div>
+          <div class="gauge-row"><div class="gauge-label">③感情 Emotion</div><div class="gauge-track"><div class="gauge-fill" data-target="35" style="background:var(--p3)"></div></div><div class="gauge-val" data-num="35">0</div></div>
+          <div class="gauge-row"><div class="gauge-label">④ストーリー Story</div><div class="gauge-track"><div class="gauge-fill" data-target="30" style="background:var(--p4)"></div></div><div class="gauge-val" data-num="30">0</div></div>
+          <div class="gauge-row"><div class="gauge-label">⑤タイミング Timing</div><div class="gauge-track"><div class="gauge-fill" data-target="50" style="background:var(--p5)"></div></div><div class="gauge-val" data-num="50">0</div></div>
+          <div class="gauge-row"><div class="gauge-label">⑥動き Motion</div><div class="gauge-track"><div class="gauge-fill" data-target="20" style="background:var(--p6)"></div></div><div class="gauge-val" data-num="20">0</div></div>
+          <div class="gauge-row"><div class="gauge-label">⑦余白 Space</div><div class="gauge-track"><div class="gauge-fill" data-target="45" style="background:var(--p7)"></div></div><div class="gauge-val" data-num="45">0</div></div>
+          <div class="gauge-row"><div class="gauge-label">⑧参加 Participation</div><div class="gauge-track"><div class="gauge-fill" data-target="15" style="background:var(--p8)"></div></div><div class="gauge-val" data-num="15">0</div></div>
+        </div>
+
+        <div class="toggle-row">
+          <button class="toggle active" id="btnLP">診断例：LP（ランディングページ）</button>
+          <button class="toggle" id="btnSales">診断例：営業提案資料</button>
+        </div>
+
+        <div class="result-card">
+          <div class="big">課題は「参加」</div>
+          <div class="cap">どちらのプロファイルも、情報を一方的に説明する構造になっており、<b>相手が自分で気づき、選び取る余地</b>がない。この一点を設計し直すだけで、記憶定着率は大きく変わる。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 04 BEFORE/AFTER ============ -->
+  <section id="before-after">
+    <div class="wrap">
+      <div class="shead reveal">
+        <div class="eyebrow">Chapter 04 · Before / After</div>
+        <h2>「良い内容」と、<br>「注意が設計された内容」は違う。</h2>
+        <p class="lede">情報量を増やしても、注意は増えない。同じ内容でも、並べ方ひとつで、届き方はまったく変わる。</p>
+      </div>
+
+      <div class="reveal reveal-d1 swap-wrap">
+        <div class="swap-col old">
+          <h3>従来の資料構成</h3>
+          <div class="chip-list">
+            <div class="chip">冒頭から自社の紹介</div>
+            <div class="chip">機能をすべて説明</div>
+            <div class="chip">最後に結論</div>
+          </div>
+        </div>
+        <div class="swap-divider">→</div>
+        <div class="swap-col new">
+          <h3>Attention Design適用後</h3>
+          <div class="chip-list">
+            <div class="chip">冒頭は相手の現在地の観察から</div>
+            <div class="chip">一点に絞り、ギャップをつくる</div>
+            <div class="chip">相手に選ばせて終わる</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 05 SUPPLY x DESIGN MATRIX ============ -->
+  <section id="matrix-section">
+    <div class="wrap">
+      <div class="shead reveal">
+        <div class="eyebrow">Chapter 05 · なぜ、今Attention Designか</div>
+        <h2>供給量では、<br>もう差がつかない。</h2>
+        <p class="lede">AIによって、コンテンツの供給量は誰でも増やせるようになった。差がつくのは、量ではなく設計の有無である。</p>
+      </div>
+
+      <div class="reveal reveal-d1">
+        <div class="matrix">
+          <div class="mcell"><b>届く人には届くコンテンツ</b><span>供給量 低 × 設計 高</span></div>
+          <div class="mcell go"><b>勝ち続けるコンテンツ</b><span>供給量 高 × 設計 高</span></div>
+          <div class="mcell"><b>誰にも気づかれないコンテンツ</b><span>供給量 低 × 設計 低</span></div>
+          <div class="mcell"><b>量で埋もれるコンテンツ</b><span>供給量 高 × 設計 低</span></div>
+        </div>
+        <div class="maxis"><span>← 供給量 少</span><span>供給量 多 →</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 06 AUDIT PROCESS ============ -->
+  <section id="process">
+    <div class="wrap">
+      <div class="shead reveal">
+        <div class="eyebrow">Chapter 06 · Attention Auditの進め方</div>
+        <h2>診断は、七つのフェーズで<br>進む。</h2>
+        <p class="lede">感覚ではなく、定型プロセスで進める。現行のLP・広告クリエイティブ・提案資料などを対象に、以下の順で診断する。</p>
+      </div>
+
+      <div class="reveal reveal-d1">
+        <div class="org-bars" id="orgBars">
+          <div class="org-row"><div class="org-name">00 スコープ設定</div><div><div class="org-track"><div class="org-fill" data-target="18" style="background:var(--p1)"><span>対象・目的の定義</span></div></div><div class="org-detail">対象アセット・ターゲット・KPIを定義</div></div></div>
+          <div class="org-row"><div class="org-name">01 Journeyマッピング</div><div><div class="org-track"><div class="org-fill" data-target="34" style="background:var(--p2)"><span>現状可視化</span></div></div><div class="org-detail">顧客接点と離脱ポイントを可視化</div></div></div>
+          <div class="org-row"><div class="org-name">02 8原則スコアリング</div><div><div class="org-track"><div class="org-fill" data-target="48" style="background:var(--p3)"><span>Attention Score算出</span></div></div><div class="org-detail">40点満点でスコア化</div></div></div>
+          <div class="org-row"><div class="org-name">03 Attention Flow診断</div><div><div class="org-track"><div class="org-fill" data-target="60" style="background:var(--p4)"><span>7段階で弱点特定</span></div></div><div class="org-detail">Notice〜Shareの流れを診断</div></div></div>
+          <div class="org-row"><div class="org-name">04 ギャップ分析</div><div><div class="org-track"><div class="org-fill" data-target="72" style="background:var(--p5)"><span>優先順位づけ</span></div></div><div class="org-detail">効果×工数で改善施策を並べ替え</div></div></div>
+          <div class="org-row"><div class="org-name">05 Canvas再設計</div><div><div class="org-track"><div class="org-fill" data-target="86" style="background:var(--p6)"><span>改善案の具体化</span></div></div><div class="org-detail">6つの問いに沿って再設計</div></div></div>
+          <div class="org-row"><div class="org-name">06 報告書・ロードマップ</div><div><div class="org-track"><div class="org-fill" data-target="100" style="background:var(--p8)"><span>納品</span></div></div><div class="org-detail">30/60/90日の実行計画つきで提示</div></div></div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-d2">
+        <p class="lede" style="margin-top:64px;">導入イメージ（架空のモデルケース：BtoB SaaS企業のLP診断）——公開中のLPを診断し、Attention Canvasで再設計した3ヶ月後。</p>
+        <div class="npv-strip">
+          <div class="npv-card pos"><div class="k">Attention Score</div><div class="v">28 → 36 点</div></div>
+          <div class="npv-card pos"><div class="k">ファーストビュー離脱率</div><div class="v">↓ 改善</div></div>
+          <div class="npv-card pos"><div class="k">資料請求・商談化率</div><div class="v">↑ 改善</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CLOSE ============ -->
+  <section class="footline">
+    <div class="wrap stack">
+      <blockquote class="reveal">
+        「情報は、これからも増え続けるだろう。しかし、人の<span class="accentline">注意</span>という資源は、増えない。」
+        <cite>注意を設計できる人が、これからの時代、最も価値のある仕事をする。</cite>
+      </blockquote>
+      <p class="reveal reveal-d1" style="color:var(--text-sub); max-width:38em;">
+        本ページで紹介したAttention Designの8原則・Attention Score・Attention Auditのプロセスは、書籍『Attention Design ―― AI時代、人を動かす「注意設計」の技術』で、体系的な理論とワークシートまで含めて解説しています。
+      </p>
+      <div class="reveal reveal-d2 cta-row">
+        <a class="btn btn-primary" href="mailto:kusanotake@gmail.com?subject=【無料相談】Attention%20Auditについて&body=草野様%0D%0A%0D%0AAttention%20Designのページを拝見し、無料相談を申し込みたくご連絡いたしました。%0D%0A%0D%0A【お名前】%0D%0A【貴社名】%0D%0A【ご相談内容】">無料相談を申し込む</a>
+        <a class="btn btn-ghost" href="../KIndle/AttentionDesignLP.html">書籍の詳細を見る</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+(function(){
+  var railFill = document.getElementById('railFill');
+  function onScroll(){
+    var h = document.documentElement;
+    var scrolled = h.scrollTop || document.body.scrollTop;
+    var height = (h.scrollHeight || document.body.scrollHeight) - h.clientHeight;
+    var pct = height > 0 ? (scrolled/height)*100 : 0;
+    railFill.style.height = pct + '%';
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  var reveals = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); } });
+  }, {threshold: 0.16});
+  reveals.forEach(function(el){ io.observe(el); });
+
+  function runDemo(){
+    var fill = document.getElementById('demoFill');
+    var num = document.getElementById('demoNum');
+    var after = document.getElementById('demoAfter');
+    fill.style.width = '100%';
+    after.classList.add('on');
+    var start = null; var dur = 1500;
+    function step(ts){
+      if(!start) start = ts;
+      var p = Math.min((ts-start)/dur, 1);
+      num.textContent = Math.round(p*68);
+      if(p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  setTimeout(runDemo, 900);
+
+  function getVar(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+
+  var layers = [
+    {key:'p1', label:'一点集中', color: getVar('--p1'), current: 80, desired: 90},
+    {key:'p2', label:'ギャップ', color: getVar('--p2'), current: 40, desired: 85},
+    {key:'p3', label:'感情',   color: getVar('--p3'), current: 35, desired: 80},
+    {key:'p4', label:'ストーリー', color: getVar('--p4'), current: 30, desired: 80},
+    {key:'p5', label:'タイミング', color: getVar('--p5'), current: 50, desired: 80},
+    {key:'p6', label:'動き',   color: getVar('--p6'), current: 20, desired: 75},
+    {key:'p7', label:'余白',   color: getVar('--p7'), current: 45, desired: 80},
+    {key:'p8', label:'参加',   color: getVar('--p8'), current: 15, desired: 85}
+  ];
+
+  var canvas = document.getElementById('radar');
+  var ctx = canvas.getContext('2d');
+  var DPR = window.devicePixelRatio || 1;
+  var CSS_SIZE = 460;
+  canvas.width = CSS_SIZE*DPR; canvas.height = CSS_SIZE*DPR;
+  canvas.style.width = CSS_SIZE+'px'; canvas.style.height = CSS_SIZE+'px';
+  ctx.scale(DPR, DPR);
+  var cx = CSS_SIZE/2, cy = CSS_SIZE/2, R = CSS_SIZE*0.34;
+  var N = layers.length;
+
+  function pt(i, r){
+    var ang = (Math.PI*2*i/N) - Math.PI/2;
+    return [cx + r*Math.cos(ang), cy + r*Math.sin(ang)];
+  }
+
+  var lineColor = 'rgba(255,255,255,0.12)';
+  var accent = getVar('--accent2');
+
+  function drawStatic(){
+    ctx.clearRect(0,0,CSS_SIZE,CSS_SIZE);
+    for(var ring=1; ring<=4; ring++){
+      ctx.beginPath();
+      for(var i=0;i<=N;i++){
+        var p = pt(i%N, R*ring/4);
+        if(i===0) ctx.moveTo(p[0],p[1]); else ctx.lineTo(p[0],p[1]);
+      }
+      ctx.strokeStyle = lineColor; ctx.lineWidth = 1; ctx.stroke();
+    }
+    for(var i=0;i<N;i++){
+      var p0 = pt(i,0), p1 = pt(i,R);
+      ctx.beginPath(); ctx.moveTo(p0[0],p0[1]); ctx.lineTo(p1[0],p1[1]);
+      ctx.strokeStyle = lineColor; ctx.lineWidth = 1; ctx.stroke();
+      var lp = pt(i, R*1.2);
+      ctx.fillStyle = layers[i].color;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.font = '700 13px sans-serif';
+      ctx.fillText(layers[i].label, lp[0], lp[1]);
+    }
+  }
+
+  function polygon(values, alphaFill, strokeColor, dashed){
+    ctx.beginPath();
+    for(var i=0;i<=N;i++){
+      var idx = i%N;
+      var r = R*(values[idx]/100);
+      var p = pt(idx, r);
+      if(i===0) ctx.moveTo(p[0],p[1]); else ctx.lineTo(p[0],p[1]);
+    }
+    ctx.closePath();
+    if(alphaFill){ ctx.fillStyle = alphaFill; ctx.fill(); }
+    if(dashed) ctx.setLineDash([4,4]); else ctx.setLineDash([]);
+    ctx.strokeStyle = strokeColor; ctx.lineWidth = 2; ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  var animStart = null; var animDur = 1200; var animated = false;
+  function frame(ts){
+    if(!animStart) animStart = ts;
+    var p = Math.min((ts-animStart)/animDur, 1);
+    var ease = 1 - Math.pow(1-p, 3);
+    drawStatic();
+    var curVals = layers.map(function(l){ return l.current*ease; });
+    var desVals = layers.map(function(l){ return l.desired*ease; });
+    polygon(desVals, accent + '22', accent, true);
+    polygon(curVals, 'rgba(248,250,252,0.12)', '#f8fafc', false);
+    if(p < 1) requestAnimationFrame(frame);
+  }
+  function startRadarAnim(){ if(animated) return; animated = true; animStart = null; requestAnimationFrame(frame); }
+  drawStatic();
+  var radarIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting) startRadarAnim(); });
+  }, {threshold:0.3});
+  radarIO.observe(canvas);
+
+  document.querySelectorAll('.legend-item').forEach(function(item, idx){
+    item.addEventListener('mouseenter', function(){
+      drawStatic();
+      var curVals = layers.map(function(l){ return l.current; });
+      var desVals = layers.map(function(l){ return l.desired; });
+      polygon(desVals, accent+'18', accent, true);
+      polygon(curVals, 'rgba(248,250,252,0.10)', '#f8fafc', false);
+      var p = pt(idx, R*(layers[idx].current/100));
+      ctx.beginPath(); ctx.arc(p[0], p[1], 5, 0, Math.PI*2);
+      ctx.fillStyle = layers[idx].color; ctx.fill();
+    });
+    item.addEventListener('mouseleave', function(){
+      drawStatic();
+      var curVals = layers.map(function(l){ return l.current; });
+      var desVals = layers.map(function(l){ return l.desired; });
+      polygon(desVals, accent+'22', accent, true);
+      polygon(curVals, 'rgba(248,250,252,0.12)', '#f8fafc', false);
+    });
+  });
+
+  var gauges = document.getElementById('gauges');
+  function animateNum(el, from, to, dur){
+    var start=null;
+    function step(ts){
+      if(!start) start=ts;
+      var p = Math.min((ts-start)/dur,1);
+      el.textContent = Math.round(from + (to-from)*p);
+      if(p<1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  var gaugeIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.querySelectorAll('.gauge-fill').forEach(function(f){ f.style.width = f.getAttribute('data-target') + '%'; });
+        e.target.querySelectorAll('.gauge-val').forEach(function(v){ animateNum(v, 0, parseInt(v.getAttribute('data-num'),10), 900); });
+        gaugeIO.unobserve(e.target);
+      }
+    });
+  }, {threshold:0.4});
+  gaugeIO.observe(gauges);
+
+  var profiles = {
+    lp:    [80, 40, 35, 30, 50, 20, 45, 15],
+    sales: [60, 70, 55, 75, 40, 10, 30, 65]
+  };
+  var gaugeFills = document.querySelectorAll('#gauges .gauge-fill');
+  var gaugeVals = document.querySelectorAll('#gauges .gauge-val');
+  function setProfile(name){
+    var vals = profiles[name];
+    gaugeFills.forEach(function(f, i){ f.style.width = vals[i] + '%'; });
+    gaugeVals.forEach(function(v, i){ animateNum(v, parseInt(v.textContent||'0',10), vals[i], 600); });
+  }
+  var btnLP = document.getElementById('btnLP');
+  var btnSales = document.getElementById('btnSales');
+  btnLP.addEventListener('click', function(){ btnLP.classList.add('active'); btnSales.classList.remove('active'); setProfile('lp'); });
+  btnSales.addEventListener('click', function(){ btnSales.classList.add('active'); btnLP.classList.remove('active'); setProfile('sales'); });
+
+  var orgBars = document.getElementById('orgBars');
+  var orgIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.querySelectorAll('.org-fill').forEach(function(f){ f.style.width = f.getAttribute('data-target') + '%'; });
+        orgIO.unobserve(e.target);
+      }
+    });
+  }, {threshold:0.4});
+  orgIO.observe(orgBars);
+})();
+</script>
+</body>
+</html>
