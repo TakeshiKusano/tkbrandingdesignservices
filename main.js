@@ -4,8 +4,8 @@ lucide.createIcons();
 // Smooth reveal animation on scroll
 const observerOptions = {
   root: null,
-  threshold: 0.1,
-  rootMargin: "0px"
+  threshold: 0,
+  rootMargin: "0px 0px -10% 0px"
 };
 
 const observer = new IntersectionObserver((entries, observer) => {
