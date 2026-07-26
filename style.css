@@ -159,25 +159,129 @@ nav {
   animation: fadeInUp 1s ease 0.4s backwards;
 }
 
-.hero-image {
-  position: absolute;
-  top: 50%;
-  right: 15%;
-  transform: translateY(-50%);
-  width: 65%;
-  height: 80%;
-  z-index: 1;
-  opacity: 0.45;
-  mask-image: linear-gradient(to left, black 40%, transparent);
-  -webkit-mask-image: linear-gradient(to left, black 40%, transparent);
+.hero--home .hero-title {
+  font-size: 4.6rem;
+  margin-bottom: 1.75rem;
 }
 
-.hero-image img,
-.hero-image video {
+.hero-lede {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--text-sub);
+  letter-spacing: 0.01em;
+  margin-bottom: 2rem;
+  border: none;
+  padding: 0;
+}
+
+/* Hero Signature — "converging light" diagram */
+.hero-signature {
+  position: absolute;
+  top: 50%;
+  right: 2%;
+  transform: translateY(-50%);
+  width: 66%;
+  height: 90%;
+  z-index: 1;
+  pointer-events: none;
+  mask-image: linear-gradient(to left, black 42%, transparent 90%);
+  -webkit-mask-image: linear-gradient(to left, black 42%, transparent 90%);
+}
+
+.hero-signature svg {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  border-radius: 24px;
+  display: block;
+  overflow: visible;
+}
+
+.hero-grid-lines line {
+  stroke: var(--text-sub);
+  stroke-opacity: 0.12;
+  stroke-width: 1;
+}
+
+.node-line {
+  stroke: var(--accent);
+  stroke-width: 1.4;
+  opacity: 0.5;
+}
+
+.node-seed {
+  fill: var(--accent);
+  opacity: 0.45;
+}
+
+.node-core {
+  fill: var(--accent);
+}
+
+.node-core-glow {
+  fill: var(--accent);
+  opacity: 0.45;
+  filter: blur(11px);
+}
+
+.node-ring {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  opacity: 0.45;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .node-line {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: drawLine 1.1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .hero-node-lines .node-line:nth-of-type(1) { animation-delay: 0.5s; }
+  .hero-node-lines .node-line:nth-of-type(2) { animation-delay: 0.62s; }
+  .hero-node-lines .node-line:nth-of-type(3) { animation-delay: 0.74s; }
+  .hero-node-lines .node-line:nth-of-type(4) { animation-delay: 0.86s; }
+  .hero-node-lines .node-line:nth-of-type(5) { animation-delay: 0.98s; }
+  .hero-node-lines .node-line:nth-of-type(6) { animation-delay: 1.1s; }
+
+  .node-seed {
+    opacity: 0;
+    animation: seedIn 0.6s ease forwards;
+  }
+  .hero-node-seeds .node-seed:nth-of-type(1) { animation-delay: 0.5s; }
+  .hero-node-seeds .node-seed:nth-of-type(2) { animation-delay: 0.62s; }
+  .hero-node-seeds .node-seed:nth-of-type(3) { animation-delay: 0.74s; }
+  .hero-node-seeds .node-seed:nth-of-type(4) { animation-delay: 0.86s; }
+  .hero-node-seeds .node-seed:nth-of-type(5) { animation-delay: 0.98s; }
+  .hero-node-seeds .node-seed:nth-of-type(6) { animation-delay: 1.1s; }
+
+  .node-core-glow {
+    opacity: 0;
+    animation: coreGlow 3.4s ease-in-out 1.7s infinite;
+  }
+  .node-ring {
+    opacity: 0;
+    animation: ringPulse 2.8s ease-out 1.6s infinite;
+  }
+}
+
+@keyframes drawLine {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes seedIn {
+  to { opacity: 0.45; }
+}
+
+@keyframes ringPulse {
+  0% { transform: scale(0.6); opacity: 0.55; }
+  70%, 100% { transform: scale(1.8); opacity: 0; }
+}
+
+@keyframes coreGlow {
+  0%, 100% { opacity: 0.3; filter: blur(9px); }
+  50% { opacity: 0.6; filter: blur(16px); }
 }
 
 /* Buttons */
@@ -251,6 +355,85 @@ nav {
   justify-content: center;
   margin-bottom: 1.5rem;
   color: var(--accent);
+}
+
+/* Methodology Cards */
+.method-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+}
+
+.method-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.method-card-top .card-icon {
+  margin-bottom: 0;
+}
+
+.method-badge {
+  white-space: nowrap;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.85rem;
+  border-radius: 50px;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+}
+
+.method-badge--tool {
+  border-color: #10b981;
+  color: #10b981;
+}
+
+.method-card h3 {
+  font-size: 1.15rem;
+  margin-bottom: 0.5rem;
+}
+
+.method-en {
+  display: block;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--text-sub);
+  letter-spacing: 0.02em;
+  margin-top: 0.3rem;
+}
+
+.method-desc {
+  color: var(--text-sub);
+  font-size: 0.92rem;
+  line-height: 1.7;
+  margin-bottom: 1.75rem;
+}
+
+.method-cta {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.method-cta i {
+  width: 15px;
+  height: 15px;
+  transition: var(--transition);
+}
+
+.method-card:hover .method-cta i {
+  transform: translateX(4px);
 }
 
 /* Publications */
@@ -414,7 +597,15 @@ nav {
 /* Responsive */
 @media (max-width: 992px) {
   .hero-title { font-size: 3rem; }
-  .hero-image { opacity: 0.15; width: 100%; right: 0; mask-image: none; }
+  .hero--home .hero-title { font-size: 2.6rem; }
+  .hero-lede { font-size: 1.25rem; }
+  .hero-signature {
+    opacity: 0.25;
+    width: 100%;
+    right: 0;
+    mask-image: linear-gradient(to bottom, black 25%, transparent 85%);
+    -webkit-mask-image: linear-gradient(to bottom, black 25%, transparent 85%);
+  }
   .nav-links { display: none; }
 }
 

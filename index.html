@@ -30,13 +30,57 @@
 
   <main>
     <!-- Hero Section -->
-    <section class="hero" id="home">
+    <section class="hero hero--home" id="home">
+      <div class="hero-signature" aria-hidden="true">
+        <svg viewBox="0 0 900 900" xmlns="http://www.w3.org/2000/svg">
+          <g class="hero-grid-lines">
+            <line x1="90" y1="0" x2="90" y2="900"/>
+            <line x1="180" y1="0" x2="180" y2="900"/>
+            <line x1="270" y1="0" x2="270" y2="900"/>
+            <line x1="360" y1="0" x2="360" y2="900"/>
+            <line x1="450" y1="0" x2="450" y2="900"/>
+            <line x1="540" y1="0" x2="540" y2="900"/>
+            <line x1="630" y1="0" x2="630" y2="900"/>
+            <line x1="720" y1="0" x2="720" y2="900"/>
+            <line x1="810" y1="0" x2="810" y2="900"/>
+            <line x1="0" y1="90" x2="900" y2="90"/>
+            <line x1="0" y1="180" x2="900" y2="180"/>
+            <line x1="0" y1="270" x2="900" y2="270"/>
+            <line x1="0" y1="360" x2="900" y2="360"/>
+            <line x1="0" y1="450" x2="900" y2="450"/>
+            <line x1="0" y1="540" x2="900" y2="540"/>
+            <line x1="0" y1="630" x2="900" y2="630"/>
+            <line x1="0" y1="720" x2="900" y2="720"/>
+            <line x1="0" y1="810" x2="900" y2="810"/>
+          </g>
+          <g class="hero-node-lines">
+            <line class="node-line" pathLength="1" x1="120" y1="140" x2="600" y2="330"/>
+            <line class="node-line" pathLength="1" x1="860" y1="90" x2="600" y2="330"/>
+            <line class="node-line" pathLength="1" x1="900" y1="520" x2="600" y2="330"/>
+            <line class="node-line" pathLength="1" x1="760" y1="860" x2="600" y2="330"/>
+            <line class="node-line" pathLength="1" x1="180" y1="780" x2="600" y2="330"/>
+            <line class="node-line" pathLength="1" x1="60" y1="480" x2="600" y2="330"/>
+          </g>
+          <g class="hero-node-seeds">
+            <circle class="node-seed" cx="120" cy="140" r="3.5"/>
+            <circle class="node-seed" cx="860" cy="90" r="3.5"/>
+            <circle class="node-seed" cx="900" cy="520" r="3.5"/>
+            <circle class="node-seed" cx="760" cy="860" r="3.5"/>
+            <circle class="node-seed" cx="180" cy="780" r="3.5"/>
+            <circle class="node-seed" cx="60" cy="480" r="3.5"/>
+          </g>
+          <circle class="node-core-glow" cx="600" cy="330" r="26"/>
+          <circle class="node-ring" cx="600" cy="330" r="20"/>
+          <circle class="node-core" cx="600" cy="330" r="7"/>
+        </svg>
+      </div>
       <div class="container">
         <div class="hero-content">
-          <h1 class="hero-title" style="margin-bottom: 0.5rem;">
-            <span class="title-accent" style="background: linear-gradient(90deg, #ff007f, #ff69b4); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Beyond AI.<br>Design Intelligence.</span>
+          <span class="hero-tag">Strategy, Backed by Logic</span>
+          <h1 class="hero-title">
+            <span class="title-accent">Beyond AI.<br>Design Intelligence.</span>
           </h1>
-          <h2 style="font-size: 1.8rem; font-weight: 600; color: var(--text-sub); margin-bottom: 2rem; border: none; padding: 0;">
+          <h2 class="hero-lede">
             AIの先にある競争力へ。<br>ブランド、組織、戦略、そしてAI。
           </h2>
           <p class="hero-subtitle">
@@ -49,11 +93,6 @@
             </a>
           </div>
         </div>
-      </div>
-      <div class="hero-image">
-        <video autoplay muted loop playsinline poster="TopImage.png">
-          <source src="hero-globe.mp4" type="video/mp4">
-        </video>
       </div>
     </section>
 
@@ -124,14 +163,32 @@
             事業・ブランド・マーケティング <span style="flex: 1; height: 1px; background: var(--glass-border);"></span>
           </h3>
           <div class="grid-3">
-            <a class="glass-card" href="Methodology/状態モデリングLP.html" style="display: block; text-decoration: none; color: inherit;">
-              <h3>状態モデリング State Modeling</h3>
+            <a class="glass-card method-card" href="Methodology/状態モデリングLP.html">
+              <div class="method-card-top">
+                <div class="card-icon"><i data-lucide="layers"></i></div>
+                <span class="method-badge">Methodology</span>
+              </div>
+              <h3>状態モデリング<span class="method-en">State Modeling</span></h3>
+              <p class="method-desc">顧客の「状態の変化」で市場と競合を捉え直すフレームワーク。棚ではなく、遷移で市場を切る。</p>
+              <span class="method-cta">詳しく見る <i data-lucide="arrow-right"></i></span>
             </a>
-            <a class="glass-card" href="Methodology/アテンションデザインLP.html" style="display: block; text-decoration: none; color: inherit;">
-              <h3>アテンションデザイン Attention Design</h3>
+            <a class="glass-card method-card" href="Methodology/アテンションデザインLP.html">
+              <div class="method-card-top">
+                <div class="card-icon"><i data-lucide="eye"></i></div>
+                <span class="method-badge">Methodology</span>
+              </div>
+              <h3>アテンションデザイン<span class="method-en">Attention Design</span></h3>
+              <p class="method-desc">情報量では差がつかない時代の「注意を動かす」8原則。届く／届かないを設計とスコアで診断する。</p>
+              <span class="method-cta">詳しく見る <i data-lucide="arrow-right"></i></span>
             </a>
-            <a class="glass-card" href="brand-diagnosis.html" style="display: block; text-decoration: none; color: inherit;">
-              <h3>ブランド診断 Brand Diagnosis</h3>
+            <a class="glass-card method-card" href="brand-diagnosis.html">
+              <div class="method-card-top">
+                <div class="card-icon"><i data-lucide="stethoscope"></i></div>
+                <span class="method-badge method-badge--tool">Diagnostic Tool</span>
+              </div>
+              <h3>ブランド診断<span class="method-en">Brand Diagnosis</span></h3>
+              <p class="method-desc">全492問・6つの観点でブランドの現在地をスコアとレーダーチャートで可視化する無料診断。</p>
+              <span class="method-cta">診断してみる <i data-lucide="arrow-right"></i></span>
             </a>
           </div>
         </div>
@@ -141,23 +198,50 @@
             人材・組織開発 <span style="flex: 1; height: 1px; background: var(--glass-border);"></span>
           </h3>
           <div class="grid-3">
-            <a class="glass-card" href="Methodology/アテンションコンピテンシーLP.html" style="display: block; text-decoration: none; color: inherit;">
-              <h3>アテンションコンピテンシー Attention Competency</h3>
+            <a class="glass-card method-card" href="Methodology/アテンションコンピテンシーLP.html">
+              <div class="method-card-top">
+                <div class="card-icon"><i data-lucide="target"></i></div>
+                <span class="method-badge">Methodology</span>
+              </div>
+              <h3>アテンションコンピテンシー<span class="method-en">Attention Competency</span></h3>
+              <p class="method-desc">行動や結果の手前にある「何に気づいたか」を、5つの軸で評価する人材育成モデル。</p>
+              <span class="method-cta">詳しく見る <i data-lucide="arrow-right"></i></span>
             </a>
-            <a class="glass-card" href="Methodology/縦軸横軸成長フレームワークLP.html" style="display: block; text-decoration: none; color: inherit;">
-              <h3>縦軸・横軸成長フレームワーク Vertical × Horizontal Growth</h3>
+            <a class="glass-card method-card" href="Methodology/縦軸横軸成長フレームワークLP.html">
+              <div class="method-card-top">
+                <div class="card-icon"><i data-lucide="grid-2x2"></i></div>
+                <span class="method-badge">Methodology</span>
+              </div>
+              <h3>縦軸・横軸成長フレームワーク<span class="method-en">Vertical × Horizontal Growth</span></h3>
+              <p class="method-desc">スキルの幅（横軸）とものの見方の深さ（縦軸）、両輪で人の成長段階を捉えるフレームワーク。</p>
+              <span class="method-cta">詳しく見る <i data-lucide="arrow-right"></i></span>
             </a>
-            <a class="glass-card" href="Methodology/思考ゲーム診断メソッドLP.html" style="display: block; text-decoration: none; color: inherit;">
-              <h3>思考ゲーム診断メソッド Thinking Game Diagnostic Method</h3>
+            <a class="glass-card method-card" href="Methodology/思考ゲーム診断メソッドLP.html">
+              <div class="method-card-top">
+                <div class="card-icon"><i data-lucide="puzzle"></i></div>
+                <span class="method-badge method-badge--tool">Diagnostic Tool</span>
+              </div>
+              <h3>思考ゲーム診断メソッド<span class="method-en">Thinking Game Diagnostic Method</span></h3>
+              <p class="method-desc">4つのゲーム×5つの問い×PESTスキャンで、今どのゲームに参加し勝ち筋はどこかを可視化する意思決定メソッド。</p>
+              <span class="method-cta">診断してみる <i data-lucide="arrow-right"></i></span>
             </a>
-            <a class="glass-card" href="Methodology/HUMAN_OS_Dashboard_診断.html" style="display: block; text-decoration: none; color: inherit;">
-              <h3>HUMAN OS Dashboard 診断</h3>
+            <a class="glass-card method-card" href="Methodology/HUMAN_OS_Dashboard_診断.html">
+              <div class="method-card-top">
+                <div class="card-icon"><i data-lucide="gauge"></i></div>
+                <span class="method-badge method-badge--tool">Diagnostic Tool</span>
+              </div>
+              <h3>HUMAN OS Dashboard<span class="method-en">診断ダッシュボード</span></h3>
+              <p class="method-desc">『HUMAN OS 人生分析学』の5ステップを、スライダーを動かすだけでその場で可視化する診断ツール。</p>
+              <span class="method-cta">診断してみる <i data-lucide="arrow-right"></i></span>
             </a>
-            <a class="glass-card" href="思考ゲーム診断アプリ.html" style="display: block; text-decoration: none; color: inherit;">
-              <h3>思考ゲーム診断アプリ Thinking Game Diagnosis App</h3>
-            </a>
-            <a class="glass-card" href="EnergyOS診断アプリ.html" style="display: block; text-decoration: none; color: inherit;">
-              <h3>EnergyOS診断アプリ EnergyOS Diagnosis App</h3>
+            <a class="glass-card method-card" href="EnergyOS診断アプリ.html">
+              <div class="method-card-top">
+                <div class="card-icon"><i data-lucide="zap"></i></div>
+                <span class="method-badge method-badge--tool">Diagnostic Tool</span>
+              </div>
+              <h3>EnergyOS診断アプリ<span class="method-en">EnergyOS Diagnosis App</span></h3>
+              <p class="method-desc">エネルギーの状態をカテゴリ別に診断し、レーダーチャートと日々の記録で自分の調子を可視化するアプリ。</p>
+              <span class="method-cta">診断してみる <i data-lucide="arrow-right"></i></span>
             </a>
           </div>
         </div>
