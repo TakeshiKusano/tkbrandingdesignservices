@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="『AI時代の組織開発 ―― 対立・合意形成・マネジメントはどう変わるのか』Kindleにて発売中。AIは最適解を示す。人間は未来への合意を設計する。組織開発100年の歴史を踏まえ、管理はAIへ、合意形成は人間へという新しいモデルを提案する一冊。">
+<title>AI時代の組織開発 ―― 対立・合意形成・マネジメントはどう変わるのか</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Noto+Sans+JP:wght@400;500;700&family=Outfit:wght@400;600;800&family=Shippori+Mincho:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root {
+  --primary: #0f172a;
+  --accent: #d4af37;
+  --accent-glow: rgba(212, 175, 55, 0.4);
+  --accent2: #38bdf8;
+  --accent2-glow: rgba(56, 189, 248, 0.35);
+  --text-main: #f8fafc;
+  --text-sub: #94a3b8;
+  --bg-dark: #020617;
+  --glass-bg: rgba(15, 23, 42, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --card-bg: #1e293b;
+  --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Noto Sans JP', 'Shippori Mincho', serif;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  line-height: 1.85;
+  overflow-x: hidden;
+}
+
+.bg-mesh {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(15, 23, 42, 0.8) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(30, 41, 59, 0.8) 0%, transparent 40%),
+    rgba(2, 6, 23, 1);
+}
+
+h1, h2, h3 {
+  font-family: 'Shippori Mincho', serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.title-accent {
+  background: linear-gradient(90deg, #d4af37, #fde68a);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.title-accent2 {
+  background: linear-gradient(90deg, #38bdf8, #bae6fd);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+section { padding: 100px 0; }
+
+/* Header */
+header {
+  position: fixed; top: 0; left: 0; width: 100%;
+  padding: 1.5rem 0;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  z-index: 1000;
+  border-bottom: 1px solid var(--glass-border);
+  transition: var(--transition);
+}
+nav { display: flex; justify-content: space-between; align-items: center; }
+.logo {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 1.05rem; font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--text-main);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-link {
+  color: var(--text-sub); text-decoration: none;
+  font-size: 0.86rem; font-weight: 500;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+.nav-link:hover { color: var(--accent); }
+.nav-cta {
+  background: var(--accent);
+  color: #000;
+  padding: 0.6rem 1.4rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+.nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 20px var(--accent-glow); }
+.nav-cta-outline {
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  color: var(--text-main);
+  padding: 0.6rem 1.4rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: var(--transition);
+  display: inline-flex; align-items: center; gap: 0.4rem;
+}
+.nav-cta-outline:hover { border-color: #FF0000; color: #FF0000; }
+
+/* Hero */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  position: relative;
+  padding: 160px 0 100px;
+}
+.hero .container {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 4rem;
+  align-items: center;
+}
+.hero-tag {
+  display: inline-block;
+  padding: 0.5rem 1.1rem;
+  background: var(--glass-border);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.05em;
+}
+.hero-title {
+  font-size: 2.6rem;
+  line-height: 1.4;
+  margin-bottom: 1.2rem;
+}
+.hero-kicker {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-sub);
+  margin-bottom: 2rem;
+  font-family: 'Noto Sans JP', sans-serif;
+  border-left: 3px solid var(--accent2);
+  padding-left: 1rem;
+}
+.hero-subtitle {
+  font-size: 1rem;
+  color: var(--text-sub);
+  max-width: 580px;
+  margin-bottom: 2.5rem;
+}
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+.hero-note { margin-top: 1.2rem; font-size: 0.8rem; color: var(--text-sub); }
+
+.hero-cover {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.hero-cover img {
+  width: 100%;
+  max-width: 340px;
+  border-radius: 10px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px var(--glass-border);
+  transition: var(--transition);
+}
+.hero-cover img:hover { transform: translateY(-8px) rotate(-1deg); }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  padding: 1.1rem 2.2rem;
+  border-radius: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: var(--transition);
+  cursor: pointer;
+  border: none;
+  font-size: 0.95rem;
+}
+.btn-primary {
+  background: var(--accent);
+  color: #000;
+  box-shadow: 0 10px 30px var(--accent-glow);
+}
+.btn-primary:hover { transform: translateY(-4px); box-shadow: 0 15px 40px var(--accent-glow); }
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  color: var(--text-main);
+}
+.btn-outline:hover { border-color: var(--accent2); color: var(--accent2); }
+
+/* Section shared */
+.section-title { text-align: center; margin-bottom: 4.5rem; }
+.section-title h2 { font-size: 2rem; margin-bottom: 1rem; }
+.section-title p { color: var(--text-sub); font-size: 1.05rem; }
+
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 2rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+.grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.75rem; }
+
+.glass-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  padding: 2.4rem;
+  border-radius: 20px;
+  backdrop-filter: blur(5px);
+  transition: var(--transition);
+}
+.glass-card:hover { border-color: var(--accent); transform: translateY(-8px); }
+
+.card-icon {
+  width: 52px; height: 52px;
+  background: var(--glass-border);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.25rem;
+  color: var(--accent);
+}
+
+/* Problem section */
+#problem { background: rgba(15, 23, 42, 0.4); }
+.problem-quote {
+  font-size: 1.05rem;
+  color: var(--text-main);
+  font-style: normal;
+  line-height: 1.9;
+}
+
+/* Concept two-axis */
+.axis-card { position: relative; padding-top: 2.8rem; }
+.axis-card.yoko { border-left: 4px solid var(--accent); }
+.axis-card.tate { border-left: 4px solid var(--accent2); }
+.axis-label {
+  position: absolute; top: 2.4rem; right: 2.4rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem; letter-spacing: 0.1em;
+  color: var(--text-sub);
+  text-transform: uppercase;
+}
+.axis-card h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+.axis-card .sub { color: var(--text-sub); font-size: 0.9rem; margin-bottom: 1.5rem; }
+.axis-card ul { list-style: none; display: grid; gap: 0.75rem; }
+.axis-card ul li { display: flex; gap: 0.6rem; font-size: 0.92rem; color: var(--text-main); }
+.axis-card.yoko ul li span { color: var(--accent); }
+.axis-card.tate ul li span { color: var(--accent2); }
+
+/* Pull quote banner */
+.quote-banner {
+  background: linear-gradient(135deg, rgba(212,175,55,0.08), rgba(56,189,248,0.05));
+  border-top: 1px solid var(--glass-border);
+  border-bottom: 1px solid var(--glass-border);
+  text-align: center;
+}
+.quote-banner p {
+  font-size: 1.4rem;
+  line-height: 1.95;
+  max-width: 780px;
+  margin: 0 auto;
+  font-family: 'Shippori Mincho', serif;
+}
+.quote-banner .source {
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  color: var(--text-sub);
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+/* For whom */
+.whom-list { display: grid; gap: 1rem; max-width: 760px; margin: 0 auto; }
+.whom-item {
+  display: flex; align-items: flex-start; gap: 1rem;
+  padding: 1.4rem 1.6rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+}
+.whom-item i { color: var(--accent2); flex-shrink: 0; margin-top: 0.15rem; }
+
+/* Contents / timeline */
+.toc-list { max-width: 820px; margin: 0 auto; display: grid; gap: 0; }
+.toc-item {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 1.5rem;
+  padding: 1.6rem 0;
+  border-bottom: 1px solid var(--glass-border);
+}
+.toc-item:last-child { border-bottom: none; }
+.toc-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding-top: 0.2rem;
+}
+.toc-item h3 { font-size: 1.15rem; margin-bottom: 0.5rem; }
+.toc-item p { color: var(--text-sub); font-size: 0.9rem; }
+
+/* English sub-label */
+.compass-en {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--text-sub);
+  text-transform: uppercase;
+  margin-left: 0.5rem;
+}
+
+/* Correspondence / diagram frame */
+.table-frame {
+  max-width: 900px; margin: 0 auto;
+  background: #f8fafc;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px var(--glass-border);
+}
+.table-frame img { width: 100%; display: block; border-radius: 8px; }
+
+/* Capability map bars */
+.capmap { max-width: 640px; margin: 3rem auto 0; display: grid; gap: 1.1rem; }
+.caprow { display: grid; grid-template-columns: 110px 1fr; align-items: center; gap: 1rem; }
+.caprow .label { font-size: 0.85rem; font-weight: 700; color: var(--text-main); }
+.cap-bar { display: flex; height: 26px; border-radius: 8px; overflow: hidden; background: rgba(255,255,255,0.06); }
+.cap-bar span { height: 100%; }
+.cap-bar .h { background: var(--text-sub); }
+.cap-bar .a { background: var(--accent); }
+.cap-bar .e { background: var(--accent2); }
+.caplegend { display: flex; gap: 1.5rem; justify-content: center; margin-top: 1.6rem; font-size: 0.8rem; color: var(--text-sub); }
+.caplegend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 0.4rem; vertical-align: middle; }
+
+/* Position / framework cards */
+.position-card { position: relative; }
+.position-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem; letter-spacing: 0.12em;
+  color: var(--accent2); text-transform: uppercase;
+  margin-bottom: 0.6rem; display: block;
+}
+.position-card h3 { font-size: 1.15rem; margin-bottom: 0.7rem; }
+.position-card p { color: var(--text-sub); font-size: 0.88rem; margin-bottom: 1rem; }
+.position-quote {
+  border-top: 1px dashed var(--glass-border);
+  padding-top: 0.9rem;
+  font-size: 0.82rem;
+  color: var(--accent);
+  font-family: 'Shippori Mincho', serif;
+  line-height: 1.7;
+}
+
+/* Final CTA */
+#cta { background: linear-gradient(180deg, transparent, rgba(212, 175, 55, 0.06)); }
+.cta-card { text-align: center; padding: 5rem 2rem; }
+.cta-card h2 { font-size: 2.1rem; margin-bottom: 1.2rem; }
+.cta-card p { color: var(--text-sub); max-width: 620px; margin: 0 auto 2.5rem; }
+
+footer { border-top: 1px solid var(--glass-border); padding: 3rem 0; }
+footer .container {
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+  font-size: 0.85rem; color: var(--text-sub);
+}
+
+/* Animations */
+.reveal { opacity: 0; transform: translateY(24px); transition: all 0.8s cubic-bezier(0.16,1,0.3,1); }
+.reveal-active { opacity: 1 !important; transform: translateY(0) !important; }
+
+@media (max-width: 992px) {
+  .hero .container { grid-template-columns: 1fr; }
+  .hero-cover { order: -1; }
+  .nav-links { display: none; }
+  .hero-title { font-size: 1.9rem; }
+  .toc-item { grid-template-columns: 80px 1fr; }
+  .caprow { grid-template-columns: 80px 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="bg-mesh"></div>
+
+<header>
+  <div class="container nav">
+    <a href="#" class="logo">AI時代の組織開発<span>。</span></a>
+    <ul class="nav-links">
+      <li><a href="../index.html" class="nav-link">← サイトトップ</a></li>
+      <li><a href="#problem" class="nav-link">変化の兆し</a></li>
+      <li><a href="#core" class="nav-link">コアアイデア</a></li>
+      <li><a href="#frameworks" class="nav-link">3つのフレームワーク</a></li>
+      <li><a href="#contents" class="nav-link">目次</a></li>
+      <li><a href="#whom" class="nav-link">こんな人へ</a></li>
+    </ul>
+    <a href="https://www.amazon.co.jp/dp/B0HBHT2MJL" target="_blank" rel="noopener noreferrer" class="nav-cta">Amazonで見る</a>
+    <a href="https://youtu.be/EX9NL4z7ZlY" target="_blank" rel="noopener noreferrer" class="nav-cta-outline">
+      <i data-lucide="youtube" style="width:16px;height:16px;"></i>
+      Youtubeで視る
+    </a>
+  </div>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="hero-content">
+        <span class="hero-tag">Kindleストアで発売中 ／ 組織開発・経営・AI活用</span>
+        <h1 class="hero-title">
+          AIは最適解を示す。<br>
+          <span class="title-accent">人間は、未来への合意を設計する。</span>
+        </h1>
+        <p class="hero-kicker">AI時代の組織開発 ―― 対立・合意形成・マネジメントはどう変わるのか</p>
+        <p class="hero-subtitle">
+          生成AIが会議を要約し、分析し、評価し、計画まで立てる時代になった。管理という仕事の多くはAIに置き換わっていく。しかし、AIがどれだけ進化しても、最後まで人間に残る仕事がある。それは「対立」を乗り越え、異なる価値観を持つ人々を未来へ導く「合意形成」である。
+        </p>
+        <div class="hero-actions">
+          <a href="https://www.amazon.co.jp/dp/B0HBHT2MJL" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            <i data-lucide="book-open" style="width:20px;height:20px;"></i>
+            Amazonで購入する
+          </a>
+          <a href="https://youtu.be/EX9NL4z7ZlY" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+            <i data-lucide="youtube" style="width:20px;height:20px;"></i>
+            Youtubeで視る
+          </a>
+          <a href="#core" class="btn btn-outline">
+            <i data-lucide="arrow-down" style="width:18px;height:18px;"></i>
+            コンセプトを見る
+          </a>
+        </div>
+        <p class="hero-note">著者：たけ@モダンロジック ／ Kindle版</p>
+      </div>
+      <div class="hero-cover">
+        <img src="AijidainoSoshikidezain.jpg" alt="『AI時代の組織開発』表紙">
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem -->
+  <section id="problem">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag" style="border-color:#ef4444; color:#ef4444;">Already Happening</span>
+        <h2>AIは組織運営の実務にも、すでに入り込んでいる</h2>
+        <p>正式な「組織改革」を経ないまま、マネジメントの現場では静かな変化が進行している</p>
+      </div>
+      <div class="grid-3">
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="gauge"></i></div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.8rem;">AI部長</h3>
+          <p class="problem-quote">KPIの進捗を常時監視し、遅延の兆候を検知した時点でアラートを出す。ある部門長は、進捗確認会議に費やす時間が導入前後で平均40%減ったという。管理職の役割は「異常を見つける人」から「AIが検知した異常にどう対応するかを判断する人」へ移行している。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="users-round"></i></div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.8rem;">AI会議</h3>
+          <p class="problem-quote">会議の音声をリアルタイムで解析し、論点と対立・一致している意見を可視化する。ある企業では発言時間を数字で示すようになったところ、特定の役職者ばかりが話し続けていた会議の風景が、自然と是正されていった。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="clipboard-check"></i></div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.8rem;">AI評価</h3>
+          <p class="problem-quote">定量データをもとに、評価者のバイアスを排除した一次評価を行う。だがある小売企業では、AI評価の結果をそのまま賞与に反映させたところ強い反発を招いた。AIが答えを出すことと、人が納得することは、まったく別の課題なのだ。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Concept -->
+  <section id="core">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Core Concept</span>
+        <h2>対立を「コミュニケーション不足」で<br>片付けている限り、次の一手は見えない</h2>
+        <p>AIが最適解を示す精度が上がるほど、その正しさに従えない人間の感情や事情が、これまで以上にくっきりと浮かび上がる</p>
+      </div>
+      <div class="grid-2" style="align-items:stretch;">
+        <div class="glass-card axis-card yoko reveal">
+          <span class="axis-label">The Old Frame</span>
+          <h3>管理職の仕事は、管理することだという思い込み<span style="color:var(--accent);">（従来の発想）</span></h3>
+          <p class="sub">対立や抵抗を「コミュニケーション不足」の一言で片付けてしまう</p>
+          <ul>
+            <li><span>✓</span>コミュニケーションの量を増やせば、対立は解消すると考えている</li>
+            <li><span>✓</span>抵抗する部下や上司を「分からず屋」「敵」だと決めつけている</li>
+            <li><span>✓</span>AIが正しい答えを示せば、人はそれに従うはずだと思っている</li>
+            <li><span>✓</span>管理職の価値は、業務知識の豊富さで測られると信じている</li>
+          </ul>
+        </div>
+        <div class="glass-card axis-card tate reveal">
+          <span class="axis-label">The Redesign</span>
+          <h3>管理はAIへ。合意形成は人間の仕事として設計し直す<span style="color:var(--accent2);">（本書のアプローチ）</span></h3>
+          <p class="sub">マネジメントを機能ごとに分解し、AIとの役割分担を組み直す</p>
+          <ul>
+            <li><span>✓</span>管理・育成・判断・合意形成の4機能に分解し、AIに委ねる部分を見極める</li>
+            <li><span>✓</span>抵抗を「利益・能力・アイデンティティ・哲学」のシグナルとして読み解く</li>
+            <li><span>✓</span>氷山モデルで、見えている発言の奥にある構造を可視化する</li>
+            <li><span>✓</span>ストレッチ・コラボレーションで、合意がなくても協働を始める</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quote banner -->
+  <section class="quote-banner">
+    <div class="container reveal">
+      <p>
+        管理は、AIに任せればいい。<br>
+        <span class="title-accent">合意形成は、人間にしかできない。</span>
+      </p>
+      <p class="source">――『AI時代の組織開発』はじめにより</p>
+    </div>
+  </section>
+
+  <!-- Management functions map -->
+  <section id="model" style="background: rgba(15, 23, 42, 0.4);">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Function Map</span>
+        <h2>マネジメントの4機能、AIと人間の分担</h2>
+        <p>管理はAIへ。合意形成は人間へ。育成と判断は、AIが土台を整え、人間が仕上げる形に再編されていく</p>
+      </div>
+      <div class="glass-card reveal">
+        <div class="capmap">
+          <div class="caprow"><span class="label">管理</span><div class="cap-bar"><span class="a" style="width:80%"></span><span class="h" style="width:20%"></span></div></div>
+          <div class="caprow"><span class="label">育成</span><div class="cap-bar"><span class="a" style="width:40%"></span><span class="h" style="width:60%"></span></div></div>
+          <div class="caprow"><span class="label">判断</span><div class="cap-bar"><span class="a" style="width:45%"></span><span class="h" style="width:55%"></span></div></div>
+          <div class="caprow"><span class="label">合意形成</span><div class="cap-bar"><span class="a" style="width:5%"></span><span class="h" style="width:95%"></span></div></div>
+        </div>
+        <div class="caplegend">
+          <span><i style="background:var(--accent)"></i>AI</span>
+          <span><i style="background:var(--text-sub)"></i>人</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Three frameworks -->
+  <section id="frameworks">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Three Frameworks</span>
+        <h2>本書が提示する、3つのフレームワーク</h2>
+        <p>ひとりのマネージャーの物語を通じて描かれる、対立と合意形成の技術</p>
+      </div>
+      <div class="grid-3">
+        <div class="glass-card position-card reveal">
+          <span class="position-num">CH.4 ／ Iceberg Model</span>
+          <h3>対立は、氷山である</h3>
+          <p>見えているのは「今のやり方で数字は出ている」という発言だけ。水面下には、利益・能力・アイデンティティ・哲学と7つの構造的要因が沈んでいる。</p>
+          <p class="position-quote">"本当に扱うべきは、水面下にある感情や関係性——「プロセス」のほうだ"</p>
+        </div>
+        <div class="glass-card position-card reveal">
+          <span class="position-num">CH.4 ／ Stretch Collaboration</span>
+          <h3>敵と協働する、という発想</h3>
+          <p>完全な合意を前提とせず、対立とつながりを受け入れ、小さな実験を重ね、自らも組織力学の一部として関わり方を変えていく。</p>
+          <p class="position-quote">"敵とのコラボレーションは、合意がなくても始められる方法を見つけることから始まる"</p>
+        </div>
+        <div class="glass-card position-card reveal">
+          <span class="position-num">CH.5 ／ Consensus Design Model</span>
+          <h3>AI時代の組織開発モデル</h3>
+          <p>AI分析で構造を可視化し、シミュレーションで選択の先を疑似体験し、対話を重ね、完全な一致ではなく共に前進できる合意形成へとつなげる。</p>
+          <p class="position-quote">"組織デザインとは、合意を仕組みに落とし込む作業である"</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contents -->
+  <section id="contents" style="background: rgba(15, 23, 42, 0.4);">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Contents</span>
+        <h2>目次</h2>
+        <p>全7章・終章で構成</p>
+      </div>
+      <div class="toc-list">
+        <div class="toc-item reveal">
+          <div class="toc-num">第1章</div>
+          <div><h3>組織開発100年の歴史</h3><p>官僚制、科学的管理法、人間関係論、知識労働、心理的安全性。AIは、この100年の探求が収斂した先に現れた到達点である。</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第2章</div>
+          <div><h3>AIは組織をどう変えるのか</h3><p>バーチャル組織、一人ユニコーン企業、組織図から相関図へ。器が変わっても、組織の「中身」は人間の領域として残り続ける。</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第3章</div>
+          <div><h3>マネジメントはなくなるのか</h3><p>管理・育成・判断・合意形成の4機能に分解する。結論はシンプルだ——管理はAIへ、合意形成は人間へ。</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第4章</div>
+          <div><h3>なぜ対立はなくならないのか</h3><p>ひとりのマネージャーの物語を通じて、抵抗の4分類・7要因・氷山モデル・ストレッチコラボレーションを描く、本書の核心。</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第5章</div>
+          <div><h3>AI時代の組織開発</h3><p>AI分析→シミュレーション→対話→合意形成→組織デザインという、新しい組織開発モデルを提案する。</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第6章</div>
+          <div><h3>AI時代に優秀な人</h3><p>知識ではなく、問い。経験ではなく、判断。成長は独りでは起きない。橋渡しする人材が求められる。</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第7章</div>
+          <div><h3>HUMAN OS</h3><p>身体・感情・思考・判断・価値観・哲学。AI時代に磨くべき、人間の土台を6層構造で描く。</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">終章</div>
+          <div><h3>組織開発2.0</h3><p>管理者から、合意形成デザイナーへ。小さな納得の連鎖が、組織を動かす。</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who it's for -->
+  <section id="whom">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">For You</span>
+        <h2>こんな人へ</h2>
+      </div>
+      <div class="whom-list">
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>経営者・管理職として、AI時代のマネジメントのあり方に悩んでいる人</span></div>
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>人事・組織開発・HRの担当者で、これからの人材育成の方向性を模索している人</span></div>
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>チーム内の対立や抵抗勢力への対応に疲れているマネージャー</span></div>
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>心理的安全性やリーダーシップを、AI時代の視点でアップデートしたい人</span></div>
+      </div>
+      <p style="text-align:center; color:var(--text-sub); font-size:0.92rem; max-width:640px; margin:2.5rem auto 0;">
+        目の前の「動かない上司」「反対する同僚」「無言で抵抗する部下」に消耗しているなら、第4章「なぜ対立はなくならないのか」から。まだAI導入の初期段階で全体像を掴みたいなら、第1章から。歴史を踏まえれば、目の前の変化が場当たりの流行ではなく、必然の延長であることが腹落ちする。
+      </p>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section id="cta">
+    <div class="container">
+      <div class="glass-card cta-card reveal">
+        <span class="hero-tag" style="margin-bottom:1.5rem;">Get Started</span>
+        <h2>管理者から、合意形成デザイナーへ。<br>あなたの組織開発の地図を書き換える。</h2>
+        <p>
+          組織開発100年の歴史を踏まえ、AIが組織の「効率」を引き受けた後に人間に残される仕事——「納得解を設計する仕事」を体系化した一冊。『AI時代の組織開発 ―― 対立・合意形成・マネジメントはどう変わるのか』
+        </p>
+        <div class="hero-actions" style="justify-content:center;">
+          <a href="https://www.amazon.co.jp/dp/B0HBHT2MJL" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            <i data-lucide="book-open" style="width:20px;height:20px;"></i>
+            Kindleストアで『AI時代の組織開発』を読む
+          </a>
+          <a href="https://youtu.be/EX9NL4z7ZlY" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+            <i data-lucide="youtube" style="width:20px;height:20px;"></i>
+            Youtubeで視る
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="logo" style="font-size:0.95rem;">AI時代の組織開発<span>。</span></div>
+    <a href="../index.html" class="nav-link">← サイトトップへ戻る</a>
+    <div>著者：たけ@モダンロジック　© たけ@モダンロジック All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  lucide.createIcons();
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('reveal-active');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { root: null, threshold: 0.1, rootMargin: "0px" });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const targetId = this.getAttribute('href');
+      if (targetId === '#' || !document.querySelector(targetId)) return;
+      e.preventDefault();
+      window.scrollTo({ top: document.querySelector(targetId).offsetTop - 80, behavior: 'smooth' });
+    });
+  });
+
+  window.addEventListener('scroll', () => {
+    const header = document.querySelector('header');
+    if (window.scrollY > 50) {
+      header.style.padding = '0.9rem 0';
+      header.style.boxShadow = '0 10px 40px rgba(0,0,0,0.5)';
+    } else {
+      header.style.padding = '1.5rem 0';
+      header.style.boxShadow = 'none';
+    }
+  });
+</script>
+</body>
+</html>
