@@ -1,0 +1,578 @@
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>サービスデザインは「状態」を設計する</title>
+<meta name="description" content="UX・UI・CXの次に来る、新しいサービス設計論。State Design(状態設計)を体系化した一冊のランディングページ。" />
+<style>
+  :root {
+    --ink: #020617;
+    --panel: #0a1220;
+    --panel-2: #0d1626;
+    --card: #101b30;
+    --line: #1d2a42;
+    --line-soft: #16213600;
+    --text-hi: #f7f8fb;
+    --text-lo: #93a1b8;
+    --text-dim: #5b6a83;
+    --gold: #d8b34a;
+    --orange: #e8763f;
+    --red: #c25b4f;
+    --serif: "Yu Mincho", "YuMincho", "Hiragino Mincho ProN", "HGS明朝E", serif;
+    --sans: "Yu Gothic", "YuGothic", "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
+    --maxw: 1080px;
+  }
+
+  * { box-sizing: border-box; }
+  html { background: var(--ink); }
+  body {
+    margin: 0;
+    background: var(--ink);
+    color: var(--text-hi);
+    font-family: var(--sans);
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--gold); color: #1a1200; }
+
+  a { color: inherit; }
+
+  .wrap {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  h1, h2, h3, blockquote { font-family: var(--serif); text-wrap: balance; margin: 0; }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--sans);
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    padding: 7px 18px;
+    border-radius: 999px;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+  }
+  .eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+  section { position: relative; }
+  .band { background: var(--panel); }
+  .py { padding: 108px 0; }
+  @media (max-width: 720px) { .py { padding: 72px 0; } }
+
+  .section-head { max-width: 720px; margin-bottom: 56px; }
+  .section-head h2 {
+    font-size: clamp(26px, 3.6vw, 38px);
+    font-weight: 700;
+    color: var(--text-hi);
+    margin-top: 18px;
+  }
+  .section-head p {
+    color: var(--text-lo);
+    font-size: 15.5px;
+    margin-top: 14px;
+    max-width: 56ch;
+  }
+
+  /* reveal */
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+
+  /* ---------------- HERO ---------------- */
+  .hero {
+    padding: 120px 0 96px;
+    border-bottom: 1px solid var(--line);
+    background:
+      radial-gradient(1100px 560px at 82% -10%, #16233a55, transparent 60%),
+      var(--ink);
+  }
+  .hero .wrap { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; align-items: center; }
+  @media (max-width: 900px) { .hero .wrap { grid-template-columns: 1fr; } }
+
+  .hero h1 {
+    font-size: clamp(34px, 5vw, 54px);
+    font-weight: 700;
+    line-height: 1.35;
+    margin: 22px 0 0;
+  }
+  .hero .accent-line { color: var(--orange); }
+  .hero .lede {
+    margin-top: 26px;
+    color: var(--text-lo);
+    font-size: 16.5px;
+    max-width: 46ch;
+    border-left: 2px solid var(--orange);
+    padding-left: 18px;
+  }
+  .hero .meta {
+    margin-top: 34px;
+    color: var(--text-dim);
+    font-size: 13.5px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .cta-row { margin-top: 38px; display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 15px 30px;
+    border-radius: 999px;
+    background: var(--gold);
+    color: #241a04;
+    font-weight: 700;
+    font-size: 14.5px;
+    text-decoration: none;
+    box-shadow: 0 18px 40px -18px #d8b34a66;
+  }
+  .btn.ghost {
+    background: transparent; color: var(--text-hi);
+    border: 1px solid var(--line); box-shadow: none;
+  }
+
+  /* state diagram (hero) */
+  .diagram { position: relative; height: 340px; }
+  .node {
+    position: absolute;
+    padding: 12px 20px;
+    border-radius: 12px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    font-size: 14px;
+    color: var(--text-lo);
+    white-space: nowrap;
+  }
+  .node.active { color: var(--text-hi); border-color: #d8b34a55; }
+  .node .tag { display: block; font-size: 10.5px; color: var(--text-dim); letter-spacing: .08em; margin-bottom: 3px; }
+  .diagram svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .flow-dot { fill: var(--orange); }
+  @media (prefers-reduced-motion: no-preference) {
+    .flow-path { stroke-dasharray: 6 8; animation: dash 3.6s linear infinite; }
+  }
+  @keyframes dash { to { stroke-dashoffset: -140; } }
+
+  /* ---------------- REALITY LIST ---------------- */
+  .reality { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+  .reality li {
+    display: grid; grid-template-columns: 64px 1fr; gap: 22px;
+    padding: 26px 0; border-top: 1px solid var(--line);
+  }
+  .reality li:last-child { border-bottom: 1px solid var(--line); }
+  .reality .idx { font-family: var(--serif); font-size: 22px; color: var(--text-dim); }
+  .reality p { margin: 0; font-size: 16px; color: var(--text-hi); max-width: 60ch; }
+  .reality span.tag { display: block; margin-top: 6px; font-size: 12.5px; color: var(--text-dim); }
+
+  /* ---------------- TRAP / AXIS ---------------- */
+  .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  @media (max-width: 800px) { .duo { grid-template-columns: 1fr; } }
+  .panelcard {
+    background: var(--card); border: 1px solid var(--line); border-radius: 18px;
+    padding: 34px 32px; position: relative; overflow: hidden;
+  }
+  .panelcard::before {
+    content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  }
+  .panelcard.trap::before { background: var(--text-dim); }
+  .panelcard.axis::before { background: var(--orange); }
+  .panelcard .label { font-size: 12px; letter-spacing: .12em; color: var(--text-dim); font-weight: 700; }
+  .panelcard h3 { font-size: 21px; margin-top: 14px; color: var(--text-hi); line-height: 1.5; }
+  .panelcard ul { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 15px; }
+  .panelcard li { display: grid; grid-template-columns: 20px 1fr; gap: 10px; font-size: 14.5px; color: var(--text-lo); }
+  .panelcard.axis li { color: var(--text-hi); }
+  .panelcard li b { color: var(--text-dim); font-weight: 700; }
+  .panelcard.axis li b { color: var(--orange); }
+
+  /* ---------------- TIMELINE (evolution) ---------------- */
+  .timeline { display: flex; gap: 0; position: relative; padding-top: 8px; }
+  .timeline::before {
+    content: ""; position: absolute; left: 0; right: 0; top: 34px; height: 1px; background: var(--line);
+  }
+  .tnode { flex: 1; position: relative; padding-right: 18px; }
+  .tnode .dot {
+    width: 13px; height: 13px; border-radius: 50%; background: var(--panel-2);
+    border: 2px solid var(--text-dim); margin-bottom: 18px; position: relative; z-index: 1;
+  }
+  .tnode.now .dot { border-color: var(--gold); background: var(--gold); box-shadow: 0 0 0 6px #d8b34a22; }
+  .tnode .era { font-size: 11.5px; color: var(--text-dim); letter-spacing: .1em; }
+  .tnode h4 { font-family: var(--serif); font-size: 18px; margin: 6px 0 8px; color: var(--text-hi); }
+  .tnode.now h4 { color: var(--gold); }
+  .tnode p { font-size: 12.5px; color: var(--text-lo); margin: 0; line-height: 1.6; }
+  @media (max-width: 860px) {
+    .timeline { flex-direction: column; gap: 28px; }
+    .timeline::before { display: none; }
+  }
+
+  /* ---------------- TREND ---------------- */
+  .trend { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 28px; }
+  @media (max-width: 860px) { .trend { grid-template-columns: 1fr; } }
+  .checklist { list-style: none; margin: 0; padding: 0; display: grid; gap: 24px; }
+  .checklist li { display: grid; grid-template-columns: 22px 1fr; gap: 14px; font-size: 15px; color: var(--text-hi); }
+  .checklist .mark { color: var(--orange); font-weight: 700; }
+  .highlight {
+    background: linear-gradient(160deg, #16233a, #0d1626); border: 1px solid #2a3c5c;
+    border-radius: 18px; padding: 32px;
+  }
+  .highlight .label { color: var(--orange); font-size: 12.5px; font-weight: 700; letter-spacing: .08em; }
+  .highlight blockquote { font-size: 19px; margin-top: 16px; color: var(--text-hi); line-height: 1.7; }
+
+  /* ---------------- CASE STUDIES (state transitions) ---------------- */
+  .cases { display: grid; gap: 18px; }
+  .case {
+    display: grid; grid-template-columns: 150px 1fr auto 1fr; align-items: center; gap: 18px;
+    background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px 26px;
+  }
+  @media (max-width: 780px) {
+    .case { grid-template-columns: 1fr; text-align: left; }
+  }
+  .case .brand { font-family: var(--serif); font-size: 19px; color: var(--text-hi); }
+  .case .state { font-size: 13.5px; padding: 9px 14px; border-radius: 8px; background: var(--panel-2); color: var(--text-lo); text-align: center; }
+  .case .state.after { color: var(--gold); border: 1px solid #d8b34a44; }
+  .case .arrow { color: var(--orange); font-size: 18px; text-align: center; }
+  .case .desc { display: none; }
+
+  /* ---------------- FRAMEWORK (7 tools) ---------------- */
+  .toolchain { display: grid; gap: 14px; }
+  .tool {
+    display: grid; grid-template-columns: 74px 200px 1fr; gap: 22px; align-items: start;
+    padding: 22px 0; border-top: 1px solid var(--line);
+  }
+  .tool:last-child { border-bottom: 1px solid var(--line); }
+  .tool .num { font-family: var(--serif); font-size: 15px; color: var(--text-dim); padding-top: 3px; }
+  .tool .name { font-size: 17px; color: var(--text-hi); font-weight: 700; }
+  .tool .name small { display: block; font-weight: 400; color: var(--text-dim); font-size: 12px; margin-top: 3px; }
+  .tool .desc { font-size: 14.5px; color: var(--text-lo); }
+  @media (max-width: 720px) {
+    .tool { grid-template-columns: 40px 1fr; }
+    .tool .desc { grid-column: 2 / 3; }
+  }
+
+  /* ---------------- BEFORE / AFTER ---------------- */
+  .ba-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  @media (max-width: 860px) { .ba-grid { grid-template-columns: 1fr; } }
+  .ba {
+    background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 28px;
+  }
+  .ba .kicker { font-size: 12px; color: var(--gold); font-weight: 700; letter-spacing: .06em; }
+  .ba h4 { font-family: var(--serif); font-size: 19px; margin: 10px 0 20px; color: var(--text-hi); }
+  .ba .row { margin-bottom: 16px; }
+  .ba .row .lab { font-size: 11px; letter-spacing: .1em; color: var(--text-dim); margin-bottom: 6px; }
+  .ba .row.after .lab { color: var(--orange); }
+  .ba .row p { margin: 0; font-size: 14px; color: var(--text-lo); line-height: 1.6; }
+  .ba .row.after p { color: var(--text-hi); }
+
+  /* ---------------- AI & HUMAN ---------------- */
+  .split { display: grid; grid-template-columns: 1fr 1fr; }
+  @media (max-width: 800px) { .split { grid-template-columns: 1fr; } }
+  .split > div { padding: 44px; }
+  .split .ai { background: var(--panel-2); border-right: 1px solid var(--line); }
+  .split .human { background: var(--card); }
+  .split h3 { font-family: var(--serif); font-size: 22px; margin-bottom: 20px; }
+  .split .human h3 { color: var(--orange); }
+  .split ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+  .split li { display: grid; grid-template-columns: 18px 1fr; gap: 10px; font-size: 14.5px; color: var(--text-lo); }
+  .split .human li { color: var(--text-hi); }
+  .split li b { color: var(--text-dim); }
+  .split .human li b { color: var(--orange); }
+
+  /* ---------------- AUTHOR ---------------- */
+  .author { display: grid; grid-template-columns: 96px 1fr; gap: 26px; align-items: start; }
+  .avatar {
+    width: 96px; height: 96px; border-radius: 50%;
+    background: linear-gradient(150deg, #d8b34a, #e8763f);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif); font-size: 30px; color: #1a1200; font-weight: 700;
+  }
+  .author h3 { font-size: 19px; color: var(--text-hi); }
+  .author p { color: var(--text-lo); font-size: 14.5px; max-width: 58ch; margin-top: 10px; }
+
+  /* ---------------- CLOSING ---------------- */
+  .closing { text-align: center; padding: 132px 0; }
+  .closing blockquote { font-size: clamp(24px, 4vw, 36px); line-height: 1.6; color: var(--text-hi); max-width: 780px; margin: 0 auto; }
+  .closing .support { color: var(--text-lo); font-size: 14.5px; margin: 26px auto 0; max-width: 52ch; }
+
+  footer { border-top: 1px solid var(--line); padding: 36px 0; color: var(--text-dim); font-size: 12.5px; }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+
+  .tag-gold { color: var(--gold); }
+  .tag-orange { color: var(--orange); }
+  .tag-red { color: var(--red); }
+</style>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow tag-gold"><span class="dot"></span>Kindleストアで発売予定 ／ ビジネス・経済</span>
+      <h1>UXの次に、企業は<br />何を<span class="accent-line">設計</span>すればいいのか。</h1>
+      <p class="lede">Apple、Disney、Duolingo――世界最先端の企業が本当に設計しているのは、画面ではない。<b>顧客の「状態」</b>である。その設計思想を体系化した一冊。</p>
+      <div class="cta-row">
+        <a class="btn" href="#cta">Kindleストアで読む(発売予定)</a>
+        <a class="btn ghost" href="#framework">7つの道具を見る</a>
+      </div>
+      <div class="meta">
+        <span>サービスデザインは「状態」を設計する</span>
+        <span>UX・UI・CXの次に来る、新しいサービス設計論 ｜ 著者：モダンロジック</span>
+      </div>
+    </div>
+
+    <div class="diagram" aria-hidden="true">
+      <svg viewBox="0 0 420 340">
+        <path class="flow-path" d="M70,60 C 140,60 140,150 210,150" fill="none" stroke="#e8763f" stroke-width="1.6" opacity="0.7" />
+        <path class="flow-path" d="M210,150 C 270,150 270,230 330,255" fill="none" stroke="#e8763f" stroke-width="1.6" opacity="0.7" />
+        <path d="M70,60 C 30,110 30,190 90,260" fill="none" stroke="#26344c" stroke-width="1.4" stroke-dasharray="3 6" opacity="0.8" />
+        <circle class="flow-dot" r="3.6">
+          <animateMotion dur="3.6s" repeatCount="indefinite"
+            path="M70,60 C 140,60 140,150 210,150 C 270,150 270,230 330,255" />
+        </circle>
+      </svg>
+      <div class="node" style="left:0; top:34px;"><span class="tag">BEFORE</span>不安・戸惑い</div>
+      <div class="node active" style="left:150px; top:124px;"><span class="tag">TRANSITION</span>状態遷移の設計</div>
+      <div class="node" style="left:150px; top:238px;"><span class="tag">— 分岐 —</span>放置・離脱リスク</div>
+      <div class="node active" style="left:270px; top:230px;"><span class="tag">AFTER</span>安心・習慣化</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== REALITY CHECK ===================== -->
+<section class="py">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow tag-red"><span class="dot"></span>Reality Check</span>
+      <h2>こんな感覚、ありませんか。</h2>
+      <p>業種はバラバラでも、根っこの構造は同じです。</p>
+    </div>
+    <ul class="reality reveal">
+      <li><span class="idx">01</span><p>UXにもCXにも投資しているのに、なぜか他社と同じ顔つきになる<span class="tag">— ブランドの均質化</span></p></li>
+      <li><span class="idx">02</span><p>機能を増やしても、解約率がなかなか下がらない<span class="tag">— 足し算の限界</span></p></li>
+      <li><span class="idx">03</span><p>研修をやっても、現場の行動が変わった実感がない<span class="tag">— 知識と行動の溝</span></p></li>
+      <li><span class="idx">04</span><p>AIを導入したが、結局UIを効率化しただけで終わっている<span class="tag">— 入り口で止まった活用</span></p></li>
+      <li><span class="idx">05</span><p>顧客満足度は高いのに、LTVがなぜか伸びない<span class="tag">— 指標と実感のズレ</span></p></li>
+      <li><span class="idx">06</span><p>何を改善すればいいのか、行動データばかりで手応えがない<span class="tag">— 軸の不在</span></p></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===================== CORE CONCEPT ===================== -->
+<section class="py band">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow tag-gold"><span class="dot"></span>Core Concept</span>
+      <h2>「使いやすさ」ではなく、「状態遷移」</h2>
+      <p>同じUIを持つ企業でも、成果が分かれる理由。</p>
+    </div>
+    <div class="duo reveal">
+      <div class="panelcard trap">
+        <span class="label">THE TRAP</span>
+        <h3>「UIを磨けば伸びる」という思い込み</h3>
+        <ul>
+          <li><b>✓</b>使いやすさは、もはや業界標準で差別化にならない</li>
+          <li><b>✓</b>機能を増やすほど、画面はかえって複雑になる</li>
+          <li><b>✓</b>指標を追っても、行動が変わったかは見えない</li>
+        </ul>
+      </div>
+      <div class="panelcard axis">
+        <span class="label">THE THIRD AXIS</span>
+        <h3>「状態遷移」という視点(本書の提案)</h3>
+        <ul>
+          <li><b>✓</b>Apple・Disney・Duolingoが設計しているのは画面ではなく状態</li>
+          <li><b>✓</b>不安を安心に、焦りを落ち着きに、やる気のなさを習慣に</li>
+          <li><b>✓</b>UIは、状態遷移を実現するための手段にすぎない</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== EVOLUTION ===================== -->
+<section class="py">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow tag-gold"><span class="dot"></span>Evolution</span>
+      <h2>設計の対象は、5段階で進化してきた</h2>
+      <p>モノから状態へ―競争の軸は、静かに移り続けている。</p>
+    </div>
+    <div class="timeline reveal">
+      <div class="tnode"><span class="era">01</span><h4>モノの時代</h4><p>設計対象：製品<br />成功指標：品質</p></div>
+      <div class="tnode"><span class="era">02</span><h4>サービスの時代</h4><p>設計対象：プロセス全体<br />成功指標：満足度</p></div>
+      <div class="tnode"><span class="era">03</span><h4>UXの時代</h4><p>設計対象：操作性<br />成功指標：使いやすさ</p></div>
+      <div class="tnode"><span class="era">04</span><h4>CXの時代</h4><p>設計対象：顧客との関係<br />成功指標：継続・LTV</p></div>
+      <div class="tnode now"><span class="era">05 — 本書の視点</span><h4>State Designの時代</h4><p>設計対象：人の状態<br />成功指標：状態遷移・行動変容・習慣化</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TREND ===================== -->
+<section class="py band">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow tag-orange"><span class="dot"></span>The Trend</span>
+      <h2>「状態経済」は、すでに始まっている</h2>
+      <p>国内外・行政まで、"状態"を扱う動きが同時多発している。</p>
+    </div>
+    <div class="trend reveal">
+      <ul class="checklist">
+        <li><span class="mark">✓</span>スマホOSの集中モードなど、状態に応じてUIが切り替わる仕組みが標準化</li>
+        <li><span class="mark">✓</span>睡眠・回復スコアを毎朝提示するウェアラブルデバイスが世界的に普及</li>
+        <li><span class="mark">✓</span>コールセンターの感情解析AIや健康増進型保険など、状態データを業務に組み込む動きが加速</li>
+        <li><span class="mark">✓</span>国内では「ととのう」「タイパ」など、状態を一語で言い切る言葉が定着</li>
+      </ul>
+      <div class="highlight">
+        <span class="label">行政・国家レベルでも</span>
+        <blockquote>ブータンの「国民総幸福量」、ニュージーランドの「ウェルビーイング予算」など、統治の目的そのものを「状態」へ移す動きが広がっている。</blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CASE STUDIES ===================== -->
+<section class="py">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow tag-gold"><span class="dot"></span>Case Study</span>
+      <h2>世界最先端企業も、状態遷移を設計している</h2>
+      <p>業種はバラバラでも、Before → Transition → Afterの構造は同じ。</p>
+    </div>
+    <div class="cases reveal">
+      <div class="case"><span class="brand">Apple</span><span class="state">不安・複雑</span><span class="arrow">→</span><span class="state after">安心・クリエイター</span></div>
+      <div class="case"><span class="brand">Disney</span><span class="state">日常・現実</span><span class="arrow">→</span><span class="state after">夢・思い出</span></div>
+      <div class="case"><span class="brand">Duolingo</span><span class="state">やる気がない</span><span class="arrow">→</span><span class="state after">習慣・継続</span></div>
+      <div class="case"><span class="brand">Tesla</span><span class="state">購入への不安</span><span class="arrow">→</span><span class="state after">所有・ファン化</span></div>
+      <div class="case"><span class="brand">メルカリ</span><span class="state">罪悪感</span><span class="arrow">→</span><span class="state after">価値・達成感</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FRAMEWORK ===================== -->
+<section class="py band" id="framework">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow tag-orange"><span class="dot"></span>Framework</span>
+      <h2>State Designを実践する、7つの道具</h2>
+      <p>カスタマージャーニーマップやペルソナに相当する、State Design版の基本ツール。</p>
+    </div>
+    <div class="toolchain reveal">
+      <div class="tool"><span class="num">01</span><span class="name">State Journey<small>状態の旅を描く</small></span><span class="desc">顧客が経験する状態の連なりを、時系列で一本の道筋として描く。</span></div>
+      <div class="tool"><span class="num">02</span><span class="name">State Map<small>状態の地図を描く</small></span><span class="desc">分岐・後戻りを含めた、状態遷移の全体地図を俯瞰する。</span></div>
+      <div class="tool"><span class="num">03</span><span class="name">State Canvas<small>一枚で設計する</small></span><span class="desc">Before・Transition・Afterを、一枚のワークシートで設計する。</span></div>
+      <div class="tool"><span class="num">04</span><span class="name">State KPI<small>状態遷移を測る</small></span><span class="desc">状態到達率・遷移時間・滞留率・逆流率という4つの指標で測定する。</span></div>
+      <div class="tool"><span class="num">05</span><span class="name">State UX<small>状態遷移のためのUI</small></span><span class="desc">透明性・最短化・感情同期・証拠提示という4つの原則でUIを設計する。</span></div>
+      <div class="tool"><span class="num">06</span><span class="name">State Touchpoint<small>接点を読み直す</small></span><span class="desc">広告からサポートまで、すべての接点を状態遷移という一本の軸で読み直す。</span></div>
+      <div class="tool"><span class="num">07</span><span class="name">状態遷移モデル<small>確率として設計する</small></span><span class="desc">状態・遷移・確率・介入という4要素で、設計を静的から動的へ転換する。</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== BEFORE / AFTER ===================== -->
+<section class="py">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow tag-gold"><span class="dot"></span>Before / After</span>
+      <h2>状態は、数字で測り、AIで支援できる</h2>
+      <p>抽象的な概念を、具体的な指標と実在サービスに落とし込む。</p>
+    </div>
+    <div class="ba-grid reveal">
+      <div class="ba">
+        <span class="kicker">State KPI</span>
+        <h4>語学学習アプリ</h4>
+        <div class="row"><div class="lab">BEFORE</div><p>「動画を何本見たか」しか測れていない</p></div>
+        <div class="row after"><div class="lab">AFTER</div><p>「不安→自信」への到達日数を測り、本質的な価値が見える化された</p></div>
+      </div>
+      <div class="ba">
+        <span class="kicker">Emotion AI</span>
+        <h4>コールセンター</h4>
+        <div class="row"><div class="lab">BEFORE</div><p>顧客の苛立ちに気づけず、対応が後手に回る</p></div>
+        <div class="row after"><div class="lab">AFTER</div><p>声のトーンから苛立ちを検知し、リアルタイムでオペレーターに助言</p></div>
+      </div>
+      <div class="ba">
+        <span class="kicker">Adaptive UI</span>
+        <h4>学習アプリのUI</h4>
+        <div class="row"><div class="lab">BEFORE</div><p>全ユーザーに同じ画面を表示</p></div>
+        <div class="row after"><div class="lab">AFTER</div><p>Duolingoの難易度自動調整のように、状態に応じて画面自体が変わる</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== AI & HUMAN ===================== -->
+<section class="band">
+  <div class="wrap reveal" style="padding: 96px 0 0;">
+    <div class="section-head" style="margin-bottom:0;">
+      <span class="eyebrow tag-orange"><span class="dot"></span>AI &amp; Human</span>
+      <h2>AIは状態を読む。境界線を引くのは人。</h2>
+      <p>State Designが強力であるほど、使う側の倫理観が問われる。</p>
+    </div>
+  </div>
+  <div class="split reveal">
+    <div class="ai">
+      <h3 style="color:var(--text-hi)">AI ― 状態を読み解くことは、圧倒的に得意</h3>
+      <ul>
+        <li><b>✓</b>行動データや声のトーンから、現在の状態を高精度に推定する</li>
+        <li><b>✓</b>状態に応じて、画面や導線をリアルタイムに最適化し続ける</li>
+        <li><b>✓</b>小さな事業者でも、大企業と同じ技術を使える環境を作る</li>
+      </ul>
+    </div>
+    <div class="human">
+      <h3>HUMAN ― 境界線を引くことは、人にしかできない</h3>
+      <ul>
+        <li><b>✓</b>顧客が「本来望んでいない状態」へ誘導していないかを判断する</li>
+        <li><b>✓</b>不安につけ込む設計と、支援する設計の一線を引く</li>
+        <li><b>✓</b>State Designを「顧客が望む状態への支援」として使うと決める</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== AUTHOR ===================== -->
+<section class="py">
+  <div class="wrap reveal">
+    <div class="section-head">
+      <span class="eyebrow tag-gold"><span class="dot"></span>Author</span>
+      <h2>著者について</h2>
+    </div>
+    <div class="author">
+      <div class="avatar">M</div>
+      <div>
+        <h3>モダンロジック</h3>
+        <p>「なぜ同じようにUXやCXを磨いても、成果が出る会社と出ない会社に分かれるのか」を考え続けてきた書き手。UX・UI・CXという既存の枠組みの先に、顧客と組織の「状態」を設計するという視点を体系化し、本書「State Design」としてまとめた。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CLOSING ===================== -->
+<section class="closing band" id="cta">
+  <div class="wrap reveal">
+    <blockquote>これから設計されるのは、<br />サービスではない。人の状態である。</blockquote>
+    <p class="support">UXでもCXでもなく、次に競う軸は「状態」である。<br />まずは自社の顧客が、今日どんな状態でいて、どんな状態で帰ってほしいのかを、言葉にすることから始めよう。</p>
+    <div class="cta-row" style="justify-content:center; margin-top:36px;">
+      <a class="btn" href="#">Kindleストアで読む(発売予定)</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>サービスデザインは「状態」を設計する ― UX・UI・CXの次に来る、新しいサービス設計論</span>
+    <span>著者：モダンロジック　© モダンロジック All rights reserved</span>
+  </div>
+</footer>
+
+<script>
+  var els = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    els.forEach(function (el) { io.observe(el); });
+  } else {
+    els.forEach(function (el) { el.classList.add('in'); });
+  }
+</script>
