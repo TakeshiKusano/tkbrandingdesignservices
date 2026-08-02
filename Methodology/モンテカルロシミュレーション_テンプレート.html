@@ -1,0 +1,699 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="『棚で勝つパッケージ戦略』第6章・第7章 準拠。単価・日販・広告費・返品率の幅を入れると、1,000回のモンテカルロ・シミュレーションで黒字化する確率と利益の分布をブラウザだけで可視化する。">
+<title>モンテカルロ・シミュレーター | 棚で勝つパッケージ戦略</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #0f172a;
+  --accent: #d4af37;
+  --accent-glow: rgba(212, 175, 55, 0.35);
+  --accent2: #38bdf8;
+  --text-main: #f8fafc;
+  --text-sub: #94a3b8;
+  --text-muted: #64748b;
+  --bg-dark: #020617;
+  --card-bg: #111c34;
+  --card-border: rgba(255,255,255,0.08);
+  --field-bg: rgba(255,255,255,0.04);
+  --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* scenario categorical palette — same family as the diagnosis app's game colors */
+  --c-a: #3987e5;   /* 案A・紺色 */
+  --c-b: #199e70;   /* 案B・緑 */
+  --c-c: #c98500;   /* 案C・低コスト訴求 */
+
+  /* status (fixed, never reused as categorical) */
+  --s-good: #0ca30c;
+  --s-warn: #fab219;
+  --s-crit: #d03b3b;
+
+  --font-display: 'Shippori Mincho', serif;
+  --font-data: ui-monospace, "SF Mono", Consolas, "Noto Sans JP", monospace;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Noto Sans JP', 'Inter', sans-serif;
+  background: var(--bg-dark);
+  color: var(--text-main);
+  line-height: 1.8;
+  min-height: 100vh;
+}
+
+.bg-mesh {
+  position: fixed; inset: 0; z-index: -1;
+  background:
+    radial-gradient(circle at 8% 15%, rgba(15,23,42,0.9) 0%, transparent 42%),
+    radial-gradient(circle at 92% 85%, rgba(30,41,59,0.9) 0%, transparent 42%),
+    rgba(2,6,23,1);
+}
+
+h1, h2, h3 { font-family: var(--font-display); letter-spacing: -0.01em; }
+a { color: inherit; }
+
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 1.4rem; }
+
+/* ---------- top bar ---------- */
+.topbar {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(2,6,23,0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--card-border);
+}
+.topbar-inner {
+  max-width: 1180px; margin: 0 auto; padding: 0.9rem 1.4rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+.topbar-title { font-family: var(--font-display); font-weight: 700; font-size: 0.95rem; white-space: nowrap; }
+.topbar-title span { color: var(--accent); }
+.topbar-note { margin-left: auto; font-size: 0.76rem; color: var(--text-muted); }
+
+/* ---------- hero ---------- */
+main { padding: 2.6rem 0 5rem; }
+
+.intro-hero { text-align: center; padding: 1rem 0 2.4rem; }
+.intro-hero .kicker { color: var(--accent); font-weight: 700; letter-spacing: 0.08em; font-size: 0.85rem; margin-bottom: 0.9rem; }
+.intro-hero h1 { font-size: clamp(1.8rem, 1.2rem + 2vw, 2.5rem); line-height: 1.5; margin-bottom: 1rem; }
+.intro-hero h1 .accent { color: var(--accent); }
+.intro-hero p { color: var(--text-sub); font-size: 0.98rem; max-width: 640px; margin: 0 auto; }
+
+.badge {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.32rem 0.8rem; border-radius: 50px;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.03em;
+  border: 1px solid currentColor;
+}
+
+/* ---------- generic card ---------- */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+}
+@media (max-width: 640px) { .card { border-radius: 16px; } }
+
+/* ---------- notes (使い方・作り方) ---------- */
+.notes { display:grid; gap:0.9rem; margin-bottom: 2.4rem; }
+details.note-card { padding:0; overflow:hidden; }
+details.note-card summary {
+  cursor:pointer; list-style:none;
+  padding: 1.1rem 1.5rem;
+  display:flex; align-items:center; gap:0.7rem;
+  font-family: var(--font-display); font-weight:700; font-size:1rem;
+}
+details.note-card summary::-webkit-details-marker{ display:none; }
+details.note-card summary::before{
+  content:"›"; color: var(--accent2); font-size:1.2rem;
+  transition: var(--transition);
+}
+details.note-card[open] summary::before{ transform:rotate(90deg); }
+details.note-card .note-body{
+  padding: 0 1.5rem 1.5rem 2.9rem;
+  color: var(--text-sub); font-size: 0.9rem;
+}
+.note-body h4{ font-family:var(--font-display); color:var(--text-main); font-size:0.92rem; margin:1.1rem 0 0.4rem; }
+.note-body h4:first-child{ margin-top:0; }
+.note-body ol, .note-body ul{ margin:0.3rem 0; padding-left:1.2rem; }
+.note-body li{ margin:0.3rem 0; }
+.note-body strong{ color: var(--text-main); }
+.note-body code{
+  font-family: var(--font-data); background: var(--field-bg);
+  border: 1px solid var(--card-border);
+  padding:0.05rem 0.4rem; border-radius:4px; font-size:0.85em; color: var(--accent2);
+}
+.formula{
+  font-family: var(--font-data); font-size:0.83rem; color: var(--text-main);
+  background: var(--field-bg); border:1px solid var(--card-border);
+  border-radius:10px; padding:0.8rem 1rem; margin:0.6rem 0; overflow-x:auto;
+}
+
+/* ---------- section title ---------- */
+.section-title { font-size: 1.25rem; margin: 2.6rem 0 1.1rem; display: flex; align-items: center; gap: 0.6rem; }
+.section-title .idx {
+  width: 30px; height: 30px; border-radius: 50%; background: var(--accent); color: #1a1400;
+  display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem; flex: 0 0 auto;
+}
+.section-note { font-size: 0.85rem; color: var(--text-sub); margin: -0.6rem 0 1.2rem 2.4rem; }
+
+/* ---------- scenario grid ---------- */
+.scenario-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.2rem; }
+
+.scn-card { display:flex; flex-direction:column; overflow:hidden; }
+.scn-tab { height:5px; background: var(--accent-scn); }
+.scn-head { padding: 1.3rem 1.4rem 1rem; border-bottom:1px solid var(--card-border); }
+.scn-head .badge { color: var(--accent-scn); margin-bottom:0.6rem; }
+.scn-head h2 { font-size: 1.15rem; margin-bottom:0.3rem; }
+.scn-head .sub { font-size: 0.82rem; color: var(--text-sub); }
+
+.params { padding: 1.1rem 1.4rem; border-bottom:1px solid var(--card-border); }
+.param-row {
+  display:grid; grid-template-columns: 6.4rem 1fr auto 1fr; align-items:center; gap:0.4rem;
+  margin-bottom:0.6rem; font-size:0.82rem;
+}
+.param-row:last-child{ margin-bottom:0; }
+.param-row .plabel{ color: var(--text-sub); }
+.param-row .tilde{ color: var(--text-muted); text-align:center; }
+.param-single{
+  display:grid; grid-template-columns: 6.4rem 1fr; align-items:center; gap:0.4rem;
+  margin-top:0.8rem; padding-top:0.8rem; border-top:1px dashed var(--card-border); font-size:0.82rem;
+}
+.param-single .plabel{ color: var(--text-sub); }
+
+input[type="number"]{
+  width:100%; font-family: var(--font-data); font-variant-numeric: tabular-nums;
+  font-size:0.83rem; padding:0.5rem 0.6rem;
+  background: var(--field-bg); border:1px solid var(--card-border); border-radius:10px;
+  color: var(--text-main);
+}
+input[type="number"]:focus{ outline:2px solid var(--accent2); outline-offset:1px; border-color:transparent; }
+
+.card-actions{ padding: 0.9rem 1.4rem; display:flex; gap:0.55rem; flex-wrap:wrap; border-bottom:1px solid var(--card-border); }
+
+.btn{
+  appearance:none; border:none; cursor:pointer; font-family:inherit; font-weight:700;
+  font-size: 0.82rem; border-radius:50px; padding:0.6rem 1.1rem; transition: var(--transition);
+}
+.btn-primary{ background: var(--accent); color:#1a1400; }
+.btn-primary:hover{ transform: translateY(-2px); box-shadow: 0 10px 24px var(--accent-glow); }
+.btn-outline{ background:transparent; color: var(--accent2); border:1px solid var(--accent2); }
+.btn-outline:hover{ background: rgba(56,189,248,0.1); }
+.btn-ghost{ background:transparent; color: var(--text-sub); border:1px solid var(--card-border); }
+.btn-ghost:hover{ color: var(--text-main); border-color: var(--text-sub); }
+
+/* ---------- stats: probability bars + value tiles ---------- */
+.prob-bars{ padding: 1.1rem 1.4rem 0.3rem; }
+.bar-row{ display:grid; grid-template-columns: 8.6rem 1fr 3.6rem; align-items:center; gap:0.7rem; margin-bottom:0.75rem; }
+.bar-row .label{ font-size:0.8rem; font-weight:600; color: var(--text-sub); }
+.bar-track{ height:14px; border-radius:8px; background: rgba(255,255,255,0.06); overflow:hidden; }
+.bar-fill{ height:100%; border-radius:8px 4px 4px 8px; min-width:4px; }
+.bar-row .val{ font-family: var(--font-data); font-size:0.78rem; color: var(--text-main); text-align:right; font-variant-numeric: tabular-nums; }
+
+.stat-grid{ display:grid; grid-template-columns:1fr 1fr; gap:1px; background: var(--card-border); }
+.stat-tile{ background: var(--card-bg); padding:0.9rem 1.1rem; }
+.stat-tile .slabel{ font-size:0.7rem; color: var(--text-muted); margin-bottom:0.3rem; }
+.stat-tile .sval{ font-family: var(--font-data); font-variant-numeric: tabular-nums; font-size:1.05rem; font-weight:700; color: var(--text-main); }
+.stat-tile .sval.neg{ color: var(--s-crit); }
+
+.chart-block{ padding: 1.2rem 1.4rem 1.4rem; }
+.chart-block .ctitle{ font-size:0.76rem; color: var(--text-muted); margin-bottom:0.6rem; }
+svg.hist{ width:100%; height:150px; overflow:visible; }
+.hist rect.bar{ opacity:0.9; }
+.hist rect.bar:hover{ opacity:1; }
+.hist line.ref{ stroke: var(--accent2); stroke-width:1; stroke-dasharray:3 3; }
+.hist text.reflabel{ fill: var(--text-muted); font-size:9px; font-family: var(--font-data); }
+.hist line.axis{ stroke: var(--card-border); stroke-width:1; }
+
+/* ---------- comparison ---------- */
+.comparison{ padding: 1.8rem 1.8rem 2rem; }
+.comparison h2{ font-size:1.2rem; margin-bottom:0.3rem; }
+.comparison .csub{ font-size:0.85rem; color: var(--text-sub); margin-bottom:1.4rem; }
+
+.cmp-metric{ margin-bottom:1.5rem; }
+.cmp-metric:last-of-type{ margin-bottom:0; }
+.cmp-metric-label{ font-size:0.85rem; font-weight:700; color: var(--text-main); margin-bottom:0.6rem; }
+.cmp-metric-rows{ display:grid; gap:0.5rem; }
+
+.export-row{ display:flex; flex-wrap:wrap; gap:0.7rem; margin-top:1.8rem; padding-top:1.4rem; border-top:1px solid var(--card-border); }
+
+.footnote{ text-align:center; font-size:0.78rem; color: var(--text-muted); margin-top:2.6rem; }
+
+/* tooltip */
+#tooltip{
+  position:fixed; pointer-events:none;
+  background: var(--card-bg); color: var(--text-main); border:1px solid var(--card-border);
+  font-family: var(--font-data); font-size:0.72rem; padding:0.4rem 0.6rem; border-radius:8px;
+  z-index:80; white-space:nowrap; transform:translate(-50%,-124%);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.4);
+}
+#tooltip[hidden]{ display:none; }
+
+@media (max-width: 640px){
+  .param-row{ grid-template-columns: 5.4rem 1fr auto 1fr; font-size:0.76rem; }
+  .bar-row{ grid-template-columns: 6.4rem 1fr 3.2rem; }
+}
+
+@media (prefers-reduced-motion: reduce){ * { transition:none !important; } }
+
+@media print{
+  body{ background:#fff !important; color:#111 !important; }
+  .bg-mesh, .topbar, .btn, .export-row { display:none !important; }
+  .card{ background:#fff !important; border:1px solid #ccc !important; box-shadow:none !important; color:#111 !important; }
+}
+</style>
+</head>
+<body>
+<div class="bg-mesh"></div>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-title">モンテカルロ<span>・シミュレーター</span></div>
+    <div class="topbar-note">サーバー通信なし・ブラウザ内で完結</div>
+  </div>
+</div>
+
+<main class="wrap">
+
+  <div class="intro-hero">
+    <div class="kicker">Monte Carlo Simulator</div>
+    <h1>その案、<br>本当に<span class="accent">黒字</span>になりますか。</h1>
+    <p>単価・日販・広告費・返品率には、いつも幅がある。1,000回のランダム試行で、黒字化する確率と利益の分布をその場で可視化する。『棚で勝つパッケージ戦略』第6章・第7章 準拠。</p>
+  </div>
+
+  <div class="notes">
+    <details class="card note-card">
+      <summary>使い方</summary>
+      <div class="note-body">
+        <h4>基本の操作</h4>
+        <ol>
+          <li>各案カードの「パラメータ設定」を、あなたの商品の数値に書き換えてください（単価・日販・広告費・返品率の下限と上限、目標月間利益）。</li>
+          <li>数値を書き換えると、1,000回試行の結果と6つの指標が自動的に再計算されます。</li>
+          <li>数値は再計算のたびにランダムに変わります。より安定した数字を見たい場合は各案の「🎲 1,000回を再試行」を何度か押して、黒字化する確率が大きくぶれないか確認してください。</li>
+          <li>下部の「案の比較」は3案の結果を自動で横並びにします。</li>
+          <li>結果は各案の「CSVで保存」からダウンロードでき、Excel／Googleスプレッドシートで開き直せます。</li>
+        </ol>
+        <h4>各項目の意味</h4>
+        <ul>
+          <li><strong>黒字化する確率</strong> — 1,000回のシミュレーションのうち、月間利益がプラスになった割合</li>
+          <li><strong>目標達成の確率</strong> — 目標月間利益を超えた割合</li>
+          <li><strong>平均月間利益</strong> — 1,000回の平均値</li>
+          <li><strong>最悪ケースの損失</strong> — 1,000回のうち、最も悪かったケースの利益（マイナスなら損失額）</li>
+          <li><strong>最良ケースの利益</strong> — 1,000回のうち、最も良かったケースの利益</li>
+          <li><strong>中央値</strong> — 1,000回を並べたときの真ん中の値。平均値より外れ値の影響を受けにくい</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="card note-card">
+      <summary>この仕組みについて（作り方）</summary>
+      <div class="note-body">
+        <p>元になっているのは配布用Excelテンプレートの数式です。このページはその計算ロジックをJavaScriptで再実装し、ブラウザだけで完結するツールにしたものです。仕組みは次の3ステップです。</p>
+        <h4>① 1回の試行で使う数値をランダムに決める</h4>
+        <p>単価・日販・広告費・返品率のそれぞれについて、「下限」と「上限」の間から一様乱数で1つの値を選びます（Excelの <code>RAND()</code> と同じ一様分布）。</p>
+        <div class="formula">値 = 下限 + Math.random() × (上限 − 下限)</div>
+        <h4>② 月間売上・月間利益を計算する</h4>
+        <div class="formula">月間売上 = 単価 × 日販 × 30日 × (1 − 返品率)
+月間利益 = 月間売上 − 広告費</div>
+        <h4>③ これを1,000回繰り返し、分布から6指標を集計する</h4>
+        <div class="formula">黒字化する確率 = COUNTIF(利益 &gt; 0) / 1000
+目標達成の確率 = COUNTIF(利益 &gt; 目標月間利益) / 1000
+平均月間利益   = AVERAGE(1,000回の利益)
+最悪ケースの損失 = MIN(1,000回の利益)
+最良ケースの利益 = MAX(1,000回の利益)
+中央値       = MEDIAN(1,000回の利益)</div>
+        <p>「🎲 1,000回を再試行」ボタンは、パラメータは変えずに乱数だけを引き直します（Excel版でF9キーを押すのと同じ動作）。ヒストグラムは1,000回分の月間利益を20個のビンに区切って本数を数えたものです。</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="section-title"><span class="idx">1</span>案ごとにパラメータを設定する</div>
+  <p class="section-note">3案は初期値として第7章のケーススタディの数値が入っています。書き換えるとすぐに再計算されます。</p>
+  <div class="scenario-grid" id="scenario-grid"></div>
+
+  <div class="section-title"><span class="idx">2</span>案の比較</div>
+  <p class="section-note">3案の結果サマリーを自動で横並びにしたものです。</p>
+  <div class="card comparison">
+    <div id="cmp-body"></div>
+    <div class="export-row">
+      <button class="btn btn-outline" id="cmp-csv">比較サマリーをCSVで保存</button>
+    </div>
+  </div>
+
+  <p class="footnote">『棚で勝つパッケージ戦略』第6章・第7章のケーススタディに準拠したモンテカルロ・シミュレーション・テンプレートのHTML版。元データは同フォルダの Excel テンプレートを参照してください。</p>
+
+</main>
+
+<div id="tooltip" hidden></div>
+
+<script>
+(function(){
+  "use strict";
+
+  var TRIALS = 1000;
+  var DAYS = 30;
+
+  var SCENARIOS = [
+    {
+      id:"A", accent:"#3987e5",
+      title:"案A（紺色・差別化重視）", short:"案A・紺色",
+      sub:"高単価・高日販レンジで差別化を狙う案",
+      defaults:{ priceMin:380, priceMax:480, salesMin:12, salesMax:50, adMin:15000, adMax:40000, returnMin:2, returnMax:8, target:100000 }
+    },
+    {
+      id:"B", accent:"#199e70",
+      title:"案B（緑・安定重視）", short:"案B・緑",
+      sub:"中庸なレンジで安定した黒字化を狙う案",
+      defaults:{ priceMin:380, priceMax:480, salesMin:10, salesMax:42, adMin:15000, adMax:40000, returnMin:2, returnMax:8, target:100000 }
+    },
+    {
+      id:"C", accent:"#c98500",
+      title:"案C（低コスト訴求）", short:"案C・低コスト",
+      sub:"低日販でも成立するコスト構造を狙う案",
+      defaults:{ priceMin:380, priceMax:480, salesMin:6, salesMax:28, adMin:15000, adMax:40000, returnMin:2, returnMax:8, target:100000 }
+    }
+  ];
+
+  var FIELDS = [
+    { key:"price",  label:"単価（円）",     step:1 },
+    { key:"sales",  label:"日販（個/日）",  step:0.1 },
+    { key:"ad",     label:"広告費（円/月）", step:100 },
+    { key:"return", label:"返品率（%）",    step:0.1 }
+  ];
+
+  var PROB_STATS = [
+    { key:"breakeven", label:"黒字化する確率" },
+    { key:"target",    label:"目標達成の確率" }
+  ];
+  var VALUE_STATS = [
+    { key:"avg",    label:"平均月間利益" },
+    { key:"worst",  label:"最悪ケースの損失" },
+    { key:"best",   label:"最良ケースの利益" },
+    { key:"median", label:"中央値" }
+  ];
+  var STAT_LABELS = PROB_STATS.concat(VALUE_STATS);
+
+  function yen(n){
+    var sign = n < 0 ? "−" : "";
+    return sign + "¥" + Math.round(Math.abs(n)).toLocaleString("ja-JP");
+  }
+  function pct(n){ return (n*100).toFixed(1) + "%"; }
+  function csvEscape(v){
+    v = String(v);
+    return /[",\n]/.test(v) ? '"' + v.replace(/"/g,'""') + '"' : v;
+  }
+  function downloadCSV(filename, rows){
+    var csv = rows.map(function(r){ return r.map(csvEscape).join(","); }).join("\r\n");
+    var blob = new Blob(["﻿" + csv], { type:"text/csv;charset=utf-8;" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  function runTrials(cfg){
+    var el = cfg.el;
+    var priceMin = parseFloat(el.priceMin.value), priceMax = parseFloat(el.priceMax.value);
+    var salesMin = parseFloat(el.salesMin.value), salesMax = parseFloat(el.salesMax.value);
+    var adMin = parseFloat(el.adMin.value), adMax = parseFloat(el.adMax.value);
+    var retMin = parseFloat(el.returnMin.value) / 100, retMax = parseFloat(el.returnMax.value) / 100;
+    var target = parseFloat(el.target.value);
+
+    var trials = new Array(TRIALS);
+    var profits = new Array(TRIALS);
+
+    for (var i = 0; i < TRIALS; i++){
+      var price = priceMin + Math.random() * (priceMax - priceMin);
+      var sales = salesMin + Math.random() * (salesMax - salesMin);
+      var ad = adMin + Math.random() * (adMax - adMin);
+      var ret = retMin + Math.random() * (retMax - retMin);
+      var revenue = price * sales * DAYS * (1 - ret);
+      var profit = revenue - ad;
+      trials[i] = { n:i+1, price:price, sales:sales, ad:ad, ret:ret, revenue:revenue, profit:profit };
+      profits[i] = profit;
+    }
+
+    var sorted = profits.slice().sort(function(a,b){ return a-b; });
+    var sum = 0;
+    for (var j = 0; j < TRIALS; j++) sum += profits[j];
+    var breakevenCount = 0, targetCount = 0;
+    for (var k = 0; k < TRIALS; k++){
+      if (profits[k] > 0) breakevenCount++;
+      if (profits[k] > target) targetCount++;
+    }
+
+    var stats = {
+      breakeven: breakevenCount / TRIALS,
+      target: targetCount / TRIALS,
+      avg: sum / TRIALS,
+      worst: sorted[0],
+      best: sorted[TRIALS-1],
+      median: (sorted[TRIALS/2 - 1] + sorted[TRIALS/2]) / 2,
+      targetValue: target
+    };
+
+    return { trials:trials, profits:profits, sorted:sorted, stats:stats };
+  }
+
+  function buildCard(cfg){
+    var d = cfg.defaults;
+    var fieldsHTML = FIELDS.map(function(f){
+      return (
+        '<div class="param-row">' +
+          '<span class="plabel">' + f.label + '</span>' +
+          '<input type="number" step="' + f.step + '" data-field="' + f.key + 'Min" value="' + d[f.key + "Min"] + '">' +
+          '<span class="tilde">〜</span>' +
+          '<input type="number" step="' + f.step + '" data-field="' + f.key + 'Max" value="' + d[f.key + "Max"] + '">' +
+        '</div>'
+      );
+    }).join("");
+
+    var probBarsHTML = PROB_STATS.map(function(s){
+      return (
+        '<div class="bar-row">' +
+          '<span class="label">' + s.label + '</span>' +
+          '<div class="bar-track"><div class="bar-fill" data-stat="' + s.key + '" style="width:0%;background:' + cfg.accent + '"></div></div>' +
+          '<span class="val" data-stat-val="' + s.key + '">—</span>' +
+        '</div>'
+      );
+    }).join("");
+
+    var valueTilesHTML = VALUE_STATS.map(function(s){
+      return (
+        '<div class="stat-tile">' +
+          '<div class="slabel">' + s.label + '</div>' +
+          '<div class="sval" data-stat="' + s.key + '">—</div>' +
+        '</div>'
+      );
+    }).join("");
+
+    var card = document.createElement("div");
+    card.className = "card scn-card";
+    card.style.setProperty("--accent-scn", cfg.accent);
+    card.innerHTML =
+      '<div class="scn-tab"></div>' +
+      '<div class="scn-head">' +
+        '<div class="badge">' + cfg.short + '</div>' +
+        '<h2>' + cfg.title + '</h2>' +
+        '<div class="sub">' + cfg.sub + '</div>' +
+      '</div>' +
+      '<div class="params">' +
+        fieldsHTML +
+        '<div class="param-single">' +
+          '<span class="plabel">目標月間利益（円）</span>' +
+          '<input type="number" step="1000" data-field="target" value="' + d.target + '">' +
+        '</div>' +
+      '</div>' +
+      '<div class="card-actions">' +
+        '<button class="btn btn-primary" data-action="reroll">🎲 1,000回を再試行</button>' +
+        '<button class="btn btn-outline" data-action="csv">CSVで保存</button>' +
+      '</div>' +
+      '<div class="prob-bars">' + probBarsHTML + '</div>' +
+      '<div class="stat-grid">' + valueTilesHTML + '</div>' +
+      '<div class="chart-block">' +
+        '<div class="ctitle">月間利益の分布（1,000回試行）</div>' +
+        '<svg class="hist" viewBox="0 0 400 150" preserveAspectRatio="none"></svg>' +
+      '</div>';
+
+    cfg.el = { card: card, svg: card.querySelector("svg.hist") };
+    FIELDS.forEach(function(f){
+      cfg.el[f.key + "Min"] = card.querySelector('[data-field="' + f.key + 'Min"]');
+      cfg.el[f.key + "Max"] = card.querySelector('[data-field="' + f.key + 'Max"]');
+    });
+    cfg.el.target = card.querySelector('[data-field="target"]');
+    STAT_LABELS.forEach(function(s){
+      cfg.el["barfill_" + s.key] = card.querySelector('.bar-fill[data-stat="' + s.key + '"]');
+      cfg.el["barval_" + s.key] = card.querySelector('[data-stat-val="' + s.key + '"]');
+      cfg.el["tile_" + s.key] = card.querySelector('.sval[data-stat="' + s.key + '"]');
+    });
+
+    var inputs = card.querySelectorAll("input[type=number]");
+    for (var i = 0; i < inputs.length; i++){
+      inputs[i].addEventListener("change", function(){ recompute(cfg); });
+    }
+    card.querySelector('[data-action="reroll"]').addEventListener("click", function(){ recompute(cfg); });
+    card.querySelector('[data-action="csv"]').addEventListener("click", function(){ exportCardCSV(cfg); });
+
+    return card;
+  }
+
+  function renderHistogram(cfg){
+    var svg = cfg.el.svg;
+    var profits = cfg.lastResult.profits;
+    var stats = cfg.lastResult.stats;
+    var accent = cfg.accent;
+
+    var W = 400, H = 150, padTop = 14, padBottom = 20, padSide = 4;
+    var plotH = H - padTop - padBottom;
+
+    var dataMin = Math.min.apply(null, profits);
+    var dataMax = Math.max.apply(null, profits);
+    var lo = Math.min(dataMin, 0, stats.targetValue);
+    var hi = Math.max(dataMax, 0, stats.targetValue);
+    var span = (hi - lo) || 1;
+    lo -= span * 0.06; hi += span * 0.06; span = hi - lo;
+
+    var bins = 20;
+    var counts = new Array(bins).fill(0);
+    for (var i = 0; i < profits.length; i++){
+      var idx = Math.floor((profits[i] - lo) / span * bins);
+      if (idx < 0) idx = 0; if (idx > bins - 1) idx = bins - 1;
+      counts[idx]++;
+    }
+    var maxCount = Math.max.apply(null, counts) || 1;
+
+    function xOf(v){ return padSide + (v - lo) / span * (W - padSide*2); }
+    function yOf(c){ return padTop + plotH - (c / maxCount) * plotH; }
+
+    var slot = (W - padSide*2) / bins;
+    var barW = Math.min(22, slot - 2);
+
+    var svgns = "http://www.w3.org/2000/svg";
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+    var baseline = document.createElementNS(svgns, "line");
+    baseline.setAttribute("class", "axis");
+    baseline.setAttribute("x1", padSide); baseline.setAttribute("x2", W - padSide);
+    baseline.setAttribute("y1", padTop + plotH); baseline.setAttribute("y2", padTop + plotH);
+    svg.appendChild(baseline);
+
+    for (var b = 0; b < bins; b++){
+      var x = padSide + b*slot + (slot - barW)/2;
+      var y = yOf(counts[b]);
+      var h = padTop + plotH - y;
+      var rect = document.createElementNS(svgns, "rect");
+      rect.setAttribute("class", "bar");
+      rect.setAttribute("x", x.toFixed(2));
+      rect.setAttribute("y", y.toFixed(2));
+      rect.setAttribute("width", barW.toFixed(2));
+      rect.setAttribute("height", Math.max(h,0).toFixed(2));
+      rect.setAttribute("rx", "2");
+      rect.style.fill = accent;
+      (function(b, count){
+        var binLo = lo + b*span/bins, binHi = lo + (b+1)*span/bins;
+        rect.addEventListener("mouseenter", function(e){ showTip(e, yen(binLo) + " 〜 " + yen(binHi) + "：" + count + "件"); });
+        rect.addEventListener("mousemove", moveTip);
+        rect.addEventListener("mouseleave", hideTip);
+      })(b, counts[b]);
+      svg.appendChild(rect);
+    }
+
+    function refLine(value, label, dy){
+      if (value < lo || value > hi) return;
+      var x = xOf(value);
+      var line = document.createElementNS(svgns, "line");
+      line.setAttribute("class", "ref");
+      line.setAttribute("x1", x.toFixed(2)); line.setAttribute("x2", x.toFixed(2));
+      line.setAttribute("y1", padTop - 2); line.setAttribute("y2", padTop + plotH);
+      svg.appendChild(line);
+      var text = document.createElementNS(svgns, "text");
+      text.setAttribute("class", "reflabel");
+      text.setAttribute("x", x.toFixed(2));
+      text.setAttribute("y", (padTop - 4 + dy).toFixed(2));
+      text.setAttribute("text-anchor", "middle");
+      text.textContent = label;
+      svg.appendChild(text);
+    }
+    refLine(0, "収支ゼロ", 0);
+    refLine(stats.targetValue, "目標", 10);
+  }
+
+  var tooltipEl = document.getElementById("tooltip");
+  function showTip(e, text){ tooltipEl.hidden = false; tooltipEl.textContent = text; moveTip(e); }
+  function moveTip(e){ tooltipEl.style.left = e.clientX + "px"; tooltipEl.style.top = e.clientY + "px"; }
+  function hideTip(){ tooltipEl.hidden = true; }
+
+  function updateStatsDisplay(cfg){
+    var s = cfg.lastResult.stats;
+    PROB_STATS.forEach(function(st){
+      var v = s[st.key];
+      cfg.el["barfill_" + st.key].style.width = (v*100).toFixed(1) + "%";
+      cfg.el["barval_" + st.key].textContent = pct(v);
+    });
+    VALUE_STATS.forEach(function(st){
+      var v = s[st.key];
+      var el = cfg.el["tile_" + st.key];
+      el.textContent = yen(v);
+      el.classList.toggle("neg", v < 0);
+    });
+  }
+
+  function recompute(cfg){
+    cfg.lastResult = runTrials(cfg);
+    updateStatsDisplay(cfg);
+    renderHistogram(cfg);
+    updateComparison();
+  }
+
+  function exportCardCSV(cfg){
+    if (!cfg.lastResult) return;
+    var rows = [["試行番号","単価(円)","日販(個/日)","広告費(円/月)","返品率(%)","月間売上(円)","月間利益(円)"]];
+    cfg.lastResult.trials.forEach(function(t){
+      rows.push([t.n, t.price.toFixed(2), t.sales.toFixed(2), t.ad.toFixed(0), (t.ret*100).toFixed(2), t.revenue.toFixed(0), t.profit.toFixed(0)]);
+    });
+    downloadCSV(cfg.title.replace(/[（）]/g,"_") + "_モンテカルロ結果.csv", rows);
+  }
+
+  function updateComparison(){
+    var body = document.getElementById("cmp-body");
+    body.innerHTML = "";
+    var ready = SCENARIOS.every(function(cfg){ return cfg.lastResult; });
+    if (!ready) return;
+
+    STAT_LABELS.forEach(function(s){
+      var isPct = (s.key === "breakeven" || s.key === "target");
+      var vals = SCENARIOS.map(function(cfg){ return cfg.lastResult.stats[s.key]; });
+      var maxAbs = Math.max.apply(null, vals.map(Math.abs)) || 1;
+
+      var block = document.createElement("div");
+      block.className = "cmp-metric";
+      var rowsHTML = SCENARIOS.map(function(cfg){
+        var v = cfg.lastResult.stats[s.key];
+        var display = isPct ? pct(v) : yen(v);
+        var fillPct = isPct ? (v*100) : Math.min(100, Math.abs(v) / maxAbs * 100);
+        var fillColor = (!isPct && v < 0) ? "var(--s-crit)" : cfg.accent;
+        return (
+          '<div class="bar-row">' +
+            '<span class="label" style="color:' + cfg.accent + '">' + cfg.short + '</span>' +
+            '<div class="bar-track"><div class="bar-fill" style="width:' + fillPct.toFixed(1) + '%;background:' + fillColor + '"></div></div>' +
+            '<span class="val">' + display + '</span>' +
+          '</div>'
+        );
+      }).join("");
+      block.innerHTML = '<div class="cmp-metric-label">' + s.label + '</div><div class="cmp-metric-rows">' + rowsHTML + '</div>';
+      body.appendChild(block);
+    });
+  }
+
+  document.getElementById("cmp-csv").addEventListener("click", function(){
+    var ready = SCENARIOS.every(function(cfg){ return cfg.lastResult; });
+    if (!ready) return;
+    var rows = [["指標","案A","案B","案C"]];
+    STAT_LABELS.forEach(function(s){
+      var isPct = (s.key === "breakeven" || s.key === "target");
+      rows.push([s.label].concat(SCENARIOS.map(function(cfg){
+        var v = cfg.lastResult.stats[s.key];
+        return isPct ? (v*100).toFixed(1) + "%" : Math.round(v);
+      })));
+    });
+    downloadCSV("案の比較_モンテカルロ結果.csv", rows);
+  });
+
+  var grid = document.getElementById("scenario-grid");
+  SCENARIOS.forEach(function(cfg){
+    grid.appendChild(buildCard(cfg));
+  });
+  SCENARIOS.forEach(recompute);
+
+})();
+</script>
+
+</body>
+</html>
