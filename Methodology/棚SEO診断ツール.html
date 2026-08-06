@@ -1,0 +1,587 @@
+<title>棚SEO実践診断ツール|『なぜ人は手に取るのか』巻末付録A</title>
+<style>
+  :root{
+    --primary: #0f172a;
+    --accent: #d4af37;
+    --accent2: #38bdf8;
+    --text-main: #f8fafc;
+    --text-sub: #94a3b8;
+    --bg-dark: #020617;
+    --card-bg: #1e293b;
+    --glass-bg: rgba(15, 23, 42, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --radius: 14px;
+
+    --body-c:      #d4af37;
+    --emotion-c:   #e0895a;
+    --cognition-c: #9d7fd6;
+    --behavior-c:  #4fae7a;
+    --social-c:    #4a9fd6;
+    --purpose-c:   #38bdf8;
+
+    --status-good: var(--behavior-c);
+    --status-bad:  #f87171;
+
+    --serif: 'Shippori Mincho', 'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+    --sans: 'Noto Sans JP', -apple-system, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Segoe UI', sans-serif;
+    --display: 'Outfit', -apple-system, sans-serif;
+  }
+  *{ box-sizing: border-box; }
+  ::selection{ background: var(--accent); color: #000; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background: var(--bg-dark);
+    color: var(--text-main);
+    font-family: var(--sans);
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a{ color: var(--accent); }
+
+  .bg-mesh{
+    position: fixed; inset: 0; z-index: -1;
+    background:
+      radial-gradient(circle at 8% 10%, rgba(212,175,55,0.08) 0%, transparent 42%),
+      radial-gradient(circle at 92% 85%, rgba(56,189,248,0.08) 0%, transparent 42%),
+      radial-gradient(circle at 50% 50%, rgba(30,41,59,0.5) 0%, transparent 60%),
+      var(--bg-dark);
+  }
+
+  h1,h2,h3{ font-family: var(--serif); font-weight: 700; text-wrap: balance; letter-spacing: -0.01em; margin: 0; color: var(--text-main); }
+  .num, .mono{ font-family: var(--display); font-variant-numeric: tabular-nums; }
+
+  .spectrum-bar{ height: 3px; width: 100%; background: linear-gradient(90deg, var(--body-c), var(--emotion-c), var(--cognition-c), var(--behavior-c), var(--social-c), var(--purpose-c)); }
+
+  .masthead{ padding: 3rem 1.5rem 2.2rem; border-bottom: 1px solid var(--glass-border); }
+  .masthead-inner{ max-width: 1100px; margin: 0 auto; }
+  .eyebrow{
+    display: inline-block;
+    font-family: var(--display); font-size: 0.76rem; font-weight: 600; letter-spacing: 0.08em;
+    padding: 0.42rem 1rem; border: 1px solid var(--accent); color: var(--accent);
+    border-radius: 50px; background: rgba(212,175,55,0.06);
+    opacity: 0; animation: rise 0.8s 0.05s cubic-bezier(.16,1,.3,1) forwards;
+  }
+  .masthead h1{
+    font-size: clamp(1.7rem, 3.6vw, 2.5rem); margin-top: 18px; line-height: 1.4;
+    opacity: 0; animation: rise 0.9s 0.15s cubic-bezier(.16,1,.3,1) forwards;
+  }
+  .masthead h1 span{
+    background: linear-gradient(90deg, var(--accent), #fde68a);
+    background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .masthead .sub{
+    font-size: clamp(0.95rem, 1.6vw, 1.05rem); color: var(--text-sub); margin-top: 16px; max-width: 46em; line-height: 1.85;
+    opacity: 0; animation: rise 0.9s 0.28s cubic-bezier(.16,1,.3,1) forwards;
+  }
+  @keyframes rise{ from{ opacity:0; transform: translateY(14px); } to{ opacity:1; transform: translateY(0); } }
+  @media (prefers-reduced-motion: reduce){
+    .eyebrow, .masthead h1, .masthead .sub, .flow{ animation: none !important; opacity: 1 !important; }
+  }
+
+  .flow{ display:flex; flex-wrap:wrap; gap:0.5rem; margin-top: 1.4rem; opacity:0; animation: rise 0.9s 0.4s cubic-bezier(.16,1,.3,1) forwards; }
+  .chip{ font-family: var(--display); font-size: 0.78rem; padding: 8px 14px; border: 1px solid var(--glass-border); border-radius: 10px; background: var(--glass-bg); backdrop-filter: blur(6px); color: var(--text-sub); }
+  .chip.arrow{ border: none; background: none; padding: 8px 2px; opacity: 0.5; }
+
+  .app-shell{
+    max-width: 1100px; margin: 0 auto; padding: 2.2rem 1.5rem 4rem;
+    display: grid; grid-template-columns: minmax(0,1.6fr) minmax(300px,1fr); gap: 1.6rem; align-items: start;
+  }
+  @media (max-width: 860px){
+    .app-shell{ grid-template-columns: 1fr; }
+    .sidebar{ order: -1; position: static !important; }
+  }
+
+  .panel{
+    border: 1px solid var(--glass-border); border-radius: var(--radius);
+    background: var(--glass-bg); backdrop-filter: blur(6px);
+    box-shadow: 0 12px 28px -18px rgba(0,0,0,0.6);
+  }
+
+  .factor-card{ margin-bottom: 1.1rem; overflow: hidden; }
+  .factor-card__head{ display:flex; align-items:center; gap:0.8rem; padding: 1rem 1.15rem; border-bottom: 1px solid var(--glass-border); }
+  .factor-card__dot{ width: 10px; height: 10px; border-radius: 50%; background: var(--cat-color, var(--accent)); flex: none; box-shadow: 0 0 8px color-mix(in srgb, var(--cat-color, var(--accent)) 60%, transparent); }
+  .factor-card__titles{ flex: 1; min-width: 0; }
+  .factor-card__titles h2{ font-family: var(--sans); font-size: 1rem; font-weight: 700; letter-spacing: 0; }
+  .factor-card__titles .en{ font-family: var(--display); font-size: 0.68rem; color: var(--text-sub); letter-spacing: 0.08em; }
+  .factor-card__meter{ display:flex; align-items:center; gap:0.6rem; width: 128px; flex: none; }
+  .gauge-track{ flex:1; height: 6px; background: rgba(255,255,255,0.08); border-radius: 5px; overflow: hidden; }
+  .gauge-fill{ height:100%; width:0%; border-radius:5px; background: var(--cat-color, var(--accent)); transition: width .5s cubic-bezier(.65,0,.35,1); }
+  .gauge-val{ font-family: var(--display); font-size: 0.78rem; color: var(--text-sub); min-width: 2.6em; text-align: right; }
+  @media (max-width: 520px){ .factor-card__meter{ width: 84px; } }
+
+  .factor-card__body{ padding: 0.3rem 1.15rem 0.85rem; }
+  label.check-row{ display:flex; align-items:flex-start; gap:0.7rem; padding: 0.65rem 0.15rem; border-bottom: 1px solid var(--glass-border); cursor: pointer; }
+  label.check-row:last-child{ border-bottom: none; }
+  label.check-row input[type="checkbox"]{ position:absolute; opacity:0; width:1px; height:1px; }
+  .stamp{
+    flex: none; width: 20px; height: 20px; margin-top: 0.2rem;
+    border: 1.5px solid rgba(255,255,255,0.28); border-radius: 5px;
+    background: rgba(255,255,255,0.03); position: relative;
+    transition: background .15s ease, border-color .15s ease, box-shadow .15s ease;
+  }
+  .stamp::after{
+    content:""; position:absolute; left: 5px; top: 1px; width: 6px; height: 11px;
+    border-right: 2.5px solid #04070d; border-bottom: 2.5px solid #04070d;
+    transform: rotate(35deg) scale(0); transform-origin: bottom left; transition: transform .15s ease;
+  }
+  input:checked + .stamp{ background: var(--cat-color, var(--accent)); border-color: var(--cat-color, var(--accent)); box-shadow: 0 0 10px color-mix(in srgb, var(--cat-color, var(--accent)) 55%, transparent); }
+  input:checked + .stamp::after{ transform: rotate(35deg) scale(1); }
+  input:focus-visible + .stamp{ outline: 2px solid var(--accent2); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce){ .stamp, .stamp::after{ transition: none; } }
+  .check-text{ font-size: 0.92rem; line-height: 1.7; color: var(--text-main); }
+  label.check-row.is-checked .check-text{ color: var(--text-sub); }
+
+  .price-note{ font-size: 0.78rem; color: var(--text-sub); padding: 0 1.15rem 0.7rem; margin: 0; line-height: 1.75; }
+
+  .sidebar{ position: sticky; top: 1.25rem; display: flex; flex-direction: column; gap: 1.1rem; }
+
+  .score-panel{ padding: 1.5rem 1.4rem; display:flex; align-items:center; gap: 1.3rem; }
+  .score-panel .ring-wrap{ position: relative; flex: none; width: 108px; height: 108px; }
+  .score-panel svg{ width: 108px; height: 108px; }
+  .score-panel .ring-num{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+  .score-panel .ring-num .v{ font-family: var(--display); font-size: 1.5rem; font-weight: 700; color: var(--text-main); }
+  .score-panel .ring-num .m{ font-family: var(--display); font-size: 0.62rem; color: var(--text-sub); letter-spacing: 0.05em; }
+  .score-panel .score-copy .label{ font-family: var(--display); font-size: 0.72rem; letter-spacing: 0.08em; color: var(--text-sub); text-transform: uppercase; }
+  .score-panel .score-copy .sub{ margin-top: 0.4rem; font-size: 0.86rem; color: var(--text-sub); line-height: 1.7; }
+
+  .panel-pad{ padding: 1.05rem 1.2rem; }
+  .panel h3{ font-family: var(--display); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-sub); margin: 0 0 0.85rem; font-weight: 600; }
+  .radar-wrap{ display:flex; justify-content:center; }
+  #radar{ width: 100%; max-width: 280px; height: auto; display:block; }
+  .radar-key{ display:flex; gap:1rem; justify-content:center; margin-top:0.6rem; font-family: var(--display); font-size: 0.66rem; color: var(--text-sub); letter-spacing: 0.04em; }
+  .radar-key span{ display:inline-flex; align-items:center; gap:0.35rem; }
+  .radar-key i{ width:14px; height:0; border-top: 2px solid var(--text-main); display:inline-block; }
+  .radar-key i.dashed{ border-top: 2px dashed var(--accent2); }
+
+  .diagnosis p{ font-size: 0.88rem; line-height: 1.85; color: var(--text-sub); margin: 0 0 0.7rem; }
+  .diagnosis p:last-child{ margin-bottom: 0; }
+  .diagnosis .weak-name{ color: var(--accent); font-weight: 700; }
+  .diagnosis .tip{ font-size: 0.78rem; color: var(--text-sub); border-top: 1px solid var(--glass-border); padding-top: 0.7rem; margin-top: 0.7rem; }
+
+  .actions{ display:flex; gap:0.6rem; flex-wrap:wrap; }
+  .toggle{
+    font-family: var(--display); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.03em;
+    padding: 0.6rem 1.1rem; border-radius: 999px; border: 1px solid var(--glass-border);
+    background: transparent; color: var(--text-sub); cursor: pointer; transition: border-color .2s, color .2s, background .2s;
+  }
+  .toggle:hover{ border-color: var(--accent); color: var(--text-main); }
+  .toggle.active{ background: var(--accent); color: #000; border-color: var(--accent); }
+  .toggle:focus-visible{ outline: 2px solid var(--accent2); outline-offset: 3px; }
+  .autosave-note{ font-size: 0.7rem; color: var(--text-sub); text-align: center; margin: 0.7rem 0 0; opacity: 0.8; }
+
+  .toast{
+    position: fixed; bottom: 1.3rem; left: 50%; transform: translateX(-50%) translateY(12px);
+    background: var(--card-bg); color: var(--text-main); border: 1px solid var(--glass-border);
+    font-family: var(--display); font-size: 0.8rem; padding: 0.6rem 1.2rem; border-radius: 999px;
+    opacity: 0; pointer-events: none; transition: opacity .2s ease, transform .2s ease; z-index: 50;
+  }
+  .toast.show{ opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  footer.credit{ max-width: 1100px; margin: 0 auto; padding: 0 1.5rem 3rem; font-size: 0.76rem; color: var(--text-sub); line-height: 1.85; border-top: 1px solid var(--glass-border); padding-top: 1.8rem; }
+</style>
+
+<div class="bg-mesh"></div>
+<div class="spectrum-bar"></div>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <span class="eyebrow">巻末付録A・実装ツール</span>
+    <h1>棚SEO<span>実践診断</span>ツール</h1>
+    <p class="sub">
+      『なぜ人は手に取るのか──Trader Joe'sに学ぶ、足を止め、心を動かし、手を伸ばさせるデザイン戦略』巻末付録Aのチェックリストを、その場でスコア化できるようにしたものです。自社の主力商品を思い浮かべながら、20項目にチェックしてください。
+    </p>
+    <div class="flow">
+      <span class="chip">Attention Design</span><span class="chip arrow">→</span>
+      <span class="chip">Foot Design</span><span class="chip arrow">→</span>
+      <span class="chip">Hand Design</span><span class="chip arrow">→</span>
+      <span class="chip">State Design</span>
+    </div>
+  </div>
+</header>
+
+<div class="app-shell">
+  <main id="checklist"></main>
+
+  <aside class="sidebar">
+    <div class="panel score-panel">
+      <div class="ring-wrap">
+        <svg viewBox="0 0 140 140">
+          <circle cx="70" cy="70" r="58" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="11"></circle>
+          <circle id="scoreRing" cx="70" cy="70" r="58" fill="none" stroke="var(--accent)" stroke-width="11"
+            stroke-linecap="round" stroke-dasharray="364.4" stroke-dashoffset="364.4"
+            transform="rotate(-90 70 70)" style="transition: stroke-dashoffset .8s cubic-bezier(.65,0,.35,1);"></circle>
+        </svg>
+        <div class="ring-num"><span class="v" id="totalScore">0</span><span class="m">/ 20</span></div>
+      </div>
+      <div class="score-copy">
+        <div class="label">Total Score</div>
+        <p class="sub" id="scoreSub">まずは6つの要因を点検してみましょう。</p>
+      </div>
+    </div>
+
+    <div class="panel panel-pad">
+      <h3>6要因バランス</h3>
+      <div class="radar-wrap">
+        <canvas id="radar" width="280" height="280" role="img" aria-label="6要因の現在スコアと目標のレーダーチャート"></canvas>
+      </div>
+      <div class="radar-key">
+        <span><i></i>現在</span>
+        <span><i class="dashed"></i>目標(3/3)</span>
+      </div>
+    </div>
+
+    <div class="panel panel-pad diagnosis">
+      <h3>診断コメント</h3>
+      <div id="diagnosisText"></div>
+      <p class="tip">ヒント:多くの企業は「コントラスト設計」と「物語性」から着手しやすいとされています。陳列交渉や在庫量の変更が不要で、パッケージ側の工夫だけで着手できるためです(よくある質問より)。</p>
+    </div>
+
+    <div class="panel panel-pad">
+      <h3>記録・共有</h3>
+      <div class="actions">
+        <button class="toggle active" id="copyBtn" type="button">結果をテキストでコピー</button>
+        <button class="toggle" id="resetBtn" type="button">リセット</button>
+      </div>
+      <p class="autosave-note">チェック内容はこの端末にのみ自動保存されます</p>
+    </div>
+  </aside>
+</div>
+
+<footer class="credit">
+  出典:『なぜ人は手に取るのか』巻末付録A 棚SEO実践チェックリスト(詳細版)/ 第5章「棚SEOという考え方」。四半期ごと、または新商品発売のたびに再チェックし、スコアの変化を記録する運用を推奨します(第5章「改善の前後を比較する習慣」参照)。
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  var CATEGORIES = [
+    { id: "visibility", name: "視認距離", en: "Visibility Distance", color: "var(--body-c)", short: "視認距離",
+      items: [
+        "3メートル離れた地点から、商品カテゴリーが識別できるか",
+        "パッケージの主要色は、隣接する棚や什器の色と明確に区別できるか",
+        "ロゴや商品名は、遠目でも判読できる大きさ・太さになっているか"
+      ] },
+    { id: "facecount", name: "フェイス数(陳列面積)", en: "Face Count", color: "var(--emotion-c)", short: "フェイス数",
+      items: [
+        "競合の主力商品と比べて、陳列幅・段数は見劣りしないか",
+        "在庫欠品によってフェイスが縮小する頻度は管理できているか",
+        "季節や催事のタイミングで、一時的にフェイスを拡大できる交渉余地はあるか"
+      ] },
+    { id: "height", name: "陳列の高さ", en: "Shelf Height", color: "var(--cognition-c)", short: "陳列の高さ",
+      items: [
+        "主要ターゲットの目線・手の届く高さ(ゴールデンゾーン)に置かれているか",
+        "子ども向け商品であれば、大人ではなく子どもの目線を基準にできているか",
+        "高さが選べない場合、その高さに適した訴求(見上げる商品なら遠目訴求など)に切り替えているか"
+      ] },
+    { id: "contrast", name: "コントラスト設計", en: "Contrast Design", color: "var(--behavior-c)", short: "コントラスト設計",
+      items: [
+        "隣接する競合商品と、色・形・素材感で明確な違いがあるか",
+        "自社のシリーズ商品同士で、かえって埋没し合っていないか",
+        "商品カテゴリーの「王道の配色」から、あえて外す判断ができているか"
+      ] },
+    { id: "refresh", name: "更新頻度", en: "Refresh Rate", color: "var(--social-c)", short: "更新頻度",
+      items: [
+        "年間を通じて、何らかの季節性・限定性を打ち出す計画があるか",
+        "パッケージデザインは、鮮度を保つために定期的に見直されているか",
+        "「今しか買えない」という感覚を作れる要素が、年に数回は用意されているか"
+      ] },
+    { id: "narrative", name: "物語性", en: "Narrative", color: "var(--purpose-c)", short: "物語性",
+      items: [
+        "パッケージ裏面や側面に、原材料表示以外の「読ませる情報」があるか",
+        "手に取った人が、続きを読みたくなる書き出しになっているか",
+        "誰かに話したくなる要素(開発秘話、産地、意外性)が一つでも含まれているか"
+      ] }
+  ];
+
+  var PRICING = {
+    name: "価格・その他", en: "Pricing (Cross-cutting)",
+    items: [
+      "価格表示のフォーマットは、周囲の商品と差別化されているか、あるいは意図的に統一されているか",
+      "セールへの依存度は高くないか。日常価格そのものへの信頼を築けているか"
+    ]
+  };
+
+  var STORAGE_KEY = "tanaSeoDiagnosis_v1";
+
+  function loadState(){ try{ var raw = localStorage.getItem(STORAGE_KEY); return raw ? JSON.parse(raw) : {}; }catch(e){ return {}; } }
+  function saveState(state){ try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){} }
+
+  var state = loadState();
+  var checklistEl = document.getElementById("checklist");
+
+  function buildCard(cat){
+    var card = document.createElement("section");
+    card.className = "panel factor-card";
+    card.style.setProperty("--cat-color", cat.color);
+
+    var head = document.createElement("div");
+    head.className = "factor-card__head";
+    head.innerHTML =
+      '<span class="factor-card__dot"></span>' +
+      '<div class="factor-card__titles"><h2>' + cat.name + '</h2>' +
+      '<div class="en">' + cat.en + '</div></div>' +
+      '<div class="factor-card__meter"><div class="gauge-track"><div class="gauge-fill" data-fill="' + cat.id + '"></div></div>' +
+      '<div class="gauge-val" data-frac="' + cat.id + '">0/' + cat.items.length + '</div></div>';
+    card.appendChild(head);
+
+    var body = document.createElement("div");
+    body.className = "factor-card__body";
+    cat.items.forEach(function (text, i) {
+      var key = cat.id + "-" + i;
+      var row = document.createElement("label");
+      row.className = "check-row";
+      row.innerHTML =
+        '<input type="checkbox" data-key="' + key + '">' +
+        '<span class="stamp" aria-hidden="true"></span>' +
+        '<span class="check-text">' + text + '</span>';
+      body.appendChild(row);
+    });
+    card.appendChild(body);
+    return card;
+  }
+
+  function buildPricingCard(){
+    var card = document.createElement("section");
+    card.className = "panel factor-card";
+    card.style.setProperty("--cat-color", "var(--accent)");
+    var head = document.createElement("div");
+    head.className = "factor-card__head";
+    head.innerHTML =
+      '<span class="factor-card__dot"></span>' +
+      '<div class="factor-card__titles"><h2>' + PRICING.name + '</h2>' +
+      '<div class="en">' + PRICING.en + '</div></div>' +
+      '<div class="factor-card__meter"><div class="gauge-track"><div class="gauge-fill" data-fill="pricing"></div></div>' +
+      '<div class="gauge-val" data-frac="pricing">0/' + PRICING.items.length + '</div></div>';
+    card.appendChild(head);
+    var note = document.createElement("p");
+    note.className = "price-note";
+    note.textContent = "価格表示は6要因を横断して影響する特殊な項目のため、レーダーチャートには含めず、別枠で扱います。";
+    card.appendChild(note);
+    var body = document.createElement("div");
+    body.className = "factor-card__body";
+    PRICING.items.forEach(function (text, i) {
+      var key = "pricing-" + i;
+      var row = document.createElement("label");
+      row.className = "check-row";
+      row.innerHTML =
+        '<input type="checkbox" data-key="' + key + '">' +
+        '<span class="stamp" aria-hidden="true"></span>' +
+        '<span class="check-text">' + text + '</span>';
+      body.appendChild(row);
+    });
+    card.appendChild(body);
+    return card;
+  }
+
+  CATEGORIES.forEach(function (cat) { checklistEl.appendChild(buildCard(cat)); });
+  checklistEl.appendChild(buildPricingCard());
+
+  var allCheckboxes = Array.prototype.slice.call(document.querySelectorAll('input[type="checkbox"]'));
+  allCheckboxes.forEach(function (cb) {
+    var key = cb.getAttribute("data-key");
+    cb.checked = !!state[key];
+    if (cb.checked) cb.closest(".check-row").classList.add("is-checked");
+    cb.addEventListener("change", function () {
+      state[key] = cb.checked;
+      cb.closest(".check-row").classList.toggle("is-checked", cb.checked);
+      saveState(state);
+      render();
+    });
+  });
+
+  function categoryScore(cat){ var n = 0; cat.items.forEach(function (t, i) { if (state[cat.id + "-" + i]) n++; }); return n; }
+  function pricingScore(){ var n = 0; PRICING.items.forEach(function (t, i) { if (state["pricing-" + i]) n++; }); return n; }
+
+  function updateMeters(){
+    CATEGORIES.forEach(function (cat) {
+      var s = categoryScore(cat), max = cat.items.length;
+      var fillEl = document.querySelector('[data-fill="' + cat.id + '"]');
+      var fracEl = document.querySelector('[data-frac="' + cat.id + '"]');
+      if (fillEl) fillEl.style.width = (s / max * 100) + "%";
+      if (fracEl) fracEl.textContent = s + "/" + max;
+    });
+    var ps = pricingScore(), pmax = PRICING.items.length;
+    var pFill = document.querySelector('[data-fill="pricing"]');
+    var pFrac = document.querySelector('[data-frac="pricing"]');
+    if (pFill) pFill.style.width = (ps / pmax * 100) + "%";
+    if (pFrac) pFrac.textContent = ps + "/" + pmax;
+  }
+
+  // ---- radar (mirrors the HSBS radar component: solid "current" + dashed "target" ----
+  function getVarColor(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+
+  var canvas = document.getElementById("radar");
+  var ctx = canvas.getContext("2d");
+  var DPR = window.devicePixelRatio || 1;
+  var CSS_SIZE = 280;
+  canvas.width = CSS_SIZE * DPR; canvas.height = CSS_SIZE * DPR;
+  canvas.style.width = CSS_SIZE + "px"; canvas.style.height = CSS_SIZE + "px";
+  ctx.scale(DPR, DPR);
+  var cx = CSS_SIZE / 2, cy = CSS_SIZE / 2, R = CSS_SIZE * 0.34;
+  var N = CATEGORIES.length;
+  var lineColor = "rgba(255,255,255,0.12)";
+
+  function pt(i, r){ var ang = (Math.PI * 2 * i / N) - Math.PI / 2; return [cx + r * Math.cos(ang), cy + r * Math.sin(ang)]; }
+
+  function drawStatic(){
+    ctx.clearRect(0, 0, CSS_SIZE, CSS_SIZE);
+    for (var ring = 1; ring <= 3; ring++) {
+      ctx.beginPath();
+      for (var i = 0; i <= N; i++) {
+        var p = pt(i % N, R * ring / 3);
+        if (i === 0) ctx.moveTo(p[0], p[1]); else ctx.lineTo(p[0], p[1]);
+      }
+      ctx.strokeStyle = lineColor; ctx.lineWidth = 1; ctx.stroke();
+    }
+    for (var j = 0; j < N; j++) {
+      var p0 = pt(j, 0), p1 = pt(j, R);
+      ctx.beginPath(); ctx.moveTo(p0[0], p0[1]); ctx.lineTo(p1[0], p1[1]);
+      ctx.strokeStyle = lineColor; ctx.lineWidth = 1; ctx.stroke();
+      var lp = pt(j, R * 1.24);
+      ctx.fillStyle = getVarColor(CATEGORIES[j].color.replace("var(", "").replace(")", ""));
+      ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      ctx.font = "700 11px " + getComputedStyle(document.body).fontFamily;
+      ctx.fillText(CATEGORIES[j].short, lp[0], lp[1]);
+    }
+  }
+
+  function polygon(values, alphaFill, strokeColor, dashed){
+    ctx.beginPath();
+    for (var i = 0; i <= N; i++) {
+      var idx = i % N;
+      var r = R * (values[idx] / 3);
+      var p = pt(idx, r);
+      if (i === 0) ctx.moveTo(p[0], p[1]); else ctx.lineTo(p[0], p[1]);
+    }
+    ctx.closePath();
+    if (alphaFill) { ctx.fillStyle = alphaFill; ctx.fill(); }
+    if (dashed) ctx.setLineDash([4, 4]); else ctx.setLineDash([]);
+    ctx.strokeStyle = strokeColor; ctx.lineWidth = 2; ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  var radarAnim = { raf: null };
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function renderRadar(){
+    var target = CATEGORIES.map(function () { return 3; });
+    var current = CATEGORIES.map(function (cat) { return categoryScore(cat); });
+    var accent2 = getVarColor("--accent2");
+
+    if (radarAnim.raf) cancelAnimationFrame(radarAnim.raf);
+    if (reduceMotion) {
+      drawStatic();
+      polygon(target, accent2 + "22", accent2, true);
+      polygon(current, "rgba(248,250,252,0.14)", "#f8fafc", false);
+      return;
+    }
+    var start = null, dur = 700;
+    function frame(ts){
+      if (!start) start = ts;
+      var p = Math.min((ts - start) / dur, 1);
+      var ease = 1 - Math.pow(1 - p, 3);
+      drawStatic();
+      polygon(target.map(function (v) { return v * ease; }), accent2 + "22", accent2, true);
+      polygon(current.map(function (v) { return v * ease; }), "rgba(248,250,252,0.14)", "#f8fafc", false);
+      if (p < 1) radarAnim.raf = requestAnimationFrame(frame);
+    }
+    radarAnim.raf = requestAnimationFrame(frame);
+  }
+
+  function renderScoreRing(totalAll){
+    var ring = document.getElementById("scoreRing");
+    var circumference = 2 * Math.PI * 58;
+    var frac = totalAll / 20;
+    ring.style.strokeDashoffset = (circumference * (1 - frac)).toFixed(1);
+  }
+
+  function renderDiagnosis(totalMain, totalAll){
+    var scores = CATEGORIES.map(function (cat) { return { short: cat.short, score: categoryScore(cat), max: cat.items.length }; });
+    var sub = document.getElementById("scoreSub");
+    var diag = document.getElementById("diagnosisText");
+
+    if (totalAll === 0) {
+      sub.textContent = "まずは6つの要因を点検してみましょう。";
+      diag.innerHTML = "<p>チェックを始めると、ここに弱点と優先順位が表示されます。</p>";
+      return;
+    }
+
+    var pct = Math.round((totalMain / 18) * 100);
+    sub.textContent = "6要因の充足率:" + pct + "%";
+
+    var sorted = scores.slice().sort(function (a, b) { return a.score - b.score; });
+    var weakest = sorted.filter(function (s) { return s.score === sorted[0].score; });
+
+    var html = "";
+    if (totalMain === 18) {
+      html += "<p>6つの要因すべてが3/3です。次のフェーズは、四半期ごとに再チェックしてスコアの変化と実際の販売数量を記録することです。</p>";
+    } else {
+      var names = weakest.slice(0, 2).map(function (s) { return '<span class="weak-name">「' + s.short + '」</span>'; });
+      html += "<p>改善余地が大きいのは " + names.join("と") + " です(" + weakest[0].score + "/" + weakest[0].max + ")。すべての要因に同時に手をつける必要はありません。まずはここに投資を集中させましょう。</p>";
+    }
+
+    var pScore = pricingScore();
+    if (pScore < PRICING.items.length) {
+      html += "<p>価格・その他は " + pScore + "/" + PRICING.items.length + "。日常価格への信頼や表示フォーマットの差別化も、6要因を横断して効いてくる項目です。</p>";
+    }
+    diag.innerHTML = html;
+  }
+
+  function render(){
+    updateMeters();
+    var totalMain = CATEGORIES.reduce(function (sum, cat) { return sum + categoryScore(cat); }, 0);
+    var totalAll = totalMain + pricingScore();
+    document.getElementById("totalScore").textContent = totalAll;
+    renderScoreRing(totalAll);
+    renderRadar();
+    renderDiagnosis(totalMain, totalAll);
+  }
+
+  render();
+
+  var toastEl = document.getElementById("toast");
+  var toastTimer = null;
+  function showToast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toastEl.classList.remove("show"); }, 2200);
+  }
+
+  document.getElementById("resetBtn").addEventListener("click", function () {
+    state = {};
+    saveState(state);
+    allCheckboxes.forEach(function (cb) { cb.checked = false; cb.closest(".check-row").classList.remove("is-checked"); });
+    render();
+    showToast("リセットしました");
+  });
+
+  document.getElementById("copyBtn").addEventListener("click", function () {
+    var lines = [];
+    lines.push("棚SEO実践診断ツール『なぜ人は手に取るのか』巻末付録Aより");
+    lines.push("");
+    CATEGORIES.forEach(function (cat) {
+      lines.push("■" + cat.name + " " + categoryScore(cat) + "/" + cat.items.length);
+      cat.items.forEach(function (text, i) { lines.push((state[cat.id + "-" + i] ? "[x] " : "[ ] ") + text); });
+      lines.push("");
+    });
+    lines.push("■" + PRICING.name + " " + pricingScore() + "/" + PRICING.items.length);
+    PRICING.items.forEach(function (text, i) { lines.push((state["pricing-" + i] ? "[x] " : "[ ] ") + text); });
+    var totalMain = CATEGORIES.reduce(function (sum, cat) { return sum + categoryScore(cat); }, 0);
+    var totalAll = totalMain + pricingScore();
+    lines.push("");
+    lines.push("合計スコア:" + totalAll + " / 20");
+
+    var text = lines.join("\n");
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { showToast("コピーしました"); }, function () { showToast("コピーに失敗しました"); });
+    } else {
+      showToast("このブラウザはコピー機能に対応していません");
+    }
+  });
+})();
+</script>
