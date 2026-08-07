@@ -20,9 +20,10 @@
       <ul class="nav-links">
         <li><a href="#problem" class="nav-link">課題解決</a></li>
         <li><a href="#solution" class="nav-link">ソリューション</a></li>
-        <li><a href="#success" class="nav-link">成功とは？</a></li>
+        <li><a href="outcomes.html" class="nav-link">成功とは？</a></li>
         <li><a href="#expertise" class="nav-link">専門性</a></li>
         <li><a href="login.html" class="nav-link">実績</a></li>
+        <li><a href="profile.html" class="nav-link">プロフィール</a></li>
         <li><a href="#contact" class="nav-link">お問い合わせ</a></li>
       </ul>
     </div>
@@ -53,32 +54,62 @@
             <line x1="0" y1="720" x2="900" y2="720"/>
             <line x1="0" y1="810" x2="900" y2="810"/>
           </g>
-          <g class="hero-node-lines">
-            <line class="node-line" pathLength="1" x1="120" y1="140" x2="600" y2="330"/>
-            <line class="node-line" pathLength="1" x1="860" y1="90" x2="600" y2="330"/>
-            <line class="node-line" pathLength="1" x1="900" y1="520" x2="600" y2="330"/>
-            <line class="node-line" pathLength="1" x1="760" y1="860" x2="600" y2="330"/>
-            <line class="node-line" pathLength="1" x1="180" y1="780" x2="600" y2="330"/>
-            <line class="node-line" pathLength="1" x1="60" y1="480" x2="600" y2="330"/>
+          <g class="hero-state-links">
+            <line class="state-link" x1="120" y1="140" x2="860" y2="90"/>
+            <line class="state-link" x1="900" y1="520" x2="760" y2="860"/>
+            <line class="state-link" x1="180" y1="780" x2="60" y2="480"/>
           </g>
-          <g class="hero-node-seeds">
-            <circle class="node-seed" cx="120" cy="140" r="3.5"/>
-            <circle class="node-seed" cx="860" cy="90" r="3.5"/>
-            <circle class="node-seed" cx="900" cy="520" r="3.5"/>
-            <circle class="node-seed" cx="760" cy="860" r="3.5"/>
-            <circle class="node-seed" cx="180" cy="780" r="3.5"/>
-            <circle class="node-seed" cx="60" cy="480" r="3.5"/>
+          <g class="hero-state-edges">
+            <line class="state-edge" pathLength="1" x1="120" y1="140" x2="600" y2="330"/>
+            <line class="state-edge" pathLength="1" x1="860" y1="90" x2="600" y2="330"/>
+            <line class="state-edge" pathLength="1" x1="900" y1="520" x2="600" y2="330"/>
+            <line class="state-edge" pathLength="1" x1="760" y1="860" x2="600" y2="330"/>
+            <line class="state-edge" pathLength="1" x1="180" y1="780" x2="600" y2="330"/>
+            <line class="state-edge" pathLength="1" x1="60" y1="480" x2="600" y2="330"/>
           </g>
-          <circle class="node-core-glow" cx="600" cy="330" r="26"/>
+          <g class="hero-state-nodes">
+            <circle class="state-node" cx="120" cy="140" r="5"/>
+            <circle class="state-node" cx="860" cy="90" r="4"/>
+            <circle class="state-node" cx="900" cy="520" r="5.5"/>
+            <circle class="state-node" cx="760" cy="860" r="4.5"/>
+            <circle class="state-node" cx="180" cy="780" r="5"/>
+            <circle class="state-node" cx="60" cy="480" r="4"/>
+          </g>
+          <circle class="node-core-glow" cx="600" cy="330" r="32"/>
           <circle class="node-ring" cx="600" cy="330" r="20"/>
-          <circle class="node-core" cx="600" cy="330" r="7"/>
+          <circle class="node-ring node-ring--2" cx="600" cy="330" r="20"/>
+          <circle class="node-core" cx="600" cy="330" r="8"/>
+          <circle class="transition-dot" r="5">
+            <animateMotion dur="2.6s" repeatCount="indefinite" keyPoints="0;1;0" keyTimes="0;0.5;1" calcMode="linear" path="M600,330 L900,520"/>
+          </circle>
+          <circle class="transition-dot transition-dot--alt" r="4.5">
+            <animateMotion dur="3.1s" repeatCount="indefinite" begin="0.4s" keyPoints="0;1;0" keyTimes="0;0.5;1" calcMode="linear" path="M600,330 L120,140"/>
+          </circle>
+          <circle class="transition-dot transition-dot--alt2" r="4.5">
+            <animateMotion dur="2.9s" repeatCount="indefinite" begin="0.8s" keyPoints="0;1;0" keyTimes="0;0.5;1" calcMode="linear" path="M600,330 L180,780"/>
+          </circle>
+          <circle class="transition-dot" r="4">
+            <animateMotion dur="3.4s" repeatCount="indefinite" begin="1.2s" keyPoints="0;1;0" keyTimes="0;0.5;1" calcMode="linear" path="M600,330 L860,90"/>
+          </circle>
+          <circle class="transition-dot transition-dot--alt" r="4">
+            <animateMotion dur="2.8s" repeatCount="indefinite" begin="1.6s" keyPoints="0;1;0" keyTimes="0;0.5;1" calcMode="linear" path="M600,330 L760,860"/>
+          </circle>
+          <circle class="transition-dot transition-dot--alt2" r="4">
+            <animateMotion dur="3.6s" repeatCount="indefinite" begin="2s" keyPoints="0;1;0" keyTimes="0;0.5;1" calcMode="linear" path="M600,330 L60,480"/>
+          </circle>
+          <circle class="link-dot" r="2.5">
+            <animateMotion dur="3.8s" repeatCount="indefinite" begin="0.6s" keyPoints="0;1;0" keyTimes="0;0.5;1" calcMode="linear" path="M120,140 L860,90"/>
+          </circle>
+          <circle class="link-dot" r="2.5">
+            <animateMotion dur="4.4s" repeatCount="indefinite" begin="1.9s" keyPoints="0;1;0" keyTimes="0;0.5;1" calcMode="linear" path="M180,780 L60,480"/>
+          </circle>
         </svg>
       </div>
       <div class="container">
         <div class="hero-content">
           <span class="hero-tag">Strategy, Backed by Logic</span>
           <h1 class="hero-title">
-            <span class="title-accent">Beyond AI.<br>Design Intelligence.</span>
+            <span class="title-accent">State Design Institute</span>
           </h1>
           <h2 class="hero-lede">
             AIの先にある競争力へ。<br>ブランド、組織、戦略、そしてAI。
@@ -119,6 +150,7 @@
             <a class="book-cover" href="KIndle/思考ゲームLP.html"><img src="KIndle/Sikougame.jpg" alt="思考ゲーム"></a>
             <a class="book-cover" href="KIndle/棚で勝つパッケージ戦略LP.html"><img src="KIndle/棚で勝つパッケージ戦略.jpg" alt="棚で勝つパッケージ戦略 ―― AIとシミュレーションで「売れる確率」を数値化する新商品開発術"></a>
             <a class="book-cover" href="KIndle/状態デザイン実践_LP.html"><img src="KIndle/状態デザイン実践.jpg" alt="状態デザイン実践 ― 8つの現場で学ぶ、State Design 7つの道具"></a>
+            <a class="book-cover" href="KIndle/なぜ人は手に取るのかLP.html"><img src="KIndle/手に取るデザイン.jpg" alt="なぜ人は手に取るのか ― Trader Joe'sに学ぶ、足を止め、心を動かし、手を伸ばさせるデザイン戦略"></a>
           </div>
         </div>
 
@@ -136,6 +168,7 @@
             <a class="book-cover" href="KIndle/NOtEnoughReSkilling.html"><img src="KIndle/reskilling.jpg" alt="リスキリングだけでは足りない"></a>
             <a class="book-cover" href="KIndle/LP_異動しても折れない人の仕事のOS.html"><img src="KIndle/異動しても折れない人の仕事のOS.jpg" alt="異動しても折れない人の仕事のOS"></a>
             <a class="book-cover" href="KIndle/想定力LP.html"><img src="KIndle/Soutei.jpg" alt="想定力"></a>
+            <a class="book-cover" href="KIndle/LP_交渉術の世界地図.html"><img src="KIndle/交渉術の世界地図.jpg" alt="交渉術の世界地図 ― AI時代の合意形成ガイド"></a>
           </div>
         </div>
 
@@ -324,114 +357,42 @@
       </div>
     </section>
 
-    <!-- Solutions/Success Section -->
+    <!-- Solutions/Success Section (teaser) -->
     <section id="solution" style="background: rgba(15, 23, 42, 0.4);">
       <div class="container">
         <div class="section-title">
           <span class="hero-tag" style="margin-bottom: 1rem;">Solutions</span>
-          <h2>「評判づくり」で実現する成功</h2>
+          <h2>「状態遷移メソッド」で実現する成功</h2>
           <p>感情を揺り動かすストーリーと、綿密なコンテンツづくりで顧客を囲い込む</p>
         </div>
-        <div style="margin-bottom: 4rem;">
-          <h3 style="font-size: 1.25rem; color: var(--accent); margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem;">
-            External Branding <span style="flex: 1; height: 1px; background: var(--glass-border);"></span>
-          </h3>
-          <div class="grid-3" style="margin-bottom: 4rem;">
-            <div class="glass-card">
-              <h3>ブランド戦略策定</h3>
-              <ul class="list-style" style="list-style: none; color: var(--text-sub); font-size: 0.95rem; margin-top: 1rem;">
-                <li>• 経営理念の言語化</li>
-                <li>• ブランドポジショニング</li>
-                <li>• コアバリューの策定</li>
-                <li>• ターゲット顧客分析</li>
-              </ul>
-            </div>
-            <div class="glass-card">
-              <h3>アイデンティティ開発</h3>
-              <ul class="list-style" style="list-style: none; color: var(--text-sub); font-size: 0.95rem; margin-top: 1rem;">
-                <li>• ロゴデザイン</li>
-                <li>• カラーパレット設計</li>
-                <li>• タイポグラフィ</li>
-                <li>• ビジュアルトーン</li>
-              </ul>
-            </div>
-            <div class="glass-card">
-              <h3>ストーリーテリング</h3>
-              <ul class="list-style" style="list-style: none; color: var(--text-sub); font-size: 0.95rem; margin-top: 1rem;">
-                <li>• ブランドストーリー構築</li>
-                <li>• Webコンテンツ企画</li>
-                <li>• SNS戦略</li>
-                <li>• 映像・画像制作</li>
-              </ul>
-            </div>
+        <div class="grid-3" style="margin-bottom: 3rem;">
+          <div class="glass-card">
+            <h3 style="color: var(--accent);">External Branding</h3>
+            <p style="color: var(--text-sub); font-size: 0.9rem; margin-top: 1rem;">
+              ブランド戦略策定・アイデンティティ開発・ストーリーテリングで、外部への発信力を強化。
+            </p>
+          </div>
+          <div class="glass-card">
+            <h3 style="color: var(--accent);">Internal Branding</h3>
+            <p style="color: var(--text-sub); font-size: 0.9rem; margin-top: 1rem;">
+              社内ブランディングと人材育成・組織開発で、理念を体現する組織づくりを支援。
+            </p>
+          </div>
+          <div class="glass-card">
+            <h3 style="color: var(--accent);">Business Transformation</h3>
+            <p style="color: var(--text-sub); font-size: 0.9rem; margin-top: 1rem;">
+              経営企画支援・プロセス改革推進・包括的ビジネス支援で、戦略の実行までを伴走。
+            </p>
           </div>
         </div>
-
-        <div style="margin-bottom: 4rem;">
-          <h3 style="font-size: 1.25rem; color: var(--accent); margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem;">
-            Internal Branding <span style="flex: 1; height: 1px; background: var(--glass-border);"></span>
-          </h3>
-          <div class="grid-3" style="margin-bottom: 4rem;">
-            <div class="glass-card">
-              <h3>社内ブランディング</h3>
-              <ul class="list-style" style="list-style: none; color: var(--text-sub); font-size: 0.95rem; margin-top: 1rem;">
-                <li>• 理念浸透・意識統一</li>
-                <li>• ブランドブック作成</li>
-                <li>• 社員ワークショップ</li>
-                <li>• 内部コミュニケーション</li>
-              </ul>
-            </div>
-            <div class="glass-card">
-              <h3>人材育成・組織開発</h3>
-              <ul class="list-style" style="list-style: none; color: var(--text-sub); font-size: 0.95rem; margin-top: 1rem;">
-                <li>• リーダーシップ育成</li>
-                <li>• 体系的人材開発</li>
-                <li>• 研修転移支援</li>
-                <li>• 組織文化醸成</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <h3 style="font-size: 1.25rem; color: var(--accent); margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem;">
-            Business Transformation <span style="flex: 1; height: 1px; background: var(--glass-border);"></span>
-          </h3>
-          <div class="grid-3">
-            <div class="glass-card">
-              <h3>経営企画支援</h3>
-              <ul class="list-style" style="list-style: none; color: var(--text-sub); font-size: 0.95rem; margin-top: 1rem;">
-                <li>• 経営方針策定</li>
-                <li>• KPI管理</li>
-                <li>• 部門方針設計</li>
-                <li>• 実行支援</li>
-              </ul>
-            </div>
-            <div class="glass-card">
-              <h3>プロセス改革推進</h3>
-              <ul class="list-style" style="list-style: none; color: var(--text-sub); font-size: 0.95rem; margin-top: 1rem;">
-                <li>• ワークフロー分析</li>
-                <li>• システム導入支援</li>
-                <li>• 業務時間削減</li>
-                <li>• コスト最適化</li>
-              </ul>
-            </div>
-            <div class="glass-card">
-              <h3>包括的ビジネス支援</h3>
-              <ul class="list-style" style="list-style: none; color: var(--text-sub); font-size: 0.95rem; margin-top: 1rem;">
-                <li>• 戦略策定～実行</li>
-                <li>• 人と文化の醸成</li>
-                <li>• 成果測定</li>
-                <li>• 伴走支援</li>
-              </ul>
-            </div>
-          </div>
+        <div style="text-align: center;">
+          <a href="profile.html#solutions" class="btn btn-primary">サービス詳細を見る</a>
         </div>
       </div>
     </section>
 
 
-    <!-- Success Impact Section -->
+    <!-- Success Impact Section (teaser) -->
     <section id="success">
       <div class="container">
         <div class="section-title">
@@ -439,58 +400,27 @@
           <h2>ブランディングの成功とは？</h2>
           <p>外部と内部の両面で、持続的な成長を実現します</p>
         </div>
-        <div class="grid-2" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem;">
+        <div class="grid-2" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
           <div class="glass-card" style="border-left: 4px solid var(--accent);">
-            <h3 style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem;">
+            <h3 style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
               <i data-lucide="globe"></i> アウター効果
             </h3>
-            <div style="display: grid; gap: 1rem;">
-              <div style="display: flex; gap: 1rem;">
-                <span style="color: var(--accent); font-weight: bold;">✓</span>
-                <p>ファンが自然と集まり、応援したくなるような物語を創造</p>
-              </div>
-              <div style="display: flex; gap: 1rem;">
-                <span style="color: var(--accent); font-weight: bold;">✓</span>
-                <p>顧客記憶に残る、信頼と共感を生むデザイン</p>
-              </div>
-              <div style="display: flex; gap: 1rem;">
-                <span style="color: var(--accent); font-weight: bold;">✓</span>
-                <p>営業活動のしやすさ向上と売上貢献</p>
-              </div>
-              <div style="display: flex; gap: 1rem;">
-                <span style="color: var(--accent); font-weight: bold;">✓</span>
-                <p>リスク管理と市場での競争力強化</p>
-              </div>
-            </div>
+            <p style="color: var(--text-sub); font-size: 0.9rem;">ファンの創造、信頼と共感を生むデザイン、営業力・競争力の強化へ。</p>
           </div>
           <div class="glass-card" style="border-left: 4px solid #10b981;">
-            <h3 style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem;">
+            <h3 style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
               <i data-lucide="home"></i> インナー効果
             </h3>
-            <div style="display: grid; gap: 1rem;">
-              <div style="display: flex; gap: 1rem;">
-                <span style="color: #10b981; font-weight: bold;">✓</span>
-                <p>社内の方向性が統一され、一貫性のあるメッセージ発信</p>
-              </div>
-              <div style="display: flex; gap: 1rem;">
-                <span style="color: #10b981; font-weight: bold;">✓</span>
-                <p>社員がブランドの伝道師となり、体験で差別化</p>
-              </div>
-              <div style="display: flex; gap: 1rem;">
-                <span style="color: #10b981; font-weight: bold;">✓</span>
-                <p>社員モチベーション向上と活気ある組織づくり</p>
-              </div>
-              <div style="display: flex; gap: 1rem;">
-                <span style="color: #10b981; font-weight: bold;">✓</span>
-                <p>求人活動の効率化と組織のリスク対応力強化</p>
-              </div>
-            </div>
+            <p style="color: var(--text-sub); font-size: 0.9rem;">方向性の統一、社員モチベーション向上、組織のリスク対応力強化へ。</p>
           </div>
+        </div>
+        <div style="text-align: center;">
+          <a href="outcomes.html" class="btn btn-primary">成功の詳細を見る</a>
         </div>
       </div>
     </section>
 
-    <!-- Core Areas Section -->
+    <!-- Core Areas Section (teaser) -->
     <section id="expertise">
       <div class="container">
         <div class="section-title">
@@ -498,36 +428,30 @@
           <h2>3つの核となる領域</h2>
           <p>20年以上のキャリアで実現した、大企業レベルの定量的な成果</p>
         </div>
-        <div class="grid-3">
+        <div class="grid-3" style="margin-bottom: 3rem;">
           <div class="glass-card" style="text-align: center;">
             <div class="card-icon" style="margin: 0 auto 1.5rem;"><i data-lucide="award"></i></div>
             <h3>ブランド・マーケティング</h3>
             <div style="font-size: 2.5rem; font-weight: 800; color: var(--accent); margin: 1rem 0;">3,500<span style="font-size: 1rem;">+ SKU/年</span></div>
-            <p style="color: var(--text-sub); font-size: 0.9rem;">
-              クリエイティブディレクションから大規模デザイン刷新まで、ブランドの成長を加速させる戦略を実行。
-            </p>
           </div>
           <div class="glass-card" style="text-align: center;">
             <div class="card-icon" style="margin: 0 auto 1.5rem;"><i data-lucide="fast-forward"></i></div>
             <h3>プロセス改革推進</h3>
             <div style="font-size: 2.5rem; font-weight: 800; color: #ef4444; margin: 1rem 0;">50<span style="font-size: 1rem;">% 削減</span></div>
-            <p style="color: var(--text-sub); font-size: 0.9rem;">
-              制作業務時間を半減。¥5億のコスト削減実績。ITツール導入とワークフロー分析で生産性を極大化。
-            </p>
           </div>
           <div class="glass-card" style="text-align: center;">
             <div class="card-icon" style="margin: 0 auto 1.5rem;"><i data-lucide="users"></i></div>
             <h3>組織・人材マネジメント</h3>
             <div style="font-size: 2.5rem; font-weight: 800; color: #10b981; margin: 1rem 0;">伴走型<span style="font-size: 1rem;">支援</span></div>
-            <p style="color: var(--text-sub); font-size: 0.9rem;">
-              部門方針策定、リーダー育成、組織開発思想に基づく持続的な文化醸成。社員がブランドの伝道師へ。
-            </p>
           </div>
+        </div>
+        <div style="text-align: center;">
+          <a href="profile.html#pillars" class="btn btn-primary">詳しい実績・プロフィールを見る</a>
         </div>
       </div>
     </section>
 
-    <!-- Biography & Certifications Section -->
+    <!-- Biography & Certifications Section (teaser) -->
     <section id="profile" style="background: rgba(15, 23, 42, 0.4);">
       <div class="container">
         <div class="section-title">
@@ -535,66 +459,14 @@
           <h2>略歴・資格等</h2>
           <p>確かな経験と専門性に基づき、変革をリードします</p>
         </div>
-        <div class="grid-2" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2.5rem;">
-          <!-- 略歴 -->
-          <div class="glass-card">
-            <h3 style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem; color: var(--accent);">
-              <i data-lucide="briefcase"></i> 略歴
-            </h3>
-            <ul class="list-style" style="list-style: none; color: var(--text-main); font-size: 0.95rem; line-height: 2;">
-              <li style="margin-bottom: 0.75rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--glass-border);">
-                <strong>イオンネクスト株式会社</strong><br>
-                <span style="color: var(--text-sub);">シニアマネージャー</span>
-              </li>
-              <li style="margin-bottom: 0.75rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--glass-border);">
-                <strong>イオントップバリュ株式会社</strong><br>
-                <span style="color: var(--text-sub);">ブランドマネジメント部部長</span>
-              </li>
-              <li style="margin-bottom: 0.75rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--glass-border);">
-                <strong>デイモンワールドワイドジャパンインク</strong><br>
-                <span style="color: var(--text-sub);">ディレクター</span>
-              </li>
-              <li style="margin-bottom: 0.75rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--glass-border);">
-                <strong>インターブランド / ランドーアソシエイツ</strong><br>
-                <span style="color: var(--text-sub);">シニアコンサルタント</span>
-              </li>
-              <li style="margin-top: 1.5rem; color: var(--accent);">
-                E-MBA 経営管理学修士 / 経済学士
-              </li>
-            </ul>
-          </div>
-          <!-- 資格等 -->
-          <div class="glass-card">
-            <h3 style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem; color: var(--accent);">
-              <i data-lucide="award"></i> 資格等
-            </h3>
-            <ul class="list-style" style="list-style: none; color: var(--text-main); font-size: 0.95rem; line-height: 2;">
-              <li style="margin-bottom: 0.5rem; display: flex; gap: 0.75rem;">
-                <span style="color: var(--accent);">•</span>
-                TOEIC 905
-              </li>
-              <li style="margin-bottom: 0.5rem; display: flex; gap: 0.75rem;">
-                <span style="color: var(--accent);">•</span>
-                AFP（2級ファイナンシャルプランニング技能士）
-              </li>
-              <li style="margin-bottom: 0.5rem; display: flex; gap: 0.75rem;">
-                <span style="color: var(--accent);">•</span>
-                中国政府教育部 漢語水平考試 HSK4級
-              </li>
-              <li style="margin-bottom: 0.5rem; display: flex; gap: 0.75rem;">
-                <span style="color: var(--accent);">•</span>
-                大阪商工会議所 メンタルヘルス・マネジメント2種検定
-              </li>
-              <li style="margin-bottom: 0.5rem; display: flex; gap: 0.75rem;">
-                <span style="color: var(--accent);">•</span>
-                東北大学主催 産学連携教育イノベーター育成プログラム 立教大学リーダーシップ開発力養成コース修了
-              </li>
-              <li style="margin-bottom: 0.5rem; display: flex; gap: 0.75rem;">
-                <span style="color: var(--accent);">•</span>
-                国家資格キャリアコンサルタント登録
-              </li>
-            </ul>
-          </div>
+        <div class="glass-card" style="max-width: 700px; margin: 0 auto; text-align: center; padding: 3rem 2rem;">
+          <p style="color: var(--text-main); line-height: 2; margin-bottom: 0.5rem;">
+            イオントップバリュ ブランドマネジメント部部長、インターブランド／ランドーアソシエイツ シニアコンサルタントを経て独立。
+          </p>
+          <p style="color: var(--text-sub); font-size: 0.9rem; margin-bottom: 2rem;">
+            E-MBA 経営管理学修士 / 国家資格キャリアコンサルタント 他
+          </p>
+          <a href="profile.html" class="btn btn-primary">詳しい略歴・資格等を見る</a>
         </div>
       </div>
     </section>

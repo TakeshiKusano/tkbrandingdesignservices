@@ -175,7 +175,7 @@ nav {
   padding: 0;
 }
 
-/* Hero Signature — "converging light" diagram */
+/* Hero Signature — "state transition" diagram */
 .hero-signature {
   position: absolute;
   top: 50%;
@@ -202,86 +202,138 @@ nav {
   stroke-width: 1;
 }
 
-.node-line {
+.state-edge {
   stroke: var(--accent);
-  stroke-width: 1.4;
-  opacity: 0.5;
+  stroke-width: 2;
+  opacity: 0.75;
+  filter: drop-shadow(0 0 3px var(--accent-glow));
 }
 
-.node-seed {
+.state-link {
+  stroke: var(--accent);
+  stroke-width: 1.2;
+  opacity: 0.3;
+}
+
+.state-node {
   fill: var(--accent);
-  opacity: 0.45;
+  opacity: 0.9;
+  filter: drop-shadow(0 0 4px var(--accent-glow));
+}
+
+.transition-dot {
+  fill: var(--accent);
+  opacity: 0.95;
+  filter: drop-shadow(0 0 10px var(--accent-glow));
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.link-dot {
+  fill: var(--accent);
+  opacity: 0.7;
+  filter: drop-shadow(0 0 6px var(--accent-glow));
+  transform-box: fill-box;
+  transform-origin: center;
 }
 
 .node-core {
   fill: var(--accent);
+  filter: drop-shadow(0 0 6px var(--accent-glow));
 }
 
 .node-core-glow {
   fill: var(--accent);
-  opacity: 0.45;
-  filter: blur(11px);
+  opacity: 0.55;
+  filter: blur(14px);
 }
 
 .node-ring {
   fill: none;
   stroke: var(--accent);
-  stroke-width: 1.5;
-  opacity: 0.45;
+  stroke-width: 2;
+  opacity: 0.6;
   transform-box: fill-box;
   transform-origin: center;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .node-line {
+  .state-edge {
     stroke-dasharray: 1;
     stroke-dashoffset: 1;
     animation: drawLine 1.1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
-  .hero-node-lines .node-line:nth-of-type(1) { animation-delay: 0.5s; }
-  .hero-node-lines .node-line:nth-of-type(2) { animation-delay: 0.62s; }
-  .hero-node-lines .node-line:nth-of-type(3) { animation-delay: 0.74s; }
-  .hero-node-lines .node-line:nth-of-type(4) { animation-delay: 0.86s; }
-  .hero-node-lines .node-line:nth-of-type(5) { animation-delay: 0.98s; }
-  .hero-node-lines .node-line:nth-of-type(6) { animation-delay: 1.1s; }
+  .hero-state-edges .state-edge:nth-of-type(1) { animation-delay: 0.5s; }
+  .hero-state-edges .state-edge:nth-of-type(2) { animation-delay: 0.62s; }
+  .hero-state-edges .state-edge:nth-of-type(3) { animation-delay: 0.74s; }
+  .hero-state-edges .state-edge:nth-of-type(4) { animation-delay: 0.86s; }
+  .hero-state-edges .state-edge:nth-of-type(5) { animation-delay: 0.98s; }
+  .hero-state-edges .state-edge:nth-of-type(6) { animation-delay: 1.1s; }
 
-  .node-seed {
+  .state-link {
+    opacity: 0;
+    animation: linkIn 0.8s ease forwards;
+  }
+  .hero-state-links .state-link:nth-of-type(1) { animation-delay: 1.3s; }
+  .hero-state-links .state-link:nth-of-type(2) { animation-delay: 1.45s; }
+  .hero-state-links .state-link:nth-of-type(3) { animation-delay: 1.6s; }
+
+  .state-node {
     opacity: 0;
     animation: seedIn 0.6s ease forwards;
   }
-  .hero-node-seeds .node-seed:nth-of-type(1) { animation-delay: 0.5s; }
-  .hero-node-seeds .node-seed:nth-of-type(2) { animation-delay: 0.62s; }
-  .hero-node-seeds .node-seed:nth-of-type(3) { animation-delay: 0.74s; }
-  .hero-node-seeds .node-seed:nth-of-type(4) { animation-delay: 0.86s; }
-  .hero-node-seeds .node-seed:nth-of-type(5) { animation-delay: 0.98s; }
-  .hero-node-seeds .node-seed:nth-of-type(6) { animation-delay: 1.1s; }
+  .hero-state-nodes .state-node:nth-of-type(1) { animation-delay: 0.5s; }
+  .hero-state-nodes .state-node:nth-of-type(2) { animation-delay: 0.62s; }
+  .hero-state-nodes .state-node:nth-of-type(3) { animation-delay: 0.74s; }
+  .hero-state-nodes .state-node:nth-of-type(4) { animation-delay: 0.86s; }
+  .hero-state-nodes .state-node:nth-of-type(5) { animation-delay: 0.98s; }
+  .hero-state-nodes .state-node:nth-of-type(6) { animation-delay: 1.1s; }
 
   .node-core-glow {
     opacity: 0;
-    animation: coreGlow 3.4s ease-in-out 1.7s infinite;
+    animation: coreGlow 2s ease-in-out 1.6s infinite;
   }
   .node-ring {
     opacity: 0;
-    animation: ringPulse 2.8s ease-out 1.6s infinite;
+    animation: ringPulse 2s ease-out 1.6s infinite;
   }
+  .node-ring--2 {
+    animation-delay: 2.6s;
+  }
+
+  .transition-dot,
+  .link-dot {
+    animation: dotTwinkle 0.9s ease-in-out 1.8s infinite;
+  }
+  .transition-dot--alt { animation-delay: 2.1s; }
+  .transition-dot--alt2 { animation-delay: 2.4s; }
 }
 
 @keyframes drawLine {
   to { stroke-dashoffset: 0; }
 }
 
+@keyframes linkIn {
+  to { opacity: 0.3; }
+}
+
 @keyframes seedIn {
-  to { opacity: 0.45; }
+  to { opacity: 0.9; }
 }
 
 @keyframes ringPulse {
-  0% { transform: scale(0.6); opacity: 0.55; }
-  70%, 100% { transform: scale(1.8); opacity: 0; }
+  0% { transform: scale(0.5); opacity: 0.7; }
+  70%, 100% { transform: scale(2.2); opacity: 0; }
 }
 
 @keyframes coreGlow {
-  0%, 100% { opacity: 0.3; filter: blur(9px); }
-  50% { opacity: 0.6; filter: blur(16px); }
+  0%, 100% { opacity: 0.4; filter: blur(12px); }
+  50% { opacity: 0.85; filter: blur(22px); }
+}
+
+@keyframes dotTwinkle {
+  0%, 100% { opacity: 0.4; transform: scale(0.85); }
+  50% { opacity: 1; transform: scale(1.3); }
 }
 
 /* Buttons */
