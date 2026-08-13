@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI経営ダッシュボード ─ 数字が気づかせてくれる会社に変わる本</title>
+<meta name="description" content="『AI経営ダッシュボード』書籍紹介ランディングページ。数字を見るのではなく、数字に気づかせてもらう経営へ。">
+<style>
+:root{
+  --ink:#12151A;
+  --panel:#1A2029;
+  --panel-2:#20272F;
+  --paper:#F3EFE4;
+  --amber:#E4A339;
+  --amber-dim:#8A6A2E;
+  --signal:#C4483C;
+  --green:#4C9E82;
+  --mist:#8791A3;
+  --mist-dim:#5B6472;
+  --hair:#2B323C;
+  --ink-text:#1C2027;
+  --ink-text-soft:#4A5160;
+  --paper-hair:#DCD5C3;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--ink);
+  color:var(--paper);
+  font-family:"Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::selection{ background:var(--amber); color:var(--ink); }
+
+.mincho{ font-family:"YuMincho","Yu Mincho","Hiragino Mincho ProN","Noto Serif JP",serif; }
+.mono{ font-family:"SF Mono","Cascadia Code","Consolas","YuGothic",monospace; font-variant-numeric:tabular-nums; }
+
+a{ color:inherit; }
+
+.wrap{
+  max-width:1080px;
+  margin:0 auto;
+  padding:0 28px;
+}
+
+/* ---------- top bar ---------- */
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:22px 0 0;
+}
+.brand{
+  font-size:13px;
+  letter-spacing:.14em;
+  color:var(--mist);
+}
+.brand b{ color:var(--paper); font-weight:600; }
+
+/* ---------- hero ---------- */
+.hero{
+  padding:64px 0 80px;
+  position:relative;
+}
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  font-size:12.5px;
+  letter-spacing:.16em;
+  color:var(--amber);
+  border:1px solid rgba(228,163,57,.35);
+  padding:6px 14px;
+  border-radius:999px;
+  background:rgba(228,163,57,.06);
+}
+.eyebrow .dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--amber);
+  box-shadow:0 0 8px 1px rgba(228,163,57,.7);
+}
+
+h1.headline{
+  font-size:clamp(34px,5.4vw,58px);
+  line-height:1.32;
+  letter-spacing:.01em;
+  margin:26px 0 4px;
+  font-weight:600;
+  color:var(--paper);
+}
+h1.headline .accent{
+  color:var(--amber);
+}
+.sub{
+  margin-top:22px;
+  font-size:17px;
+  line-height:1.9;
+  color:var(--mist);
+  max-width:560px;
+}
+.sub strong{ color:var(--paper); font-weight:600; }
+
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.02fr .98fr;
+  gap:48px;
+  align-items:center;
+  margin-top:8px;
+}
+@media (max-width:900px){
+  .hero-grid{ grid-template-columns:1fr; }
+}
+
+.cta-row{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  margin-top:38px;
+  flex-wrap:wrap;
+}
+.btn-primary{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  background:var(--amber);
+  color:#1A1305;
+  font-weight:700;
+  font-size:15.5px;
+  padding:15px 26px;
+  border-radius:8px;
+  text-decoration:none;
+  letter-spacing:.02em;
+  box-shadow:0 10px 28px -10px rgba(228,163,57,.55);
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.btn-primary:hover{ transform:translateY(-1px); box-shadow:0 14px 32px -10px rgba(228,163,57,.7); }
+.btn-primary:focus-visible{ outline:2px solid var(--paper); outline-offset:3px; }
+.cta-note{
+  font-size:12.5px;
+  color:var(--mist-dim);
+}
+
+/* ---------- signature panel (dashboard mockup) ---------- */
+.panel-frame{
+  background:linear-gradient(180deg,var(--panel-2),var(--panel));
+  border:1px solid var(--hair);
+  border-radius:14px;
+  padding:22px 22px 20px;
+  box-shadow:0 30px 70px -30px rgba(0,0,0,.65), inset 0 1px 0 rgba(255,255,255,.03);
+  position:relative;
+}
+.panel-frame::before{
+  content:"";
+  position:absolute; inset:0;
+  border-radius:14px;
+  padding:1px;
+  background:linear-gradient(160deg,rgba(228,163,57,.25),transparent 40%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  pointer-events:none;
+}
+.panel-topline{
+  display:flex; align-items:center; justify-content:space-between;
+  font-size:11.5px; color:var(--mist-dim); letter-spacing:.08em;
+  padding-bottom:14px; margin-bottom:16px;
+  border-bottom:1px solid var(--hair);
+}
+.panel-topline .lights{ display:flex; gap:6px; }
+.panel-topline .lights span{ width:7px;height:7px;border-radius:50%; display:inline-block; }
+
+.panel-status{
+  display:flex; align-items:baseline; justify-content:space-between; gap:12px;
+  margin-bottom:18px;
+}
+.panel-status .label{ font-size:12.5px; color:var(--mist); }
+.panel-status .value{
+  font-size:19px; font-weight:700; color:var(--amber);
+  display:flex; align-items:center; gap:8px;
+}
+.panel-status .value .tri{
+  width:0;height:0;
+  border-left:6px solid transparent;
+  border-right:6px solid transparent;
+  border-bottom:10px solid var(--amber);
+}
+
+.panel-block{ margin-bottom:16px; }
+.panel-block:last-child{ margin-bottom:0; }
+.panel-block .k{
+  font-size:11px; color:var(--mist-dim); letter-spacing:.1em; margin-bottom:6px;
+}
+.panel-block .v{
+  font-size:14.5px; line-height:1.7; color:var(--paper);
+}
+.panel-block .v em{
+  font-style:normal; color:var(--amber); font-weight:700;
+}
+.panel-actions{
+  margin-top:4px;
+  display:grid; gap:7px;
+}
+.panel-actions .row{
+  display:flex; gap:9px; font-size:13.5px; color:#D9D3C4; line-height:1.6;
+}
+.panel-actions .row::before{
+  content:"›"; color:var(--amber); font-weight:700; flex:none;
+}
+
+/* ---------- section shell ---------- */
+section{ padding:86px 0; }
+.section-light{ background:var(--paper); color:var(--ink-text); }
+.section-dark{ background:var(--ink); }
+
+.kicker{
+  font-size:12.5px; letter-spacing:.18em; color:var(--amber);
+  margin-bottom:14px; font-weight:600;
+}
+.section-light .kicker{ color:var(--amber-dim); }
+
+h2.section-title{
+  font-family:"YuMincho","Yu Mincho","Hiragino Mincho ProN","Noto Serif JP",serif;
+  font-size:clamp(26px,3.4vw,36px);
+  line-height:1.5;
+  font-weight:600;
+  margin:0 0 18px;
+}
+.section-lede{
+  font-size:16px; line-height:2; max-width:640px;
+  color:var(--mist);
+}
+.section-light .section-lede{ color:var(--ink-text-soft); }
+
+/* ---------- problem section ---------- */
+.pain-quote{
+  font-family:"YuMincho","Yu Mincho","Hiragino Mincho ProN","Noto Serif JP",serif;
+  font-size:clamp(20px,2.6vw,27px);
+  line-height:1.9;
+  color:var(--paper);
+  margin:36px 0 44px;
+  padding-left:24px;
+  border-left:2px solid var(--amber);
+}
+.pain-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;
+  background:var(--hair);
+  border:1px solid var(--hair);
+  border-radius:12px;
+  overflow:hidden;
+}
+@media (max-width:760px){ .pain-grid{ grid-template-columns:1fr; } }
+.pain-cell{
+  background:var(--panel);
+  padding:26px 24px;
+}
+.pain-cell .num{
+  font-family:"SF Mono","Cascadia Code","Consolas",monospace;
+  font-size:12px; color:var(--amber-dim); letter-spacing:.1em; margin-bottom:12px;
+}
+.pain-cell p{ font-size:14.5px; line-height:1.85; color:var(--mist); margin:0; }
+.pain-cell strong{ color:var(--paper); font-weight:600; }
+
+/* ---------- diagnosis ---------- */
+.diag-wrap{
+  display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center;
+}
+@media (max-width:860px){ .diag-wrap{ grid-template-columns:1fr; gap:32px; } }
+.diag-line{
+  font-family:"YuMincho","Yu Mincho","Hiragino Mincho ProN","Noto Serif JP",serif;
+  font-size:clamp(24px,3vw,32px);
+  line-height:1.7;
+  color:var(--ink-text);
+}
+.diag-line .strike{ text-decoration:line-through; text-decoration-color:var(--signal); text-decoration-thickness:2px; color:#9a9488; }
+.diag-line .fix{ color:var(--amber-dim); font-weight:700; }
+.diag-visual{
+  border:1px solid var(--paper-hair);
+  border-radius:12px;
+  background:#FBF9F3;
+  padding:22px;
+}
+.diag-dept{
+  font-size:11.5px; letter-spacing:.08em; color:#a39a86; margin-bottom:10px;
+}
+.diag-scatter{
+  display:flex; flex-wrap:wrap; gap:8px;
+}
+.diag-scatter span{
+  font-size:12.5px; padding:6px 11px; border-radius:6px;
+  background:#EFE9DA; color:#7a715f; border:1px solid var(--paper-hair);
+}
+.diag-arrow{
+  text-align:center; color:var(--amber-dim); font-size:20px; margin:14px 0;
+}
+.diag-unified{
+  border:1.5px solid var(--amber-dim);
+  border-radius:8px;
+  padding:14px 16px;
+  font-size:13.5px;
+  color:var(--ink-text);
+  background:#FCF6E8;
+}
+
+/* ---------- flow (5 stages) ---------- */
+.flow{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:0;
+  margin-top:44px;
+  position:relative;
+}
+@media (max-width:900px){
+  .flow{ grid-template-columns:1fr; gap:14px; }
+}
+.flow-step{
+  position:relative;
+  padding:0 18px 0 0;
+}
+.flow-step:not(:last-child)::after{
+  content:"→";
+  position:absolute; right:-4px; top:8px;
+  color:var(--mist-dim); font-size:18px;
+}
+@media (max-width:900px){ .flow-step:not(:last-child)::after{ content:"↓"; right:auto; left:22px; top:auto; bottom:-16px; } }
+.flow-tag{
+  font-family:"SF Mono","Cascadia Code","Consolas",monospace;
+  font-size:11px; color:var(--amber); letter-spacing:.08em; margin-bottom:10px;
+}
+.flow-jp{ font-size:16.5px; font-weight:700; color:var(--paper); margin-bottom:8px; }
+.flow-en{ font-size:11.5px; color:var(--mist-dim); margin-bottom:10px; letter-spacing:.06em;}
+.flow-desc{ font-size:13px; line-height:1.8; color:var(--mist); }
+.flow-step.human .flow-jp{ color:var(--amber); }
+
+/* ---------- levels ---------- */
+.levels{
+  display:grid; gap:12px; margin-top:40px;
+}
+.level-row{
+  display:grid;
+  grid-template-columns:120px 1fr;
+  gap:22px;
+  align-items:start;
+  border:1px solid var(--paper-hair);
+  border-radius:10px;
+  padding:20px 22px;
+  background:#FBF9F3;
+}
+@media (max-width:640px){ .level-row{ grid-template-columns:1fr; gap:8px; } }
+.level-tag{
+  font-family:"SF Mono","Cascadia Code","Consolas",monospace;
+  font-size:12px; color:#a39a86; letter-spacing:.08em; padding-top:3px;
+}
+.level-tag b{ display:block; font-size:22px; color:var(--amber-dim); font-family:"YuMincho",serif; margin-top:2px;}
+.level-title{ font-size:16px; font-weight:700; color:var(--ink-text); margin-bottom:6px; }
+.level-desc{ font-size:13.5px; line-height:1.85; color:var(--ink-text-soft); }
+
+/* ---------- before/after ---------- */
+.ba-grid{
+  display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:40px;
+}
+@media (max-width:820px){ .ba-grid{ grid-template-columns:1fr; } }
+.ba-card{
+  border-radius:12px;
+  padding:26px 24px;
+  border:1px solid var(--hair);
+}
+.ba-card.before{ background:var(--panel); }
+.ba-card.after{ background:linear-gradient(180deg,rgba(228,163,57,.08),transparent); border-color:rgba(228,163,57,.35); }
+.ba-label{
+  font-size:11.5px; letter-spacing:.12em; margin-bottom:14px;
+  color:var(--mist-dim);
+}
+.ba-card.after .ba-label{ color:var(--amber); }
+.ba-line{
+  font-size:14.5px; line-height:1.95; color:var(--mist);
+}
+.ba-card.after .ba-line{ color:#E8E2D2; }
+.ba-line .num{ color:var(--paper); font-weight:700; font-family:"SF Mono",monospace; }
+.ba-card.after .ba-line .num{ color:var(--amber); }
+.ba-stop{
+  margin-top:16px; font-size:12.5px; color:var(--mist-dim); font-style:italic;
+}
+
+/* ---------- toc ---------- */
+.toc-list{
+  margin-top:40px;
+  border-top:1px solid var(--hair);
+}
+.toc-item{
+  display:grid;
+  grid-template-columns:52px 1fr;
+  gap:20px;
+  padding:18px 0;
+  border-bottom:1px solid var(--hair);
+}
+.toc-item .no{
+  font-family:"SF Mono","Cascadia Code","Consolas",monospace;
+  font-size:13px; color:var(--amber-dim); padding-top:2px;
+}
+.toc-item .t{ font-size:15px; color:var(--paper); line-height:1.6; }
+.toc-item .t .sub{ display:block; font-size:12.5px; color:var(--mist-dim); margin-top:3px; }
+
+/* ---------- author ---------- */
+.author-wrap{
+  display:grid; grid-template-columns:auto 1fr; gap:28px; align-items:flex-start;
+  margin-top:36px;
+}
+@media (max-width:640px){ .author-wrap{ grid-template-columns:1fr; } }
+.author-mark{
+  width:64px;height:64px;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%,var(--amber),var(--amber-dim));
+  display:flex;align-items:center;justify-content:center;
+  font-family:"YuMincho",serif; font-weight:700; font-size:22px; color:#1A1305;
+}
+.author-name{ font-size:16px; font-weight:700; color:var(--ink-text); margin-bottom:10px; }
+.author-bio{ font-size:14px; line-height:2; color:var(--ink-text-soft); max-width:600px; }
+
+/* ---------- final cta ---------- */
+.final-cta{
+  text-align:center;
+  padding:96px 0 100px;
+}
+.final-cta .mincho-line{
+  font-family:"YuMincho","Yu Mincho","Hiragino Mincho ProN","Noto Serif JP",serif;
+  font-size:clamp(24px,3.6vw,34px);
+  line-height:1.7;
+  color:var(--paper);
+  max-width:620px;
+  margin:0 auto 38px;
+}
+.final-cta .mincho-line .accent{ color:var(--amber); }
+
+footer{
+  padding:30px 0 40px;
+  border-top:1px solid var(--hair);
+  font-size:12px;
+  color:var(--mist-dim);
+  display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+}
+
+.divider-dot{
+  display:flex; justify-content:center; gap:8px; margin:0 0 6px;
+}
+.divider-dot span{ width:4px;height:4px;border-radius:50%; background:var(--mist-dim); }
+</style>
+</head>
+<body>
+
+<div class="topbar wrap">
+  <div class="brand">著者 <b>たけ＠モダンロジック</b></div>
+  <div class="brand">Kindle 経営書</div>
+</div>
+
+<!-- HERO -->
+<section class="hero" style="padding-top:8px;">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow"><span class="dot"></span>その経営会議、資料作りに何時間？</span>
+      <h1 class="headline">数字を見るのではなく、<br><span class="accent">数字に気づかせてもらう</span>経営へ。</h1>
+      <p class="sub">
+        売上、粗利、新規顧客数——事実は画面に並んでいる。だが「で、結局どうすればいいの？」に、ダッシュボードは答えてくれない。<br><br>
+        <strong>『AI経営ダッシュボード』</strong>は、見る→気づく→予測する→選ぶ→動く、という5段階でダッシュボードをAI化する設計思想を1冊にまとめた実務書です。
+      </p>
+      <div class="cta-row">
+        <a class="btn-primary" href="https://www.amazon.co.jp/dp/B0HDSFWYRB" target="_blank" rel="noopener">Kindleストアで読む →</a>
+        <span class="cta-note">Kindle Unlimited対象 ／ 電子書籍</span>
+      </div>
+    </div>
+
+    <div class="panel-frame">
+      <div class="panel-topline">
+        <span>AI経営コックピット ── LEVEL 5</span>
+        <span class="lights"><span style="background:var(--signal)"></span><span style="background:var(--amber)"></span><span style="background:var(--green)"></span></span>
+      </div>
+      <div class="panel-status">
+        <span class="label">今日の経営状況</span>
+        <span class="value"><span class="tri"></span>総合判定：注意</span>
+      </div>
+      <div class="panel-block">
+        <div class="k">最重要問題</div>
+        <div class="v">新規顧客獲得ではなく、<em>既存顧客の購入頻度低下</em></div>
+      </div>
+      <div class="panel-block">
+        <div class="k">原因</div>
+        <div class="v">商品A・Bのリピート率が前月比 <em>▲8%</em></div>
+      </div>
+      <div class="panel-block">
+        <div class="k">予測</div>
+        <div class="v">現状のままなら年間売上 <em>▲1.8億円</em></div>
+      </div>
+      <div class="panel-block">
+        <div class="k">推奨アクション</div>
+        <div class="panel-actions">
+          <div class="row">商品A購入者への再購入施策</div>
+          <div class="row">商品Bの休眠顧客掘り起こし</div>
+          <div class="row">広告予算の一部を既存顧客施策へ移動</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="section-dark">
+  <div class="wrap">
+    <div class="kicker">PROBLEM</div>
+    <h2 class="section-title">立派なダッシュボードがあるのに、<br>経営会議の会話は変わらない。</h2>
+    <p class="pain-quote">
+      「今月の売上は8.2億円です」<br>
+      「はい、それで？」<br>
+      「……原因を確認して、来週ご報告します」
+    </p>
+    <div class="pain-grid">
+      <div class="pain-cell">
+        <div class="num">01 ／ 優先順位がない</div>
+        <p>KPIが20個も30個も同じ大きさで並び、<strong>今いちばん見るべき数字</strong>がどれかは、画面のどこにも書かれていない。</p>
+      </div>
+      <div class="pain-cell">
+        <div class="num">02 ／ 見に行かないと教えてくれない</div>
+        <p>異常が起きても知らせてくれない受け身の存在。忙しい経営者が気づくのは、<strong>いつも誰かの報告のあと</strong>。</p>
+      </div>
+      <div class="pain-cell">
+        <div class="num">03 ／ 更新が属人化する</div>
+        <p>担当者がExcelを整えて初めて動く仕組み。異動や多忙で更新が止まり、<strong>半年後には誰も見なくなる</strong>。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIAGNOSIS -->
+<section class="section-light">
+  <div class="wrap diag-wrap">
+    <div>
+      <div class="kicker">DIAGNOSIS</div>
+      <p class="diag-line">
+        <span class="strike">見えていない</span>のではない。<br>
+        <span class="fix">「バラバラに見えている」</span>から、<br>
+        見えていないのと同じ状態になっている。
+      </p>
+    </div>
+    <div class="diag-visual">
+      <div class="diag-dept">営業／マーケ／経理──別々のExcel</div>
+      <div class="diag-scatter">
+        <span>営業の数字</span><span>広告の数字</span><span>経理の数字</span><span>CRMの数字</span><span>現場の数字</span>
+      </div>
+      <div class="diag-arrow">↓ 束ねて意味を持たせる</div>
+      <div class="diag-unified">「新規と既存、商品別、チャネル別まで数字が分解されていれば、打ち手はまったく変わってくる」</div>
+    </div>
+  </div>
+</section>
+
+<!-- FRAMEWORK: 5 stages -->
+<section class="section-dark">
+  <div class="wrap">
+    <div class="kicker">FRAMEWORK</div>
+    <h2 class="section-title">段階を上げるほど、<br>経営者の仕事は減っていく。</h2>
+    <p class="section-lede">本書の核となる5段階のフレームワーク。ダッシュボードが「見る」だけの装置から「動く」ための装置へと進化する道筋を示す。</p>
+
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-tag">STAGE 1</div>
+        <div class="flow-jp">見る</div>
+        <div class="flow-en">Dashboard</div>
+        <div class="flow-desc">数字が一箇所に集まり、可視化されている。多くの会社がすでにここにいる。</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-tag">STAGE 2</div>
+        <div class="flow-jp">気づく</div>
+        <div class="flow-en">Diagnosis</div>
+        <div class="flow-desc">異常や変化をAIが自動検知し、原因候補を提示する。</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-tag">STAGE 3</div>
+        <div class="flow-jp">予測する</div>
+        <div class="flow-en">Prediction</div>
+        <div class="flow-desc">このまま進んだら将来どうなるかを、数字で示す。</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-tag">STAGE 4</div>
+        <div class="flow-jp">選ぶ</div>
+        <div class="flow-en">Recommendation</div>
+        <div class="flow-desc">複数の打ち手をAIが選択肢として並べる。</div>
+      </div>
+      <div class="flow-step human">
+        <div class="flow-tag">STAGE 5</div>
+        <div class="flow-jp">動く</div>
+        <div class="flow-en">Action</div>
+        <div class="flow-desc">選ばれた打ち手が実行され、結果が再びダッシュボードに戻る。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEVELS -->
+<section class="section-light">
+  <div class="wrap">
+    <div class="kicker">STRUCTURE</div>
+    <h2 class="section-title">AI経営ダッシュボードの5階層</h2>
+    <p class="section-lede">普段はLEVEL1とLEVEL5だけ見ていれば十分。異常があったときだけ、必要な深さまで潜っていける構造にする。</p>
+
+    <div class="levels">
+      <div class="level-row">
+        <div class="level-tag">LEVEL<b>1</b></div>
+        <div>
+          <div class="level-title">経営状態 ── 30秒で分かる会社の体温</div>
+          <div class="level-desc">売上・粗利・キャッシュなどを、AIが一言で総合判定。「今月の経営状態：注意」――このひとことが緊張感を変える。</div>
+        </div>
+      </div>
+      <div class="level-row">
+        <div class="level-tag">LEVEL<b>2</b></div>
+        <div>
+          <div class="level-title">KGI・KSF・KPI ── 「何が効いているか」を毎日計算する</div>
+          <div class="level-desc">KPIツリーを並べるだけでなく、KGIへの影響度で毎日順位づけ。今日どのKPIに注意を払うべきかが分かる。</div>
+        </div>
+      </div>
+      <div class="level-row">
+        <div class="level-tag">LEVEL<b>3</b></div>
+        <div>
+          <div class="level-title">異常検知 ── 赤・黄・緑ではなく「原因候補」を出す</div>
+          <div class="level-desc">「CPA上昇の原因は広告単価ではなくLPのCVR低下」――データを横断して犯人探しを終わらせる。</div>
+        </div>
+      </div>
+      <div class="level-row">
+        <div class="level-tag">LEVEL<b>4</b></div>
+        <div>
+          <div class="level-title">予測 ── 「このままだといくらか」「あと何が必要か」</div>
+          <div class="level-desc">目標達成確率38%、必要追加売上3.2億円――数字を「点」ではなく「線」で示す。</div>
+        </div>
+      </div>
+      <div class="level-row">
+        <div class="level-tag">LEVEL<b>5</b></div>
+        <div>
+          <div class="level-title">AI経営コックピット ── すべてが1画面に揃う</div>
+          <div class="level-desc">診断・原因・予測・選択肢が、ひとつのストーリーとして語られる。もはや画面ではなく、経営OS。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE/AFTER -->
+<section class="section-dark">
+  <div class="wrap">
+    <div class="kicker">BEFORE / AFTER</div>
+    <h2 class="section-title">同じ「売上95億円」から、<br>たどり着く場所がまったく違う。</h2>
+    <div class="ba-grid">
+      <div class="ba-card before">
+        <div class="ba-label">従来型 ── 事実で止まる</div>
+        <div class="ba-line">売上：<span class="num">95億円</span><br>粗利：<span class="num">32%</span><br>新規顧客：<span class="num">12,300人</span><br>CPA：<span class="num">4,800円</span></div>
+        <div class="ba-stop">思考はここで一旦止まる。次に何をすべきか、画面は何も教えてくれない。</div>
+      </div>
+      <div class="ba-card after">
+        <div class="ba-label">AI型 ── 数字の先まで届く</div>
+        <div class="ba-line">売上は計画比<span class="num">▲3.2%</span>。主因は新規顧客数ではなく、既存顧客の購入頻度低下です。特に40代女性の商品Aで顕著です。このまま推移すると、第4四半期の売上は計画比<span class="num">▲1.8億円</span>になります。推奨アクションは、商品A購入者への再購入施策です。</div>
+        <div class="ba-stop" style="color:var(--amber);">経営者に残る仕事は、この提案を承認するかを決めることだけ。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOC -->
+<section class="section-dark" style="padding-top:70px;">
+  <div class="wrap">
+    <div class="kicker">CONTENTS</div>
+    <h2 class="section-title">目次</h2>
+    <div class="toc-list">
+      <div class="toc-item"><div class="no">序章</div><div class="t">ダッシュボードは、なぜ経営に必要なのか<span class="sub">経営とは選択の連続である／ダッシュボードとは経営の五感である</span></div></div>
+      <div class="toc-item"><div class="no">01</div><div class="t">9割のダッシュボードが機能しない理由<span class="sub">「現在地」は見せるが「意味」を見せない</span></div></div>
+      <div class="toc-item"><div class="no">02</div><div class="t">経営を測る言語 ── メトリクス設計の基本<span class="sub">KGI・KSF・KPIを1つの図で理解する</span></div></div>
+      <div class="toc-item"><div class="no">03</div><div class="t">ダッシュボードの進化 ── 見る→気づく→予測する→動く</div></div>
+      <div class="toc-item"><div class="no">04</div><div class="t">AI経営ダッシュボードの5階層<span class="sub">LEVEL1〜5、階層構造の設計</span></div></div>
+      <div class="toc-item"><div class="no">05</div><div class="t">異常検知をAIに任せる<span class="sub">「CPAが悪化した」で止まらない</span></div></div>
+      <div class="toc-item"><div class="no">06</div><div class="t">未来を読む ── 予測とシミュレーション<span class="sub">目標達成確率、必要追加売上という表現の力</span></div></div>
+      <div class="toc-item"><div class="no">07</div><div class="t">データを一か所に集める ── AIより先に設計すべきこと</div></div>
+      <div class="toc-item"><div class="no">08</div><div class="t">経営会議をAI化する<span class="sub">8つのステップで構成する会議資料</span></div></div>
+      <div class="toc-item"><div class="no">09</div><div class="t">部門ダッシュボードへの展開 ── マーケティング部門を例に</div></div>
+      <div class="toc-item"><div class="no">10</div><div class="t">AI経営コックピットへ ── 経営者の役割はどう変わるか</div></div>
+      <div class="toc-item"><div class="no">結</div><div class="t">数字は、見るものから、気づかせてくれるものへ</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- AUTHOR -->
+<section class="section-light">
+  <div class="wrap">
+    <div class="kicker">AUTHOR</div>
+    <h2 class="section-title">著者について</h2>
+    <div class="author-wrap">
+      <div class="author-mark">た</div>
+      <div>
+        <div class="author-name">たけ＠モダンロジック</div>
+        <p class="author-bio">
+          ブランド・マーケティング、プロセス改革、人材・組織マネジメントを軸に、30年以上にわたり企業の変革と構造設計に携わる。物事を分野ごとに捉えるのではなく、異なる領域の共通構造を見出す「比較の癖」を持つ。現在は、大企業で培われた戦略・ブランド設計・業務プロセスの知見を、中小企業の現実に適合させる形で企業支援を展開している。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="section-dark final-cta">
+  <div class="wrap">
+    <div class="divider-dot"><span></span><span></span><span></span></div>
+    <p class="mincho-line">
+      経営者に残る仕事は、<span class="accent">「何を大事にするか」</span>を決めることだけになる。<br>
+      その一歩を、今日から始めてほしい。
+    </p>
+    <a class="btn-primary" href="https://www.amazon.co.jp/dp/B0HDSFWYRB" target="_blank" rel="noopener">Kindleストアで読む →</a>
+    <div style="margin-top:16px;"><span class="cta-note">Kindle Unlimited対象 ／ 電子書籍</span></div>
+  </div>
+</section>
+
+<footer class="wrap">
+  <span>© たけ＠モダンロジック All rights reserved.</span>
+  <span>AI経営ダッシュボード ── 数字が気づかせてくれる会社に変わる本</span>
+</footer>
+
+</body>
+</html>
