@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="State Economy — People Pay for 'States.' Now on Kindle. From coffee to hotels, education to healthcare, finance to AI, the nation to religion: a new framework showing that what people really buy isn't a product, but a 'state transition.' A book that reads the State OS, the winners of the State Economy, and the ethics of design.">
+<title>State Economy | People Pay for "States"</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;600;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root {
+  --primary: #0f172a;
+  --accent: #d4af37;
+  --accent-glow: rgba(212, 175, 55, 0.4);
+  --accent2: #38bdf8;
+  --accent2-glow: rgba(56, 189, 248, 0.35);
+  --text-main: #f8fafc;
+  --text-sub: #94a3b8;
+  --bg-dark: #020617;
+  --glass-bg: rgba(15, 23, 42, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --card-bg: #1e293b;
+  --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  line-height: 1.85;
+  overflow-x: hidden;
+}
+
+.bg-mesh {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(15, 23, 42, 0.8) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(30, 41, 59, 0.8) 0%, transparent 40%),
+    rgba(2, 6, 23, 1);
+}
+
+h1, h2, h3 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.title-accent {
+  background: linear-gradient(90deg, #d4af37, #fde68a);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.title-accent2 {
+  background: linear-gradient(90deg, #38bdf8, #bae6fd);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+section { padding: 100px 0; }
+
+/* Header */
+header {
+  position: fixed; top: 0; left: 0; width: 100%;
+  padding: 1.5rem 0;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  z-index: 1000;
+  border-bottom: 1px solid var(--glass-border);
+  transition: var(--transition);
+}
+nav { display: flex; justify-content: space-between; align-items: center; }
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem; font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--text-main);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 1.5rem; list-style: none; }
+.nav-link {
+  color: var(--text-sub); text-decoration: none;
+  font-size: 0.84rem; font-weight: 500;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+.nav-link:hover { color: var(--accent); }
+.nav-cta {
+  background: var(--accent);
+  color: #000;
+  padding: 0.6rem 1.4rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+.nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 20px var(--accent-glow); }
+.nav-cta-outline {
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  color: var(--text-main);
+  padding: 0.6rem 1.4rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: var(--transition);
+  display: inline-flex; align-items: center; gap: 0.4rem;
+}
+.nav-cta-outline:hover { border-color: #FF0000; color: #FF0000; }
+
+/* Hero */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  position: relative;
+  padding: 160px 0 100px;
+}
+.hero .container {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 4rem;
+  align-items: center;
+}
+.hero-tag {
+  display: inline-block;
+  padding: 0.5rem 1.1rem;
+  background: var(--glass-border);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.05em;
+}
+.hero-title {
+  font-size: 2.1rem;
+  line-height: 1.55;
+  margin-bottom: 1.2rem;
+}
+.hero-kicker {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--text-sub);
+  margin-bottom: 2rem;
+  font-family: 'Inter', sans-serif;
+  border-left: 3px solid var(--accent2);
+  padding-left: 1rem;
+}
+.hero-subtitle {
+  font-size: 1rem;
+  color: var(--text-sub);
+  max-width: 580px;
+  margin-bottom: 2.5rem;
+}
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+.hero-note { margin-top: 1.2rem; font-size: 0.8rem; color: var(--text-sub); }
+
+.hero-cover {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.hero-cover img {
+  width: 100%;
+  max-width: 340px;
+  border-radius: 10px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px var(--glass-border);
+  transition: var(--transition);
+}
+.hero-cover img:hover { transform: translateY(-8px) rotate(-1deg); }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  padding: 1.1rem 2.2rem;
+  border-radius: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: var(--transition);
+  cursor: pointer;
+  border: none;
+  font-size: 0.95rem;
+}
+.btn-primary {
+  background: var(--accent);
+  color: #000;
+  box-shadow: 0 10px 30px var(--accent-glow);
+}
+.btn-primary:hover { transform: translateY(-4px); box-shadow: 0 15px 40px var(--accent-glow); }
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  color: var(--text-main);
+}
+.btn-outline:hover { border-color: var(--accent2); color: var(--accent2); }
+
+/* Section shared */
+.section-title { text-align: center; margin-bottom: 4.5rem; }
+.section-title h2 { font-size: 2rem; margin-bottom: 1rem; }
+.section-title p { color: var(--text-sub); font-size: 1.05rem; max-width: 720px; margin: 0 auto; }
+
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 2rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+.grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.75rem; }
+
+.glass-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  padding: 2.4rem;
+  border-radius: 20px;
+  backdrop-filter: blur(5px);
+  transition: var(--transition);
+}
+.glass-card:hover { border-color: var(--accent); transform: translateY(-8px); }
+
+.card-icon {
+  width: 52px; height: 52px;
+  background: var(--glass-border);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.25rem;
+  color: var(--accent);
+}
+
+/* Problem section */
+#problem { background: rgba(15, 23, 42, 0.4); }
+.problem-quote {
+  font-size: 1.05rem;
+  color: var(--text-main);
+  font-style: normal;
+  line-height: 1.9;
+}
+
+/* Concept two-axis */
+.axis-card { position: relative; padding-top: 2.8rem; }
+.axis-card.yoko { border-left: 4px solid var(--accent); }
+.axis-card.tate { border-left: 4px solid var(--accent2); }
+.axis-label {
+  position: absolute; top: 2.4rem; right: 2.4rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem; letter-spacing: 0.1em;
+  color: var(--text-sub);
+  text-transform: uppercase;
+}
+.axis-card h3 { font-size: 1.3rem; margin-bottom: 0.5rem; line-height: 1.5; }
+.axis-card .sub { color: var(--text-sub); font-size: 0.9rem; margin-bottom: 1.5rem; }
+.axis-card ul { list-style: none; display: grid; gap: 0.75rem; }
+.axis-card ul li { display: flex; gap: 0.6rem; font-size: 0.92rem; color: var(--text-main); }
+.axis-card.yoko ul li span { color: var(--accent); }
+.axis-card.tate ul li span { color: var(--accent2); }
+
+/* Pull quote banner */
+.quote-banner {
+  background: linear-gradient(135deg, rgba(212,175,55,0.08), rgba(56,189,248,0.05));
+  border-top: 1px solid var(--glass-border);
+  border-bottom: 1px solid var(--glass-border);
+  text-align: center;
+}
+.quote-banner p {
+  font-size: 1.4rem;
+  line-height: 1.9;
+  max-width: 780px;
+  margin: 0 auto;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+}
+.quote-banner .source {
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  color: var(--text-sub);
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+}
+
+/* For whom */
+.whom-list { display: grid; gap: 1rem; max-width: 760px; margin: 0 auto; }
+.whom-item {
+  display: flex; align-items: flex-start; gap: 1rem;
+  padding: 1.4rem 1.6rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+}
+.whom-item i { color: var(--accent2); flex-shrink: 0; margin-top: 0.15rem; }
+
+/* Contents / timeline */
+.toc-list { max-width: 860px; margin: 0 auto; display: grid; gap: 0; }
+.toc-item {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 1.5rem;
+  padding: 1.6rem 0;
+  border-bottom: 1px solid var(--glass-border);
+}
+.toc-item:last-child { border-bottom: none; }
+.toc-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem;
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  padding-top: 0.2rem;
+}
+.toc-item h3 { font-size: 1.1rem; margin-bottom: 0.5rem; line-height: 1.4; }
+.toc-item p { color: var(--text-sub); font-size: 0.88rem; }
+
+/* Method / numbered cards */
+.method-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--accent2);
+  opacity: 0.5;
+  margin-bottom: 0.5rem;
+}
+
+/* Cycle steps */
+.cycle-wrap { max-width: 900px; margin: 0 auto; display: grid; gap: 1rem; }
+.cycle-step {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 1.4rem 1.8rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+}
+.cycle-step-num {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+}
+.cycle-step h3 { font-size: 1.05rem; margin-bottom: 0.2rem; font-family: 'Inter', sans-serif; font-weight: 700; }
+.cycle-step p { color: var(--text-sub); font-size: 0.88rem; }
+.cycle-step.is-goal { border-color: var(--accent); background: linear-gradient(135deg, rgba(212,175,55,0.1), transparent); }
+.cycle-step.is-goal .cycle-step-num { background: var(--accent); color: #000; }
+
+/* Correspondence / diagram image */
+.table-frame {
+  max-width: 900px; margin: 0 auto;
+  background: #f8fafc;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px var(--glass-border);
+}
+.table-frame img { width: 100%; display: block; border-radius: 8px; }
+
+/* Functions (position cards) */
+.position-card { position: relative; }
+.position-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem; letter-spacing: 0.12em;
+  color: var(--accent2); text-transform: uppercase;
+  margin-bottom: 0.6rem; display: block;
+}
+.position-card h3 { font-size: 1.1rem; margin-bottom: 0.7rem; font-family: 'Inter', sans-serif; font-weight: 700; }
+.position-card p { color: var(--text-sub); font-size: 0.88rem; margin-bottom: 1rem; }
+.position-quote {
+  border-top: 1px dashed var(--glass-border);
+  padding-top: 0.9rem;
+  font-size: 0.82rem;
+  color: var(--accent);
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  line-height: 1.7;
+}
+
+/* Twelve domains / theory grid */
+.theory-card { text-align: left; }
+.theory-card h3 { font-size: 1rem; margin-bottom: 0.5rem; color: var(--accent2); font-family: 'Inter', sans-serif; font-weight: 700; }
+.theory-card p { color: var(--text-sub); font-size: 0.86rem; }
+
+/* Author */
+#author { background: rgba(15, 23, 42, 0.4); }
+.author-wrap {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 3rem;
+  align-items: start;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.author-badge {
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(212,175,55,0.2), rgba(56,189,248,0.15));
+  border: 1px solid var(--glass-border);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  text-align: center;
+  color: var(--accent);
+}
+.author-name { font-size: 1.4rem; margin-bottom: 0.3rem; }
+.author-role { color: var(--accent2); font-size: 0.9rem; margin-bottom: 1.5rem; display: block; font-family: 'Inter', sans-serif; }
+.author-list { list-style: none; color: var(--text-sub); font-size: 0.9rem; display: grid; gap: 0.5rem; margin-top: 1.5rem; }
+.author-list li { display: flex; gap: 0.6rem; }
+.author-list span { color: var(--accent); }
+
+/* Final CTA */
+#cta { background: linear-gradient(180deg, transparent, rgba(212, 175, 55, 0.06)); }
+.cta-card { text-align: center; padding: 5rem 2rem; }
+.cta-card h2 { font-size: 2.1rem; margin-bottom: 1.2rem; }
+.cta-card p { color: var(--text-sub); max-width: 620px; margin: 0 auto 2.5rem; }
+
+footer { border-top: 1px solid var(--glass-border); padding: 3rem 0; }
+footer .container {
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+  font-size: 0.85rem; color: var(--text-sub);
+}
+
+/* Animations */
+.reveal { opacity: 0; transform: translateY(24px); transition: all 0.8s cubic-bezier(0.16,1,0.3,1); }
+.reveal-active { opacity: 1 !important; transform: translateY(0) !important; }
+
+@media (max-width: 992px) {
+  .hero .container { grid-template-columns: 1fr; }
+  .hero-cover { order: -1; }
+  .nav-links { display: none; }
+  .hero-title { font-size: 1.5rem; }
+  .author-wrap { grid-template-columns: 1fr; text-align: center; }
+  .author-badge { margin: 0 auto; }
+  .author-list { justify-content: center; }
+  .cycle-step { grid-template-columns: 44px 1fr; gap: 1rem; padding: 1.2rem; }
+  .toc-item { grid-template-columns: 80px 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="bg-mesh"></div>
+
+<header>
+  <div class="container nav">
+    <a href="#" class="logo">State Economy<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="../index.html" class="nav-link">← Site Home</a></li>
+      <li><a href="#problem" class="nav-link">Reality Check</a></li>
+      <li><a href="#concept" class="nav-link">Concept</a></li>
+      <li><a href="#os" class="nav-link">State OS</a></li>
+      <li><a href="#industries" class="nav-link">State Transition Industry</a></li>
+      <li><a href="#layers" class="nav-link">Five Layers</a></li>
+      <li><a href="#ethics" class="nav-link">Ethics of Design</a></li>
+      <li><a href="#contents" class="nav-link">Contents</a></li>
+      <li><a href="#author" class="nav-link">Author</a></li>
+    </ul>
+    <a href="https://www.amazon.com/dp/B0HC73YJGD" target="_blank" rel="noopener noreferrer" class="nav-cta">View on Amazon</a>
+    <a href="https://youtu.be/umexRNR_GnA" target="_blank" rel="noopener noreferrer" class="nav-cta-outline">
+      <i data-lucide="youtube" style="width:16px;height:16px;"></i>
+      Watch on YouTube
+    </a>
+  </div>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="hero-content">
+        <span class="hero-tag">Available on Kindle ／ State Economy · Marketing · AI-Era Business Models</span>
+        <h1 class="hero-title">
+          "Making a good product" is no longer<br>
+          enough to be chosen.<br>
+          <span class="title-accent">What people are actually buying is not the product — it's the single instant a "state" changes.</span>
+        </h1>
+        <p class="hero-kicker">Coffee doesn't sell you a caffeine hit — it sells the switch from drowsy to focused. A hotel doesn't sell a room — it sells time spent leaving the everyday behind. Same function, same price: the reason one gets chosen over the other lies one step beyond it.</p>
+        <p class="hero-subtitle">
+          For a long time, we described the nature of value as moving from goods, to services, to experience. What this book reveals is the stage one step further still: "state transition." From drowsiness to focus, from anxiety to reassurance, from loneliness to empathy — education, healthcare, finance, entertainment, and retail, industries that look utterly unrelated; religion, humanity's oldest apparatus; the nation, a system of governance; and AI, a civilization now taking shape — all of it can be read through a single structure: the design of the human state. What individuals, companies, and nations will compete over next is neither products nor information. It is the right to design states.
+        </p>
+        <div class="hero-actions">
+          <a href="https://www.amazon.com/dp/B0HC73YJGD" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            <i data-lucide="book-open" style="width:20px;height:20px;"></i>
+            Buy on Amazon
+          </a>
+          <a href="https://youtu.be/umexRNR_GnA" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+            <i data-lucide="youtube" style="width:20px;height:20px;"></i>
+            Watch on YouTube
+          </a>
+          <a href="#concept" class="btn btn-outline">
+            <i data-lucide="arrow-down" style="width:18px;height:18px;"></i>
+            See the Concept
+          </a>
+        </div>
+        <p class="hero-note">Author: Take @ Modern Logic ／ Kindle Edition</p>
+      </div>
+      <div class="hero-cover">
+        <img src="StateEconomy.jpg" alt='Cover of "State Economy — People Pay for States"'>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem -->
+  <section id="problem">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag" style="border-color:#ef4444; color:#ef4444;">Reality Check</span>
+        <h2>Does any of this feel familiar?</h2>
+        <p>Every time you've been told to "raise the experience value" or "differentiate," there's been an unshakeable sense that something isn't quite explained. You just haven't put it into words yet.</p>
+      </div>
+      <div class="grid-3">
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="tag"></i></div>
+          <p class="problem-quote">You can't explain, in terms of features or specs alone, why customers choose you at this price.</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="package"></i></div>
+          <p class="problem-quote">You're building what you believe are good products and services — yet real differentiation never seems to follow.</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="bot"></i></div>
+          <p class="problem-quote">As AI makes information free, you carry a vague unease about where your own value, or your company's, is going to survive.</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="sparkles"></i></div>
+          <p class="problem-quote">You're told to "raise the experience value" — but no one can say exactly what that means to design.</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="smartphone"></i></div>
+          <p class="problem-quote">You sense that social media and apps are engineering how you spend your time, but can't quite put the mechanism into words.</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="message-square-more"></i></div>
+          <p class="problem-quote">Every conversation about marketing or product development still stalls on "what do we sell" — and never moves past it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Concept -->
+  <section id="concept">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Core Concept</span>
+        <h2>Differentiation by "product," or differentiation by "state"</h2>
+        <p>In the very same market, only those who re-locate value one level deeper gain access to a new axis of competition.</p>
+      </div>
+      <div class="grid-2" style="align-items:stretch;">
+        <div class="glass-card axis-card yoko reveal">
+          <span class="axis-label">The Trap</span>
+          <h3>Still measuring the next move by product, service, and experience<span style="color:var(--accent);"> (the trap most companies fall into)</span></h3>
+          <p class="sub">Still haven't escaped the premise that "if you make something good, it gets chosen"</p>
+          <ul>
+            <li><span>✓</span>Haven't escaped the premise that a good product sells itself</li>
+            <li><span>✓</span>Champion "raising the experience," without ever making concrete what to design</li>
+            <li><span>✓</span>Losing sight of your own value, as AI makes information free</li>
+            <li><span>✓</span>Can only explain why you're chosen using the yardsticks of price or features</li>
+          </ul>
+        </div>
+        <div class="glass-card axis-card tate reveal">
+          <span class="axis-label">The Strategy</span>
+          <h3>Read through the one-level-deeper structure of "state transition"<span style="color:var(--accent2);"> (this book's approach)</span></h3>
+          <p class="sub">Reframes the object of design — not the product, but the "change" that lies beyond it</p>
+          <ul>
+            <li><span>✓</span>Reframes the object of design as the change from a "current state" to a "desired state" — not the product</li>
+            <li><span>✓</span>Reads education, healthcare, finance, and entertainment through the very same structure that runs through religion, the nation, and AI</li>
+            <li><span>✓</span>Introduces the "State OS" — a new axis of competition built on the continuous accumulation of state data</li>
+            <li><span>✓</span>Measures the ethics of design against four standards: transparency, choice, direction of purpose, and reversibility</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Model: product as state transition device -->
+  <section id="model" style="background: rgba(15, 23, 42, 0.4);">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Not Just Marketing</span>
+        <h2>The true nature of a product is a "state-transition device"</h2>
+        <p>This is where the difference that price and features can't explain lives. The wine experiment, insurance as a product, the stories brands tell — all of it reads through the very same structure.</p>
+      </div>
+      <div class="table-frame reveal">
+        <img src="図解_EN/02_state_transition_device.png" alt="Diagram showing that the true nature of a product is a state-transition device">
+      </div>
+      <p style="text-align:center; color:var(--text-sub); font-size:0.92rem; max-width:640px; margin:2.5rem auto 0;">
+        It looks as though we're buying products — but what we're really buying may be "the change into the state we desire." Tell someone the very same wine costs more, and they rate it as tastier, with the pleasure-related regions of the brain responding more strongly still — even price itself can become staging for switching a state.
+      </p>
+    </div>
+  </section>
+
+  <!-- Quote banner -->
+  <section class="quote-banner">
+    <div class="container reveal">
+      <p>
+        People are not buying products.<br>
+        <span class="title-accent">They are buying the change from their "current state" to their "desired state."</span>
+      </p>
+      <p class="source">— from Chapter 2, "State Economy"</p>
+    </div>
+  </section>
+
+  <!-- Civilization thread -->
+  <section id="civilization">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Where Value Is Heading</span>
+        <h2>Value moved from goods, to services, to experience. And now, to "the state"</h2>
+        <p>Agrarian society delivered food. Industrial society delivered goods. The service economy delivered convenience. The experience economy delivered being moved. What comes next is the era of "the state" that lies one step beyond.</p>
+      </div>
+      <div class="table-frame reveal" style="margin-bottom:3rem;">
+        <img src="図解_EN/01_civilization_evolution.png" alt="The evolution of civilization and the shifting center of value">
+      </div>
+      <div class="cycle-wrap">
+        <div class="cycle-step reveal">
+          <div class="cycle-step-num">1</div>
+          <div><h3>Agrarian Society — Food</h3><p>An era when the calories needed simply to survive were, quite literally, wealth.</p></div>
+        </div>
+        <div class="cycle-step reveal">
+          <div class="cycle-step-num">2</div>
+          <div><h3>Industrial Society — Goods</h3><p>Sturdier cloth, faster cars. An era when "owning things" was the proof of prosperity.</p></div>
+        </div>
+        <div class="cycle-step reveal">
+          <div class="cycle-step-num">3</div>
+          <div><h3>Service Economy — Convenience</h3><p>An era when being able to receive the service you needed, exactly when you needed it, came to matter most.</p></div>
+        </div>
+        <div class="cycle-step reveal">
+          <div class="cycle-step-num">4</div>
+          <div><h3>Experience Economy — Being Moved</h3><p>An era when companies began selling not products or services, but the memorable experience itself.</p></div>
+        </div>
+        <div class="cycle-step is-goal reveal">
+          <div class="cycle-step-num">5</div>
+          <div><h3>State Economy — State Transition</h3><p>People seek not the experience itself, but the "change of state" that experience produces. This is the point where we now stand.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- For whom -->
+  <section id="whom" style="background: rgba(15, 23, 42, 0.4);">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">For You</span>
+        <h2>Who this book is for</h2>
+      </div>
+      <div class="whom-list">
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>Executives and marketers who want to explain why they're chosen, at this price, in words that go beyond a product's features</span></div>
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>Anyone who wants to update product development and branding from a vantage point one step beyond "experience"</span></div>
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>Anyone trying to see clearly where their own work, or their company's value, will still stand as AI makes information free</span></div>
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>Anyone who wants a clear-eyed understanding of how social media, apps, and AI are shaping their own state</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- State OS -->
+  <section id="os">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">The New Platform War</span>
+        <h2>What rules the world is the "State OS"</h2>
+        <p>A smartphone is not an information device. It is the foundation — device layer, data layer, and integration layer stacked together — that underlies human state transitions.</p>
+      </div>
+      <div class="table-frame reveal" style="margin-bottom:3rem;">
+        <img src="図解_EN/04_state_os_layers.png" alt="The three-layer structure of the State OS">
+      </div>
+      <div class="grid-3">
+        <div class="glass-card theory-card reveal"><h3>Device Layer</h3><p>The most foundational layer, in which the smartphone or wearable device itself determines how our body and attention are handled.</p></div>
+        <div class="glass-card theory-card reveal"><h3>Data Layer</h3><p>The layer in which individual services — Netflix, Spotify, Oura, WHOOP — continually accumulate "state data" within their own domains.</p></div>
+        <div class="glass-card theory-card reveal"><h3>Integration Layer</h3><p>The layer of the AI agent, which bundles state data spanning multiple domains into a single, internally consistent piece of advice for one human being.</p></div>
+      </div>
+      <p style="text-align:center; color:var(--text-sub); font-size:0.92rem; max-width:680px; margin:2.5rem auto 0;">
+        Oura's "Readiness Score." WHOOP's "Recovery Score." What the user is looking at is not a graph of heart rate. It's an answer condensed onto a single screen: "what state am I in right now." Netflix has disclosed that nearly 80 percent of all viewing arises via a recommendation engine of exactly this kind.
+      </p>
+    </div>
+  </section>
+
+  <!-- Industries -->
+  <section id="industries" style="background: rgba(15, 23, 42, 0.4);">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">State Transition Industry</span>
+        <h2>Industries that look utterly unrelated are connected by the very same role</h2>
+        <p>Not what you make, but what state transition you provide. Take that vantage point, and competitors that cross every industry boundary come into view.</p>
+      </div>
+      <div class="table-frame reveal" style="margin-bottom:3rem;">
+        <img src="図解_EN/03_industry_mapping.png" alt="A state-transition mapping table by industry">
+      </div>
+      <div class="grid-4">
+        <div class="glass-card theory-card reveal"><h3>Education</h3><p>From "I don't understand" to "I understand." Supports the state transition of cognition and behavior.</p></div>
+        <div class="glass-card theory-card reveal"><h3>Healthcare</h3><p>From "anxiety" to "reassurance." Supports the state transition of body and mind.</p></div>
+        <div class="glass-card theory-card reveal"><h3>Entertainment</h3><p>From "boredom" to "immersion." Moves emotion, and changes what's inside a person.</p></div>
+        <div class="glass-card theory-card reveal"><h3>Finance</h3><p>From "anxiety about the future" to "confidence in the future." Designs reassurance alongside assets.</p></div>
+        <div class="glass-card theory-card reveal"><h3>Retail</h3><p>From "a little hungry" to "satisfied." Changes a customer's state the instant they walk in.</p></div>
+        <div class="glass-card theory-card reveal"><h3>Community / SNS</h3><p>From "isolation" to "belonging." Provides the state transition of approval and connection.</p></div>
+        <div class="glass-card theory-card reveal"><h3>AI</h3><p>From "hesitation" to "conviction." Accompanies the small decisions of daily life.</p></div>
+        <div class="glass-card theory-card reveal"><h3>Religion</h3><p>From "anxiety" to "acceptance." Humanity's oldest state-design apparatus.</p></div>
+      </div>
+      <p style="text-align:center; color:var(--text-sub); font-size:0.92rem; max-width:680px; margin:2.5rem auto 0;">
+        A fitness gym's true competitor may not be another gym, but a meditation app — because both provide the very same state transition, from "stress" to "calm." A competitive structure invisible from the supply side's classification reveals itself clearly the instant you adopt the state-transition perspective.
+      </p>
+    </div>
+  </section>
+
+  <!-- Five layers / winners -->
+  <section id="layers">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Who Wins the State Economy</span>
+        <h2>Who are the winners of the State Economy?</h2>
+        <p>The individual, the company, the nation, religion, and AI. Across five layers, the conditions that decide victory and defeat are beginning to change.</p>
+      </div>
+      <div class="table-frame reveal" style="margin-bottom:3rem;">
+        <img src="図解_EN/09_five_layers.png" alt="The five layers that govern the State Economy">
+      </div>
+      <div class="grid-3">
+        <div class="glass-card position-card reveal">
+          <span class="position-num">01 ／ Individual</span>
+          <h3>The Individual Winner</h3>
+          <p>Not "what they know" — what will carry value is the ability to read another person, discern the state they should be guided into, and actually bring about that change.</p>
+          <div class="position-quote">"How intentionally can you change another person's state?"</div>
+        </div>
+        <div class="glass-card position-card reveal">
+          <span class="position-num">02 ／ Company</span>
+          <h3>The Corporate Winner</h3>
+          <p>Not a product's function or price — the quality and volume of accumulated "state data" generates a competitive advantage that can't easily be copied.</p>
+          <div class="position-quote">"State data built up over years cannot easily be imitated."</div>
+        </div>
+        <div class="glass-card position-card reveal">
+          <span class="position-num">03 ／ Nation</span>
+          <h3>The National Winner</h3>
+          <p>Not GDP or military power — a "state score" built from citizens' security, health, and motivation to learn becomes the new yardstick for true strength.</p>
+          <div class="position-quote">"Design the average state of the citizenry in a better direction."</div>
+        </div>
+        <div class="glass-card position-card reveal">
+          <span class="position-num">04 ／ Religion</span>
+          <h3>Religion as Apparatus</h3>
+          <p>The anxiety of death. The meaning of existence. Fundamental loneliness. Religion still carries a domain no other industry has yet managed to fully replace.</p>
+          <div class="position-quote">"Religion was humanity's oldest 'State OS.'"</div>
+        </div>
+        <div class="glass-card position-card reveal">
+          <span class="position-num">05 ／ AI</span>
+          <h3>AI, the Winner</h3>
+          <p>Once state data is integrated across the boundaries of individual, company, and nation, AI could become either a "state-liberation device" or a giant apparatus of domination.</p>
+          <div class="position-quote">"Not what you possess — but the right to create which state you hold."</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ethics -->
+  <section id="ethics" style="background: rgba(15, 23, 42, 0.4);">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">The Ethics of Design</span>
+        <h2>A state can be designed. Which is exactly why it can be manipulated.</h2>
+        <p>Social-media notifications, recommendations, news headlines — the very same technology can be used to help a person, or to exploit them.</p>
+      </div>
+      <div class="grid-4">
+        <div class="glass-card reveal">
+          <div class="method-num">01</div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.8rem;">Transparency</h3>
+          <p style="color:var(--text-sub); font-size:0.88rem;">The idea that users should have the right to know how a mechanism of state design actually works.</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="method-num">02</div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.8rem;">The Possibility of Choice</h3>
+          <p style="color:var(--text-sub); font-size:0.88rem;">No matter how skillfully a state transition is designed, the freedom to step away and choose a different path should always remain.</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="method-num">03</div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.8rem;">The Direction of Purpose</h3>
+          <p style="color:var(--text-sub); font-size:0.88rem;">Whether a design aims at maximizing dependency and consumption, or at the user's own autonomy and well-being.</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="method-num">04</div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.8rem;">Reversibility</h3>
+          <p style="color:var(--text-sub); font-size:0.88rem;">Whether, no matter how skillful the design, a path is provided for the user to escape its influence and return to their original state.</p>
+        </div>
+      </div>
+      <p style="text-align:center; color:var(--text-sub); font-size:0.95rem; max-width:680px; margin:3rem auto 0; font-family:'Playfair Display', serif; font-style:italic; line-height:1.9;">
+        "Where am I trying to lead this person?"<br>Whether one can keep answering this question honestly is what will separate the designers of the era ahead from those who are not.
+      </p>
+    </div>
+  </section>
+
+  <!-- Contents -->
+  <section id="contents">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Contents</span>
+        <h2>Table of Contents</h2>
+        <p>Preface, nine chapters, a final chapter, and an afterword</p>
+      </div>
+      <div class="toc-list">
+        <div class="toc-item reveal">
+          <div class="toc-num">Preface</div>
+          <div><h3>In an Era When the Scarcity of Information Has Vanished</h3><p>What becomes valuable next is "the state" / Our days are made up of a continuous stream of countless state transitions</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">Chapter 1</div>
+          <div><h3>The World Began Selling "States"</h3><p>The evolution of value: goods → services → experience → state / Hedonic adaptation and the peak-end rule</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">Chapter 2</div>
+          <div><h3>People Are Buying "State Transitions"</h3><p>The wine price experiment, insurance as a product, prospect theory and the anchoring effect</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">Chapter 3</div>
+          <div><h3>The World Is Evolving into the "State Transition Industry"</h3><p>The common structure running through education, healthcare, entertainment, finance, and retail / How this differs from Jobs to Be Done theory</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">Chapter 4</div>
+          <div><h3>What Rules the World Is the "State OS"</h3><p>The device, data, and integration layers / A map of companies that hold a state database</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">Chapter 5</div>
+          <div><h3>The Nation Is a Giant State-Design Apparatus</h3><p>The Nudge Unit, GNH, the Minister for Loneliness / Biopower and governmentality</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">Chapter 6</div>
+          <div><h3>Religion Was the First State Industry</h3><p>Converting states of anxiety, behavior, and meaning / Kukai and the staging of the kanjo ritual</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">Chapter 7</div>
+          <div><h3>AI Will Become a New Civilization</h3><p>The ELIZA effect and parasocial relationships / From information to state, from state to meaning-making</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">Chapter 8</div>
+          <div><h3>The Ethics of State Design</h3><p>Four standards: transparency, the possibility of choice, the direction of purpose, and reversibility</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">Chapter 9</div>
+          <div><h3>The Winners of the State Economy</h3><p>The conditions for winning, seen across five layers: individual, company, nation, religion, and AI</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">Final Chapter / Afterword</div>
+          <div><h3>The Future Competition Will Be Over "the Right to Design States"</h3><p>Where am I trying to lead this person? / Life itself as a story of state transitions</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Author -->
+  <section id="author" style="background: rgba(15, 23, 42, 0.4);">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Author</span>
+        <h2>About the Author</h2>
+      </div>
+      <div class="author-wrap reveal">
+        <div class="author-badge">Take @<br>Modern Logic</div>
+        <div>
+          <h3 class="author-name">Take @ Modern Logic</h3>
+          <span class="author-role">Comparative Thinking / Brand & Marketing / Talent & Organizational Management</span>
+          <p style="color:var(--text-sub); font-size:0.95rem;">
+            Centered on brand marketing, process reform, and talent and organizational management, has spent more than thirty years engaged in corporate transformation and structural design. While handling marketing operations within a huge distribution group, a project with a healthcare company became the opportunity to keep confronting a single question — "what do people truly want?" — and that question led to the perspective of the State Economy. Rather than grasping things field by field, brings a habitual instinct for comparison that finds the common structure across different domains, cutting across the unrelated territories of business, the nation, religion, and AI to extract the true nature of value.
+          </p>
+          <ul class="author-list">
+            <li><span>•</span>30+ years of hands-on experience in brand marketing and talent/organizational management</li>
+            <li><span>•</span>Analysis built on a "habit of comparison" that finds shared structure across unrelated domains</li>
+            <li><span>•</span>A recurring theme: re-editing the structure of human cognition and decision-making</li>
+            <li><span>•</span>Now applying strategy and organizational-design knowledge built at large corporations to support small and midsize businesses</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section id="cta">
+    <div class="container">
+      <div class="glass-card cta-card reveal">
+        <span class="hero-tag" style="margin-bottom:1.5rem;">Get Started</span>
+        <h2>What's needed isn't a better product.<br>It's choosing what state to create.</h2>
+        <p>
+          Not a book of economics. Not a marketing textbook. Coffee, hotels, education, healthcare, finance, AI, the nation, religion — one single structure, "state transition," running through domains that share no name and no context. By the time you finish, what remains in your hands isn't a technique for differentiation. It's an entirely new lens of thought for reading the economy, and the civilization, to come.
+        </p>
+        <div class="hero-actions" style="justify-content:center;">
+          <a href="https://www.amazon.com/dp/B0HC73YJGD" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            <i data-lucide="book-open" style="width:20px;height:20px;"></i>
+            Read "State Economy" on Kindle
+          </a>
+          <a href="https://youtu.be/umexRNR_GnA" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+            <i data-lucide="youtube" style="width:20px;height:20px;"></i>
+            Watch on YouTube
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="logo" style="font-size:0.95rem;">State Economy<span>.</span></div>
+    <a href="../index.html" class="nav-link">← Back to Site Home</a>
+    <div>Author: Take @ Modern Logic　© Take @ Modern Logic. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  lucide.createIcons();
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('reveal-active');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { root: null, threshold: 0.1, rootMargin: "0px" });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const targetId = this.getAttribute('href');
+      if (targetId === '#' || !document.querySelector(targetId)) return;
+      e.preventDefault();
+      window.scrollTo({ top: document.querySelector(targetId).offsetTop - 80, behavior: 'smooth' });
+    });
+  });
+
+  window.addEventListener('scroll', () => {
+    const header = document.querySelector('header');
+    if (window.scrollY > 50) {
+      header.style.padding = '0.9rem 0';
+      header.style.boxShadow = '0 10px 40px rgba(0,0,0,0.5)';
+    } else {
+      header.style.padding = '1.5rem 0';
+      header.style.boxShadow = 'none';
+    }
+  });
+</script>
+</body>
+</html>
