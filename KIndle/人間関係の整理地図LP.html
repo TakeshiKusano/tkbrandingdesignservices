@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="『人間関係の整理地図 ―― 7つの地図で見つける、疲れない人付き合い』Kindleより発売準備中。人間関係は「能力」ではなく「距離」の問題だった。距離・境界線・エネルギー・信頼・期待・感情・出口――7つの地図で、誰と、どれだけ、どう距離を取るかを自分で選び直すための一冊。「整理地図」シリーズ第2巻。">
+<title>人間関係の整理地図 | 7つの地図で見つける、疲れない人付き合い</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Noto+Sans+JP:wght@400;500;700&family=Outfit:wght@400;600;800&family=Shippori+Mincho:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root {
+  --primary: #0f172a;
+  --accent: #d4af37;
+  --accent-glow: rgba(212, 175, 55, 0.4);
+  --accent2: #38bdf8;
+  --accent2-glow: rgba(56, 189, 248, 0.35);
+  --text-main: #f8fafc;
+  --text-sub: #94a3b8;
+  --bg-dark: #020617;
+  --glass-bg: rgba(15, 23, 42, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --card-bg: #1e293b;
+  --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Noto Sans JP', 'Shippori Mincho', serif;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  line-height: 1.85;
+  overflow-x: hidden;
+}
+
+.bg-mesh {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(15, 23, 42, 0.8) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(30, 41, 59, 0.8) 0%, transparent 40%),
+    rgba(2, 6, 23, 1);
+}
+
+h1, h2, h3 {
+  font-family: 'Shippori Mincho', serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.title-accent {
+  background: linear-gradient(90deg, #d4af37, #fde68a);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.title-accent2 {
+  background: linear-gradient(90deg, #38bdf8, #bae6fd);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+section { padding: 100px 0; }
+
+/* Header */
+header {
+  position: fixed; top: 0; left: 0; width: 100%;
+  padding: 1.5rem 0;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  z-index: 1000;
+  border-bottom: 1px solid var(--glass-border);
+  transition: var(--transition);
+}
+nav { display: flex; justify-content: space-between; align-items: center; }
+.logo {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 1.1rem; font-weight: 800;
+  letter-spacing: 0.05em;
+  color: var(--text-main);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 2.2rem; list-style: none; }
+.nav-link {
+  color: var(--text-sub); text-decoration: none;
+  font-size: 0.88rem; font-weight: 500;
+  transition: var(--transition);
+}
+.nav-link:hover { color: var(--accent); }
+.nav-cta {
+  background: var(--accent);
+  color: #000;
+  padding: 0.6rem 1.4rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: var(--transition);
+}
+.nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 20px var(--accent-glow); }
+
+/* Hero */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  position: relative;
+  padding: 160px 0 100px;
+}
+.hero .container {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 4rem;
+  align-items: center;
+}
+.hero-tag {
+  display: inline-block;
+  padding: 0.5rem 1.1rem;
+  background: var(--glass-border);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.05em;
+}
+.hero-title {
+  font-size: 2.7rem;
+  line-height: 1.4;
+  margin-bottom: 1.2rem;
+}
+.hero-kicker {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-sub);
+  margin-bottom: 2rem;
+  font-family: 'Noto Sans JP', sans-serif;
+  border-left: 3px solid var(--accent2);
+  padding-left: 1rem;
+}
+.hero-subtitle {
+  font-size: 1rem;
+  color: var(--text-sub);
+  max-width: 560px;
+  margin-bottom: 2.5rem;
+}
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+.hero-note { margin-top: 1.2rem; font-size: 0.8rem; color: var(--text-sub); }
+
+.hero-cover {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.hero-cover img {
+  width: 100%;
+  max-width: 340px;
+  border-radius: 10px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px var(--glass-border);
+  transition: var(--transition);
+}
+.hero-cover img:hover { transform: translateY(-8px) rotate(-1deg); }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  padding: 1.1rem 2.2rem;
+  border-radius: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: var(--transition);
+  cursor: pointer;
+  border: none;
+  font-size: 0.95rem;
+}
+.btn-primary {
+  background: var(--accent);
+  color: #000;
+  box-shadow: 0 10px 30px var(--accent-glow);
+}
+.btn-primary:hover { transform: translateY(-4px); box-shadow: 0 15px 40px var(--accent-glow); }
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  color: var(--text-main);
+}
+.btn-outline:hover { border-color: var(--accent2); color: var(--accent2); }
+
+/* Section shared */
+.section-title { text-align: center; margin-bottom: 4.5rem; }
+.section-title h2 { font-size: 2rem; margin-bottom: 1rem; }
+.section-title p { color: var(--text-sub); font-size: 1.05rem; }
+
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 2rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+.grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.75rem; }
+
+.glass-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  padding: 2.4rem;
+  border-radius: 20px;
+  backdrop-filter: blur(5px);
+  transition: var(--transition);
+}
+.glass-card:hover { border-color: var(--accent); transform: translateY(-8px); }
+
+.card-icon {
+  width: 52px; height: 52px;
+  background: var(--glass-border);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.25rem;
+  color: var(--accent);
+}
+
+/* Problem section */
+#problem { background: rgba(15, 23, 42, 0.4); }
+.problem-quote {
+  font-size: 1.05rem;
+  color: var(--text-main);
+  font-style: normal;
+  line-height: 1.9;
+}
+
+/* Concept two-axis */
+.axis-card { position: relative; padding-top: 2.8rem; }
+.axis-card.yoko { border-left: 4px solid var(--accent); }
+.axis-card.tate { border-left: 4px solid var(--accent2); }
+.axis-label {
+  position: absolute; top: 2.4rem; right: 2.4rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem; letter-spacing: 0.1em;
+  color: var(--text-sub);
+  text-transform: uppercase;
+}
+.axis-card h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+.axis-card .sub { color: var(--text-sub); font-size: 0.9rem; margin-bottom: 1.5rem; }
+.axis-card ul { list-style: none; display: grid; gap: 0.75rem; }
+.axis-card ul li { display: flex; gap: 0.6rem; font-size: 0.92rem; color: var(--text-main); }
+.axis-card.yoko ul li span { color: var(--accent); }
+.axis-card.tate ul li span { color: var(--accent2); }
+
+/* Pull quote banner */
+.quote-banner {
+  background: linear-gradient(135deg, rgba(212,175,55,0.08), rgba(56,189,248,0.05));
+  border-top: 1px solid var(--glass-border);
+  border-bottom: 1px solid var(--glass-border);
+  text-align: center;
+}
+.quote-banner p {
+  font-size: 1.5rem;
+  line-height: 1.9;
+  max-width: 780px;
+  margin: 0 auto;
+  font-family: 'Shippori Mincho', serif;
+}
+.quote-banner .source {
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  color: var(--text-sub);
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+/* Map number label */
+.map-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  color: var(--accent2);
+  margin-bottom: 0.6rem;
+  display: block;
+}
+
+/* Type diagnosis cards */
+.type-card { text-align: center; }
+.type-card .type-name { font-size: 1.15rem; margin-bottom: 0.6rem; }
+.type-card p { color: var(--text-sub); font-size: 0.88rem; }
+
+/* For whom */
+.whom-list { display: grid; gap: 1rem; max-width: 760px; margin: 0 auto; }
+.whom-item {
+  display: flex; align-items: flex-start; gap: 1rem;
+  padding: 1.4rem 1.6rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+}
+.whom-item i { color: var(--accent2); flex-shrink: 0; margin-top: 0.15rem; }
+
+/* Contents / timeline */
+.toc-list { max-width: 820px; margin: 0 auto; display: grid; gap: 0; }
+.toc-item {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 1.5rem;
+  padding: 1.6rem 0;
+  border-bottom: 1px solid var(--glass-border);
+}
+.toc-item:last-child { border-bottom: none; }
+.toc-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding-top: 0.2rem;
+}
+.toc-item h3 { font-size: 1.15rem; margin-bottom: 0.5rem; }
+.toc-item p { color: var(--text-sub); font-size: 0.9rem; }
+
+/* Cycle steps (7 techniques) */
+.cycle-wrap { max-width: 900px; margin: 0 auto; display: grid; gap: 1rem; }
+.cycle-step {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 1.4rem 1.8rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+}
+.cycle-step-num {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+}
+.cycle-step h3 { font-size: 1.05rem; margin-bottom: 0.2rem; }
+.cycle-step p { color: var(--text-sub); font-size: 0.88rem; }
+
+/* Author */
+#author { background: rgba(15, 23, 42, 0.4); }
+.author-wrap {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 3rem;
+  align-items: start;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.author-badge {
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(212,175,55,0.2), rgba(56,189,248,0.15));
+  border: 1px solid var(--glass-border);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Shippori Mincho', serif;
+  font-size: 1.4rem;
+  text-align: center;
+  color: var(--accent);
+}
+.author-name { font-size: 1.4rem; margin-bottom: 0.3rem; }
+.author-role { color: var(--accent2); font-size: 0.9rem; margin-bottom: 1.5rem; display: block; }
+.author-list { list-style: none; color: var(--text-sub); font-size: 0.9rem; display: grid; gap: 0.5rem; margin-top: 1.5rem; }
+.author-list li { display: flex; gap: 0.6rem; }
+.author-list span { color: var(--accent); }
+
+/* Series */
+.series-note {
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 2rem 2.4rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+}
+.series-note p { color: var(--text-sub); font-size: 0.95rem; margin-bottom: 1.5rem; }
+
+/* Final CTA */
+#cta { background: linear-gradient(180deg, transparent, rgba(212, 175, 55, 0.06)); }
+.cta-card { text-align: center; padding: 5rem 2rem; }
+.cta-card h2 { font-size: 2.2rem; margin-bottom: 1.2rem; }
+.cta-card p { color: var(--text-sub); max-width: 620px; margin: 0 auto 2.5rem; }
+
+footer { border-top: 1px solid var(--glass-border); padding: 3rem 0; }
+footer .container {
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+  font-size: 0.85rem; color: var(--text-sub);
+}
+
+/* Animations */
+.reveal { opacity: 0; transform: translateY(24px); transition: all 0.8s cubic-bezier(0.16,1,0.3,1); }
+.reveal-active { opacity: 1 !important; transform: translateY(0) !important; }
+
+@media (max-width: 992px) {
+  .hero .container { grid-template-columns: 1fr; }
+  .hero-cover { order: -1; }
+  .nav-links { display: none; }
+  .hero-title { font-size: 2rem; }
+  .author-wrap { grid-template-columns: 1fr; text-align: center; }
+  .author-badge { margin: 0 auto; }
+  .author-list { justify-content: center; }
+  .cycle-step { grid-template-columns: 44px 1fr; gap: 1rem; padding: 1.2rem; }
+}
+</style>
+</head>
+<body>
+<div class="bg-mesh"></div>
+
+<header>
+  <div class="container nav">
+    <a href="#" class="logo">人間関係の整理地図<span>。</span></a>
+    <ul class="nav-links">
+      <li><a href="../index.html" class="nav-link">← サイトトップ</a></li>
+      <li><a href="#problem" class="nav-link">こんな悩み</a></li>
+      <li><a href="#maps" class="nav-link">7つの地図</a></li>
+      <li><a href="#contents" class="nav-link">目次</a></li>
+      <li><a href="#author" class="nav-link">著者</a></li>
+    </ul>
+    <a href="https://www.amazon.co.jp/dp/B0HF7KBPMN" target="_blank" rel="noopener noreferrer" class="nav-cta">Amazonで見る</a>
+  </div>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="hero-content">
+        <span class="hero-tag">Kindle発売準備中 ／ 「整理地図」シリーズ第2巻</span>
+        <h1 class="hero-title">
+          「誰とでも仲良く」は、<br>
+          <span class="title-accent">もうやめよう。</span>
+        </h1>
+        <p class="hero-kicker">7つの地図で見つける、疲れない人付き合い</p>
+        <p class="hero-subtitle">
+          職場の人間関係に気を遣いすぎて、休日も疲れが取れない。家族に会うたびに、なぜか消耗してしまう。友人だと思っていた相手に、実はずっとエネルギーを奪われていた――もしひとつでも心当たりがあるなら、それはあなたの性格やコミュニケーション能力のせいではありません。ただ、人との「距離」を測る地図を、まだ手にしていないだけです。
+        </p>
+        <div class="hero-actions">
+          <a href="https://www.amazon.co.jp/dp/B0HF7KBPMN" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            <i data-lucide="book-open" style="width:20px;height:20px;"></i>
+            Amazonで探す
+          </a>
+          <a href="LP_心の整理地図.html" class="btn btn-outline">
+            <i data-lucide="compass" style="width:20px;height:20px;"></i>
+            シリーズ第1巻『心の整理地図』を見る
+          </a>
+        </div>
+        <p class="hero-note">著者：たけ＠モダンロジック ／ Kindle版・「整理地図」シリーズ第2巻</p>
+      </div>
+      <div class="hero-cover">
+        <img src="人間関係の整理地図.jpg" alt="『人間関係の整理地図』表紙">
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem -->
+  <section id="problem">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag" style="border-color:#ef4444; color:#ef4444;">Reality Check</span>
+        <h2>こんな感覚、ありませんか？</h2>
+        <p>頑張っているのに、なぜかいつも疲れている</p>
+      </div>
+      <div class="grid-3">
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="briefcase"></i></div>
+          <p class="problem-quote">職場の人間関係に気を遣いすぎて、休日も疲れが取れない</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="home"></i></div>
+          <p class="problem-quote">家族に会うたびに、なぜか消耗してしまう</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="battery-low"></i></div>
+          <p class="problem-quote">友人だと思っていた相手に、実はずっとエネルギーを奪われていた</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="smartphone"></i></div>
+          <p class="problem-quote">SNSを見るたびに、なぜか気持ちが沈む</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="smile"></i></div>
+          <p class="problem-quote">「いい人」をやめられず、いつも自分より相手を優先してしまう</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="x-circle"></i></div>
+          <p class="problem-quote">断れない、NOと言えない自分を変えたい</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Concept -->
+  <section id="concept">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Core Concept</span>
+        <h2>人間関係は「能力」ではなく「距離」の問題だった</h2>
+        <p>他人を変える本ではない。人との「距離」を整理する本である</p>
+      </div>
+      <div class="grid-2" style="align-items:stretch;">
+        <div class="glass-card axis-card yoko reveal">
+          <span class="axis-label">The Trap</span>
+          <h3>能力至上主義<span style="color:var(--accent);">（多くの人がハマる罠）</span></h3>
+          <p class="sub">「コミュ力が足りないから疲れる」――そう思い込み、話し方や心理テクニックを学び続ける</p>
+          <ul>
+            <li><span>✓</span>コミュニケーション本を読んでも、疲れは消えない</li>
+            <li><span>✓</span>距離を置く＝冷たい人、という罪悪感を持っている</li>
+            <li><span>✓</span>「人間関係＝我慢するもの」という思い込みがある</li>
+            <li><span>✓</span>誰と、どれだけ距離を取ればいいか、自分では決められない</li>
+          </ul>
+        </div>
+        <div class="glass-card axis-card tate reveal">
+          <span class="axis-label">The Strategy</span>
+          <h3>地図思考<span style="color:var(--accent2);">（本書のアプローチ）</span></h3>
+          <p class="sub">人間関係を「能力」ではなく「地図（ナビゲーション）」として扱う</p>
+          <ul>
+            <li><span>✓</span>近すぎる関係、遠すぎる関係を一枚の地図の上に描き出す</li>
+            <li><span>✓</span>7つの視点から、関係の配置を可視化する</li>
+            <li><span>✓</span>続ける・離れる・終わらせる・修復する、出口を自分で選ぶ</li>
+            <li><span>✓</span>地図は一度描いたら終わりではなく、何度でも更新できる</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quote banner -->
+  <section class="quote-banner">
+    <div class="container reveal">
+      <p>
+        人間関係は、増やすものではない。<br>
+        <span class="title-accent">整えるものだ。</span>
+      </p>
+      <p class="source">──『人間関係の整理地図』より</p>
+    </div>
+  </section>
+
+  <!-- 7 Maps -->
+  <section id="maps" style="background: rgba(15, 23, 42, 0.4);">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Original Framework</span>
+        <h2>本書で手に入る「7つの地図」</h2>
+        <p>駅・路線・交差点・分岐・目的地――統一された「地図言語」で、関係のすべてを可視化する</p>
+      </div>
+      <div class="grid-3">
+        <div class="glass-card reveal">
+          <span class="map-num">MAP 01</span>
+          <div class="card-icon"><i data-lucide="map-pin"></i></div>
+          <h3 style="font-size:1.1rem; margin-bottom:0.5rem;">距離の地図</h3>
+          <p style="color:var(--text-sub); font-size:0.9rem;">近すぎず、遠すぎない場所を見つける。主要な人物を距離順にプロットする。</p>
+        </div>
+        <div class="glass-card reveal">
+          <span class="map-num">MAP 02</span>
+          <div class="card-icon"><i data-lucide="shield"></i></div>
+          <h3 style="font-size:1.1rem; margin-bottom:0.5rem;">境界線の地図</h3>
+          <p style="color:var(--text-sub); font-size:0.9rem;">自分の領域と相手の領域を分ける。境界線は壁ではなく門だと捉え直す。</p>
+        </div>
+        <div class="glass-card reveal">
+          <span class="map-num">MAP 03</span>
+          <div class="card-icon"><i data-lucide="battery-charging"></i></div>
+          <h3 style="font-size:1.1rem; margin-bottom:0.5rem;">エネルギー地図</h3>
+          <p style="color:var(--text-sub); font-size:0.9rem;">与えてくれる人と、奪っていく人を見分ける。4象限マトリクスで人物を配置する。</p>
+        </div>
+        <div class="glass-card reveal">
+          <span class="map-num">MAP 04</span>
+          <div class="card-icon"><i data-lucide="handshake"></i></div>
+          <h3 style="font-size:1.1rem; margin-bottom:0.5rem;">信頼地図</h3>
+          <p style="color:var(--text-sub); font-size:0.9rem;">信用・信頼・依存・支配の違いを知る。それは信頼か、依存かを判定する。</p>
+        </div>
+        <div class="glass-card reveal">
+          <span class="map-num">MAP 05</span>
+          <div class="card-icon"><i data-lucide="scale"></i></div>
+          <h3 style="font-size:1.1rem; margin-bottom:0.5rem;">期待の地図</h3>
+          <p style="color:var(--text-sub); font-size:0.9rem;">期待しすぎ、期待されすぎ、期待ゼロ――期待のズレを数値化する。</p>
+        </div>
+        <div class="glass-card reveal">
+          <span class="map-num">MAP 06</span>
+          <div class="card-icon"><i data-lucide="traffic-cone"></i></div>
+          <h3 style="font-size:1.1rem; margin-bottom:0.5rem;">感情の交通整理</h3>
+          <p style="color:var(--text-sub); font-size:0.9rem;">怒り・罪悪感・嫉妬・不安・執着。感情別の「止まれ／注意／進んでよい」を知る。</p>
+        </div>
+        <div class="glass-card reveal" style="grid-column: span 1;">
+          <span class="map-num">MAP 07</span>
+          <div class="card-icon"><i data-lucide="signpost"></i></div>
+          <h3 style="font-size:1.1rem; margin-bottom:0.5rem;">関係の出口地図</h3>
+          <p style="color:var(--text-sub); font-size:0.9rem;">続ける、距離を置く、終わらせる、修復する。4つの出口を判定するチャート。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Diagnosis / 5 types -->
+  <section id="diagnosis">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Self Diagnosis</span>
+        <h2>あなたの現在地を診断する</h2>
+        <p>20問の診断チェックリストで、自分の「人間関係タイプ」がわかる</p>
+      </div>
+      <div class="grid-3">
+        <div class="glass-card type-card reveal">
+          <div class="card-icon" style="margin:0 auto 1.25rem;"><i data-lucide="heart-handshake"></i></div>
+          <h3 class="type-name">尽くし型</h3>
+          <p>相手を優先し続け、気づけば自分がすり減っている</p>
+        </div>
+        <div class="glass-card type-card reveal">
+          <div class="card-icon" style="margin:0 auto 1.25rem;"><i data-lucide="frown"></i></div>
+          <h3 class="type-name">我慢型</h3>
+          <p>不満を飲み込み続け、言葉にする前に諦めてしまう</p>
+        </div>
+        <div class="glass-card type-card reveal">
+          <div class="card-icon" style="margin:0 auto 1.25rem;"><i data-lucide="users"></i></div>
+          <h3 class="type-name">迎合型</h3>
+          <p>場の空気に合わせすぎて、自分の意見がわからなくなる</p>
+        </div>
+        <div class="glass-card type-card reveal">
+          <div class="card-icon" style="margin:0 auto 1.25rem;"><i data-lucide="door-closed"></i></div>
+          <h3 class="type-name">孤立型</h3>
+          <p>傷つく前に距離を置き、気づけば一人になっている</p>
+        </div>
+        <div class="glass-card type-card reveal">
+          <div class="card-icon" style="margin:0 auto 1.25rem;"><i data-lucide="check-circle-2"></i></div>
+          <h3 class="type-name">健全型</h3>
+          <p>近づきすぎず、離れすぎず、適正な距離を保てている</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- For whom -->
+  <section id="whom" style="background: rgba(15, 23, 42, 0.4);">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">For You</span>
+        <h2>こんな方におすすめです</h2>
+      </div>
+      <div class="whom-list">
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>職場の人間関係に気を遣いすぎて、休日も疲れが取れない</span></div>
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>「いい人」をやめられず、いつも自分より相手を優先してしまう</span></div>
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>親子・夫婦関係の距離感に、長年モヤモヤを抱えている</span></div>
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>HSP気質で、人といると人一倍疲れてしまう</span></div>
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>断れない・NOと言えない自分を変えたい</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contents -->
+  <section id="contents">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Contents</span>
+        <h2>目次</h2>
+        <p>はじめに・全7章・おわりにで構成</p>
+      </div>
+      <div class="toc-list">
+        <div class="toc-item reveal">
+          <div class="toc-num">はじめに</div>
+          <div><h3>あなたの人生には、人間関係の地図がありますか？</h3><p>「頑張っているのに疲れる」原因は性格でも能力でもなく、地図を持っていないことだと提示する</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第1章</div>
+          <div><h3>なぜ人間関係は疲れるのか</h3><p>距離感のズレ、期待のズレ、役割のズレという3つのズレ構造／「いい人」であろうとするほど地図を持てなくなる逆説</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第2章</div>
+          <div><h3>人間関係には地図がある</h3><p>近い・遠い×深い・浅いという4軸で関係を可視化する／「能力」ではなく「配置」の問題だと捉え直す</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第3章</div>
+          <div><h3>あなたの現在地を診断する</h3><p>20問診断チェックリスト／尽くし型・我慢型・迎合型・孤立型・健全型の5タイプ判定</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第4章</div>
+          <div><h3>7つの地図をつくる（本書の中核）</h3><p>距離／境界線／エネルギー／信頼／期待／感情の交通整理／出口――7つの地図を一つずつ描いていく</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第5章</div>
+          <div><h3>距離を整える7つの技術</h3><p>NOと言う・頼る・断る・期待を調整する・境界線を引く・離れる勇気を持つ・許す。今日から使える一言スクリプト付き</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第6章</div>
+          <div><h3>ケース別・人間関係の整理地図</h3><p>職場・夫婦／パートナー・親子・友人・恋愛・SNS・ママ友、それぞれの地図の当てはめ方</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第7章</div>
+          <div><h3>人間関係は、何度でも整理できる</h3><p>地図は一度描いたら終わりではなく、更新し続けるもの／人生は、誰と歩くかで決まる</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">おわりに</div>
+          <div><h3>あなたの地図を広げよう</h3><p>著者からの一言メッセージと、シリーズ次巻への橋渡し</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 techniques -->
+  <section id="techniques" style="background: rgba(15, 23, 42, 0.4);">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">7 Techniques</span>
+        <h2>距離を整える7つの技術</h2>
+        <p>今日から使える一言スクリプト付き。読むだけでなく、使うための実践パート</p>
+      </div>
+      <div class="cycle-wrap">
+        <div class="cycle-step reveal">
+          <div class="cycle-step-num">01</div>
+          <div><h3>NOと言う技術</h3><p>断ることは、関係を壊すことではないと知る。</p></div>
+        </div>
+        <div class="cycle-step reveal">
+          <div class="cycle-step-num">02</div>
+          <div><h3>頼る技術</h3><p>一人で抱え込まず、適切な相手に委ねる。</p></div>
+        </div>
+        <div class="cycle-step reveal">
+          <div class="cycle-step-num">03</div>
+          <div><h3>断る技術</h3><p>相手を傷つけずに、境界線を伝える言い方を持つ。</p></div>
+        </div>
+        <div class="cycle-step reveal">
+          <div class="cycle-step-num">04</div>
+          <div><h3>期待を調整する技術</h3><p>期待しすぎず、期待されすぎない関係を設計する。</p></div>
+        </div>
+        <div class="cycle-step reveal">
+          <div class="cycle-step-num">05</div>
+          <div><h3>境界線を引く技術</h3><p>「ここから先は相手、ここから先は自分」を明確にする。</p></div>
+        </div>
+        <div class="cycle-step reveal">
+          <div class="cycle-step-num">06</div>
+          <div><h3>離れる勇気を持つ技術</h3><p>距離を置くことへの罪悪感を手放す。</p></div>
+        </div>
+        <div class="cycle-step reveal">
+          <div class="cycle-step-num">07</div>
+          <div><h3>許す技術</h3><p>関係を終わらせても、自分の中で整理をつける。</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Case studies -->
+  <section id="cases">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Case Studies</span>
+        <h2>ケース別・人間関係の整理地図</h2>
+        <p>7つの地図と出口の選び方を、身近なシーンに当てはめる</p>
+      </div>
+      <div class="grid-4">
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="briefcase"></i></div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.6rem;">職場</h3>
+          <p style="color:var(--text-sub); font-size:0.88rem;">上司・部下・同僚との板挟みで消耗しないための距離設計。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="heart"></i></div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.6rem;">夫婦・パートナー</h3>
+          <p style="color:var(--text-sub); font-size:0.88rem;">近すぎる関係にも、適正な距離が必要だと知る。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="home"></i></div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.6rem;">親子</h3>
+          <p style="color:var(--text-sub); font-size:0.88rem;">毒親・過干渉・介護期――親子だからこそ難しい境界線。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="users"></i></div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.6rem;">友人</h3>
+          <p style="color:var(--text-sub); font-size:0.88rem;">マウント・疎遠・腐れ縁。友情にも出口を用意していい。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="heart-crack"></i></div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.6rem;">恋愛</h3>
+          <p style="color:var(--text-sub); font-size:0.88rem;">依存・執着・距離を置くべきサインを見極める。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="smartphone"></i></div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.6rem;">SNS</h3>
+          <p style="color:var(--text-sub); font-size:0.88rem;">比較疲れ・既読スルー・フォロワー疲れとの付き合い方。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="baby"></i></div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.6rem;">ママ友・近所付き合い</h3>
+          <p style="color:var(--text-sub); font-size:0.88rem;">避けられない付き合いの中で、無理をしない距離をつくる。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Series -->
+  <section id="series" style="background: rgba(15, 23, 42, 0.4);">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Series</span>
+        <h2>「整理地図」シリーズ</h2>
+        <p>駅・路線・交差点・分岐・目的地――全巻共通の「地図言語」でつながるシリーズ</p>
+      </div>
+      <div class="series-note reveal">
+        <p>第1巻『心の整理地図』（自分を知る）に続く、シリーズ第2巻。第3巻以降は思考・不安・怒り・仕事・人生と続く予定です。</p>
+        <a href="LP_心の整理地図.html" class="btn btn-outline">
+          <i data-lucide="compass" style="width:18px;height:18px;"></i>
+          シリーズ第1巻『心の整理地図』を見る
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Author -->
+  <section id="author">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Author</span>
+        <h2>著者について</h2>
+      </div>
+      <div class="author-wrap reveal">
+        <div class="author-badge">たけ＠<br>モダンロジック</div>
+        <div>
+          <h3 class="author-name">たけ＠モダンロジック</h3>
+          <span class="author-role">『人間関係の整理地図』著者 ／ ブランディング・組織開発・キャリアコンサルタント</span>
+          <p style="color:var(--text-sub); font-size:0.95rem;">
+            イオンネクスト、イオントップバリュ ブランドマネジメント部部長、デイモンワールドワイドジャパン、インターブランド／ランドーアソシエイツを経て、大企業レベルの経営戦略と組織変革を中小企業に伴走支援。
+            企業のブランディングや組織開発で人と人との関係性を設計してきた経験と、心理学・ナビゲーション理論を組み合わせ、人間関係を「能力」でなく「地図」として扱う独自フレームワーク「7つの地図」を提唱し、本書にまとめた。
+          </p>
+          <ul class="author-list">
+            <li><span>•</span>E-MBA 経営管理学修士 / 経済学士</li>
+            <li><span>•</span>国家資格キャリアコンサルタント登録</li>
+            <li><span>•</span>大阪商工会議所 メンタルヘルス・マネジメント2種検定</li>
+            <li><span>•</span>東北大学主催 産学連携教育イノベーター育成プログラム 修了</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section id="cta">
+    <div class="container">
+      <div class="glass-card cta-card reveal">
+        <span class="hero-tag" style="margin-bottom:1.5rem;">Get Started</span>
+        <h2>人間関係に「正解」はない。<br>あるのは、あなたにとっての適正距離だけだ。</h2>
+        <p>
+          本書を読み終えたとき、あなたはもう、人間関係に振り回される側ではなくなっている。20問の診断チェックリストと7つの地図、7つの実践技術、書き込めるワークシート付き。<br>
+          さあ、あなたの地図を広げましょう。
+        </p>
+        <div class="hero-actions" style="justify-content:center;">
+          <a href="https://www.amazon.co.jp/dp/B0HF7KBPMN" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            <i data-lucide="book-open" style="width:20px;height:20px;"></i>
+            Amazonで『人間関係の整理地図』を探す
+          </a>
+          <a href="LP_心の整理地図.html" class="btn btn-outline">
+            <i data-lucide="compass" style="width:20px;height:20px;"></i>
+            シリーズ第1巻を見る
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="logo" style="font-size:0.95rem;">人間関係の整理地図<span>。</span></div>
+    <a href="../index.html" class="nav-link">← サイトトップへ戻る</a>
+    <div>著者：たけ＠モダンロジック　© たけ＠モダンロジック All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  lucide.createIcons();
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('reveal-active');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { root: null, threshold: 0.1, rootMargin: "0px" });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const targetId = this.getAttribute('href');
+      if (targetId === '#' || !document.querySelector(targetId)) return;
+      e.preventDefault();
+      window.scrollTo({ top: document.querySelector(targetId).offsetTop - 80, behavior: 'smooth' });
+    });
+  });
+
+  window.addEventListener('scroll', () => {
+    const header = document.querySelector('header');
+    if (window.scrollY > 50) {
+      header.style.padding = '0.9rem 0';
+      header.style.boxShadow = '0 10px 40px rgba(0,0,0,0.5)';
+    } else {
+      header.style.padding = '1.5rem 0';
+      header.style.boxShadow = 'none';
+    }
+  });
+</script>
+</body>
+</html>
