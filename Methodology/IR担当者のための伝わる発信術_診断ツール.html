@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="『IR担当者のための伝わる発信術』の独自診断ツール「IR Readability Score」を無料で体験。8つの軸×5段階、40点満点で自社の決算説明資料をその場で自己採点できます。">
+<title>IR Readability Score 自己診断</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Outfit:wght@400;500;600;700;800&family=Shippori+Mincho:wght@500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root {
+  --primary: #0f172a;
+  --accent: #d4af37;
+  --accent-glow: rgba(212, 175, 55, 0.4);
+  --accent2: #38bdf8;
+  --text-main: #f8fafc;
+  --text-sub: #94a3b8;
+  --text-faint: #64748b;
+  --bg-dark: #020617;
+  --glass-bg: rgba(15, 23, 42, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --track: rgba(212, 175, 55, 0.14);
+  --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  line-height: 1.8;
+}
+
+.bg-mesh {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(15, 23, 42, 0.85) 0%, transparent 40%),
+    radial-gradient(circle at 90% 90%, rgba(30, 41, 59, 0.85) 0%, transparent 40%),
+    rgba(2, 6, 23, 1);
+}
+
+h1, h2, h3 { font-family: 'Shippori Mincho', serif; font-weight: 700; letter-spacing: -0.01em; }
+
+.container { max-width: 880px; margin: 0 auto; padding: 0 1.5rem; }
+
+/* Header */
+header {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--glass-border);
+  padding: 1.1rem 0;
+}
+header .container { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.logo { font-family: 'Shippori Mincho', serif; font-size: 1rem; font-weight: 800; color: var(--text-main); text-decoration: none; white-space: nowrap; }
+.logo span { color: var(--accent); }
+.back-link { color: var(--text-sub); text-decoration: none; font-size: 0.85rem; }
+.back-link:hover { color: var(--accent); }
+
+/* Hero */
+.tool-hero { padding: 4rem 0 2.5rem; text-align: center; }
+.hero-tag {
+  display: inline-block; padding: 0.5rem 1.1rem;
+  background: var(--glass-border); border: 1px solid var(--accent); color: var(--accent);
+  border-radius: 50px; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.05em; margin-bottom: 1.5rem;
+}
+.tool-hero h1 { font-size: 2rem; line-height: 1.5; margin-bottom: 1rem; text-wrap: balance; }
+.tool-hero p { color: var(--text-sub); max-width: 60ch; margin: 0 auto; font-size: 0.98rem; }
+
+/* Rubric legend */
+.rubric {
+  background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 16px;
+  padding: 1.6rem 1.8rem; margin: 2.5rem 0; backdrop-filter: blur(5px);
+}
+.rubric h2 { font-size: 0.95rem; margin-bottom: 1rem; color: var(--text-main); }
+.rubric ol { list-style: none; display: grid; gap: 0.55rem; counter-reset: lv; }
+.rubric li { display: flex; gap: 0.7rem; font-size: 0.86rem; color: var(--text-sub); align-items: baseline; }
+.rubric li b {
+  font-family: 'Outfit', sans-serif; color: var(--accent); font-weight: 700; flex-shrink: 0;
+  width: 3.4rem;
+}
+
+/* Score summary */
+.summary {
+  display: grid; grid-template-columns: auto 1fr; gap: 2.2rem; align-items: center;
+  background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 20px;
+  padding: 2.2rem 2rem; margin-bottom: 2.5rem; backdrop-filter: blur(5px);
+  position: sticky; top: 72px; z-index: 50;
+}
+.summary-figure { text-align: center; }
+.summary-figure .value {
+  font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 3rem; line-height: 1;
+  color: var(--text-main);
+}
+.summary-figure .value span { color: var(--accent); }
+.summary-figure .max { font-family: 'Outfit', sans-serif; font-size: 0.8rem; color: var(--text-sub); margin-top: 0.3rem; }
+.summary-meter { display: flex; flex-direction: column; gap: 0.5rem; }
+.summary-meter .label { font-size: 0.8rem; color: var(--text-sub); }
+.summary-track {
+  height: 14px; border-radius: 7px; background: var(--track); overflow: hidden;
+}
+.summary-fill {
+  height: 100%; border-radius: 7px; background: linear-gradient(90deg, var(--accent), #fde68a);
+  width: 0%; transition: width 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+.summary-status { font-size: 0.82rem; color: var(--text-sub); margin-top: 0.2rem; }
+
+@media (max-width: 640px) {
+  .summary { grid-template-columns: 1fr; text-align: center; position: static; }
+}
+
+/* Axis blocks */
+.axes { display: grid; gap: 1.1rem; margin-bottom: 3rem; }
+.axis {
+  background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 16px;
+  padding: 1.6rem 1.8rem; transition: var(--transition);
+}
+.axis.filled { border-color: rgba(212,175,55,0.35); }
+.axis-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 0.9rem; flex-wrap: wrap; }
+.axis-name-wrap { display: flex; align-items: center; gap: 0.7rem; }
+.axis-icon {
+  width: 38px; height: 38px; border-radius: 10px; background: var(--glass-border);
+  display: flex; align-items: center; justify-content: center; color: var(--accent); flex-shrink: 0;
+}
+.axis-name { font-size: 1.05rem; font-weight: 700; }
+.axis-en { font-family: 'Outfit', sans-serif; font-size: 0.7rem; letter-spacing: 0.1em; color: var(--text-faint); text-transform: uppercase; }
+.axis-score-label { font-family: 'Outfit', sans-serif; font-size: 0.85rem; color: var(--text-sub); white-space: nowrap; }
+.axis-score-label b { color: var(--accent); font-size: 1rem; }
+
+.axis-desc { font-size: 0.86rem; color: var(--text-sub); margin-bottom: 1.1rem; line-height: 1.75; }
+.axis-desc b { color: var(--text-main); font-weight: 600; }
+
+.axis-track { height: 10px; border-radius: 5px; background: var(--track); overflow: hidden; margin-bottom: 1rem; }
+.axis-fill { height: 100%; border-radius: 5px; background: var(--accent); width: 0%; transition: width 0.35s cubic-bezier(0.16,1,0.3,1); }
+
+.lv-buttons { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5rem; }
+.lv-btn {
+  padding: 0.6rem 0.4rem; border-radius: 9px; border: 1px solid var(--glass-border);
+  background: rgba(255,255,255,0.03); color: var(--text-sub);
+  font-family: 'Outfit', sans-serif; font-size: 0.82rem; font-weight: 600; cursor: pointer;
+  transition: var(--transition);
+}
+.lv-btn:hover { border-color: var(--accent2); color: var(--accent2); }
+.lv-btn.active { background: var(--accent); border-color: var(--accent); color: #000; }
+
+/* Priority panel */
+#priority { margin-bottom: 3rem; }
+.priority-empty { color: var(--text-sub); font-size: 0.9rem; text-align: center; padding: 2rem 0; }
+.priority-item {
+  display: grid; grid-template-columns: 2.2rem 1fr; gap: 1rem; padding: 1.1rem 0;
+  border-bottom: 1px solid var(--glass-border);
+}
+.priority-item:last-child { border-bottom: none; }
+.priority-rank { font-family: 'Outfit', sans-serif; font-weight: 700; color: var(--accent); font-size: 1.1rem; }
+.priority-item h3 { font-size: 0.98rem; margin-bottom: 0.3rem; }
+.priority-item .score-tag { font-family: 'Outfit', sans-serif; font-size: 0.78rem; color: var(--text-faint); margin-left: 0.5rem; }
+.priority-item p { font-size: 0.86rem; color: var(--text-sub); }
+
+.section-title { text-align: center; margin-bottom: 1.6rem; }
+.section-title h2 { font-size: 1.4rem; }
+.section-title p { color: var(--text-sub); font-size: 0.9rem; margin-top: 0.4rem; }
+
+/* Actions */
+.tool-actions { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; margin-bottom: 4rem; }
+.btn {
+  display: inline-flex; align-items: center; gap: 0.55rem; padding: 0.85rem 1.6rem;
+  border-radius: 10px; font-weight: 700; text-decoration: none; font-size: 0.88rem;
+  cursor: pointer; border: none; transition: var(--transition);
+}
+.btn-primary { background: var(--accent); color: #000; box-shadow: 0 8px 24px var(--accent-glow); }
+.btn-primary:hover { transform: translateY(-3px); }
+.btn-ghost { background: transparent; border: 1px solid var(--glass-border); color: var(--text-sub); }
+.btn-ghost:hover { border-color: #ef4444; color: #ef4444; }
+
+.privacy-note { text-align: center; color: var(--text-faint); font-size: 0.78rem; margin: -2.5rem 0 3rem; }
+
+footer { border-top: 1px solid var(--glass-border); padding: 2.5rem 0; margin-top: 2rem; }
+footer .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 0.82rem; color: var(--text-sub); }
+</style>
+</head>
+<body>
+<div class="bg-mesh"></div>
+
+<header>
+  <div class="container">
+    <a href="IR担当者のための伝わる発信術LP.html" class="logo">伝わる発信術<span>。</span></a>
+    <a href="IR担当者のための伝わる発信術LP.html" class="back-link">← 本の詳細に戻る</a>
+  </div>
+</header>
+
+<div class="tool-hero container">
+  <span class="hero-tag">IR Readability Score</span>
+  <h1>自社の決算説明資料を、<br>8つの物差しで自己診断する</h1>
+  <p>『IR担当者のための伝わる発信術』の独自診断ツールを、そのまま体験できます。各軸を5段階で評価すると、40点満点のスコアと、直すべき優先順位がその場で分かります。</p>
+</div>
+
+<div class="container">
+
+  <div class="rubric">
+    <h2>評価の目安（5段階共通のものさし）</h2>
+    <ol>
+      <li><b>Lv.1</b>該当要素が見当たらない</li>
+      <li><b>Lv.2</b>部分的に機能している</li>
+      <li><b>Lv.3</b>一貫して使われている</li>
+      <li><b>Lv.4</b>投資家の反応で効果が確認できる</li>
+      <li><b>Lv.5</b>型として毎回再現できる</li>
+    </ol>
+  </div>
+
+  <div class="summary">
+    <div class="summary-figure">
+      <div class="value" id="totalValue"><span id="totalNum">0</span></div>
+      <div class="max">／ 40点満点</div>
+    </div>
+    <div class="summary-meter">
+      <div class="label">総合スコア</div>
+      <div class="summary-track"><div class="summary-fill" id="summaryFill"></div></div>
+      <div class="summary-status" id="summaryStatus">8つの軸を、下から採点してみてください</div>
+    </div>
+  </div>
+
+  <div class="axes" id="axes"></div>
+
+  <div id="priority">
+    <div class="section-title">
+      <h2>ここから直すと、効果が大きい</h2>
+      <p>スコアの低い軸から順に表示します（本書 第6章「優先順位のつけ方」より）</p>
+    </div>
+    <div class="glass-card" style="background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:16px; padding:0.5rem 1.8rem;">
+      <div id="priorityList"></div>
+    </div>
+  </div>
+
+  <div class="tool-actions">
+    <a href="https://www.amazon.co.jp/dp/XXXXXXXXXX" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+      <i data-lucide="book-open" style="width:18px;height:18px;"></i>
+      本編で8つの軸を詳しく読む
+    </a>
+    <button class="btn btn-ghost" id="resetBtn">
+      <i data-lucide="rotate-ccw" style="width:16px;height:16px;"></i>
+      採点をリセット
+    </button>
+  </div>
+  <p class="privacy-note">入力内容はこの端末のブラウザ内にのみ保存され、どこにも送信されません。</p>
+
+</div>
+
+<footer>
+  <div class="container">
+    <div class="logo" style="font-size:0.92rem;">伝わる発信術<span>。</span></div>
+    <a href="IR担当者のための伝わる発信術LP.html" class="back-link">← 本の詳細へ戻る</a>
+    <div>著者：たけ@モダンロジック</div>
+  </div>
+</footer>
+
+<script>
+const AXES = [
+  { id: 'focus', name: '一点集中', en: 'FOCUS', icon: 'target',
+    desc: '<b>満点の目安：</b>資料の1〜2枚目に「今回伝えたいことは3つ」という形で明示され、説明会の冒頭でも質疑でも繰り返し参照される。',
+    tips: {1:'まず「今回、絶対に削れない一文」を1つだけ選び出すところから始める', 2:'伝えたいメッセージを1〜3個まで絞り込み、資料の冒頭に明示する', 3:'そのメッセージが説明会の冒頭や質疑でも繰り返し参照される状態を目指す', 4:'次回以降も同じ絞り込みを再現できる型として定着させる'} },
+  { id: 'consistency', name: '一貫性', en: 'CONSISTENCY', icon: 'link-2',
+    desc: '<b>満点の目安：</b>前回の開示内容への言及が定型的に組み込まれ、投資家が過去の資料を見返さなくても「続き」として読める。',
+    tips: {1:'前回開示した課題を、今回の資料のどこかに一言でも書き足す', 2:'「前回の課題→今回の実績→今後」の3点セットを毎回同じ位置に置く', 3:'この3点セットを、決算のたびに定型的に組み込む運用にする', 4:'投資家が過去資料を見返さなくても続きとして読める状態に磨き込む'} },
+  { id: 'kpi', name: 'KPI接続', en: 'KPI LINK', icon: 'trending-up',
+    desc: '<b>満点の目安：</b>KPIの数字の隣に、そのKPIが1ポイント改善すると利益にどう影響するかが、定量的・構造的に説明されている。',
+    tips: {1:'主要KPIを1つ選び、それが何の利益・成長ドライバーと関係するか一文で書く', 2:'すべての主要KPIに、利益との関係を示す一文を添える', 3:'KPIと利益の関係を、毎回同じフォーマットで説明する', 4:'定量的な影響度（1ポイント改善で◯◯円等）まで示せる状態を目指す'} },
+  { id: 'risk', name: 'リスク開示', en: 'RISK', icon: 'shield',
+    desc: '<b>満点の目安：</b>主要なリスクごとに具体的な打ち手が対で記載され、リスク開示が経営の解像度の高さとして評価されている。',
+    tips: {1:'資料内で最も重要なリスクを1つだけでも明示的に書く', 2:'主要リスクそれぞれに、対応する打ち手を対で書き足す', 3:'ポジティブ情報とリスク情報のバランスを、毎回同じ基準で保つ', 4:'リスク開示が投資家からむしろ信頼材料として評価される状態を目指す'} },
+  { id: 'clarity', name: '明快さ', en: 'CLARITY', icon: 'lightbulb',
+    desc: '<b>満点の目安：</b>業界特有の略語や指標が登場するたびに、括弧書きや脚注で簡潔な説明が添えられている。',
+    tips: {1:'資料内で最も頻出する専門用語を1つ選び、注釈を付ける', 2:'主要な専門用語・略語すべてに括弧書きの説明を添える', 3:'新しい用語が出るたびに注釈を付けるルールを徹底する', 4:'専門知識のない読者でも文脈を見失わずに読み進められる状態を目指す'} },
+  { id: 'summary', name: '要約力', en: 'SUMMARY', icon: 'file-text',
+    desc: '<b>満点の目安：</b>エグゼクティブサマリーだけを読んだ投資家が、詳細を読まなくてもその回の要点をおおむね把握できる。',
+    tips: {1:'資料の冒頭に、実績値だけでも1枚のサマリーを追加する', 2:'実績値・進捗率・重要な経営判断をサマリーに含める', 3:'サマリーを毎回同じフォーマットで冒頭に置く運用にする', 4:'サマリーだけで要点が伝わるレベルまで磨き込む'} },
+  { id: 'volume', name: '適正分量', en: 'VOLUME', icon: 'pie-chart',
+    desc: '<b>満点の目安：</b>必要な情報を削らずに、投資家が読み切れる分量（目安20〜40ページ）に収まっている。',
+    tips: {1:'現在の資料のページ数を数え、60ページを超えていないか確認する', 2:'他の7軸を機能させながら、削れるページを洗い出す', 3:'20〜40ページを目安に、毎回同じ基準で分量を調整する', 4:'必要な情報を削らずに適正分量へ収める型を確立する'} },
+  { id: 'esg', name: '非財務接続', en: 'ESG LINK', icon: 'users',
+    desc: '<b>満点の目安：</b>非財務指標が中期経営計画のKPIと同じページ・同じ文脈で語られ、財務と非財務が一つの企業価値の物語として読める。',
+    tips: {1:'ESG・人的資本の取り組みを1つ選び、事業戦略との関係を一文で書く', 2:'非財務指標を財務KPIの近くに配置し直す', 3:'非財務指標を財務KPIと同じ文脈で語ることを毎回のルールにする', 4:'財務と非財務が一つの企業価値の物語として読める構成に磨き込む'} },
+];
+
+const LV_LABELS = { 1:'Lv.1', 2:'Lv.2', 3:'Lv.3', 4:'Lv.4', 5:'Lv.5' };
+const STORAGE_KEY = 'ir-readability-score-v1';
+
+let scores = {};
+try {
+  const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+  scores = saved;
+} catch (e) { scores = {}; }
+
+const axesEl = document.getElementById('axes');
+
+function renderAxes() {
+  axesEl.innerHTML = AXES.map(ax => {
+    const score = scores[ax.id] || 0;
+    const pct = (score / 5) * 100;
+    const btns = [1,2,3,4,5].map(n =>
+      `<button class="lv-btn${score === n ? ' active' : ''}" data-axis="${ax.id}" data-score="${n}">${LV_LABELS[n]}</button>`
+    ).join('');
+    return `
+    <div class="axis${score ? ' filled' : ''}" id="axis-${ax.id}">
+      <div class="axis-head">
+        <div class="axis-name-wrap">
+          <div class="axis-icon"><i data-lucide="${ax.icon}" style="width:18px;height:18px;"></i></div>
+          <div>
+            <div class="axis-name">${ax.name}</div>
+            <div class="axis-en">${ax.en}</div>
+          </div>
+        </div>
+        <div class="axis-score-label">${score ? `<b>${score}</b> / 5` : '未評価'}</div>
+      </div>
+      <p class="axis-desc">${ax.desc}</p>
+      <div class="axis-track"><div class="axis-fill" style="width:${pct}%"></div></div>
+      <div class="lv-buttons">${btns}</div>
+    </div>`;
+  }).join('');
+  lucide.createIcons();
+}
+
+function total() {
+  return AXES.reduce((sum, ax) => sum + (scores[ax.id] || 0), 0);
+}
+
+function renderSummary() {
+  const t = total();
+  document.getElementById('totalNum').textContent = t;
+  document.getElementById('summaryFill').style.width = (t / 40 * 100) + '%';
+  const answered = AXES.filter(ax => scores[ax.id]).length;
+  const statusEl = document.getElementById('summaryStatus');
+  if (answered === 0) {
+    statusEl.textContent = '8つの軸を、下から採点してみてください';
+  } else if (answered < 8) {
+    statusEl.textContent = `${answered} / 8 軸を採点済み。残り ${8 - answered} 軸を評価すると、優先順位が確定します`;
+  } else if (t >= 36) {
+    statusEl.textContent = '高スコアです。型として再現できているかを次の決算でも確認してみてください';
+  } else if (t >= 24) {
+    statusEl.textContent = '及第点です。下の「ここから直すと効果が大きい」から着手箇所を確認してください';
+  } else {
+    statusEl.textContent = 'まだ伸びしろがあります。スコアの低い軸から、1つずつ直していきましょう';
+  }
+}
+
+function renderPriority() {
+  const answered = AXES.filter(ax => scores[ax.id]);
+  const listEl = document.getElementById('priorityList');
+  if (answered.length < 8) {
+    listEl.innerHTML = `<div class="priority-empty">8つの軸すべてを採点すると、直すべき優先順位がここに表示されます</div>`;
+    return;
+  }
+  const sorted = [...AXES].sort((a, b) => (scores[a.id] || 0) - (scores[b.id] || 0));
+  listEl.innerHTML = sorted.map((ax, i) => {
+    const s = scores[ax.id];
+    const tip = ax.tips[s] || ax.tips[1];
+    return `
+    <div class="priority-item">
+      <div class="priority-rank">${i + 1}</div>
+      <div>
+        <h3>${ax.name}<span class="score-tag">${s} / 5</span></h3>
+        <p>${tip}</p>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderAll() {
+  renderAxes();
+  renderSummary();
+  renderPriority();
+}
+
+function save() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(scores));
+}
+
+axesEl.addEventListener('click', (e) => {
+  const btn = e.target.closest('.lv-btn');
+  if (!btn) return;
+  const axisId = btn.dataset.axis;
+  const score = Number(btn.dataset.score);
+  scores[axisId] = scores[axisId] === score ? score : score;
+  save();
+  renderAll();
+});
+
+document.getElementById('resetBtn').addEventListener('click', () => {
+  if (!confirm('採点をすべてリセットしますか？')) return;
+  scores = {};
+  save();
+  renderAll();
+});
+
+renderAll();
+</script>
+</body>
+</html>
