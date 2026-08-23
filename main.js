@@ -57,6 +57,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // Navbar background shift on scroll
 window.addEventListener('scroll', () => {
   const header = document.querySelector('header');
+  if (!header) return;
   if (window.scrollY > 50) {
     header.style.padding = '0.8rem 0';
     header.style.boxShadow = '0 10px 40px rgba(0,0,0,0.5)';

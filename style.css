@@ -175,167 +175,6 @@ nav {
   padding: 0;
 }
 
-/* Hero Signature — "state transition" diagram */
-.hero-signature {
-  position: absolute;
-  top: 50%;
-  right: 2%;
-  transform: translateY(-50%);
-  width: 66%;
-  height: 90%;
-  z-index: 1;
-  pointer-events: none;
-  mask-image: linear-gradient(to left, black 42%, transparent 90%);
-  -webkit-mask-image: linear-gradient(to left, black 42%, transparent 90%);
-}
-
-.hero-signature svg {
-  width: 100%;
-  height: 100%;
-  display: block;
-  overflow: visible;
-}
-
-.hero-grid-lines line {
-  stroke: var(--text-sub);
-  stroke-opacity: 0.12;
-  stroke-width: 1;
-}
-
-.state-edge {
-  stroke: var(--accent);
-  stroke-width: 2;
-  opacity: 0.75;
-  filter: drop-shadow(0 0 3px var(--accent-glow));
-}
-
-.state-link {
-  stroke: var(--accent);
-  stroke-width: 1.2;
-  opacity: 0.3;
-}
-
-.state-node {
-  fill: var(--accent);
-  opacity: 0.9;
-  filter: drop-shadow(0 0 4px var(--accent-glow));
-}
-
-.transition-dot {
-  fill: var(--accent);
-  opacity: 0.95;
-  filter: drop-shadow(0 0 10px var(--accent-glow));
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
-.link-dot {
-  fill: var(--accent);
-  opacity: 0.7;
-  filter: drop-shadow(0 0 6px var(--accent-glow));
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
-.node-core {
-  fill: var(--accent);
-  filter: drop-shadow(0 0 6px var(--accent-glow));
-}
-
-.node-core-glow {
-  fill: var(--accent);
-  opacity: 0.55;
-  filter: blur(14px);
-}
-
-.node-ring {
-  fill: none;
-  stroke: var(--accent);
-  stroke-width: 2;
-  opacity: 0.6;
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .state-edge {
-    stroke-dasharray: 1;
-    stroke-dashoffset: 1;
-    animation: drawLine 1.1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-  .hero-state-edges .state-edge:nth-of-type(1) { animation-delay: 0.5s; }
-  .hero-state-edges .state-edge:nth-of-type(2) { animation-delay: 0.62s; }
-  .hero-state-edges .state-edge:nth-of-type(3) { animation-delay: 0.74s; }
-  .hero-state-edges .state-edge:nth-of-type(4) { animation-delay: 0.86s; }
-  .hero-state-edges .state-edge:nth-of-type(5) { animation-delay: 0.98s; }
-  .hero-state-edges .state-edge:nth-of-type(6) { animation-delay: 1.1s; }
-
-  .state-link {
-    opacity: 0;
-    animation: linkIn 0.8s ease forwards;
-  }
-  .hero-state-links .state-link:nth-of-type(1) { animation-delay: 1.3s; }
-  .hero-state-links .state-link:nth-of-type(2) { animation-delay: 1.45s; }
-  .hero-state-links .state-link:nth-of-type(3) { animation-delay: 1.6s; }
-
-  .state-node {
-    opacity: 0;
-    animation: seedIn 0.6s ease forwards;
-  }
-  .hero-state-nodes .state-node:nth-of-type(1) { animation-delay: 0.5s; }
-  .hero-state-nodes .state-node:nth-of-type(2) { animation-delay: 0.62s; }
-  .hero-state-nodes .state-node:nth-of-type(3) { animation-delay: 0.74s; }
-  .hero-state-nodes .state-node:nth-of-type(4) { animation-delay: 0.86s; }
-  .hero-state-nodes .state-node:nth-of-type(5) { animation-delay: 0.98s; }
-  .hero-state-nodes .state-node:nth-of-type(6) { animation-delay: 1.1s; }
-
-  .node-core-glow {
-    opacity: 0;
-    animation: coreGlow 2s ease-in-out 1.6s infinite;
-  }
-  .node-ring {
-    opacity: 0;
-    animation: ringPulse 2s ease-out 1.6s infinite;
-  }
-  .node-ring--2 {
-    animation-delay: 2.6s;
-  }
-
-  .transition-dot,
-  .link-dot {
-    animation: dotTwinkle 0.9s ease-in-out 1.8s infinite;
-  }
-  .transition-dot--alt { animation-delay: 2.1s; }
-  .transition-dot--alt2 { animation-delay: 2.4s; }
-}
-
-@keyframes drawLine {
-  to { stroke-dashoffset: 0; }
-}
-
-@keyframes linkIn {
-  to { opacity: 0.3; }
-}
-
-@keyframes seedIn {
-  to { opacity: 0.9; }
-}
-
-@keyframes ringPulse {
-  0% { transform: scale(0.5); opacity: 0.7; }
-  70%, 100% { transform: scale(2.2); opacity: 0; }
-}
-
-@keyframes coreGlow {
-  0%, 100% { opacity: 0.4; filter: blur(12px); }
-  50% { opacity: 0.85; filter: blur(22px); }
-}
-
-@keyframes dotTwinkle {
-  0%, 100% { opacity: 0.4; transform: scale(0.85); }
-  50% { opacity: 1; transform: scale(1.3); }
-}
-
 /* Buttons */
 .btn {
   display: inline-flex;
@@ -635,6 +474,30 @@ nav {
   display: block;
 }
 
+/* Hero Office Image + Hotspots */
+.hero-image{
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 30px 70px rgba(0,0,0,0.55);
+}
+.hero-image img{
+  width: 100%;
+  display: block;
+}
+.room-hotspot{
+  position: absolute;
+  border-radius: 10px;
+  transition: var(--transition);
+}
+.room-hotspot:hover,
+.room-hotspot:focus-visible{
+  background: rgba(212, 175, 55, 0.12);
+  box-shadow: inset 0 0 0 2px var(--accent);
+  outline: none;
+}
+
 /* Animations */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(30px); }
@@ -651,13 +514,6 @@ nav {
   .hero-title { font-size: 3rem; }
   .hero--home .hero-title { font-size: 2.6rem; }
   .hero-lede { font-size: 1.25rem; }
-  .hero-signature {
-    opacity: 0.25;
-    width: 100%;
-    right: 0;
-    mask-image: linear-gradient(to bottom, black 25%, transparent 85%);
-    -webkit-mask-image: linear-gradient(to bottom, black 25%, transparent 85%);
-  }
   .nav-links { display: none; }
 }
 
