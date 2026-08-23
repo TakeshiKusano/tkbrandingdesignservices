@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="『IR担当者のための伝わる発信術』Kindleにて発売。良い数字を並べても、伝わるとは限らない。独自診断ツール「IR Readability Score」を初公開し、決算説明資料を8つの物差しで自己診断する実践書。">
+<title>IR担当者のための伝わる発信術</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Noto+Sans+JP:wght@400;500;700&family=Outfit:wght@400;600;800&family=Shippori+Mincho:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root {
+  --primary: #0f172a;
+  --accent: #d4af37;
+  --accent-glow: rgba(212, 175, 55, 0.4);
+  --accent2: #38bdf8;
+  --accent2-glow: rgba(56, 189, 248, 0.35);
+  --text-main: #f8fafc;
+  --text-sub: #94a3b8;
+  --bg-dark: #020617;
+  --glass-bg: rgba(15, 23, 42, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --card-bg: #1e293b;
+  --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Noto Sans JP', 'Shippori Mincho', serif;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  line-height: 1.85;
+  overflow-x: hidden;
+}
+
+.bg-mesh {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(15, 23, 42, 0.8) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(30, 41, 59, 0.8) 0%, transparent 40%),
+    rgba(2, 6, 23, 1);
+}
+
+h1, h2, h3 {
+  font-family: 'Shippori Mincho', serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.title-accent {
+  background: linear-gradient(90deg, #d4af37, #fde68a);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.title-accent2 {
+  background: linear-gradient(90deg, #38bdf8, #bae6fd);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+section { padding: 100px 0; }
+
+/* Header */
+header {
+  position: fixed; top: 0; left: 0; width: 100%;
+  padding: 1.5rem 0;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  z-index: 1000;
+  border-bottom: 1px solid var(--glass-border);
+  transition: var(--transition);
+}
+nav { display: flex; justify-content: space-between; align-items: center; }
+.logo {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 1.05rem; font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--text-main);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-link {
+  color: var(--text-sub); text-decoration: none;
+  font-size: 0.86rem; font-weight: 500;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+.nav-link:hover { color: var(--accent); }
+.nav-cta {
+  background: var(--accent);
+  color: #000;
+  padding: 0.6rem 1.4rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+.nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 20px var(--accent-glow); }
+
+/* Hero */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  position: relative;
+  padding: 160px 0 100px;
+}
+.hero .container {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 4rem;
+  align-items: center;
+}
+.hero-tag {
+  display: inline-block;
+  padding: 0.5rem 1.1rem;
+  background: var(--glass-border);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.05em;
+}
+.hero-title {
+  font-size: 2.5rem;
+  line-height: 1.5;
+  margin-bottom: 1.2rem;
+}
+.hero-kicker {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-sub);
+  margin-bottom: 2rem;
+  font-family: 'Noto Sans JP', sans-serif;
+  border-left: 3px solid var(--accent2);
+  padding-left: 1rem;
+}
+.hero-subtitle {
+  font-size: 1rem;
+  color: var(--text-sub);
+  max-width: 580px;
+  margin-bottom: 2.5rem;
+}
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+.hero-note { margin-top: 1.2rem; font-size: 0.8rem; color: var(--text-sub); }
+
+.hero-cover {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.hero-cover img {
+  width: 100%;
+  max-width: 340px;
+  border-radius: 10px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px var(--glass-border);
+  transition: var(--transition);
+}
+.hero-cover img:hover { transform: translateY(-8px) rotate(-1deg); }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  padding: 1.1rem 2.2rem;
+  border-radius: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: var(--transition);
+  cursor: pointer;
+  border: none;
+  font-size: 0.95rem;
+}
+.btn-primary {
+  background: var(--accent);
+  color: #000;
+  box-shadow: 0 10px 30px var(--accent-glow);
+}
+.btn-primary:hover { transform: translateY(-4px); box-shadow: 0 15px 40px var(--accent-glow); }
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  color: var(--text-main);
+}
+.btn-outline:hover { border-color: var(--accent2); color: var(--accent2); }
+
+/* Section shared */
+.section-title { text-align: center; margin-bottom: 4.5rem; }
+.section-title h2 { font-size: 2rem; margin-bottom: 1rem; }
+.section-title p { color: var(--text-sub); font-size: 1.05rem; }
+
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 2rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+.grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.75rem; }
+
+.glass-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  padding: 2.4rem;
+  border-radius: 20px;
+  backdrop-filter: blur(5px);
+  transition: var(--transition);
+}
+.glass-card:hover { border-color: var(--accent); transform: translateY(-8px); }
+
+.card-icon {
+  width: 52px; height: 52px;
+  background: var(--glass-border);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.25rem;
+  color: var(--accent);
+}
+
+/* Problem section */
+#problem { background: rgba(15, 23, 42, 0.4); }
+.problem-quote {
+  font-size: 1.05rem;
+  color: var(--text-main);
+  font-style: normal;
+  line-height: 1.9;
+}
+
+/* Concept two-axis */
+.axis-card { position: relative; padding-top: 2.8rem; }
+.axis-card.yoko { border-left: 4px solid var(--accent); }
+.axis-card.tate { border-left: 4px solid var(--accent2); }
+.axis-label {
+  position: absolute; top: 2.4rem; right: 2.4rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem; letter-spacing: 0.1em;
+  color: var(--text-sub);
+  text-transform: uppercase;
+}
+.axis-card h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+.axis-card .sub { color: var(--text-sub); font-size: 0.9rem; margin-bottom: 1.5rem; }
+.axis-card ul { list-style: none; display: grid; gap: 0.75rem; }
+.axis-card ul li { display: flex; gap: 0.6rem; font-size: 0.92rem; color: var(--text-main); }
+.axis-card.yoko ul li span { color: var(--accent); }
+.axis-card.tate ul li span { color: var(--accent2); }
+
+/* Pull quote banner */
+.quote-banner {
+  background: linear-gradient(135deg, rgba(212,175,55,0.08), rgba(56,189,248,0.05));
+  border-top: 1px solid var(--glass-border);
+  border-bottom: 1px solid var(--glass-border);
+  text-align: center;
+}
+.quote-banner p {
+  font-size: 1.4rem;
+  line-height: 1.95;
+  max-width: 780px;
+  margin: 0 auto;
+  font-family: 'Shippori Mincho', serif;
+}
+.quote-banner .source {
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  color: var(--text-sub);
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+/* 8 axes */
+#axes { background: rgba(15, 23, 42, 0.4); }
+.axis-mini { text-align: center; }
+.axis-mini .card-icon { margin: 0 auto 1.25rem; }
+.axis-mini .num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.72rem; letter-spacing: 0.12em;
+  color: var(--accent2); text-transform: uppercase;
+  display: block; margin-bottom: 0.5rem;
+}
+.axis-mini h3 { font-size: 1.05rem; margin-bottom: 0.6rem; }
+.axis-mini p { color: var(--text-sub); font-size: 0.85rem; }
+
+/* For whom */
+.whom-list { display: grid; gap: 1rem; max-width: 760px; margin: 0 auto; }
+.whom-item {
+  display: flex; align-items: flex-start; gap: 1rem;
+  padding: 1.4rem 1.6rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+}
+.whom-item i { color: var(--accent2); flex-shrink: 0; margin-top: 0.15rem; }
+
+/* Contents / timeline */
+.toc-list { max-width: 820px; margin: 0 auto; display: grid; gap: 0; }
+.toc-item {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 1.5rem;
+  padding: 1.6rem 0;
+  border-bottom: 1px solid var(--glass-border);
+}
+.toc-item:last-child { border-bottom: none; }
+.toc-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding-top: 0.2rem;
+}
+.toc-item h3 { font-size: 1.15rem; margin-bottom: 0.5rem; }
+.toc-item p { color: var(--text-sub); font-size: 0.9rem; }
+
+/* Author dual-experience */
+.dual-exp { display: grid; grid-template-columns: 1fr auto 1fr; gap: 2rem; align-items: center; max-width: 900px; margin: 0 auto; }
+.dual-exp .side { text-align: center; }
+.dual-exp .side .label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem; letter-spacing: 0.1em;
+  color: var(--accent2); text-transform: uppercase;
+  display: block; margin-bottom: 0.8rem;
+}
+.dual-exp .side p { color: var(--text-sub); font-size: 0.92rem; }
+.dual-exp .cross { font-family: 'Outfit', sans-serif; font-size: 1.6rem; color: var(--accent); text-align: center; }
+
+/* Final CTA */
+#cta { background: linear-gradient(180deg, transparent, rgba(212, 175, 55, 0.06)); }
+.cta-card { text-align: center; padding: 5rem 2rem; }
+.cta-card h2 { font-size: 2rem; margin-bottom: 1.2rem; }
+.cta-card p { color: var(--text-sub); max-width: 620px; margin: 0 auto 2.5rem; }
+
+footer { border-top: 1px solid var(--glass-border); padding: 3rem 0; }
+footer .container {
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+  font-size: 0.85rem; color: var(--text-sub);
+}
+
+/* Animations */
+.reveal { opacity: 0; transform: translateY(24px); transition: all 0.8s cubic-bezier(0.16,1,0.3,1); }
+.reveal-active { opacity: 1 !important; transform: translateY(0) !important; }
+
+@media (max-width: 992px) {
+  .hero .container { grid-template-columns: 1fr; }
+  .hero-cover { order: -1; }
+  .nav-links { display: none; }
+  .hero-title { font-size: 1.9rem; }
+  .toc-item { grid-template-columns: 80px 1fr; }
+  .dual-exp { grid-template-columns: 1fr; }
+  .dual-exp .cross { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="bg-mesh"></div>
+
+<header>
+  <div class="container nav">
+    <a href="#" class="logo">伝わる発信術<span>。</span></a>
+    <ul class="nav-links">
+      <li><a href="../index.html" class="nav-link">← サイトトップ</a></li>
+      <li><a href="#problem" class="nav-link">投資家の実態</a></li>
+      <li><a href="#core" class="nav-link">コアアイデア</a></li>
+      <li><a href="#axes" class="nav-link">8つの物差し</a></li>
+      <li><a href="#contents" class="nav-link">目次</a></li>
+      <li><a href="#whom" class="nav-link">こんな人へ</a></li>
+    </ul>
+    <a href="https://www.amazon.co.jp/dp/B0HG713DK6" target="_blank" rel="noopener noreferrer" class="nav-cta">Amazonで見る</a>
+  </div>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="hero-content">
+        <span class="hero-tag">Kindleにて発売 ／ IR・広報・投資家対応</span>
+        <h1 class="hero-title">
+          良い数字を並べても、伝わるとは限らない。<br>
+          <span class="title-accent">伝わるIRには、型がある。</span>
+        </h1>
+        <p class="hero-kicker">IR担当者のための伝わる発信術 ―― 8つの物差しで、自社のIR資料を採点する</p>
+        <p class="hero-subtitle">
+          決算説明資料を作り終えて、提出ボタンを押した瞬間。「これ、本当に読まれるのだろうか」。IR担当者が発信に迷うのは、センスの問題ではない。判断基準を持てていないだけだ。本書は、独自診断ツール「IR Readability Score」で、良いIR発信の8つの物差しを初公開する。
+        </p>
+        <div class="hero-actions">
+          <a href="https://www.amazon.co.jp/dp/B0HG713DK6" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            <i data-lucide="book-open" style="width:20px;height:20px;"></i>
+            Amazonで購入する
+          </a>
+          <a href="#core" class="btn btn-outline">
+            <i data-lucide="arrow-down" style="width:18px;height:18px;"></i>
+            コンセプトを見る
+          </a>
+        </div>
+        <p class="hero-note">著者：たけ@モダンロジック ／ Kindle版</p>
+      </div>
+      <div class="hero-cover">
+        <img src="IR担当者のための伝わる発信術.jpg" alt="IR担当者のための伝わる発信術　書影">
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem -->
+  <section id="problem">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag" style="border-color:#ef4444; color:#ef4444;">Investor's Reality</span>
+        <h2>投資家は「読む」のではなく「探す」</h2>
+        <p>探されているものを、渡せているか。同じ情報量でも、資料の作り方次第で投資家の反応はまったく変わる</p>
+      </div>
+      <div class="grid-3">
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="list"></i></div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.8rem;">数字の羅列だけ</h3>
+          <p class="problem-quote">業績数値・KPIを並べるだけで、「なぜこの会社に投資すべきか」というストーリーが読み取れない。情報量は十分なのに、伝わるものが何もない資料になる。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="book-x"></i></div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.8rem;">専門用語に説明がない</h3>
+          <p class="problem-quote">業界特有の略語・専門用語が注釈なしで使われ、個人投資家はもちろん非専門のアナリストにも伝わりにくい。読み手を選ぶ資料になってしまう。</p>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><i data-lucide="layers"></i></div>
+          <h3 style="font-size:1.05rem; margin-bottom:0.8rem;">情報過多で要点が埋もれる</h3>
+          <p class="problem-quote">財務情報・KPI・ESG情報を詰め込みすぎて、伝えたいメッセージが1〜3個に絞られていない。投資家は答えを見つけられず、離脱する。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Concept -->
+  <section id="core">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Core Concept</span>
+        <h2>資料の巧拙は、センスではない。<br>判断基準を持っているかどうかだ。</h2>
+        <p>専任者が自分一人しかいない環境では、資料の良し悪しを相談できる相手が社内にいない。必要なのは経験則ではなく、誰でも当てはめられる物差しだ</p>
+      </div>
+      <div class="grid-2" style="align-items:stretch;">
+        <div class="glass-card axis-card yoko reveal">
+          <span class="axis-label">The Old Frame</span>
+          <h3>感覚とセンスに頼る発想<span style="color:var(--accent);">（従来の発想）</span></h3>
+          <p class="sub">資料の出来を、担当者個人の経験や感覚で判断してしまう</p>
+          <ul>
+            <li><span>✓</span>IR資料の巧拙を、担当者個人のセンスの問題だと捉えている</li>
+            <li><span>✓</span>株価という、資料の出来以外の要因だらけの結果でしか評価できない</li>
+            <li><span>✓</span>情報を増やすほど、投資家に伝わると考えてしまう</li>
+            <li><span>✓</span>良し悪しを相談できる相手が、社内にいない</li>
+          </ul>
+        </div>
+        <div class="glass-card axis-card tate reveal">
+          <span class="axis-label">The Readability Score</span>
+          <h3>IR Readability Score<span style="color:var(--accent2);">（本書のアプローチ）</span></h3>
+          <p class="sub">8つの軸×5段階、40点満点の診断フレームワークで採点する</p>
+          <ul>
+            <li><span>✓</span>資料の伝わる力を、8つの軸×5段階、40点満点で採点する</li>
+            <li><span>✓</span>機関投資家の「スキャン読み」と個人投資家の「直感読み」、両方の視点で評価する</li>
+            <li><span>✓</span>良い例・悪い例を比較し、自社資料に今日から当てはめられる</li>
+            <li><span>✓</span>前回の課題→今回の実績→今後、というストーリーの一貫性まで診断する</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quote banner -->
+  <section class="quote-banner">
+    <div class="container reveal">
+      <p>
+        良い数字を並べても、伝わるとは限らない。<br>
+        <span class="title-accent">伝わるIRには、型がある。</span>
+      </p>
+      <p class="source">――『IR担当者のための伝わる発信術』はじめにより</p>
+    </div>
+  </section>
+
+  <!-- 8 axes -->
+  <section id="axes">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">IR Readability Score</span>
+        <h2>独自診断ツールが採点する、8つの物差し</h2>
+        <p>8軸×5点満点=40点満点。感覚ではなく、誰でも自社資料に当てはめて採点できる判断基準に翻訳する</p>
+      </div>
+      <div class="grid-4">
+        <div class="glass-card axis-mini reveal">
+          <div class="card-icon"><i data-lucide="target"></i></div>
+          <span class="num">01 ／ FOCUS</span>
+          <h3>一点集中</h3>
+          <p>情報を絞り込み、重要な一文を埋もれさせない</p>
+        </div>
+        <div class="glass-card axis-mini reveal">
+          <div class="card-icon"><i data-lucide="link-2"></i></div>
+          <span class="num">02 ／ CONSISTENCY</span>
+          <h3>一貫性</h3>
+          <p>前回の課題→今回の実績→今後、の筋が通っている</p>
+        </div>
+        <div class="glass-card axis-mini reveal">
+          <div class="card-icon"><i data-lucide="trending-up"></i></div>
+          <span class="num">03 ／ KPI LINK</span>
+          <h3>KPI接続</h3>
+          <p>KPIが利益・成長ドライバーと接続して説明されている</p>
+        </div>
+        <div class="glass-card axis-mini reveal">
+          <div class="card-icon"><i data-lucide="shield"></i></div>
+          <span class="num">04 ／ RISK</span>
+          <h3>リスク開示</h3>
+          <p>ポジティブな情報だけでなく、リスクと打ち手をセットで開示している</p>
+        </div>
+        <div class="glass-card axis-mini reveal">
+          <div class="card-icon"><i data-lucide="lightbulb"></i></div>
+          <span class="num">05 ／ CLARITY</span>
+          <h3>明快さ</h3>
+          <p>専門用語に注釈があり、非専門家にも伝わる</p>
+        </div>
+        <div class="glass-card axis-mini reveal">
+          <div class="card-icon"><i data-lucide="file-text"></i></div>
+          <span class="num">06 ／ SUMMARY</span>
+          <h3>要約力</h3>
+          <p>エグゼクティブサマリーで要点が1枚に集約されている</p>
+        </div>
+        <div class="glass-card axis-mini reveal">
+          <div class="card-icon"><i data-lucide="pie-chart"></i></div>
+          <span class="num">07 ／ VOLUME</span>
+          <h3>適正分量</h3>
+          <p>目安20〜40ページに収まっている</p>
+        </div>
+        <div class="glass-card axis-mini reveal">
+          <div class="card-icon"><i data-lucide="users"></i></div>
+          <span class="num">08 ／ ESG LINK</span>
+          <h3>非財務接続</h3>
+          <p>ESG・人的資本が事業戦略・企業価値と接続している</p>
+        </div>
+      </div>
+      <div style="text-align:center; margin-top:3rem;" class="reveal">
+        <a href="IR担当者のための伝わる発信術_診断ツール.html" class="btn btn-outline">
+          <i data-lucide="clipboard-check" style="width:20px;height:20px;"></i>
+          この8つの物差しで、自社資料を無料診断する
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Author dual experience -->
+  <section id="author">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Author's Two Sides</span>
+        <h2>「作る側」と「読む側」、両方の経験から</h2>
+        <p>既存のIR書籍は、どちらか一方の立場からしか書かれていない</p>
+      </div>
+      <div class="dual-exp reveal">
+        <div class="side">
+          <span class="label">作る側の経験</span>
+          <p>大手流通企業で広報PRマネージャーとして、広告換算値6億円・投資対効果約30倍の実績。</p>
+        </div>
+        <div class="cross">×</div>
+        <div class="side">
+          <span class="label">読む側の経験</span>
+          <p>2005年から約20年、個人投資家。テクニカルで鳴かず飛ばず、四季報ベースのファンダメンタルズ分析で報われた視点。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contents -->
+  <section id="contents" style="background: rgba(15, 23, 42, 0.4);">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">Contents</span>
+        <h2>目次</h2>
+        <p>全12章・はじめに・おわりに・巻末付録（比較テンプレート）で構成</p>
+      </div>
+      <div class="toc-list">
+        <div class="toc-item reveal">
+          <div class="toc-num">第1章</div>
+          <div><h3>IR担当者が抱える4つの構造的な迷い</h3><p>体制の薄さ・目的化・評価基準の曖昧さ・成果の帰属。「センスがない」のではなく「物差しがない」だけだと気づく。</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第2章</div>
+          <div><h3>投資家は「読む」のではなく「探す」</h3><p>機関投資家の「スキャン読み」と個人投資家の「直感読み」、2つの読み方を知る。</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第3章</div>
+          <div><h3>IR Readability Score・8つの軸を知る</h3><p>独自診断フレームワークを初公開。8軸×5段階、40点満点で資料を採点する。</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第4章</div>
+          <div><h3>同じ8軸の落とし穴を知る</h3><p>良い例の裏返しではなく、8つの軸が低スコアに落ちるメカニズムを見る。</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第5章</div>
+          <div><h3>良い例と悪い例を並べて見る</h3><p>資料の構成・専門用語・リスクの見せ方を並べて比較し、見分ける目を養う。</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第6章</div>
+          <div><h3>自己診断：自社資料を採点する</h3><p>採点の手順と、影響度×直しやすさによる優先順位のつけ方。</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第7章</div>
+          <div><h3>ストーリーの一貫性をつくる技術</h3><p>「前回・今回・今後」の3点セットで、資料に筋を通す。</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第8章</div>
+          <div><h3>非財務情報を企業価値に接続する書き方</h3><p>ESG・人的資本を「活動の紹介」から「戦略の一部」へ書き換える。</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第9章</div>
+          <div><h3>リスクを隠さない開示技術</h3><p>リスクと打ち手を、必ず対で書く実践的な技術。</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第10章</div>
+          <div><h3>分量の判断基準</h3><p>20ページ・40ページ・60ページの境界線。開示量×設計の2×2マトリクスで削るべき箇所を見極める。</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第11章</div>
+          <div><h3>ビフォーアフター実践</h3><p>架空企業の1ページを、8つの軸で実際に直してみる。</p></div>
+        </div>
+        <div class="toc-item reveal">
+          <div class="toc-num">第12章</div>
+          <div><h3>IR発信を仕組み化する</h3><p>「作ること」の目的化から抜け出し、年間IRカレンダーに検証を組み込む。</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who it's for -->
+  <section id="whom">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="hero-tag">For You</span>
+        <h2>こんな人へ</h2>
+      </div>
+      <div class="whom-list">
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>専任1名、または広報・経営企画と兼任のIR担当者</span></div>
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>決算説明資料・IRサイトの改善ポイントを言語化したい方</span></div>
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>上場準備中で、これからIR体制を整える担当者</span></div>
+        <div class="whom-item reveal"><i data-lucide="check-circle"></i><span>ESG・非財務情報を企業価値にどう接続すべきか悩む広報・IR担当者</span></div>
+      </div>
+      <p style="text-align:center; color:var(--text-sub); font-size:0.92rem; max-width:640px; margin:2.5rem auto 0;">
+        資料の相談相手が社内にいないなら、第1章から。今すぐ自社資料を採点したいなら、第3章「IR Readability Score」と巻末付録の診断チェックリストから。
+      </p>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section id="cta">
+    <div class="container">
+      <div class="glass-card cta-card reveal">
+        <span class="hero-tag" style="margin-bottom:1.5rem;">Get Started</span>
+        <h2>投資家は「読む」のではなく「探す」。<br>探されているものを、渡せているか。</h2>
+        <p>
+          良い数字を並べても、伝わるとは限らない。独自診断ツール「IR Readability Score」で、良いIR発信の8つの物差しと、伝わらない発信が陥る8つの落とし穴を対比させながら、自社資料を自己採点できる一冊。『IR担当者のための伝わる発信術 ―― 8つの物差しで、自社のIR資料を採点する』
+        </p>
+        <div class="hero-actions" style="justify-content:center;">
+          <a href="https://www.amazon.co.jp/dp/B0HG713DK6" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            <i data-lucide="book-open" style="width:20px;height:20px;"></i>
+            Kindleストアで『伝わる発信術』を読む
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="logo" style="font-size:0.95rem;">伝わる発信術<span>。</span></div>
+    <a href="../index.html" class="nav-link">← サイトトップへ戻る</a>
+    <div>著者：たけ@モダンロジック　© たけ@モダンロジック All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  lucide.createIcons();
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('reveal-active');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { root: null, threshold: 0.1, rootMargin: "0px" });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const targetId = this.getAttribute('href');
+      if (targetId === '#' || !document.querySelector(targetId)) return;
+      e.preventDefault();
+      window.scrollTo({ top: document.querySelector(targetId).offsetTop - 80, behavior: 'smooth' });
+    });
+  });
+
+  window.addEventListener('scroll', () => {
+    const header = document.querySelector('header');
+    if (window.scrollY > 50) {
+      header.style.padding = '0.9rem 0';
+      header.style.boxShadow = '0 10px 40px rgba(0,0,0,0.5)';
+    } else {
+      header.style.padding = '1.5rem 0';
+      header.style.boxShadow = 'none';
+    }
+  });
+</script>
+</body>
+</html>
