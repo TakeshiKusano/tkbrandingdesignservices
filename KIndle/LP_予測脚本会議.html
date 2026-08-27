@@ -1,0 +1,458 @@
+<meta name="description" content="『予測脚本会議』Kindleにて発売。780話・36年の『ザ・シンプソンズ』脚本会議に隠れた5つの構造――母数の法則、専門性の翻訳、逆算構造、風刺というフィルター、集合知――を解き明かし、AI時代の事業推進にそのまま転用するフレームワークを提示する一冊。『AI時代の組織開発』シリーズ第2弾。">
+<title>予測脚本会議</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Outfit:wght@400;600;800&family=Shippori+Mincho:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #0f172a;
+  --accent: #d4af37;
+  --accent-glow: rgba(212, 175, 55, 0.4);
+  --accent2: #38bdf8;
+  --accent2-glow: rgba(56, 189, 248, 0.35);
+  --text-main: #f8fafc;
+  --text-sub: #94a3b8;
+  --bg-dark: #020617;
+  --glass-bg: rgba(15, 23, 42, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --card-bg: #1e293b;
+  --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Noto Sans JP', 'Shippori Mincho', serif;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  line-height: 1.85;
+  overflow-x: hidden;
+}
+
+.bg-mesh {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(15, 23, 42, 0.8) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(30, 41, 59, 0.8) 0%, transparent 40%),
+    rgba(2, 6, 23, 1);
+}
+
+h1, h2, h3 { font-family: 'Shippori Mincho', serif; font-weight: 700; letter-spacing: -0.01em; text-wrap: balance; }
+
+.title-accent {
+  background: linear-gradient(90deg, #d4af37, #fde68a);
+  background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.title-accent2 {
+  background: linear-gradient(90deg, #38bdf8, #bae6fd);
+  background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+section { padding: 100px 0; }
+svg.ico { width: 1em; height: 1em; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; vertical-align: -0.15em; }
+
+/* Header */
+header {
+  position: fixed; top: 0; left: 0; width: 100%; padding: 1.4rem 0;
+  background: var(--glass-bg); backdrop-filter: blur(12px); z-index: 1000;
+  border-bottom: 1px solid var(--glass-border); transition: var(--transition);
+}
+nav { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.logo { font-family: 'Shippori Mincho', serif; font-size: 1.05rem; font-weight: 800; letter-spacing: 0.02em; color: var(--text-main); text-decoration: none; white-space: nowrap; }
+.logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 1.8rem; list-style: none; }
+.nav-link { color: var(--text-sub); text-decoration: none; font-size: 0.86rem; font-weight: 500; transition: var(--transition); white-space: nowrap; }
+.nav-link:hover { color: var(--accent); }
+.nav-cta {
+  background: var(--accent); color: #000; padding: 0.6rem 1.4rem; border-radius: 50px;
+  font-size: 0.85rem; font-weight: 700; text-decoration: none; transition: var(--transition); white-space: nowrap;
+}
+.nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 20px var(--accent-glow); }
+
+/* Hero */
+.hero { min-height: 100vh; display: flex; align-items: center; position: relative; padding: 160px 0 100px; }
+.hero .container { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 4rem; align-items: center; }
+.hero-tag {
+  display: inline-block; padding: 0.5rem 1.1rem; background: var(--glass-border);
+  border: 1px solid var(--accent); color: var(--accent); border-radius: 50px;
+  font-size: 0.8rem; font-weight: 600; margin-bottom: 1.5rem; letter-spacing: 0.05em;
+}
+.hero-title { font-size: 2.5rem; line-height: 1.45; margin-bottom: 1.2rem; }
+.hero-kicker {
+  font-size: 1.05rem; font-weight: 600; color: var(--text-sub); margin-bottom: 2rem;
+  font-family: 'Noto Sans JP', sans-serif; border-left: 3px solid var(--accent2); padding-left: 1rem;
+}
+.hero-subtitle { font-size: 1rem; color: var(--text-sub); max-width: 580px; margin-bottom: 2.5rem; }
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+.hero-note { margin-top: 1.2rem; font-size: 0.8rem; color: var(--text-sub); }
+.series-pill {
+  margin-top: 1.6rem; display: inline-flex; align-items: center; gap: 0.6rem;
+  font-size: 0.78rem; color: var(--text-sub); padding: 0.5rem 1rem;
+  border: 1px dashed var(--glass-border); border-radius: 50px;
+}
+.series-pill b { color: var(--accent2); font-weight: 700; }
+
+.hero-cover { position: relative; display: flex; justify-content: center; }
+.cover-mock {
+  width: 100%; max-width: 320px; aspect-ratio: 5 / 8;
+  background: linear-gradient(160deg, #111a2e 0%, #0b1120 70%);
+  border-radius: 10px; box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px var(--glass-border);
+  transition: var(--transition); position: relative; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: space-between; padding: 2rem 1.7rem;
+}
+.cover-mock:hover { transform: translateY(-8px) rotate(-1deg); }
+.cover-mock::before {
+  content: ""; position: absolute; inset: 14px; border: 1px solid rgba(212,175,55,0.35); pointer-events: none;
+}
+.cover-eyebrow { font-family: 'Outfit', sans-serif; font-size: 0.68rem; letter-spacing: 0.18em; color: var(--accent2); text-transform: uppercase; }
+.cover-title { font-family: 'Shippori Mincho', serif; font-size: 2.1rem; font-weight: 800; line-height: 1.35; color: var(--text-main); margin-top: 0.8rem; }
+.cover-sub { font-size: 0.82rem; color: var(--text-sub); margin-top: 1rem; line-height: 1.7; }
+.cover-foot { font-family: 'Outfit', sans-serif; font-size: 0.7rem; letter-spacing: 0.1em; color: var(--accent); }
+
+/* Buttons */
+.btn { display: inline-flex; align-items: center; gap: 0.6rem; padding: 1.1rem 2.2rem; border-radius: 12px; font-weight: 700; text-decoration: none; transition: var(--transition); cursor: pointer; border: none; font-size: 0.95rem; }
+.btn-primary { background: var(--accent); color: #000; box-shadow: 0 10px 30px var(--accent-glow); }
+.btn-primary:hover { transform: translateY(-4px); box-shadow: 0 15px 40px var(--accent-glow); }
+.btn-outline { background: transparent; border: 1px solid var(--glass-border); color: var(--text-main); }
+.btn-outline:hover { border-color: var(--accent2); color: var(--accent2); }
+
+.section-title { text-align: center; margin-bottom: 4.5rem; }
+.section-title span.eyebrow { font-family: 'Outfit', sans-serif; font-size: 0.75rem; letter-spacing: 0.18em; color: var(--accent2); text-transform: uppercase; }
+.section-title h2 { font-size: 2rem; margin: 0.8rem 0 1rem; }
+.section-title p { color: var(--text-sub); font-size: 1.05rem; max-width: 620px; margin: 0 auto; }
+
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 2rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+
+.glass-card { background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 2.4rem; border-radius: 20px; backdrop-filter: blur(5px); transition: var(--transition); }
+.glass-card:hover { border-color: var(--accent); transform: translateY(-8px); }
+.card-icon { width: 52px; height: 52px; background: var(--glass-border); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; color: var(--accent); font-size: 1.4rem; }
+.glass-card h3 { font-size: 1.15rem; margin-bottom: 0.7rem; }
+.glass-card p { color: var(--text-sub); font-size: 0.92rem; }
+.card-theory { margin-top: 1.1rem; padding-top: 1rem; border-top: 1px dashed var(--glass-border); font-family: 'Outfit', sans-serif; font-size: 0.72rem; letter-spacing: 0.04em; color: var(--text-sub); }
+
+#myth { background: rgba(15, 23, 42, 0.4); }
+.problem-quote { font-size: 1.05rem; color: var(--text-main); font-style: normal; line-height: 1.9; }
+.problem-quote cite { display: block; margin-top: 1.2rem; font-size: 0.82rem; color: var(--text-sub); font-style: normal; font-family: 'Noto Sans JP', sans-serif; }
+
+.axis-card { position: relative; padding: 2.2rem 2rem; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 16px; }
+.axis-card.yoko { border-left: 4px solid var(--accent); }
+.axis-card.tate { border-left: 4px solid var(--accent2); }
+.axis-label { font-family: 'Outfit', sans-serif; font-size: 0.72rem; letter-spacing: 0.1em; color: var(--text-sub); text-transform: uppercase; }
+.axis-card h3 { font-size: 1.3rem; margin: 0.5rem 0 1.4rem; }
+.axis-card ul { list-style: none; display: grid; gap: 0.8rem; }
+.axis-card ul li { display: flex; gap: 0.6rem; font-size: 0.9rem; color: var(--text-main); }
+.axis-card.yoko ul li span { color: var(--accent); }
+.axis-card.tate ul li span { color: var(--accent2); }
+
+.quote-banner { background: linear-gradient(135deg, rgba(212,175,55,0.08), rgba(56,189,248,0.05)); border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); text-align: center; }
+.quote-banner p { font-size: 1.4rem; line-height: 1.95; max-width: 760px; margin: 0 auto; font-family: 'Shippori Mincho', serif; }
+.quote-banner .source { margin-top: 2rem; font-size: 0.85rem; color: var(--text-sub); font-family: 'Noto Sans JP', sans-serif; }
+
+/* Deadline / countdown bar */
+.countdown { max-width: 760px; margin: 3rem auto 0; }
+.cd-bar { display: flex; height: 30px; border-radius: 8px; overflow: hidden; background: rgba(255,255,255,0.06); }
+.cd-bar span { height: 100%; }
+.cd-labels { display: grid; grid-template-columns: repeat(5, 1fr); margin-top: 1rem; text-align: center; }
+.cd-labels div { font-size: 0.8rem; color: var(--text-sub); font-family: 'Outfit', sans-serif; letter-spacing: .02em; }
+.cd-labels div b { display: block; color: var(--text-main); font-family: 'Noto Sans JP', sans-serif; font-weight: 700; margin-top: 0.2rem; }
+
+.toc-list { max-width: 820px; margin: 0 auto; display: grid; gap: 0; }
+.toc-item { display: grid; grid-template-columns: 110px 1fr; gap: 1.5rem; padding: 1.5rem 0; border-bottom: 1px solid var(--glass-border); }
+.toc-item:last-child { border-bottom: none; }
+.toc-num { font-family: 'Outfit', sans-serif; font-size: 0.85rem; color: var(--accent); font-weight: 600; letter-spacing: 0.05em; padding-top: 0.2rem; }
+.toc-item h3 { font-size: 1.1rem; margin-bottom: 0.4rem; }
+.toc-item p { color: var(--text-sub); font-size: 0.88rem; }
+
+.appendix-note { max-width: 820px; margin: 2.6rem auto 0; padding: 1.6rem 1.8rem; background: var(--glass-bg); border: 1px dashed var(--glass-border); border-radius: 14px; font-size: 0.92rem; color: var(--text-sub); }
+.appendix-note b { color: var(--accent2); }
+
+.whom-list { display: grid; gap: 1rem; max-width: 760px; margin: 0 auto; }
+.whom-item { display: flex; align-items: flex-start; gap: 1rem; padding: 1.4rem 1.6rem; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 14px; }
+.whom-item .ico-wrap { color: var(--accent2); flex-shrink: 0; margin-top: 0.15rem; font-size: 1.2rem; }
+
+#cta { background: linear-gradient(180deg, transparent, rgba(212, 175, 55, 0.06)); }
+.cta-card { text-align: center; padding: 5rem 2rem; }
+.cta-card h2 { font-size: 2.1rem; margin-bottom: 1.2rem; }
+.cta-card p { color: var(--text-sub); max-width: 620px; margin: 0 auto 2.5rem; }
+
+footer { border-top: 1px solid var(--glass-border); padding: 3rem 0; }
+footer .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 0.85rem; color: var(--text-sub); }
+
+.reveal { opacity: 0; transform: translateY(24px); transition: all 0.8s cubic-bezier(0.16,1,0.3,1); }
+.reveal-active { opacity: 1 !important; transform: translateY(0) !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+@media (max-width: 992px) {
+  .hero .container { grid-template-columns: 1fr; }
+  .hero-cover { order: -1; }
+  .nav-links { display: none; }
+  .hero-title { font-size: 1.8rem; }
+  .toc-item { grid-template-columns: 80px 1fr; }
+  .cd-labels { grid-template-columns: repeat(5, 1fr); font-size: 0.68rem; }
+}
+</style>
+
+<div class="bg-mesh"></div>
+
+<header>
+  <div class="container nav">
+    <a href="#" class="logo">予測脚本会議<span>。</span></a>
+    <ul class="nav-links">
+      <li><a href="#myth" class="nav-link">神話の正体</a></li>
+      <li><a href="#mechanism" class="nav-link">5つの構造</a></li>
+      <li><a href="#deadline" class="nav-link">10ヶ月逆算</a></li>
+      <li><a href="#contents" class="nav-link">目次</a></li>
+      <li><a href="#whom" class="nav-link">こんな人へ</a></li>
+    </ul>
+    <a href="#" class="nav-cta">Amazonで見る</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="hero-content">
+        <span class="hero-tag">Kindleストアで発売 ／ 経営戦略・意思決定・AI活用</span>
+        <h1 class="hero-title">
+          「シンプソンズはまた予言を的中させた」<br>
+          その裏側にある、<span class="title-accent">地味で誠実な設計。</span>
+        </h1>
+        <p class="hero-kicker">予測脚本会議 ―― 10年ビジョンの次に持つべきもの</p>
+        <p class="hero-subtitle">
+          780話・36年分のダーツが教えてくれる、母数の法則、専門性の翻訳、逆算構造、風刺というフィルター、集合知。
+          ハーバード出の理系脚本家たちが放送の10ヶ月前から仕込む「外挿」という技術を、あなたの事業推進の現場に
+          そのまま持ち帰るための1冊。
+        </p>
+        <div class="hero-actions">
+          <a href="#" class="btn btn-primary">
+            <svg class="ico" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            Amazonで探す
+          </a>
+          <a href="#contents" class="btn btn-outline">
+            <svg class="ico" viewBox="0 0 24 24"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></svg>
+            目次を見る
+          </a>
+        </div>
+        <p class="hero-note">Kindle Unlimited 対応予定</p>
+        <div class="series-pill"><b>SERIES 02</b> 「AI時代の組織開発」――「管理はAIへ、合意形成は人間へ」その先へ</div>
+      </div>
+
+      <div class="hero-cover">
+        <div class="cover-mock">
+          <div>
+            <span class="cover-eyebrow">Business / AI Management</span>
+            <div class="cover-title">予測<br>脚本<br>会議</div>
+          </div>
+          <div>
+            <p class="cover-sub">AI時代の事業推進に向けて</p>
+            <p class="cover-foot">「AI時代の組織開発」第二弾</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Myth -->
+  <section id="myth">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="eyebrow">The Myth</span>
+        <h2>「700話も書けば、何も当たらない方がおかしい」</h2>
+        <p>大統領選、企業買収、ヒッグス粒子の発見。「シンプソンズ　予言」で検索すると、驚くほどの数のオカルト記事がヒットする。だが種明かしは、すでに本人の口から語られている。</p>
+      </div>
+      <div class="grid-2">
+        <div class="glass-card reveal">
+          <p class="problem-quote">「700話も書けば、何も当たらない方がおかしい。ダーツを十分投げれば、いくつかはブルズアイに刺さる」</p>
+          <cite>— Al Jean（製作総指揮）</cite>
+        </div>
+        <div class="glass-card reveal">
+          <p class="problem-quote">「あれは予言ではなく、アメリカへの警告だった」</p>
+          <cite>— Dan Greaney（脚本家）</cite>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mechanism -->
+  <section id="mechanism">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="eyebrow">The Mechanism</span>
+        <h2>脚本会議に隠れた、5つの構造</h2>
+        <p>超能力とは無縁の、地味で反復可能な仕組み。本書はこの5つを1対1で事業推進に置き換え、「予測脚本会議」というフレームワークに組み直す。</p>
+      </div>
+      <div class="grid-3">
+        <div class="glass-card reveal">
+          <div class="card-icon"><svg class="ico" viewBox="0 0 24 24" style="width:24px;height:24px;"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></div>
+          <h3>第1章｜母数の法則</h3>
+          <p>700話という圧倒的な数のダーツを投げているから、何かは当たって見える。</p>
+          <div class="card-theory">量の原則（Osborn, 1953）</div>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><svg class="ico" viewBox="0 0 24 24" style="width:24px;height:24px;"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+          <h3>第2章｜専門性の翻訳</h3>
+          <p>ハーバード出の数学者・物理学者が、精密な冗談を笑いの皮で包んで仕込む。</p>
+          <div class="card-theory">専門知の翻訳工程</div>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><svg class="ico" viewBox="0 0 24 24" style="width:24px;height:24px;"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+          <h3>第3章｜逆算構造</h3>
+          <p>放送の10ヶ月前、今の兆候をもとに脚本を書く。締切が外挿を習慣にする。</p>
+          <div class="card-theory">外挿／フューチャーズ・コーン</div>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><svg class="ico" viewBox="0 0 24 24" style="width:24px;height:24px;"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div>
+          <h3>第4章｜風刺というフィルター</h3>
+          <p>今すでにある小さな兆候を、拡大鏡で大げさに引き伸ばして見せる。</p>
+          <div class="card-theory">ウィークシグナル理論（Ansoff, 1975）</div>
+        </div>
+        <div class="glass-card reveal">
+          <div class="card-icon"><svg class="ico" viewBox="0 0 24 24" style="width:24px;height:24px;"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.4"/><circle cx="10" cy="17" r="2.6"/><path d="M9.6 10.4l4.5-.9M11.5 15.3l4-4.6"/></svg></div>
+          <h3>第5章｜集合知</h3>
+          <p>10〜20人の多様な頭脳がぶつかり合う部屋が、一人の勘に勝る。</p>
+          <div class="card-theory">デルファイ法（RAND研究所）</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Deadline -->
+  <section id="deadline" style="background: rgba(15, 23, 42, 0.4);">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="eyebrow">The Deadline</span>
+        <h2>10年でも、思いつきでもない。10ヶ月という距離感。</h2>
+        <p>1週間先ならほぼ点で言い当てられるし、10年先なら円錐は広がりすぎて意味をなさない。あなたの会社の「意思決定リードタイム」は、何ヶ月ですか。</p>
+      </div>
+      <div class="countdown reveal">
+        <div class="cd-bar">
+          <span style="width:5%; background: var(--accent2);"></span>
+          <span style="width:25%; background: #2b3a55;"></span>
+          <span style="width:25%; background: #3d4f72;"></span>
+          <span style="width:25%; background: #52658c;"></span>
+          <span style="width:20%; background: var(--accent);"></span>
+        </div>
+        <div class="cd-labels">
+          <div><b>今</b>脚本会議</div>
+          <div><b>3ヶ月</b>兆候の選定</div>
+          <div><b>6ヶ月</b>構造への翻訳</div>
+          <div><b>9ヶ月</b>誇張して描く</div>
+          <div><b>10ヶ月</b>放送・実行</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparison -->
+  <section id="comparison">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="eyebrow">Not Scenario Planning</span>
+        <h2>一般的なシナリオプランニングとの違い</h2>
+      </div>
+      <div class="grid-2">
+        <div class="axis-card yoko reveal">
+          <span class="axis-label">Prediction Script Meeting</span>
+          <h3>予測脚本会議</h3>
+          <ul>
+            <li><span>▸</span>意思決定リードタイム（半年〜1年）に時間軸を固定</li>
+            <li><span>▸</span>週次・月次の日常業務として回す</li>
+            <li><span>▸</span>評価軸は仮説の量・頻度・多様性（スループット）</li>
+          </ul>
+        </div>
+        <div class="axis-card tate reveal">
+          <span class="axis-label">Scenario Planning</span>
+          <h3>一般的なシナリオプランニング</h3>
+          <ul>
+            <li><span>▸</span>5〜20年の長期的な不確実性を対象にする</li>
+            <li><span>▸</span>年次・数年に一度の重量級イベント</li>
+            <li><span>▸</span>評価軸はどんな未来にも耐えるか（頑健性）</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quote banner -->
+  <section class="quote-banner">
+    <div class="container">
+      <p class="reveal">予言者はいない。設計する人がいるだけだ。</p>
+      <p class="source reveal">――『予測脚本会議』おわりに より</p>
+    </div>
+  </section>
+
+  <!-- Contents -->
+  <section id="contents">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="eyebrow">Table of Contents</span>
+        <h2>本書の構成</h2>
+      </div>
+      <div class="toc-list reveal">
+        <div class="toc-item"><div class="toc-num">序</div><div><h3>はじめに</h3><p>10年ビジョンが機能した時代の終わり。なぜオカルト記事しか出てこないのか。</p></div></div>
+        <div class="toc-item"><div class="toc-num">第1章</div><div><h3>なぜ「当たった」ように見えるのか</h3><p>母数の法則と生存者バイアス。</p></div></div>
+        <div class="toc-item"><div class="toc-num">第2章</div><div><h3>理系脳が仕込む「精密な冗談」</h3><p>専門性を笑いに変換する設計。</p></div></div>
+        <div class="toc-item"><div class="toc-num">第3章</div><div><h3>10ヶ月先を書くという逆算構造</h3><p>締切があるから、外挿が習慣になる。</p></div></div>
+        <div class="toc-item"><div class="toc-num">第4章</div><div><h3>風刺は「今の誇張」でしかない</h3><p>トレンド外挿の原理。</p></div></div>
+        <div class="toc-item"><div class="toc-num">第5章</div><div><h3>多様な頭脳をぶつける部屋</h3><p>集合知としての予測。</p></div></div>
+        <div class="toc-item"><div class="toc-num">第6章</div><div><h3>予測脚本会議</h3><p>AI時代の事業推進への応用。</p></div></div>
+        <div class="toc-item"><div class="toc-num">結</div><div><h3>おわりに</h3><p>管理者から、合意形成デザイナーへ。</p></div></div>
+      </div>
+      <div class="appendix-note reveal">
+        <b>巻末付録つき：</b> 実践ワークシート／会議アジェンダ例（食品スーパー・SaaS業種）／手法習得プログラム／用語集（外挿・ウィークシグナル理論・ホライゾン・スキャニング・デルファイ法）。読んで終わりにしない構成です。
+      </div>
+    </div>
+  </section>
+
+  <!-- Whom -->
+  <section id="whom" style="background: rgba(15, 23, 42, 0.4);">
+    <div class="container">
+      <div class="section-title reveal">
+        <span class="eyebrow">Who This Is For</span>
+        <h2>こんな現場に、持ち帰ってほしい</h2>
+      </div>
+      <div class="whom-list reveal">
+        <div class="whom-item"><span class="ico-wrap"><svg class="ico" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-6 3 3 5-7"/></svg></span><p>中期経営計画や事業戦略の立案に関わっている</p></div>
+        <div class="whom-item"><span class="ico-wrap"><svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span><p>シナリオプランニングや未来予測を、もっと軽く実務に取り入れたい</p></div>
+        <div class="whom-item"><span class="ico-wrap"><svg class="ico" viewBox="0 0 24 24"><path d="M8 12h8M8 16h5M6 4h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9l-4 4V6a2 2 0 0 1 2-2z"/></svg></span><p>予測会議を開いても、当たり障りのない意見しか出てこない</p></div>
+        <div class="whom-item"><span class="ico-wrap"><svg class="ico" viewBox="0 0 24 24"><path d="M12 2a5 5 0 0 1 5 5c0 2-1 3-2 4s-1 2-1 3H10c0-1 0-2-1-3s-2-2-2-4a5 5 0 0 1 5-5z"/><path d="M9 18h6M10 21h4"/></svg></span><p>AI時代の経営・組織開発に関心がある</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta">
+    <div class="container cta-card reveal">
+      <h2>10年ビジョンの代わりに、これを持ち帰ってほしい。</h2>
+      <p>10年ビジョンの代わりに何を持てばいいのか。その答えを、あなたの事業推進の現場に持ち帰るための1冊。『AI時代の組織開発』第二弾。</p>
+      <a href="#" class="btn btn-primary">
+        <svg class="ico" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        Amazonで探す
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <span>© 予測脚本会議 ―― AI時代の組織開発 シリーズ</span>
+    <span>「AI時代の組織開発」第2弾</span>
+  </div>
+</footer>
+
+<script>
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const els = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('reveal-active'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    els.forEach(el => io.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('reveal-active'));
+  }
+</script>
