@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kindle出版プロデュース｜あなたの知見を、一冊のKindle本に。企画から出版・運用まで個人が伴走</title>
+<meta name="description" content="「いつか本を出したい」個人・専門家・経営者の方へ。企画・構成から執筆サポート、表紙・図版、KDPへの入稿・出版、出版後の運用まで、フリーランス個人が一気通貫で伴走。40冊の自己出版実績。料金は稼働時間と写真・イラストの難易度で変動。まずは無料相談から。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600;700&family=Noto+Serif+JP:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary:#0f172a;
+    --accent:#d4af37;
+    --accent-glow:rgba(212,175,55,.4);
+    --accent2:#38bdf8;
+    --accent2-glow:rgba(56,189,248,.35);
+    --violet:#a78bfa;
+    --good:#4ade80;
+    --text-main:#f8fafc;
+    --text-sub:#94a3b8;
+    --text-faint:#64748b;
+    --bg-dark:#020617;
+    --glass-bg:rgba(15,23,42,.7);
+    --glass-bg-solid:#0f172a;
+    --glass-border:rgba(255,255,255,.1);
+    --transition:all .4s cubic-bezier(.16,1,.3,1);
+    --radius:18px;
+    --serif:Georgia,"Times New Roman","Yu Mincho","Hiragino Mincho ProN","Noto Serif JP",serif;
+    --sans:"Inter",system-ui,-apple-system,"Segoe UI","Hiragino Sans","Yu Gothic","Noto Sans JP",sans-serif;
+    --label:ui-monospace,"SFMono-Regular","Menlo",Consolas,"Courier New",monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--sans);
+    color:var(--text-main); background:var(--bg-dark); line-height:1.8; font-size:16px;
+    -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  .bg-mesh{
+    position:fixed;inset:0;z-index:-1;
+    background:
+      radial-gradient(circle at 8% 12%, rgba(212,175,55,.06) 0%, transparent 38%),
+      radial-gradient(circle at 92% 88%, rgba(56,189,248,.06) 0%, transparent 40%),
+      radial-gradient(circle at 12% 88%, rgba(15,23,42,.9) 0%, transparent 42%),
+      radial-gradient(circle at 88% 8%, rgba(30,41,59,.8) 0%, transparent 42%),
+      var(--bg-dark);
+  }
+  a{color:var(--accent);text-decoration:none}
+  ::selection{background:var(--accent);color:#000}
+  .wrap{max-width:960px;margin:0 auto;padding:0 24px}
+  section{padding:80px 0}
+  h1,h2,h3{font-family:var(--serif);font-weight:700;letter-spacing:-.01em;line-height:1.4}
+  h2{font-size:1.9rem;letter-spacing:.02em;margin-bottom:8px}
+  h2 .en{display:block;font-family:var(--label);font-size:.72rem;color:var(--accent2);font-weight:700;letter-spacing:.16em;text-transform:uppercase;margin-bottom:10px}
+  .lead{color:var(--text-sub);margin-bottom:36px;font-size:1.02rem}
+  .btn{
+    display:inline-block;background:var(--accent);color:#000;font-weight:700;
+    padding:16px 34px;border-radius:999px;text-decoration:none;font-size:1.02rem;
+    box-shadow:0 10px 30px var(--accent-glow);transition:var(--transition);
+  }
+  .btn:hover{transform:translateY(-3px);box-shadow:0 15px 40px var(--accent-glow)}
+  .btn.ghost{background:transparent;border:2px solid var(--glass-border);color:var(--text-main);box-shadow:none}
+  .btn.ghost:hover{background:rgba(255,255,255,.06);border-color:var(--accent)}
+
+  /* header */
+  .topbar{position:sticky;top:0;z-index:50;background:rgba(2,6,23,.92);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--glass-border);
+    display:flex;align-items:center;justify-content:space-between;padding:14px 24px;color:var(--text-main)}
+  .topbar .name{font-family:var(--label);font-size:.82rem;letter-spacing:.06em;color:var(--text-sub)}
+  .topbar a.cta{background:var(--accent);color:#000;text-decoration:none;font-weight:700;
+    padding:9px 18px;border-radius:999px;font-size:.85rem}
+
+  /* hero */
+  .hero{padding:100px 0 96px;position:relative}
+  .hero .eyebrow{display:inline-block;font-family:var(--label);font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent);border:1px solid var(--accent);background:rgba(212,175,55,.08);border-radius:999px;padding:6px 18px;margin-bottom:22px}
+  .hero h1{font-size:2.7rem;line-height:1.4}
+  .hero h1 .o{color:var(--accent)}
+  .hero p.sub{color:var(--text-sub);margin:22px 0 34px;font-size:1.05rem;max-width:720px}
+  .hero .actions{display:flex;gap:14px;flex-wrap:wrap}
+
+  /* hero: 本棚キービジュアル */
+  .shelf{margin-top:52px;display:flex;justify-content:center;align-items:flex-end;gap:18px;
+    padding-bottom:18px;border-bottom:2px solid var(--glass-border);max-width:640px}
+  .bk{width:150px;height:210px;background:var(--glass-bg-solid);border:1px solid var(--glass-border);border-radius:8px;overflow:hidden;
+    box-shadow:0 18px 40px rgba(0,0,0,.5);flex:0 0 auto}
+  .bk .band{height:38px;background:rgba(255,255,255,.05)}
+  .bk .ln{height:8px;background:var(--glass-border);border-radius:4px;margin:14px 16px 0}
+  .bk.you{width:184px;height:246px;border:2px solid var(--accent);background:#1e293b}
+  .bk.you .band{height:44px;background:rgba(212,175,55,.12);color:var(--accent);font-size:.6rem;
+    letter-spacing:.15em;display:flex;align-items:center;justify-content:center;font-family:var(--label)}
+  .bk.you .ttl{color:var(--text-main);text-align:center;font-weight:700;font-size:1.15rem;
+    line-height:1.5;margin-top:22px;font-family:var(--serif)}
+  .bk.you .ttl .o{color:var(--accent)}
+  .bk.you .bar{width:56px;height:8px;background:var(--accent);margin:14px auto 0}
+
+  /* generic cards */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .card{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:var(--radius);padding:24px;backdrop-filter:blur(6px);transition:var(--transition)}
+  .card:hover{border-color:var(--accent);transform:translateY(-6px)}
+  .card h3{font-size:1.05rem;margin-bottom:8px;color:var(--text-main)}
+  .card p{font-size:.93rem;color:var(--text-sub)}
+  .card .num{color:var(--accent);font-weight:700;font-size:.8rem;letter-spacing:.1em;font-family:var(--label)}
+
+  /* value list */
+  .vlist{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .vlist .v{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--glass-border)}
+  .vlist .v .n{flex:0 0 auto;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#000;
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem}
+  .vlist .v b{color:var(--text-main);font-family:var(--sans)}
+  .vlist .v span{color:var(--text-sub);font-size:.95rem}
+
+  /* phases */
+  .phases{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .phase{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:var(--radius);padding:24px 20px;backdrop-filter:blur(6px);border-top:3px solid var(--accent)}
+  .phase:nth-child(1){border-top-color:var(--accent2)}
+  .phase:nth-child(1) .en{color:var(--accent2)}
+  .phase:nth-child(2){border-top-color:var(--accent)}
+  .phase:nth-child(2) .en{color:var(--accent)}
+  .phase:nth-child(3){border-top-color:var(--good)}
+  .phase:nth-child(3) .en{color:var(--good)}
+  .phase:nth-child(4){border-top-color:var(--violet)}
+  .phase:nth-child(4) .en{color:var(--violet)}
+  .phase .en{font-family:var(--label);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase}
+  .phase h3{font-size:1.1rem;margin:6px 0 10px;color:var(--text-main)}
+  .phase p{font-size:.9rem;color:var(--text-sub)}
+  .phase small{display:block;margin-top:12px;font-size:.76rem;color:var(--text-faint)}
+
+  /* table */
+  table{width:100%;border-collapse:collapse;margin-top:12px;font-size:.92rem;background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:var(--radius);overflow:hidden;backdrop-filter:blur(6px)}
+  th,td{padding:12px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--glass-border)}
+  thead th{font-family:var(--label);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text-faint);background:rgba(255,255,255,.02)}
+  td{color:var(--text-sub)}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:hover td{background:rgba(255,255,255,.02)}
+  .note{font-size:.8rem;color:var(--text-faint);margin-top:12px}
+
+  /* proof stats */
+  .stats{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:26px}
+  .stat{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:var(--radius);padding:20px 28px;flex:1 1 180px;text-align:center;backdrop-filter:blur(6px)}
+  .stat .big{font-family:var(--serif);font-size:2.4rem;font-weight:700;line-height:1.1;color:var(--accent)}
+  .stat span{font-size:.9rem;color:var(--text-sub)}
+  .stat.alt{border-color:var(--accent2)}
+  .stat.alt .big{color:var(--accent2)}
+
+  /* price variables */
+  .pvar{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:8px 0 30px}
+  .pvar .p{background:var(--glass-bg);border:1px solid var(--glass-border);border-top:3px solid var(--accent);
+    border-radius:var(--radius);padding:24px;backdrop-filter:blur(6px)}
+  .pvar .p h3{color:var(--text-main);font-size:1.05rem;margin-bottom:10px}
+  .pvar .p ul{list-style:none;font-size:.92rem;color:var(--text-sub)}
+  .pvar .p li{padding:4px 0 4px 16px;position:relative}
+  .pvar .p li::before{content:"・";position:absolute;left:0;color:var(--accent)}
+
+  /* plans */
+  .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px}
+  .plan{border:1px solid var(--glass-border);border-radius:var(--radius);padding:26px;background:var(--glass-bg);backdrop-filter:blur(6px);transition:var(--transition)}
+  .plan:hover{border-color:var(--accent);transform:translateY(-6px)}
+  .plan.reco{border-color:var(--accent);box-shadow:0 15px 40px var(--accent-glow);position:relative}
+  .plan.reco::after{content:"おすすめ";position:absolute;top:-12px;right:16px;background:var(--accent);
+    color:#000;font-size:.7rem;font-weight:700;padding:4px 14px;border-radius:999px}
+  .plan h3{color:var(--text-main);font-size:1.15rem;margin-bottom:6px}
+  .plan .who{color:var(--text-sub);font-size:.86rem;margin-bottom:16px;font-family:var(--sans)}
+  .plan ul{list-style:none;font-size:.9rem}
+  .plan li{padding:6px 0 6px 18px;position:relative;color:var(--text-sub)}
+  .plan li::before{content:"✓";position:absolute;left:0;color:var(--accent);font-weight:700}
+  .plan .price{margin-top:16px;font-weight:700;color:var(--accent);font-family:var(--label);font-size:.95rem}
+
+  /* steps */
+  .steps{counter-reset:st;list-style:none;margin-top:8px}
+  .steps li{position:relative;padding:16px 0 16px 56px;border-bottom:1px solid var(--glass-border)}
+  .steps li::before{counter-increment:st;content:counter(st);position:absolute;left:0;top:14px;
+    width:36px;height:36px;border-radius:50%;background:var(--accent);color:#000;font-weight:700;
+    display:flex;align-items:center;justify-content:center;font-size:.9rem}
+  .steps li b{color:var(--text-main)}
+  .steps li span{color:var(--text-sub);font-size:.95rem;display:block}
+
+  /* faq */
+  .faq details{border-bottom:1px solid var(--glass-border);padding:16px 0}
+  .faq summary{font-weight:700;cursor:pointer;list-style:none;color:var(--text-main);font-size:1rem;font-family:var(--sans)}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::before{content:"Q ";color:var(--accent)}
+  .faq details[open] summary{margin-bottom:8px}
+  .faq p{color:var(--text-sub);font-size:.95rem}
+
+  /* cta band */
+  .ctaband{background:var(--glass-bg-solid);border-top:1px solid var(--glass-border);border-bottom:1px solid var(--glass-border);text-align:center}
+  .ctaband h2{color:var(--text-main)}
+  .ctaband .lead{color:var(--text-sub)}
+  .ctaband .contact{margin-top:20px;font-size:.9rem;color:var(--text-faint)}
+
+  footer{background:var(--bg-dark);color:var(--text-faint);font-size:.68rem;font-family:var(--label);padding:36px 0;border-top:1px solid var(--glass-border)}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+  @media(max-width:820px){
+    .hero h1{font-size:2rem}
+    .grid,.vlist,.phases,.plans,.pvar{grid-template-columns:1fr}
+    section{padding:56px 0}
+    h2{font-size:1.5rem}
+    table{font-size:.86rem}
+    th,td{padding:9px 10px}
+    .shelf{gap:10px}
+    .bk{width:110px;height:154px}
+    .bk.you{width:132px;height:178px}
+  }
+</style>
+</head>
+<body>
+<div class="bg-mesh"></div>
+
+<div class="topbar">
+  <span class="name">Kindle出版プロデュース</span>
+  <a class="cta" href="#contact">無料相談する</a>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">「いつか本を出したい」個人・専門家・経営者の方へ</p>
+    <h1>あなたの知見を、<br><span class="o">一冊のKindle本に。</span></h1>
+    <p class="sub">企画・構成から執筆サポート、表紙・図版、KDPへの入稿・出版、そして出版後の運用まで。<br>
+      一気通貫で伴走します。窓口は一本、中間マージンなし、無理のない価格で。<br>
+      外資系ブランドコンサルティング、大手流通のブランド担当（管理職）として25年に渡り、価値を抽出し、戦略として創りあげる業務に携わってきました。この経験を基にご支援させて頂きます。</p>
+    <div class="actions">
+      <a class="btn" href="#contact">まずは無料相談（30〜45分）</a>
+      <a class="btn ghost" href="#flow">進め方を見る</a>
+    </div>
+
+    <div class="shelf">
+      <div class="bk"><div class="band"></div><div class="ln" style="width:70%"></div><div class="ln" style="width:48%"></div><div class="ln" style="width:60%"></div></div>
+      <div class="bk you">
+        <div class="band">YOUR BOOK</div>
+        <div class="ttl">あなたの<br>知見を<br><span class="o">一冊に</span></div>
+        <div class="bar"></div>
+      </div>
+      <div class="bk"><div class="band"></div><div class="ln" style="width:66%"></div><div class="ln" style="width:52%"></div><div class="ln" style="width:44%"></div></div>
+    </div>
+  </div>
+</header>
+
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="wrap">
+    <h2><span class="en">THE PROBLEM</span>「出したい」の前に立ちはだかる壁</h2>
+    <p class="lead">「いつか本を」と思いながら、多くの方が手前で止まっています。理由は3つです。</p>
+    <div class="grid">
+      <div class="card"><h3>商業出版の壁</h3><p>企画の持ち込みは狭き門。刊行まで1年以上かかることも多く、テーマや書き方の決定権は出版社側にあります。</p></div>
+      <div class="card"><h3>自費出版の壁</h3><p>費用は数百万円規模になりがち。刷って終わりで、読者に届ける「場」がないことも少なくありません。</p></div>
+      <div class="card"><h3>自力でKindleの壁</h3><p>やることが多すぎる。企画・執筆・整形・表紙・入稿・KDP設定・販促……途中で力尽きて下書きのまま。</p></div>
+    </div>
+    <p class="note">「ちゃんとした品質で、出版まで伴走してもらえて、現実的な費用で」――その答えとして、個人でこのプロデュースをお引き受けしています。</p>
+  </div>
+</section>
+
+<!-- WHY -->
+<section id="why" style="background:rgba(255,255,255,.02)">
+  <div class="wrap">
+    <h2><span class="en">WHY A BOOK</span>なぜ、いま「Kindle出版」なのか</h2>
+    <p class="lead">名刺は増えていく。SNSは流れていく。一冊の本は、残る。</p>
+    <div class="grid">
+      <div class="card"><span class="num">01</span><h3>信頼の証明になる</h3><p>ひとつのテーマを一冊分、体系立てて語れることの証明。肩書きやフォロワー数とは別の説得力が生まれます。</p></div>
+      <div class="card"><span class="num">02</span><h3>集客・出会いの入口になる</h3><p>「本を読みました」から始まる相談・依頼・登壇。検索とレコメンドで、まだ会っていない読者に届きます。</p></div>
+      <div class="card"><span class="num">03</span><h3>資産として残り続ける</h3><p>一度出せば24時間販売され続ける、在庫リスクゼロの資産。改訂やシリーズ化で育てていけます。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUE -->
+<section id="value">
+  <div class="wrap">
+    <h2><span class="en">WHAT I DO</span>ご提供する価値</h2>
+    <p class="lead">企画からKDP出版、出版後の初期運用まで。窓口はひとり、一気通貫で伴走します。</p>
+    <div class="vlist">
+      <div class="v"><span class="n">1</span><div><b>企画設計</b><br><span>「誰に・何を・なぜあなたが語るのか」を、目的から逆算して一冊のかたちに設計</span></div></div>
+      <div class="v"><span class="n">2</span><div><b>原稿制作サポート</b><br><span>取材ヒアリングを起点に、構成づくり・執筆・編集。話せれば形になります</span></div></div>
+      <div class="v"><span class="n">3</span><div><b>表紙・図版制作</b><br><span>サムネイルで手が止まらない表紙、内容が伝わる図版・イラスト（難易度別）</span></div></div>
+      <div class="v"><span class="n">4</span><div><b>入稿・出版代行</b><br><span>本文整形・KDP入稿データ作成、キーワード・カテゴリ設定、公開まで代行</span></div></div>
+      <div class="v"><span class="n">5</span><div><b>出版後の初期運用</b><br><span>レビュー導線、A+コンテンツ、価格・キーワード調整、シリーズ展開の相談</span></div></div>
+      <div class="v"><span class="n">6</span><div><b>個人ならではの小回り</b><br><span>連絡が速く、中間マージンがないぶん費用も抑えられます</span></div></div>
+    </div>
+    <p class="note" style="margin-top:16px">Kindleで電子書籍のみでなく、ペーパーバックづくりのご対応もご相談お受けします。</p>
+  </div>
+</section>
+
+<!-- FLOW -->
+<section id="flow" style="background:rgba(255,255,255,.02)">
+  <div class="wrap">
+    <h2><span class="en">HOW IT WORKS</span>進め方 ― 4つのフェーズ</h2>
+    <p class="lead">原稿量・写真/イラストの点数・ご自身で書く範囲によって期間は前後します。</p>
+    <div class="phases">
+      <div class="phase"><span class="en">PLAN</span><h3>1. 企画設計</h3><p>目的・読者・ゴールとタイトル・目次構成を固める。写真/イラストの要否も見積り。</p><small>目安 1〜2週</small></div>
+      <div class="phase"><span class="en">WRITE</span><h3>2. 原稿制作</h3><p>取材ヒアリング → 執筆・編集・校正。章ごとにご確認いただきます。</p><small>目安 3〜8週</small></div>
+      <div class="phase"><span class="en">BUILD</span><h3>3. 制作・入稿</h3><p>表紙・図版制作、本文整形、KDP入稿データ作成、端末プレビュー確認。</p><small>目安 2〜3週</small></div>
+      <div class="phase"><span class="en">LAUNCH</span><h3>4. 出版・運用</h3><p>KDP登録・公開、キーワード最適化、告知文案、30日間のデータで調整。</p><small>目安 4週〜</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- DELIVERABLES -->
+<section id="deliverables">
+  <div class="wrap">
+    <h2><span class="en">DELIVERABLES</span>制作物・納品物</h2>
+    <p class="lead">図版・原稿の元データはすべてお渡しします。著作権・使用範囲は契約書で取り決めます。</p>
+    <table>
+      <thead><tr><th>フェーズ</th><th>主な納品物</th></tr></thead>
+      <tbody>
+        <tr><td>企画設計</td><td>企画書／目次構成案／タイトル候補／制作見積り（稼働時間・図版点数・難易度）／スケジュール表</td></tr>
+        <tr><td>原稿制作</td><td>章ごとの原稿／編集・校正済みの完成原稿</td></tr>
+        <tr><td>制作・入稿</td><td>表紙データ／図版・イラスト（元データ含む）／整形済み本文／KDP入稿用データ一式</td></tr>
+        <tr><td>出版・運用</td><td>公開済みKindle書籍／内容紹介文・キーワード設定／告知文案／30日レポート（オプション）</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- PROOF -->
+<section id="proof" style="background:rgba(255,255,255,.02)">
+  <div class="wrap">
+    <h2><span class="en">TRACK RECORD</span>実績</h2>
+    <p class="lead">企画・執筆・整形・表紙・入稿・KDP設定まで、すべて自分の手で回してきた工程です。</p>
+    <div class="stats">
+      <div class="stat"><div class="big">40</div><span>冊の自己出版実績</span></div>
+      <div class="stat alt"><div class="big">1</div><span>クライアント書籍を制作中</span></div>
+    </div>
+    <div class="vlist">
+      <div class="v"><span class="n">•</span><div><b>回してきた工程</b><br><span>テーマ選定・市場調査・構成・執筆・編集・表紙・図版・整形・入稿・キーワード設計・価格調整</span></div></div>
+      <div class="v"><span class="n">•</span><div><b>得意分野</b><br><span>ビジネス書／実用書／副業・スモールビジネス系。US市場で伸びたテーマの日本市場への持ち込み</span></div></div>
+      <div class="v"><span class="n">•</span><div><b>現在</b><br><span>はじめてのクライアント案件として書籍1冊を進行中。少数だからこそ丁寧に伴走します</span></div></div>
+    </div>
+    <p style="margin-top:24px"><a class="btn" href="作品一覧.html">制作した書籍の一覧を見る</a></p>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="wrap">
+    <h2><span class="en">PRICING</span>料金の考え方</h2>
+    <p class="lead">個人で活動しているぶん、価格は抑えめ。金額は「固定」ではなく、次の2つで変動します。</p>
+    <div class="pvar">
+      <div class="p">
+        <h3>① 取り掛かる時間数（稼働時間）</h3>
+        <ul>
+          <li>どの工程を、どこまでお任せいただくか</li>
+          <li>取材の回数、執筆量、修正の回数</li>
+          <li>ご自身で書く範囲が広いほど費用は下がります</li>
+          <li>「作業時間 × 単価」で算出し、着手前に提示します</li>
+        </ul>
+      </div>
+      <div class="p">
+        <h3>② 写真・イラスト制作の難易度</h3>
+        <ul>
+          <li>図版・イラスト・写真の「点数」と「難易度」</li>
+          <li>簡単な図表か、オリジナルイラストか</li>
+          <li>撮影・加工の有無、漫画パートの有無</li>
+          <li>難易度A〜Cの区分で1点あたりの単価が変わります</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="plans">
+      <div class="plan">
+        <h3>ライト</h3>
+        <p class="who">自分で書ける。要所だけ見てほしい方に</p>
+        <ul>
+          <li>企画設計＋編集・校正＋入稿アドバイス</li>
+          <li>表紙・図版はオプション</li>
+          <li>納期の目安：3〜5週</li>
+        </ul>
+        <p class="price">50,000円〜（税込）</p>
+      </div>
+      <div class="plan reco">
+        <h3>スタンダード</h3>
+        <p class="who">話せる。書くのは任せたい方に</p>
+        <ul>
+          <li>企画設計＋執筆代行＋編集＋入稿代行</li>
+          <li>表紙1点込み／図版は難易度別</li>
+          <li>納期の目安：6〜10週</li>
+        </ul>
+        <p class="price">150,000円〜（税込）</p>
+      </div>
+      <div class="plan">
+        <h3>フルサポート</h3>
+        <p class="who">全部任せて出版まで伴走してほしい方に</p>
+        <ul>
+          <li>企画〜執筆〜表紙・図版〜出版〜初期運用</li>
+          <li>表紙＋図版一式（難易度別で加算）</li>
+          <li>納期の目安：8〜14週</li>
+        </ul>
+        <p class="price">300,000円〜（税込）</p>
+      </div>
+    </div>
+    <p class="note">※ お支払いは着手金50%／納品時50%（銀行振込）。時間精算（1時間 5,000円〜）でのご依頼も可能です。</p>
+
+    <h3 style="margin:34px 0 4px;color:var(--text-main)">写真・イラストの難易度別料金（目安）</h3>
+    <table>
+      <thead><tr><th>難易度</th><th>内容の例</th><th>1点あたり目安（税込）</th></tr></thead>
+      <tbody>
+        <tr><td>A（かんたん）</td><td>既存素材の調整、シンプルな図表・チャート、AI生成画像の軽微な加工</td><td>1,000円〜</td></tr>
+        <tr><td>B（ふつう）</td><td>オリジナルの図解・インフォグラフィック、写真の撮影・レタッチ</td><td>3,000円〜<br><span style="font-size:.82rem;color:var(--text-faint)">プロのカメラマンを起用する場合、別途お見積となります。</span></td></tr>
+        <tr><td>C（むずかしい）</td><td>オリジナルイラスト、複雑な作図、キャラクター、漫画パート</td><td>8,000円〜／イラスト作家様起用の場合、別途見積</td></tr>
+        <tr><td>表紙デザイン</td><td>コンセプト設計、2案提示＋修正</td><td>10,000円〜（難易度で変動）</td></tr>
+      </tbody>
+    </table>
+    <p class="note">※ 点数・難易度は企画設計フェーズで一覧化し、合計金額を確定してから制作に入ります。外部の有料素材・フォントは実費を別途申し受けます。</p>
+  </div>
+</section>
+
+<!-- STEPS -->
+<section id="steps" style="background:rgba(255,255,255,.02)">
+  <div class="wrap">
+    <h2><span class="en">AFTER YOU SIGN</span>ご契約後のステップ</h2>
+    <p class="lead">各ステップの区切りで、必ずご承認をいただいてから次に進みます。</p>
+    <ol class="steps">
+      <li><b>ご契約・着手金</b><span>業務委託契約書を締結（業務範囲・料金・著作権・秘密保持・修正回数を明記）。着手金50%をお支払い。</span></li>
+      <li><b>キックオフMTG</b><span>オンライン60分。目的・読者・ゴール・スケジュール・連絡方法をすり合わせ。</span></li>
+      <li><b>企画確定</b><span>企画書・目次構成案・制作見積り（稼働時間／図版点数・難易度）を提示 → ご承認で確定。</span></li>
+      <li><b>原稿制作</b><span>取材ヒアリング → 執筆・編集。章ごとにご確認いただき、修正して次章へ。</span></li>
+      <li><b>表紙・図版制作</b><span>点数と難易度を確定し制作。ラフ → 修正 → 確定。</span></li>
+      <li><b>入稿データ作成</b><span>本文整形、KDP入稿用データ・表紙データを作成し、端末プレビューで確認。</span></li>
+      <li><b>KDP登録・出版</b><span>書誌情報・価格・キーワード・カテゴリを設定し、公開。</span></li>
+      <li><b>出版後の初期運用</b><span>告知文案、レビュー導線、30日間のデータを見た調整（オプション）。</span></li>
+      <li><b>納品・残金お支払い</b><span>原稿・図版の元データ一式を納品。残金50%をお支払い。実績としての掲載可否を確認。</span></li>
+    </ol>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="wrap faq">
+    <h2><span class="en">FAQ</span>よくあるご質問</h2>
+    <details><summary>文章を書くのが苦手でも大丈夫ですか？</summary>
+      <p>はい。取材ヒアリングでお話を伺い、こちらで執筆します。原稿のご用意は不要です。話せる内容があれば一冊になります。</p></details>
+    <details><summary>本の著者は誰になりますか？権利はどうなりますか？</summary>
+      <p>著者はあなたご本人です。完成した書籍・原稿・図版の著作権は、原則として納品後にあなたへ帰属します（契約書に明記）。</p></details>
+    <details><summary>費用が「〜円」表記なのはなぜですか？</summary>
+      <p>お任せいただく工程の範囲（稼働時間）と、写真・イラストの点数・難易度で変わるためです。企画設計フェーズで合計金額を確定し、着手前にお見積りを提示します。</p></details>
+    <details><summary>KDPのアカウントを持っていません。</summary>
+      <p>アカウント作成・初期設定からサポートします。出版作業も代行可能です（ロイヤリティの受取口座などご本人設定が必要な項目は一緒に進めます）。</p></details>
+    <details><summary>どのくらい売れますか？</summary>
+      <p>出版までを伴走するサービスであり、売上・ランキング・レビュー数を保証するものではありません。売れやすい企画設計と発売直後の立ち上げまではご一緒します。</p></details>
+    <details><summary>対応できないテーマはありますか？</summary>
+      <p>政治・宗教・スピリチュアル・ネットワークビジネスの勧誘、他者の権利を侵害する内容はお受けできません。</p></details>
+    <details><summary>対応エリアは？</summary>
+      <p>オンライン中心で全国対応可能です。</p></details>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="contact" class="ctaband">
+  <div class="wrap">
+    <h2><span class="en">GET STARTED</span>この一冊を、ご一緒に。</h2>
+    <p class="lead">まずは無料相談（30〜45分）で、テーマ・進め方・費用感をすり合わせるところから。<br>売り込みはしません。お気軽にご相談ください。</p>
+    <a class="btn" href="mailto:your-address@example.com?subject=Kindle出版プロデュースの相談&amp;body=テーマ（仮）／出版の目的／ご希望時期／ご予算感／写真・イラストの要否をご記入ください。">メールで相談する</a>
+    <p class="contact">草野　健 / ペンネーム　たけ＠モダンロジック（個人事業主　適格請求書発行事業者）</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Kindle出版プロデュース　／　たけ＠モダンロジック</span>
+    <span>※ Amazon、Kindle は Amazon.com, Inc. またはその関連会社の商標です。</span>
+  </div>
+</footer>
+
+</body>
+</html>
