@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>開発WEBアプリ一覧</title>
+<meta name="description" content="WEBアプリフォルダ内で開発した単一HTML製品の一覧。名前・目的・用途・希望販売価格をまとめたカタログ。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600;700&family=Noto+Serif+JP:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary:#0f172a;
+    --accent:#d4af37;
+    --accent-glow:rgba(212,175,55,.4);
+    --accent2:#38bdf8;
+    --accent2-glow:rgba(56,189,248,.35);
+    --text-main:#f8fafc;
+    --text-sub:#94a3b8;
+    --text-faint:#64748b;
+    --bg-dark:#020617;
+    --glass-bg:rgba(15,23,42,.7);
+    --glass-bg-solid:#0f172a;
+    --glass-border:rgba(255,255,255,.1);
+    --card-bg:#1e293b;
+    --field-bg:rgba(2,6,23,.55);
+    --good:#4ade80;
+    --warn:#fbbf24;
+    --crit:#f87171;
+    --transition:all .4s cubic-bezier(.16,1,.3,1);
+    --radius:18px;
+    --serif:Georgia,"Times New Roman","Yu Mincho","Hiragino Mincho ProN","Noto Serif JP",serif;
+    --sans:"Inter",system-ui,-apple-system,"Segoe UI","Hiragino Sans","Yu Gothic","Noto Sans JP",sans-serif;
+    --label:ui-monospace,"SFMono-Regular","Menlo",Consolas,"Courier New",monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  [hidden]{display:none!important;}
+  html,body{min-height:100%;}
+  body{
+    background:var(--bg-dark);color:var(--text-main);
+    font-family:var(--sans);font-size:15px;line-height:1.8;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  .bg-mesh{
+    position:fixed;inset:0;z-index:-1;
+    background:
+      radial-gradient(circle at 8% 12%, rgba(212,175,55,.06) 0%, transparent 38%),
+      radial-gradient(circle at 92% 88%, rgba(56,189,248,.06) 0%, transparent 40%),
+      radial-gradient(circle at 12% 88%, rgba(15,23,42,.9) 0%, transparent 42%),
+      radial-gradient(circle at 88% 8%, rgba(30,41,59,.8) 0%, transparent 42%),
+      var(--bg-dark);
+  }
+  h1,h2,h3,h4{font-family:var(--serif);font-weight:700;letter-spacing:-.01em;line-height:1.4;text-wrap:balance;}
+  .title-accent{background:linear-gradient(90deg,#d4af37,#fde68a);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  .title-accent2{background:linear-gradient(90deg,#38bdf8,#bae6fd);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  a{color:var(--accent);text-decoration:none;}
+  ::selection{background:var(--accent);color:#000;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px 90px;}
+
+  header.top{
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+    padding:20px 0;border-bottom:1px solid var(--glass-border);margin-bottom:36px;flex-wrap:wrap;
+  }
+  .brandmark{font-family:var(--label);font-size:.82rem;letter-spacing:.08em;color:var(--text-sub);}
+  .brandmark b{color:var(--accent);}
+  .credit{font-family:var(--label);font-size:.62rem;letter-spacing:.1em;color:#f4463b;font-weight:700;text-transform:lowercase;}
+
+  .hero{padding:20px 0 10px;}
+  .eyebrow{display:inline-block;font-family:var(--label);font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent);background:rgba(212,175,55,.08);border-radius:999px;padding:5px 16px;margin-bottom:16px;}
+  .hero h1{font-size:clamp(28px,4.2vw,42px);margin-bottom:14px;}
+  .hero p{max-width:720px;color:var(--text-sub);font-size:.98rem;}
+
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:32px 0;}
+  .stat{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:14px;padding:16px 18px;backdrop-filter:blur(6px);}
+  .stat .n{font-family:var(--serif);font-size:1.8rem;color:var(--accent);}
+  .stat .l{font-size:.76rem;color:var(--text-sub);margin-top:2px;}
+
+  .cat{margin-top:44px;}
+  .cat-head{display:flex;align-items:baseline;gap:12px;margin-bottom:16px;border-bottom:1px solid var(--glass-border);padding-bottom:10px;}
+  .cat-head .num{font-family:var(--label);font-size:.72rem;color:var(--accent2);}
+  .cat-head h2{font-size:1.25rem;}
+  .cat-head .count{margin-left:auto;font-family:var(--label);font-size:.7rem;color:var(--text-faint);}
+
+  table{width:100%;border-collapse:collapse;}
+  .prodtable{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:var(--radius);overflow:hidden;backdrop-filter:blur(6px);}
+  .prodtable th{
+    text-align:left;font-family:var(--label);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--text-faint);padding:10px 16px;border-bottom:1px solid var(--glass-border);background:rgba(255,255,255,.02);
+  }
+  .prodtable td{padding:14px 16px;border-bottom:1px solid var(--glass-border);vertical-align:top;font-size:.86rem;}
+  .prodtable tr:last-child td{border-bottom:none;}
+  .prodtable tr:hover td{background:rgba(255,255,255,.02);}
+  .pname{font-weight:700;color:var(--text-main);display:block;}
+  .pname a{color:inherit;}
+  .pname a:hover{color:var(--accent);}
+  .pfiles{font-family:var(--label);font-size:.66rem;color:var(--text-faint);margin-top:3px;display:block;}
+  .ppurpose{color:var(--text-sub);font-size:.82rem;line-height:1.65;}
+  .puse{color:var(--text-sub);font-size:.8rem;}
+  .pprice{font-family:var(--label);font-weight:700;color:var(--accent);white-space:nowrap;font-size:.82rem;}
+  .pprice.est{color:var(--text-sub);font-weight:500;}
+  .pprice .note{display:block;font-family:var(--sans);font-weight:400;font-size:.68rem;color:var(--text-faint);margin-top:2px;}
+  .sub-list{margin:4px 0 0;padding-left:1.1em;font-size:.78rem;color:var(--text-faint);}
+  .sub-list li{margin:1px 0;}
+  .sub-list a{color:var(--text-sub);}
+  .sub-list a:hover{color:var(--accent);}
+
+  .legend{margin-top:52px;padding:20px 24px;border-radius:14px;background:var(--glass-bg);border:1px solid var(--glass-border);font-size:.82rem;color:var(--text-sub);backdrop-filter:blur(6px);}
+  .legend b{color:var(--text-main);}
+
+  .footer{margin-top:40px;text-align:center;font-family:var(--label);font-size:.68rem;color:var(--text-faint);}
+
+  @media (max-width:820px){
+    .prodtable, .prodtable thead{display:block;}
+    .prodtable thead{display:none;}
+    .prodtable tr{display:block;padding:14px 16px;border-bottom:1px solid var(--glass-border);}
+    .prodtable td{display:block;padding:4px 0;border:none;}
+    .prodtable td:before{content:attr(data-label);display:block;font-family:var(--label);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text-faint);margin-bottom:2px;}
+  }
+</style>
+</head>
+<body>
+<div class="bg-mesh"></div>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brandmark"><b>WEB</b>アプリ / Product Catalog</div>
+    <span class="credit">takeshi kusano &middot; under development</span>
+  </header>
+
+  <section class="hero">
+    <span class="eyebrow">DEVELOPED WEB APPS</span>
+    <h1>これまでに開発した<br><span class="title-accent">単一HTML製品</span>の<span class="title-accent2">一覧</span>。</h1>
+    <p>WEBアプリフォルダ内で開発した単一HTMLファイル製品をカテゴリ別にまとめました。すべてサーバー運用不要・ブラウザ完結型で、名前・目的・用途・希望販売価格を掲載しています。価格は既存の価格帯提案チラシがあるものは実際の主力プラン（A案）を、未作成のものは同シリーズの相場観からの参考値（未確定）です。</p>
+  </section>
+
+  <div class="stats">
+    <div class="stat"><div class="n">33</div><div class="l">製品・製品群</div></div>
+    <div class="stat"><div class="n">9</div><div class="l">カテゴリ</div></div>
+    <div class="stat"><div class="n">12</div><div class="l">価格帯提案チラシ作成済み</div></div>
+    <div class="stat"><div class="n">¥0〜29,800</div><div class="l">個人向け価格帯レンジ</div></div>
+  </div>
+
+  <!-- 01 マーケティング運用 -->
+  <section class="cat">
+    <div class="cat-head"><span class="num">CATEGORY 01</span><h2>マーケティング運用</h2><span class="count">9 製品</span></div>
+    <div class="prodtable">
+      <table>
+        <thead><tr><th style="width:24%;">名前</th><th style="width:34%;">目的</th><th style="width:24%;">用途</th><th style="width:18%;">希望販売価格</th></tr></thead>
+        <tbody>
+          <tr>
+            <td data-label="名前"><span class="pname"><a href="modernmarketing/文言アプローチ/文言アプローチツール.html">文言アプローチツール</a></span><span class="pfiles">21ステップ・7カテゴリ</span></td>
+            <td data-label="目的"><span class="ppurpose">資料読込からブランド価値抽出、消費者インサイト・ペルソナ・カスタマージャーニー、SNS・広告・LP・キャッチコピー・出版企画、文章表現の磨き込みまでをAIプロンプト化する統合ツール</span></td>
+            <td data-label="用途"><span class="puse">広報・PR担当者、コピーライター、ブランディング会社</span></td>
+            <td data-label="希望販売価格"><span class="pprice">¥14,800〜19,800</span></td>
+          </tr>
+          <tr>
+            <td data-label="名前"><span class="pname"><a href="modernmarketing/コンテンツ戦略/content-strategy-app.html">Content Compass</a></span></td>
+            <td data-label="目的"><span class="ppurpose">コンテンツ戦略の立案・カレンダー管理・運用状況の可視化</span></td>
+            <td data-label="用途"><span class="puse">編集チーム、SNS/オウンドメディア運用担当</span></td>
+            <td data-label="希望販売価格"><span class="pprice">¥5,800〜8,800</span></td>
+          </tr>
+          <tr>
+            <td data-label="名前"><span class="pname"><a href="modernmarketing/AI_SearchVisibility/ai-search-visibility.html">Answer Engine Radar</a></span></td>
+            <td data-label="目的"><span class="ppurpose">ChatGPT等のAI検索エンジンにおける自社の露出状況を可視化・改善提案</span></td>
+            <td data-label="用途"><span class="puse">SEO/AEO担当者</span></td>
+            <td data-label="希望販売価格"><span class="pprice est">¥9,800〜14,800<span class="note">参考価格・未確定</span></span></td>
+          </tr>
+          <tr>
+            <td data-label="名前"><span class="pname"><a href="modernmarketing/SEO&OrganicSearch/organic-search-desk.html">Organic Search Desk</a></span></td>
+            <td data-label="目的"><span class="ppurpose">オーガニック検索（SEO）の施策・順位・流入の運用管理</span></td>
+            <td data-label="用途"><span class="puse">SEO担当者</span></td>
+            <td data-label="希望販売価格"><span class="pprice est">¥9,800〜14,800<span class="note">参考価格・未確定</span></span></td>
+          </tr>
+          <tr>
+            <td data-label="名前"><span class="pname"><a href="modernmarketing/PaidPerformance/paid-performance-desk.html">Paid Performance Desk</a></span></td>
+            <td data-label="目的"><span class="ppurpose">リスティング・ディスプレイ等の広告運用パフォーマンス管理</span></td>
+            <td data-label="用途"><span class="puse">広告運用担当者</span></td>
+            <td data-label="希望販売価格"><span class="pprice est">¥9,800〜14,800<span class="note">参考価格・未確定</span></span></td>
+          </tr>
+          <tr>
+            <td data-label="名前"><span class="pname"><a href="modernmarketing/CorporatePR/corporate-pr-desk.html">Corporate PR Desk</a></span></td>
+            <td data-label="目的"><span class="ppurpose">プレスリリース・メディアリスト・広報活動の統合管理</span></td>
+            <td data-label="用途"><span class="puse">広報担当者</span></td>
+            <td data-label="希望販売価格"><span class="pprice">¥12,800〜16,800</span></td>
+          </tr>
+          <tr>
+            <td data-label="名前"><span class="pname"><a href="GrowthMarketing/growth-marketing-desk.html">Growth Marketing Desk</a></span></td>
+            <td data-label="目的"><span class="ppurpose">グロースマーケティングの実行管理（AAARRRファネル・ボトルネック診断・ICE施策評価・実験カンバン）</span></td>
+            <td data-label="用途"><span class="puse">グロースマーケター、事業責任者</span></td>
+            <td data-label="希望販売価格"><span class="pprice est">¥9,800〜14,800<span class="note">参考価格・未確定</span></span></td>
+          </tr>
+          <tr>
+            <td data-label="名前"><span class="pname"><a href="戦略企画ツール/新規事業ワークフロー・スイート/新規事業ワークフロー.html">新規事業ワークフロー・スイート</a></span><span class="pfiles">7ツール＋ハブ</span></td>
+            <td data-label="目的"><span class="ppurpose">市場調査・市場規模推定・意思決定・事業戦略企画・ピッチ・グロース運用・財務インパクト試算までを一気通貫でカバー</span>
+              <ul class="sub-list">
+                <li><a href="戦略企画ツール/新規事業ワークフロー・スイート/羅針盤リサーチ.html">羅針盤リサーチ</a></li>
+                <li><a href="戦略企画ツール/新規事業ワークフロー・スイート/市場規模推定.html">市場規模推定</a></li>
+                <li><a href="戦略企画ツール/新規事業ワークフロー・スイート/コンテスタブル市場診断.html">コンテスタブル市場診断</a></li>
+                <li><a href="戦略企画ツール/新規事業ワークフロー・スイート/エフェクチュエーション.html">エフェクチュエーション</a></li>
+                <li><a href="戦略企画ツール/新規事業ワークフロー・スイート/戦略企画ツール.html">事業戦略企画ツール</a></li>
+                <li><a href="戦略企画ツール/新規事業ワークフロー・スイート/ピッチストーリー.html">ピッチストーリー</a></li>
+                <li><a href="戦略企画ツール/新規事業ワークフロー・スイート/財務インパクトシミュレーション.html">財務インパクトシミュレーション</a></li>
+              </ul>
+            </td>
+            <td data-label="用途"><span class="puse">起業家・新規事業担当者、コンサルタント</span></td>
+            <td data-label="希望販売価格"><span class="pprice">¥14,800〜19,800</span></td>
+          </tr>
+          <tr>
+            <td data-label="名前"><span class="pname"><a href="採用ブランディングマーケティング/saiyo-marketing-tool.html">採用ブランディング・マーケティング推進ツール</a></span></td>
+            <td data-label="目的"><span class="ppurpose">要件定義・採用の基本方程式（必要応募数逆算）・チャネル選定・EVP設計・求人票/SNS発信文作成・進捗管理・JD一覧までを一気通貫</span></td>
+            <td data-label="用途"><span class="puse">採用担当者、人事責任者</span></td>
+            <td data-label="希望販売価格"><span class="pprice est">¥9,800〜14,800<span class="note">参考価格・未確定</span></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 02 組織・人材マネジメント -->
+  <section class="cat">
+    <div class="cat-head"><span class="num">CATEGORY 02</span><h2>組織・人材マネジメント</h2><span class="count">7 製品</span></div>
+    <div class="prodtable">
+      <table>
+        <thead><tr><th style="width:24%;">名前</th><th style="width:34%;">目的</th><th style="width:24%;">用途</th><th style="width:18%;">希望販売価格</th></tr></thead>
+        <tbody>
+          <tr>
+            <td data-label="名前"><span class="pname"><a href="CRM/crm-desk.html">CRM Desk</a></span></td>
+            <td data-label="目的"><span class="ppurpose">コンタクト・会社・パイプライン・タスク・メールトラッキングを一元管理する営業CRM</span></td>
+            <td data-label="用途"><span class="puse">営業担当者・営業マネージャー</span></td>
+            <td data-label="希望販売価格"><span class="pprice est">¥9,800〜14,800<span class="note">参考価格・未確定</span></span></td>
+          </tr>
+          <tr>
+            <td data-label="名前"><span class="pname"><a href="HRKPI/hr-kpi-dashboard.html">People Metrics Desk</a></span><span class="pfiles">10種のKPI</span></td>
+            <td data-label="目的"><span class="ppurpose">離職率・採用充足日数・エンゲージメント等10種の人事KPIダッシュボード</span></td>
+            <td data-label="用途"><span class="puse">人事担当者</span></td>
+            <td data-label="希望販売価格"><span class="pprice est">¥9,800〜14,800<span class="note">参考価格・未確定</span></span></td>
+          </tr>
+          <tr>
+            <td data-label="名前"><span class="pname"><a href="ProjectDesk/project-desk.html">Project Desk</a></span><span class="pfiles">8画面＋AI活用研修36レッスン</span></td>
+            <td data-label="目的"><span class="ppurpose">ダッシュボード・WBS・かんばん・ガント・予算・リスクを1本で完結させるプロジェクト管理</span></td>
+            <td data-label="用途"><span class="puse">フリーランス、小規模チーム、PM</span></td>
+            <td data-label="希望販売価格"><span class="pprice">¥6,800〜9,800</span></td>
+          </tr>
+          <tr>
+            <td data-label="名前"><span class="pname"><a href="トップ層ブランディング/index.html">トップ層ブランディング研修＋不安整理地図</a></span><span class="pfiles">2アプリ連動</span></td>
+            <td data-label="目的"><span class="ppurpose">経営層の可視性向上10ステップ研修と、経営者特有の不安（資金・孤独・決断疲れ）を整理するワークシート</span></td>
+            <td data-label="用途"><span class="puse">中小企業経営者、個人事業主、役員</span></td>
+            <td data-label="希望販売価格"><span class="pprice est">¥9,800〜14,800<span class="note">参考価格・未確定</span></span></td>
+          </tr>
+          <tr>
+            <td data-label="名前"><span class="pname"><a href="PharmacyShift/pharmacy-shift-tool.html">調剤薬局 シフト管理ツール</a></span></td>
+            <td data-label="目的"><span class="ppurpose">複数店舗の必要人数・薬剤師配置義務・労働時間上限を考慮したシフト自動作成と変更履歴管理</span></td>
+            <td data-label="用途"><span class="puse">調剤薬局チェーンの本部人事・エリアマネージャー</span></td>
+            <td data-label="希望販売価格"><span class="pprice">個人¥8,800〜12,800／法人¥148,000〜</span></td>
+          </tr>
+          <tr>
+            <td data-label="名前"><span class="pname"><a href="鈴木たいせつ・西田幾多郎から学ぶ経営/training_app.html">答えを急がない経営 トレーニングアプリ</a></span><span class="pfiles">学習＋クイズ＋実践ツール＋ノート＋90日＋ピッチ資料</span></td>
+            <td data-label="目的"><span class="ppurpose">西田幾多郎・鈴木大拙の8つの思考法を会議・意思決定・組織づくり・自分自身の4場面で使えるよう鍛える書籍連動トレーニングアプリ</span></td>
+            <td data-label="用途"><span class="puse">書籍読者、経営者・管理職研修</span></td>
+            <td data-label="希望販売価格"><span class="pprice">無料（書籍販促用）</span></td>
+          </tr>
+          <tr>
+            <td data-label="名前"><span class="pname"><a href="プロセス思考トレーニング/process-thinking-training.html">プロセス思考トレーニング</a></span><span class="pfiles">学習＋クイズ12問＋ワークシート</span></td>
+            <td data-label="目的"><span class="ppurpose">「なんとなくの仕事」を測れる「プロセス」に変える実務トレーニング。PDCA/PPDACの使い分けを学び、自分の業務をワークシートに落とし込む</span></td>
+            <td data-label="用途"><span class="puse">研修担当、業務改善を進めるマネージャー</span></td>
+            <td data-label="希望販売価格"><span class="pprice est">¥5,800〜8,800<span class="note">参考価格・未確定</span></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 03 キャリア支援 -->
+  <section class="cat">
+    <div class="cat-head"><span class="num">CATEGORY 03</span><h2>キャリア支援</h2><span class="count">3 製品群</span></div>
+    <div class="prodtable">
+      <table>
+        <thead><tr><th style="width:24%;">名前</th><th style="width:34%;">目的</th><th style="width:24%;">用途</th><th style="width:18%;">希望販売価格</th></tr></thead>
+        <tbody>
+          <tr>
+            <td data-label="名前"><span class="pname"><a href="キャリアデザイン/index.html">キャリアコンサルティング Tools</a></span><span class="pfiles">11ツール＋ハブ</span></td>
+            <td data-label="目的"><span class="ppurpose">面談（カウンセリング）→自己理解（診断・ライフチャート・強み・ブランド）→行動計画（ギャップ分析・ジョブクラフティング・職務記述書・組織適合）→統合（理論ライブラリ・報告書）</span></td>
+            <td data-label="用途"><span class="puse">キャリアコンサルタント</span></td>
+            <td data-label="希望販売価格"><span class="pprice">¥29,800</span></td>
+          </tr>
+          <tr>
+            <td data-label="名前"><span class="pname"><a href="マーケティング領域キャリア便覧/index.html">マーケティング領域キャリア便覧 Tools</a></span><span class="pfiles">4ツール</span></td>
+            <td data-label="目的"><span class="ppurpose">職種マップ（11系統48職種）・70Appスキルマップ・キャリアレベル診断・働き方タイプ診断でマーケターの現在地と選択肢を可視化</span></td>
+            <td data-label="用途"><span class="puse">キャリア相談、社内人材育成</span></td>
+            <td data-label="希望販売価格"><span class="pprice est">¥9,800〜14,800<span class="note">参考価格・未確定</span></span></td>
+          </tr>
+          <tr>
+            <td data-label="名前"><span class="pname"><a href="面白い人養成トレーニング/omoshiroi-hito-training.html">面白い人養成トレーニング</a></span><span class="pfiles">診断＋学習＋実践＋ノート＋90日ロードマップ</span></td>
+            <td data-label="目的"><span class="ppurpose">「つまらない人の特徴16選」を逆転素材に、自己診断・学習・実践チェックリスト・ノート記録・90日ロードマップで人物的魅力を鍛える研修アプリ</span></td>
+            <td data-label="用途"><span class="puse">研修担当、営業・対人職のセルフトレーニング</span></td>
+            <td data-label="希望販売価格"><span class="pprice">¥5,800〜8,800</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 04 意思決定・対人スキル -->
+  <section class="cat">
+    <div class="cat-head"><span class="num">CATEGORY 04</span><h2>意思決定・対人スキル</h2><span class="count">2 製品</span></div>
+    <div class="prodtable">
+      <table>
+        <thead><tr><th style="width:24%;">名前</th><th style="width:34%;">目的</th><th style="width:24%;">用途</th><th style="width:18%;">希望販売価格</th></tr></thead>
+        <tbody>
+          <tr>
+            <td data-label="名前"><span class="pname"><a href="Counterpart/index.html">Counterpart</a></span><span class="pfiles">5ツール＋ハブ</span></td>
+            <td data-label="目的"><span class="ppurpose">相手がいる意思決定を支援。戦略を読む・伝わる言葉にする・合意点を探る・対立の型を知る・営業力を鍛える</span>
+              <ul class="sub-list">
+                <li><a href="Counterpart/game-theory-strategy-tool.html">ゲーム理論 戦略ツール</a></li>
+                <li><a href="Counterpart/persuasion-framework-tool.html">説得の型ツール（11フレームワーク）</a></li>
+                <li><a href="Counterpart/negotiation-simulator.html">交渉シミュレーター（BATNA/ZOPA）</a></li>
+                <li><a href="Counterpart/conflict-resolution-style-tool.html">コンフリクト解決スタイルツール</a></li>
+                <li><a href="Counterpart/sales-skill-training.html">営業スキル研修（10モジュール）</a></li>
+              </ul>
+            </td>
+            <td data-label="用途"><span class="puse">営業担当者、交渉頻度の高いビジネスパーソン、研修担当</span></td>
+            <td data-label="希望販売価格"><span class="pprice">¥14,800〜19,800</span></td>
+          </tr>
+          <tr>
+            <td data-label="名前"><span class="pname"><a href="仮説提案アプリ/調剤薬局が新規事業を検証する「顧客ジョブ×仮説検証」営業研修.html">仮説提案アプリ（顧客ジョブ×仮説検証 営業研修）</a></span><span class="pfiles">全6回プログラム＋ワークブックA〜E</span></td>
+            <td data-label="目的"><span class="ppurpose">新規事業の"種"をジョブ理論（JTBD）と仮説検証思考で最短・最小に検証し、投資判断会議まで導く6回の営業研修プログラム。編集工学の「伝わる1本の線」の型を用いたピッチ構成も内包</span></td>
+            <td data-label="用途"><span class="puse">新規事業を検証する営業担当者（調剤薬局など）、研修担当</span></td>
+            <td data-label="希望販売価格"><span class="pprice est">¥9,800〜14,800<span class="note">参考価格・未確定</span></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 05 デザイン -->
+  <section class="cat">
+    <div class="cat-head"><span class="num">CATEGORY 05</span><h2>デザイン</h2><span class="count">2 製品</span></div>
+    <div class="prodtable">
+      <table>
+        <thead><tr><th style="width:24%;">名前</th><th style="width:34%;">目的</th><th style="width:24%;">用途</th><th style="width:18%;">希望販売価格</th></tr></thead>
+        <tbody>
+          <tr>
+            <td data-label="名前"><span class="pname"><a href="UIUXDesignDesk/index.html">Design Tools Hub</a></span><span class="pfiles">UIUX Design Desk + Service Design Desk</span></td>
+            <td data-label="目的"><span class="ppurpose">リサーチ・ペルソナ・ジャーニーマップ・デザインシステム・ユーザビリティテストからサービスブループリント・タッチポイント管理まで、UI/UXとサービスデザイン双方のワークフローを統合管理</span></td>
+            <td data-label="用途"><span class="puse">UI/UXデザイナー、サービスデザイナー</span></td>
+            <td data-label="希望販売価格"><span class="pprice">¥12,800〜18,800</span></td>
+          </tr>
+          <tr>
+            <td data-label="名前"><span class="pname"><a href="modernmarketing/ブランドガイドラインアプリ/index.html">ブランドガイドラインアプリ</a></span></td>
+            <td data-label="目的"><span class="ppurpose">ブランドガイドラインの管理。評判管理（Reputation Management）・信頼性シグナル（Trust &amp; Authority Signals）機能を含む</span></td>
+            <td data-label="用途"><span class="puse">ブランド管理担当、マーケティング責任者</span></td>
+            <td data-label="希望販売価格"><span class="pprice est">¥9,800〜14,800<span class="note">参考価格・未確定</span></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 06 金融・投資 -->
+  <section class="cat">
+    <div class="cat-head"><span class="num">CATEGORY 06</span><h2>金融・投資</h2><span class="count">2 製品</span></div>
+    <div class="prodtable">
+      <table>
+        <thead><tr><th style="width:24%;">名前</th><th style="width:34%;">目的</th><th style="width:24%;">用途</th><th style="width:18%;">希望販売価格</th></tr></thead>
+        <tbody>
+          <tr>
+            <td data-label="名前"><span class="pname"><a href="ファイナンス/アナリストアプリ/アナリストデスク.html">アナリストデスク</a></span><span class="pfiles">通常版／理論株価特化版</span></td>
+            <td data-label="目的"><span class="ppurpose">財務諸表の組み替え、残余利益（RI）モデルによる企業価値評価、複数モデルの理論株価算定、非上場株式の簡易評価（財産評価基本通達ベース）</span></td>
+            <td data-label="用途"><span class="puse">証券アナリスト、財務コンサルタント、M&amp;A担当者</span></td>
+            <td data-label="希望販売価格"><span class="pprice est">¥14,800〜24,800<span class="note">参考価格・未確定（専門性が高いため高め）</span></span></td>
+          </tr>
+          <tr>
+            <td data-label="名前"><span class="pname"><a href="ファイナンス/株式シミュレーター/public/index.html">日本株スイングトレード・シミュレーター</a></span><span class="pfiles">9ページ構成</span></td>
+            <td data-label="目的"><span class="ppurpose">セクター分析・銘柄の堀（Moat）評価・週次振り返り・ブレイクアウト検出など、スイングトレードの練習と銘柄分析</span></td>
+            <td data-label="用途"><span class="puse">個人投資家</span></td>
+            <td data-label="希望販売価格"><span class="pprice est">¥4,800〜9,800<span class="note">参考価格・未確定</span></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 07 広報・IR -->
+  <section class="cat">
+    <div class="cat-head"><span class="num">CATEGORY 07</span><h2>広報・IR</h2><span class="count">2 製品</span></div>
+    <div class="prodtable">
+      <table>
+        <thead><tr><th style="width:24%;">名前</th><th style="width:34%;">目的</th><th style="width:24%;">用途</th><th style="width:18%;">希望販売価格</th></tr></thead>
+        <tbody>
+          <tr>
+            <td data-label="名前"><span class="pname"><a href="IRWatch/index.html">IR Tools</a></span><span class="pfiles">IR Watch Desk + IR Readability診断</span></td>
+            <td data-label="目的"><span class="ppurpose">開示資料のウォッチリスト管理と、決算説明資料・IRサイトを8軸で採点するReadability診断</span></td>
+            <td data-label="用途"><span class="puse">IR担当者</span></td>
+            <td data-label="希望販売価格"><span class="pprice est">¥9,800〜14,800<span class="note">参考価格・未確定</span></span></td>
+          </tr>
+          <tr>
+            <td data-label="名前"><span class="pname"><a href="Methodology/IR担当者のための伝わる発信術_診断ツール.html">IR Readability Score 自己診断</a></span></td>
+            <td data-label="目的"><span class="ppurpose">書籍『IR担当者のための伝わる発信術』準拠。決算説明資料を8軸×5段階・40点満点で自己採点</span></td>
+            <td data-label="用途"><span class="puse">書籍読者、見込み客獲得（リードマグネット）</span></td>
+            <td data-label="希望販売価格"><span class="pprice">無料（書籍販促用）</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 08 クリエイティブ制作支援 -->
+  <section class="cat">
+    <div class="cat-head"><span class="num">CATEGORY 08</span><h2>クリエイティブ制作支援</h2><span class="count">2 製品</span></div>
+    <div class="prodtable">
+      <table>
+        <thead><tr><th style="width:24%;">名前</th><th style="width:34%;">目的</th><th style="width:24%;">用途</th><th style="width:18%;">希望販売価格</th></tr></thead>
+        <tbody>
+          <tr>
+            <td data-label="名前"><span class="pname"><a href="modernmarketing/動画生成プロンプトメーカー/index.html">PROMPT SLATE（動画生成プロンプトメーカー）</a></span></td>
+            <td data-label="目的"><span class="ppurpose">動画生成AI向けの構造化プロンプトを組み立てる作成支援ツール</span></td>
+            <td data-label="用途"><span class="puse">動画クリエイター、マーケティング担当者</span></td>
+            <td data-label="希望販売価格"><span class="pprice est">¥2,980〜5,800<span class="note">参考価格・未確定</span></span></td>
+          </tr>
+          <tr>
+            <td data-label="名前"><span class="pname"><a href="modernmarketing/画像生成プロンプトメーカーver2/public/index.html">画像生成プロンプトメーカー</a></span></td>
+            <td data-label="目的"><span class="ppurpose">画像生成AI向けの構造化プロンプトを組み立てる作成支援ツール</span></td>
+            <td data-label="用途"><span class="puse">デザイナー、マーケティング担当者</span></td>
+            <td data-label="希望販売価格"><span class="pprice est">¥2,980〜5,800<span class="note">参考価格・未確定</span></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 09 学習・書籍連動 -->
+  <section class="cat">
+    <div class="cat-head"><span class="num">CATEGORY 09</span><h2>学習・書籍連動</h2><span class="count">4 製品</span></div>
+    <div class="prodtable">
+      <table>
+        <thead><tr><th style="width:24%;">名前</th><th style="width:34%;">目的</th><th style="width:24%;">用途</th><th style="width:18%;">希望販売価格</th></tr></thead>
+        <tbody>
+          <tr>
+            <td data-label="名前"><span class="pname"><a href="Methodology/HUMAN_OS_Dashboard_診断.html">HUMAN OS Dashboard 診断</a></span></td>
+            <td data-label="目的"><span class="ppurpose">書籍『HUMAN OS』の理論に基づく自己診断ダッシュボード</span></td>
+            <td data-label="用途"><span class="puse">書籍読者、見込み客獲得（リードマグネット）</span></td>
+            <td data-label="希望販売価格"><span class="pprice">無料（書籍販促用）</span></td>
+          </tr>
+          <tr>
+            <td data-label="名前"><span class="pname"><a href="Methodology/モンテカルロシミュレーション_テンプレート.html">モンテカルロ・シミュレーター</a></span></td>
+            <td data-label="目的"><span class="ppurpose">書籍『棚で勝つパッケージ戦略』準拠。単価・日販・広告費・返品率の幅から黒字化確率と利益分布を1,000回試行で可視化</span></td>
+            <td data-label="用途"><span class="puse">書籍読者、パッケージ商品の事業計画検討者</span></td>
+            <td data-label="希望販売価格"><span class="pprice">無料（書籍販促用）</span></td>
+          </tr>
+          <tr>
+            <td data-label="名前"><span class="pname"><a href="Methodology/棚SEO診断ツール.html">棚SEO実践診断ツール</a></span></td>
+            <td data-label="目的"><span class="ppurpose">書籍『なぜ人は手に取るのか』巻末付録A。パッケージの「棚SEO」実践度を診断</span></td>
+            <td data-label="用途"><span class="puse">書籍読者、パッケージデザイン担当者</span></td>
+            <td data-label="希望販売価格"><span class="pprice">無料（書籍販促用）</span></td>
+          </tr>
+          <tr>
+            <td data-label="名前"><span class="pname"><a href="FP&amp;A Book/起動用(HTML)/FP&amp;Aツールキット.html">FP&amp;Aツールキット</a></span><span class="pfiles">損益分岐点/感度分析ほか実践計算ツール5種</span></td>
+            <td data-label="目的"><span class="ppurpose">FP&amp;A書籍の各章（損益分岐点・感度分析、デュポン分析等）に対応した、実際に数値を入力しながら体験できる実践計算ツール集</span></td>
+            <td data-label="用途"><span class="puse">書籍読者、財務・経営企画担当者</span></td>
+            <td data-label="希望販売価格"><span class="pprice">無料（書籍販促用）</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="legend">
+    <b>価格表記について：</b>価格は個人・単体ライセンスでの買い切り想定の目安です。金額が確定表示のものは、各製品フォルダ内の「価格帯提案チラシ.html」に基づく実際の提案価格（A. 主力プラン）です。「参考価格・未確定」表記のものは、同シリーズ内の相場観から算出した仮の目安であり、正式な提案資料はまだ作成していません。チームライセンス・法人ライセンス・ホワイトレーベル等の上位プランは、価格帯提案チラシが存在する製品のみ別途設定されています。書籍連動の診断ツール群は、書籍の販促・リード獲得を目的とした無料ツールです。
+  </div>
+
+  <div class="footer">開発WEBアプリ一覧 &mdash; internal catalog, last compiled 2026&#8209;09&#8209;23</div>
+</div>
+</body>
+</html>
