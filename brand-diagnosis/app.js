@@ -199,12 +199,12 @@
   }
 
   function scoreLabel(score) {
-    if (score === null) return { text: 'データなし', color: '#94a3b8' };
-    if (score >= 85) return { text: '卓越したブランド', color: '#34d399' };
-    if (score >= 70) return { text: '強いブランド', color: '#38bdf8' };
-    if (score >= 55) return { text: '発展途上のブランド', color: '#d4af37' };
-    if (score >= 40) return { text: '弱いブランド', color: '#fb923c' };
-    return { text: '危機的な状況', color: '#f87171' };
+    if (score === null) return { text: 'データなし', color: '#8E96A8' };
+    if (score >= 85) return { text: '卓越したブランド', color: '#D1D646' };
+    if (score >= 70) return { text: '強いブランド', color: '#57C4E5' };
+    if (score >= 55) return { text: '発展途上のブランド', color: '#EDF2EF' };
+    if (score >= 40) return { text: '弱いブランド', color: '#FBA59F' };
+    return { text: '危機的な状況', color: '#F97068' };
   }
 
   /* ---------- Radar chart (hand-drawn SVG) ---------- */

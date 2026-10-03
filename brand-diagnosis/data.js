@@ -4,32 +4,32 @@ const BRAND_DIAG_DATA = {
   "customer": {
    "label": "顧客とインサイト",
    "short": "顧客理解",
-   "color": "#38bdf8"
+   "color": "#57C4E5"
   },
   "strategy": {
    "label": "戦略・アイデンティティ設計",
    "short": "戦略設計",
-   "color": "#d4af37"
+   "color": "#F97068"
   },
   "equity": {
    "label": "エクイティの構築と測定",
    "short": "エクイティ",
-   "color": "#a78bfa"
+   "color": "#EDF2EF"
   },
   "org": {
    "label": "組織・マネジメント・法務",
    "short": "組織体制",
-   "color": "#34d399"
+   "color": "#D1D646"
   },
   "activation": {
    "label": "マーケティング活動と顧客体験",
    "short": "活動・体験",
-   "color": "#fb923c"
+   "color": "#FBA59F"
   },
   "digital": {
    "label": "グローバル・デジタル展開",
    "short": "デジタル",
-   "color": "#f472b6"
+   "color": "#9ADCF0"
   }
  },
  "categories": [
