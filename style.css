@@ -159,15 +159,27 @@ nav {
   animation: fadeInUp 1s ease 0.4s backwards;
 }
 
+/* トップのヒーローイメージ（assets/home-hero.jpg）。中央を暗くして文字を読みやすくし、下端はページ背景に溶かす */
+.hero--home {
+  background:
+    radial-gradient(ellipse 42% 60% at 50% 48%, rgba(26, 31, 44, 0.78), rgba(26, 31, 44, 0.2) 75%),
+    linear-gradient(180deg, rgba(26, 31, 44, 0.35) 0%, transparent 25%, transparent 70%, var(--bg-dark) 100%),
+    url("assets/home-hero.jpg") center / cover no-repeat,
+    var(--bg-dark);
+}
+.hero--home .hero-lede { color: var(--text-main); }
+.hero-logo { margin: 0 auto 2rem; line-height: 0; }
+.hero-logo img { width: min(340px, 70vw); height: auto; display: inline-block; filter: drop-shadow(0 6px 24px rgba(0, 0, 0, 0.45)); }
+
 .hero--home .hero-title {
   font-size: 4.6rem;
   margin-bottom: 1.75rem;
 }
 
 .hero-lede {
-  font-family: 'Noto Sans JP', sans-serif;
+  font-family: 'Shippori Mincho', serif;
   font-size: 1.6rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-sub);
   letter-spacing: 0.01em;
   margin-bottom: 2rem;

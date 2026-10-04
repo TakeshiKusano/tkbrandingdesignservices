@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>業務プロセス体系図</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* トンマナ：Project Desk（新規事業ワークフロー／ConceptMaker tone）に合わせる */
+  :root{
+    color-scheme:dark;
+    --ground:#0c0e14; --surface:#151824; --surface-2:rgba(255,255,255,.045);
+    --ink:#f5f6fb; --soft:#a6abc0; --faint:#8a90a6;
+    --line:rgba(255,255,255,.14); --line-strong:rgba(255,255,255,.22);
+    --accent:#8b7cf6; --accent-soft:rgba(139,124,246,.16); --on-accent:#0c0e14;
+    --lane-people:#3f8fc6; --lane-think:#8b7cf6; --lane-industry:#28b39f; --lane-asset:#d0609a;
+    --head:"Manrope","Noto Sans JP",sans-serif; --sans:"Inter","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif; --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+    --r:6px;
+  }
+  *{box-sizing:border-box}
+  [hidden]{display:none!important}
+  body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  ::selection{background:var(--accent);color:var(--on-accent)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+  .topbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:13px 24px;border-bottom:1.5px solid var(--line-strong)}
+  .brand{display:flex;gap:10px;align-items:center}
+  .brand .glyph{width:30px;height:30px;flex:none;border-radius:6px;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;font-family:var(--head);font-weight:800;font-size:.9rem}
+  .brand b{font-family:var(--head);font-weight:700;font-size:.92rem;line-height:1.1;display:block}
+  .brand small{font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+  .topbar .sp{flex:1}
+  .credit{color:#ff6b6b;font-family:var(--mono);font-size:11px;letter-spacing:.04em;font-weight:500}
+  .wrap{max-width:1500px;margin:0 auto;padding:28px 24px 80px}
+  .eyebrow{font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;color:var(--faint);text-transform:uppercase}
+  header h1{font-family:var(--head);font-weight:700;font-size:clamp(1.5rem,3vw,2.2rem);line-height:1.3;margin:8px 0 10px;text-wrap:balance}
+  header p{color:var(--soft);max-width:70em;margin:0;font-size:.92rem}
+  /* ヒーローイメージ（assets/hero-map.jpg を置くと表示。なければ下のグラデーションだけ） */
+  .wrap > header{position:relative;padding:26px 28px 24px;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
+    background:linear-gradient(90deg,rgba(12,14,20,.96) 0%,rgba(12,14,20,.86) 42%,rgba(12,14,20,.35) 100%),
+      radial-gradient(circle at 85% 30%,rgba(139,124,246,.16),transparent 50%),
+      url("assets/hero-map.jpg") right center/cover no-repeat,var(--surface)}
+  @media (max-width:640px){ .wrap > header{padding:20px 16px;background:linear-gradient(rgba(12,14,20,.9),rgba(12,14,20,.9)),url("assets/hero-map.jpg") center/cover no-repeat,var(--surface)} }
+  .toplinks{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:8px;padding:7px 13px;font:inherit;font-size:.82rem;font-weight:600;cursor:pointer;text-decoration:none;transition:border-color .12s,background .12s}
+  .btn:hover{border-color:var(--soft)}
+  .btn.primary{background:var(--ink);border-color:var(--ink);color:var(--ground)}
+  .btn.primary:hover{opacity:.88}
+  .btn.on{background:var(--accent-soft);border-color:var(--accent);color:var(--ink)}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:22px 0 8px}
+  .stats div{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:13px 16px 12px}
+  .stats div:first-child{border-color:color-mix(in srgb,var(--accent) 40%,var(--line));background:linear-gradient(180deg,var(--accent-soft),var(--surface) 62%)}
+  .stats b{font-family:var(--mono);font-size:1.7rem;font-weight:500;line-height:1.1;font-variant-numeric:tabular-nums}
+  .stats small{display:block;color:var(--soft);font-size:.76rem;font-weight:500;margin-top:2px}
+  h2.sec{font-family:var(--head);font-size:1.15rem;font-weight:700;margin:34px 0 4px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  h2.sec small{font-family:var(--sans);font-size:.8rem;color:var(--faint);font-weight:400}
+  /* scenario bar */
+  .scen{position:sticky;top:0;z-index:20;background:var(--ground);border-bottom:1.5px solid var(--line-strong);margin:0 -24px;padding:12px 24px}
+  .scen .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .scen .lab{font-family:var(--mono);font-size:.66rem;color:var(--faint);letter-spacing:.14em;margin-right:4px}
+  .scen .btn{padding:5px 11px;font-size:.78rem}
+  .scen input{background:var(--surface);border:1px solid var(--line-strong);border-radius:8px;padding:7px 12px;color:var(--ink);font:inherit;font-size:.84rem;min-width:240px}
+  .scen input:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent}
+  .scen .desc{margin:9px 0 0;font-size:.86rem;color:var(--soft);min-height:1.4em}
+  .scen .desc b{color:var(--accent)}
+  /* map */
+  .mapbox{overflow-x:auto;margin-top:14px;padding-bottom:6px}
+  .map{position:relative;min-width:1240px}
+  .cycle{display:grid;grid-template-columns:repeat(8,1fr);gap:10px}
+  .stage{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 10px 10px;display:flex;flex-direction:column;gap:7px;position:relative}
+  .stage .sh{border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:2px}
+  .stage .sn{font-family:var(--mono);font-size:.62rem;color:var(--accent);letter-spacing:.14em;font-weight:600}
+  .stage h3{font-family:var(--head);font-weight:700;font-size:.98rem;margin:2px 0 2px;line-height:1.35}
+  .stage .q{font-size:.72rem;color:var(--faint);line-height:1.5;margin:0}
+  .stage:not(:last-child)::after{content:"";position:absolute;right:-9px;top:34px;width:0;height:0;border-left:8px solid var(--accent);border-top:7px solid transparent;border-bottom:7px solid transparent;z-index:2}
+  .loopback{display:flex;align-items:center;gap:10px;margin:8px 0 18px;font-family:var(--mono);font-size:.7rem;color:var(--faint)}
+  .loopback i{flex:1;height:0;border-top:1.5px dashed color-mix(in srgb,var(--accent) 60%,transparent);position:relative}
+  .loopback i::before{content:"";position:absolute;left:-2px;top:-6px;border-right:8px solid color-mix(in srgb,var(--accent) 60%,transparent);border-top:5px solid transparent;border-bottom:5px solid transparent}
+  .app{display:block;text-decoration:none;background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r);padding:7px 9px;font-size:.8rem;line-height:1.4;position:relative;transition:opacity .25s,border-color .15s,background .15s}
+  .app:hover{border-color:var(--accent);background:var(--accent-soft)}
+  .app b{display:block;font-weight:600}
+  .app b small.ja{display:block;font-weight:500;font-size:.7rem;color:var(--soft);margin-top:1px}
+  .app span{display:block;font-size:.68rem;color:var(--faint);margin-top:2px}
+  .app .tag{display:inline-block;font-family:var(--mono);font-size:.58rem;border:1px solid var(--line-strong);border-radius:4px;padding:0 4px;margin-top:3px;color:var(--soft)}
+  .app .tag.new{color:var(--accent);border-color:var(--accent)}
+  .app .num{position:absolute;top:-9px;left:-9px;width:22px;height:22px;border-radius:50%;background:var(--accent);color:var(--on-accent);font-family:var(--mono);font-weight:700;font-size:.72rem;display:none;place-items:center;box-shadow:0 0 0 3px var(--ground);z-index:3}
+  .map.focus .app{opacity:.2}
+  .map.focus .app.hit{opacity:1;border-color:var(--accent);background:var(--accent-soft);box-shadow:0 0 0 1px var(--accent)}
+  .map.focus .app.hit .num{display:grid}
+  .map.focus .app.hit{padding-left:20px}
+  .map.search .app{opacity:.18}
+  .map.search .app.match{opacity:1;border-color:var(--accent)}
+  svg.links{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:visible}
+  .lanes{display:flex;flex-direction:column;gap:10px}
+  .lane{display:grid;grid-template-columns:190px 1fr;gap:10px;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--lc);border-radius:var(--r);padding:10px}
+  .lane .lh h3{font-family:var(--head);font-weight:700;font-size:.95rem;margin:0;display:flex;align-items:center;gap:7px}
+  .lane .lh h3::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--lc);flex:none}
+  .lane .lh p{font-size:.72rem;color:var(--faint);margin:4px 0 0;line-height:1.5}
+  .lane .apps{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px;align-content:start}
+  .lanes-title{font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;color:var(--faint);margin:6px 0 8px;text-transform:uppercase}
+  details.more{grid-column:1/-1}
+  details.more summary{cursor:pointer;font-size:.78rem;color:var(--soft)}
+  details.more .list{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:4px 14px;margin-top:8px}
+  details.more .list a{font-size:.76rem;color:var(--soft);text-decoration:none}
+  details.more .list a:hover{color:var(--accent)}
+  /* scenario cards */
+  .flows{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:12px;margin-top:12px}
+  .flow{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;cursor:pointer;transition:border-color .12s}
+  .flow:hover{border-color:var(--accent)}
+  .flow h4{font-family:var(--head);font-weight:700;font-size:.98rem;margin:0 0 4px}
+  .flow p{font-size:.78rem;color:var(--faint);margin:0 0 8px}
+  .flow ol{margin:0;padding-left:22px;font-size:.8rem;color:var(--soft)}
+  .flow ol li::marker{color:var(--accent);font-family:var(--mono)}
+  .flow ol li small{color:var(--faint)}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.74rem;color:var(--faint);margin-top:10px}
+  .legend .tag{font-family:var(--mono);font-size:.62rem;border:1px solid var(--line-strong);border-radius:4px;padding:0 4px}
+  footer{margin-top:40px;color:var(--faint);font-size:.76rem;border-top:1px solid var(--line);padding-top:14px}
+  @media (max-width:640px){ .wrap{padding:22px 16px 60px} .scen{margin:0 -16px;padding:12px 16px} .scen input{min-width:0;flex:1} .topbar{padding:12px 16px} }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+  @media print{ .scen,.toplinks{display:none} body{background:#0c0e14;-webkit-print-color-adjust:exact;print-color-adjust:exact} .mapbox{overflow:visible} @page{size:A3 landscape;margin:8mm} }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="brand"><span class="glyph" aria-hidden="true">業</span><span><b>業務プロセス体系図</b><small>Business Process Map</small></span></div>
+  <span class="sp"></span>
+  <span class="credit">takeshi.kusano under development</span>
+</div>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Business Process Map</div>
+    <h1>WEBアプリは、ビジネスのどのプロセスで使うのか</h1>
+    <p>「知る → 戦略をつくる → ブランドをつくる → 体験を設計する → 市場に届ける → 売る → 実行する → 測る」という価値を生む8つの段階と、それを下から支える4つのレーン（組織・人材／思考の土台／業界パッケージ／自社の発信資産）に、すべてのアプリを配置しました。測った結果は、次の「知る」に戻って循環します。アプリ名をクリックすると開きます。</p>
+    <div class="toplinks"><a class="btn primary" href="開発WEBアプリ一覧.html">← 開発WEBアプリ一覧（カタログ）</a><a class="btn" href="業務プロセス体系図LP.html">紹介ページ（LP）</a><button class="btn" onclick="window.print()">印刷（A3横）</button></div>
+    <div class="stats" id="stats"></div>
+  </header>
+
+  <div class="scen">
+    <div class="row"><span class="lab">SCENARIO</span><span id="scenBtns" class="row"></span></div>
+    <div class="row" style="margin-top:8px"><span class="lab">SEARCH</span><input id="q" type="search" placeholder="アプリ名・用途で探す（例：SNS、交渉、KPI）"><button class="btn" id="clear">表示をリセット</button></div>
+    <p class="desc" id="scenDesc">シナリオを選ぶと、使う順番に番号と矢印が付きます。</p>
+  </div>
+
+  <h2 class="sec">体系図 <small>上段：価値を生む8段階（左から右へ、最後は最初に戻る）／下段：全段階を支えるレーン</small></h2>
+  <div class="mapbox"><div class="map" id="map">
+    <svg class="links" id="links"></svg>
+    <div class="cycle" id="cycle"></div>
+    <div class="loopback"><span>08 測る</span><i></i><span>01 知る へ戻る（次のサイクル）</span></div>
+    <div class="lanes-title">Foundation Lanes ― 全段階を支える</div>
+    <div class="lanes" id="lanes"></div>
+  </div></div>
+  <div class="legend"><span><span class="tag">HUB</span> 複数ツールの入口</span><span><span class="tag">⇄</span> 他のアプリとデータ連携</span><span><span class="tag" style="color:var(--accent);border-color:var(--accent)">NEW</span> カタログ未掲載</span></div>
+
+  <h2 class="sec">代表的な使い方の流れ <small>カードをクリックすると、体系図の上で順番に光ります</small></h2>
+  <div class="flows" id="flows"></div>
+
+  <footer>フォルダ：WEBアプリ ／ 各アプリは単体のHTMLで動きます（入力はブラウザに保存）。体系図の配置は「主に使う段階」で、複数の段階で使えるアプリもあります。</footer>
+</div>
+
+<script>
+"use strict";
+const NB = "戦略企画ツール/新規事業ワークフロー・スイート/";
+const STAGES = [
+  { id: "know", n: "01", t: "環境・市場を知る", q: "どこに機会があり、顧客は何に困っているか？" },
+  { id: "strategy", n: "02", t: "事業・戦略をつくる", q: "どこで、どう勝ち、どれくらい儲かるか？" },
+  { id: "brand", n: "03", t: "ブランド・コンセプトをつくる", q: "誰に、何を約束し、どう思い出されたいか？" },
+  { id: "design", n: "04", t: "体験・サービスを設計する", q: "顧客の体験と、それを支える仕組みをどうつくるか？" },
+  { id: "gtm", n: "05", t: "市場に届ける", q: "どの言葉・コンテンツ・チャネルで届けるか？" },
+  { id: "sell", n: "06", t: "売る・関係を育てる", q: "どう提案し、合意し、関係を長く続けるか？" },
+  { id: "run", n: "07", t: "実行する", q: "計画どおりに進め、問題を早く見つけられるか？" },
+  { id: "measure", n: "08", t: "測る・報告する", q: "成果を数字で示し、関係者に伝えられるか？" },
+];
+const LANES = [
+  { id: "people", t: "組織・人材を育てる", d: "戦略を実行する人と組織をつくる。研修・キャリア・対話・採用。", c: "var(--lane-people)" },
+  { id: "think", t: "思考の土台", d: "どの段階でも使う、考え方と判断の型。", c: "var(--lane-think)" },
+  { id: "industry", t: "業界パッケージ", d: "特定業界向けに、複数の段階をひとまとめにしたもの。", c: "var(--lane-industry)" },
+  { id: "asset", t: "自社の発信・集客資産", d: "サービスや書籍を知ってもらうためのLP・サイト。", c: "var(--lane-asset)" },
+];
+// [id, name, path, stage/lane, short description, tags]
+const APPS = [
+  ["compass", "羅針盤リサーチ", NB + "羅針盤リサーチ.html", "know", "外部環境と兆しを調べる"],
+  ["screening", "テーマスクリーニング", NB + "テーマスクリーニング.html", "know", "事業テーマの候補を絞る", ["NEW"]],
+  ["tam", "市場規模推定", NB + "市場規模推定.html", "know", "TAM/SAM/SOMを推定"],
+  ["mstruct", "市場構造診断", NB + "市場構造診断.html", "know", "市場の状態を調べて診断"],
+  ["contest", "コンテスタブル市場診断", NB + "コンテスタブル市場診断.html", "know", "参入しやすさ・競争の開かれ方"],
+  ["insight", "消費者インサイト", "UIUXDesignServiceourneyDesk/消費者インサイト.html", "know", "顧客の本音と行動の理由", ["NEW"]],
+  ["analyst", "アナリストデスク", "ファイナンス/アナリストアプリ/アナリストデスク.html", "know", "企業・競合を財務で読む"],
+
+  ["nbw", "新規事業ワークフロー", NB + "新規事業ワークフロー.html", "strategy", "新規事業の全工程の入口", ["HUB"]],
+  ["effect", "エフェクチュエーション", NB + "エフェクチュエーション.html", "strategy", "手持ちの資源から始める"],
+  ["statem", "状態モデリング・アプローチ", NB + "状態モデリング・アプローチ.html", "strategy", "顧客の状態変化から事業を考える", ["NEW"]],
+  ["bmc", "ビジネスモデルキャンバス", NB + "ビジネスモデルキャンバス.html", "strategy", "各ツールの入力から9要素を抽出して1枚に", ["NEW", "⇄"]],
+  ["strat", "事業戦略企画ツール", NB + "戦略企画ツール.html", "strategy", "戦略を1つの計画にまとめる"],
+  ["bizeval", "事業性評価", NB + "事業性評価.html", "strategy", "やる価値があるかを評価", ["NEW"]],
+  ["game", "ゲーム理論 戦略ツール", "Counterpart/game-theory-strategy-tool.html", "strategy", "競合の出方を読んで打ち手を決める"],
+  ["pricing", "Pricing Strategy Desk", "PricingStrategy/pricing-strategy-desk.html", "strategy", "価格反応マップ・閾値の刻み方・PSM・値上げ告知"],
+  ["finimp", "財務インパクト・シミュレーション", NB + "財務インパクトシミュレーション.html", "strategy", "PL・投資回収を試算"],
+  ["monte", "モンテカルロ・シミュレーター", "Methodology/モンテカルロシミュレーション_テンプレート.html", "strategy", "不確実性を幅で見積もる"],
+  ["fpa", "FP&Aツールキット", "FP&A Book/起動用(HTML)/FP&Aツールキット.html", "strategy", "損益分岐・感度分析"],
+  ["funding", "資金など調達アプローチ", NB + "資金など調達アプローチ.html", "strategy", "資金・人・協力者の集め方", ["NEW"]],
+  ["pitch", "ピッチストーリー", NB + "ピッチストーリー.html", "strategy", "事業を伝える物語"],
+
+  ["bms", "Brand Management Studio", "BrandManagement/brand-management-studio.html", "brand", "分析→ThinkBox→ポジショニング→プラン→実行（BAV診断つき）", ["NEW", "⇄"]],
+  ["bassoc", "ブランド連想の戦略", "BrandManagement/brand-association.html", "brand", "連想の棚卸し・連想マップ・施策", ["NEW", "⇄"]],
+  ["concept", "Concept Maker", "ConceptMaker/concept-maker.html", "brand", "コンセプトを言葉にする"],
+  ["logolab", "Logo Lab", "LogoLab/logo-lab.html", "brand", "ロゴ開発：ブリーフ→4案以上の探索と採点→文字ロゴ・シンボル・スタイル比較→配色→磨き込み→展開→仕様書", ["NEW"]],
+  ["palette", "Palette Studio", "PaletteStudio/palette-studio.html", "brand", "ブランドカラー設計：配色の型・写真から抽出→役割と60:30:10→50〜900の濃淡・ダークモード→コントラスト・色覚の多様性→CSS/Tailwind/ASE・カラーガイド", ["NEW", "⇄"]],
+  ["guideline", "ブランドガイドラインアプリ", "ブランドガイドラインアプリ/ブランドガイドライン.html", "brand", "表現のルールをまとめる（HTMLで直接起動）"],
+  ["execbrand", "トップ層ブランディング研修", "トップ層ブランディング/index.html", "brand", "経営者・リーダーのブランド＋不安整理地図"],
+
+  ["dhub", "Design Tools Hub", "UIUXDesignServiceourneyDesk/index.html", "design", "デザイン系ツールの入口", ["HUB"]],
+  ["uiux", "UIUX Design Desk", "UIUXDesignServiceourneyDesk/uiux-design-desk.html", "design", "画面・操作の設計"],
+  ["svc", "Service Design Desk", "UIUXDesignServiceourneyDesk/service-design-desk.html", "design", "サービスの仕組みの設計"],
+  ["journey", "Service Journey Designer", "UIUXDesignServiceourneyDesk/service-journey-designer.html", "design", "カスタマージャーニーを描く", ["NEW"]],
+
+  ["wording", "文言アプローチツール", "文言アプローチ/文言アプローチツール.html", "gtm", "刺さる言葉・SNSネタ探し・コピーの4段階（24ステップ）", ["⇄"]],
+  ["titlelab", "One-Line Lab", "TitleLab/title-lab.html", "gtm", "142の型でタイトル・キャッチコピーを量産・採点・比較", ["NEW"]],
+  ["content", "Content Compass", "コンテンツ戦略/content-strategy-app.html", "gtm", "コンテンツ戦略・SNSネタ・制作管理", ["⇄"]],
+  ["dms", "Digital Marketing Suite", "デジタルマーケティングスイート/index.html", "gtm", "キーワード調査→SEO・AI検索・広告→MMMの5ツールの入口", ["HUB", "NEW"]],
+  ["kis", "Keyword Intent Studio", "デジタルマーケティングスイート/KeywordIntent/keyword-intent-studio.html", "gtm", "検索意図の4分類・ページ割り当て・SERP確認", ["NEW", "⇄"]],
+  ["seo", "Organic Search Desk", "デジタルマーケティングスイート/SEO&OrganicSearch/organic-search-desk.html", "gtm", "SEO・自然検索", ["⇄"]],
+  ["aeo", "Answer Engine Radar", "デジタルマーケティングスイート/AI_SearchVisibility/ai-search-visibility.html", "gtm", "AI検索での見え方"],
+  ["paid", "Paid Performance Desk", "デジタルマーケティングスイート/PaidPerformance/paid-performance-desk.html", "gtm", "広告運用"],
+  ["growth", "Growth Marketing Desk", "GrowthMarketing/growth-marketing-desk.html", "gtm", "獲得・活性化・継続の実験"],
+  ["pr", "Corporate PR Desk", "CorporatePR/corporate-pr-desk.html", "gtm", "広報・メディアリレーション"],
+  ["shelf", "棚SEO実践診断ツール", "ShelfVision/棚SEO診断ツール.html", "gtm", "店頭の棚で選ばれるか（6要因・20項目）。Shelf Vision Studio と同じフォルダで連携", ["⇄"]],
+  ["shelfvision", "Shelf Vision Studio", "ShelfVision/shelf-vision.html", "gtm", "棚の写真から予測ヒートマップ→スマホの実測テスト（想起テスト付き）・視線CSV→探し方3型の分類→プラノグラム（棚割り）の注目度・売上・粗利シミュレーション。パッケージの蘊蓄（トロピカーナ・コカ・コーラの失敗例ほか）と独自資産の棚卸し", ["NEW", "⇄"]],
+  ["teaser", "Teaser Director", "TeaserDirector/teaser-director.html", "gtm", "ティーザー動画の構成とプロンプト"],
+  ["storyboard", "Storyboard Studio", "Storyboard/storyboard-studio.html", "gtm", "商品CM・ブランド動画を8コマに設計：一貫性の固定・ショット文法・画像／動画プロンプト・A4ボード", ["NEW"]],
+  ["slate", "PROMPT SLATE", "動画生成プロンプトメーカー/index.html", "gtm", "動画生成プロンプト"],
+  ["imgp", "画像生成プロンプトメーカー", "画像生成プロンプトメーカーver2/public/index.html", "gtm", "画像生成プロンプト"],
+
+  ["cphub", "Counterpart", "Counterpart/index.html", "sell", "説得・交渉・営業ツールの入口", ["HUB"]],
+  ["hypo", "顧客ジョブ×仮説検証 営業研修", "仮説提案アプリ_アナロジーアブダクション/仮説提案アプリ_アナロジーアブダクション_顧客ジョブ×仮説検証_営業研修.html", "sell", "アナロジーとアブダクションで仮説提案"],
+  ["persuade", "説得の型ツール", "Counterpart/persuasion-framework-tool.html", "sell", "11の説得フレームワーク"],
+  ["nego", "交渉シミュレーター", "Counterpart/negotiation-simulator.html", "sell", "BATNA／ZOPAで交渉準備"],
+  ["conflict", "コンフリクト解決スタイル", "Counterpart/conflict-resolution-style-tool.html", "sell", "対立の解き方"],
+  ["salesskill", "営業スキル研修", "Counterpart/sales-skill-training.html", "sell", "10モジュールの営業研修"],
+  ["crm", "CRM Desk", "CRM/crm-desk.html", "sell", "顧客関係の管理と育成"],
+
+  ["mms", "Marketing Management Suite", "MarketingManagement/marketing-management-suite.html", "run", "マーケ組織の現状把握→実行層と設計層（氷山）→KPI・集客シミュレーション→カレンダー→マネジメント・会議", ["NEW"]],
+  ["pdesk", "Project Desk", "ProjectDesk/project-desk.html", "run", "進捗・課題・リスクのダッシュボード", ["HUB", "⇄"]],
+  ["pplan", "Project Plan Studio", "ProjectDesk/project-plan-studio.html", "run", "計画書とエグゼクティブサマリー", ["⇄"]],
+  ["pdiag", "Project Diagnosis", "ProjectDesk/project-diagnosis.html", "run", "進捗から問題を推定", ["⇄"]],
+
+  ["mmm", "MMM Studio", "デジタルマーケティングスイート/MMM/mmm-studio.html", "measure", "チャネル別の売上貢献・ROIと最適な予算配分", ["NEW"]],
+  ["brandval", "ブランド資産価値算定", NB + "ブランド資産価値算定.html", "measure", "インカム・コスト・マーケット法でブランドを金額に", ["NEW"]],
+  ["hrkpi", "People Metrics Desk", "HRKPI/hr-kpi-dashboard.html", "measure", "人事KPI（10種）＋離職要因診断・人的資本ROI"],
+  ["irtools", "IR Tools", "IRWatch/index.html", "measure", "IR Watch Desk＋Readability", ["HUB"]],
+  ["irdoc", "IR資料診断アプリ", "IRWatch/IR資料診断アプリ.html", "measure", "IR資料のわかりやすさを診断", ["NEW"]],
+  ["irread", "IR Readability 自己診断", "Methodology/IR担当者のための伝わる発信術_診断ツール.html", "measure", "伝わる発信か自己診断"],
+
+  ["ibrand", "共感価値デスク", "InternalBranding/internal-branding-desk.html", "people", "インターナルブランディング：理念→共通言語→行動", ["NEW"]],
+  ["teamtrust", "Team Trust Studio", "TeamBuilding/team-trust-studio.html", "people", "発達段階・信頼の三角形・9つの習慣・5つの機能不全・協働の6層・コーチング7習慣・RAPID・辞める理由9つ", ["NEW"]],
+  ["story", "Leader Story Studio", "Storytelling/leader-story-studio.html", "people", "6つの物語の型：診断・組み立て・点検・感情の流れ・時間調整・リハーサル", ["NEW"]],
+  ["no2", "No.2養成トレーニング", "No2Training/no2-training.html", "people", "右腕タイプ診断・10の対比軸・8組の名コンビ"],
+  ["goal", "目標設定スタジオ", "GoalSetting/goal-setting-studio.html", "people", "2軸型目標（業績×成長）・BSC・スキルマップ・評価シート", ["NEW"]],
+  ["aitrain", "AI活用研修プログラム", "ProjectDesk/ai-training-program.html", "people", "AI活用を組織に広げる", ["⇄"]],
+  ["future", "Future Dialogue Toolkit", "FutureDialogue/future-dialogue-toolkit.html", "people", "未来志向の対話"],
+  ["kanki", "答えを急がない経営", "鈴木たいせつ・西田幾多郎から学ぶ経営/training_app.html", "people", "経営者の思索トレーニング"],
+  ["recruit", "採用ブランディング・マーケティング", "採用ブランディングマーケティング/saiyo-marketing-tool.html", "people", "採用のブランドと集客"],
+  ["career", "キャリアコンサルティング Tools", "キャリアデザイン/index.html", "people", "11ツール：強み・ギャップ・職務記述書", ["HUB"]],
+  ["mkcareer", "マーケティング領域キャリア便覧", "マーケティング領域キャリア便覧/index.html", "people", "職種マップ・スキルマップ・レベル診断", ["HUB"]],
+  ["omoshiroi", "面白い人養成トレーニング", "面白い人養成トレーニング/omoshiroi-hito-training.html", "people", "診断＋学習＋実践"],
+
+  ["process", "プロセス思考トレーニング", "プロセス思考トレーニング/process-thinking-training.html", "think", "結果ではなくプロセスで考える"],
+  ["humanos", "HUMAN OS Dashboard 診断", "Methodology/HUMAN_OS_Dashboard_診断.html", "think", "自分の思考・行動のOSを診断"],
+  ["math", "すうがく、もういちど。", "MathRestart/math-restart.html", "think", "文系のための数学学び直し（AIの数学まで）", ["NEW"]],
+  ["thinkgame", "思考ゲーム診断アプリ", "KIndle/思考ゲーム診断アプリ.html", "think", "思考のくせをゲームで診断", ["NEW"]],
+  ["books", "トップ1％が読む100冊＋名著28冊の要約", "Top1PercentBooks/top1-percent-books.html", "think", "8分野・128冊の要点6つ・邦訳の有無・次に読む本つき", ["NEW"]],
+  ["booktrain", "Top1% Book Trainer", "Top1PercentBooks/top1-book-trainer.html", "think", "128冊の要点をクイズ・カードで覚え、実践を記録", ["NEW"]],
+
+  ["hospital", "病院ナビ", "医療コンサルティング/index.html", "industry", "病院経営改革・病院／介護マーケ・地域レポート", ["HUB"]],
+  ["maadv", "M&A Advisory Desk", "MAAdvisory/ma-advisory-desk.html", "industry", "M&A仲介・FAの10ステージ：受託・報酬→評価→ノンネーム→買い手探索→LOI→DD→最終契約→PMI（関連ツール14本を同梱）", ["NEW", "HUB"]],
+  ["pharmmgmt", "Pharmacy Manager Academy", "PharmacyManagement/pharmacy-manager-academy.html", "industry", "薬局長・事務リーダーの育成：数字・在庫・リスク・スタッフ・リーダーシップ", ["NEW"]],
+  ["pharmacy", "調剤薬局 シフト管理ツール", "PharmacyShift/pharmacy-shift-tool.html", "industry", "薬局の人員配置"],
+  ["flower", "営業マーケ戦略企画（HTML版）", "営業マーケ戦略企画HTML版/index.html", "industry", "花屋の事例：調査→ブランド→セールス→集客→商品開発", ["NEW"]],
+
+  ["hrsite", "HRコンサルティング サイト", "hr-consulting-site/index.html", "asset", "自社サービスのWebサイト", ["NEW"]],
+  ["nbwlp", "新規事業ワークフロー LP", NB + "新規事業ワークフロー・スイートLP.html", "asset", "スイートの紹介ページ", ["NEW"]],
+  ["irlp", "IRコンサル提案 LP", "IRWatch/LP_コンサル提案.html", "asset", "IR支援の提案ページ", ["NEW"]],
+];
+// 英語名のアプリに添える日本語の補足（カード・シナリオ・検索で使う）
+const JA = {
+  pricing: "価格戦略デスク", bms: "ブランドマネジメント・スタジオ", concept: "コンセプトづくり",
+  dhub: "デザインツールの入口", uiux: "画面・操作の設計デスク", svc: "サービスデザイン・デスク", journey: "カスタマージャーニー設計",
+  content: "コンテンツ戦略", dms: "デジタルマーケティング・スイート", kis: "キーワードの検索意図", seo: "自然検索・SEO",
+  aeo: "AI検索での見え方", paid: "広告運用", growth: "グロースマーケティング", pr: "広報・PR", teaser: "ティーザー動画の演出", storyboard: "ストーリーボード設計デスク", logolab: "ロゴ開発デスク", shelfvision: "棚ヒートマップ＆プラノグラム", palette: "カラーパレット設計デスク", pharmmgmt: "薬局マネジメント育成デスク", maadv: "M&A仲介・アドバイザリー実務デスク", titlelab: "タイトル・キャッチコピー作成デスク",
+  slate: "動画生成プロンプト", cphub: "説得・交渉・営業の入口", crm: "顧客管理", mms: "マーケティング組織の運営",
+  pdesk: "プロジェクト管理", pplan: "計画書ビルダー", pdiag: "プロジェクト診断", mmm: "マーケティング効果の分析",
+  hrkpi: "人事KPIデスク", irtools: "IRツールの入口", irread: "IRの伝わりやすさ", fpa: "財務計画・分析", future: "未来志向の対話",
+  career: "キャリア支援ツール", teamtrust: "チームビルディング実践デスク", story: "ビジネス・ストーリーテリング実践デスク", humanos: "思考と行動のOS診断", booktrain: "名著の要点トレーナー",
+};
+const LP_JA = { "AttentionDesign": "アテンションデザイン", "HUMANOS": "HUMAN OS 人生分析", "Muchu": "夢中ってどういうこと？", "NOtEnoughReSkilling": "リスキリングだけでは足りない", "Position": "努力より、場所。", "ServiceDesignStates EN": "サービスデザインは「状態」を設計する・英語版", "StateEconomy EN": "状態経済・英語版" };
+const LP_KINDLE = ["AI時代の組織開発LP", "AI時代の組織設計LP", "AttentionDesign", "HUMANOSLP", "IR担当者のための伝わる発信術LP", "LP", "LP_なぜ、あのアイスクリーム屋は消えたのか", "LP_異動しても折れない人の仕事のOS", "LP_価格センシティビティの科学", "LP_交渉術の世界地図", "LP_心の整理地図", "LP_人生はエネルギーで決まる", "LP_予測脚本会議", "Muchu", "NOtEnoughReSkilling", "Position", "ServiceDesignStates_LP_EN", "StateEconomy_LP_EN", "アテンションの歴史LP", "アルゴリズム進化論LP", "サービスデザインは_LP", "なぜ人は固まるのかLP", "なぜ人は手に取るのかLP", "ブランドを超えてLP", "価値の文明史_3_4巻_LP", "価値の文明史_LP", "海外スーパー成長戦略大全LP", "見る力LP", "見る力実践編LP", "思い出されるブランドのつくり方LP", "思考ゲームLP", "思考は二千年前に完成していたLP", "状態デザイン実践_LP", "状態モデリング実践編LP", "状態経済LP", "人間関係の整理地図LP", "人生GPSLP", "想定力LP", "棚で勝つパッケージ戦略LP", "断れない人の決める技術_LP", "未来を数字で考える技術LP", "未来を買う技術LP"].map(n => { const d = n.replace(/_?LP$|^LP_/g, "").replace(/_/g, " ") || "AI経営ダッシュボード"; return ["KIndle/" + n + ".html", LP_JA[d] ? `${d}（${LP_JA[d]}）` : d]; });
+const LP_METHOD = ["アテンションコンピテンシーLP", "アテンションデザインLP", "思考ゲーム診断メソッドLP", "縦軸横軸成長フレームワークLP", "状態モデリングLP"].map(n => ["Methodology/" + n + ".html", n.replace(/LP$/, "")]);
+
+const FLOWS = [
+  { t: "新規事業を立ち上げる", d: "兆しの調査から、事業計画・資金集め・プロジェクト化まで。", ids: ["compass", "screening", "tam", "mstruct", "contest", "insight", "effect", "bmc", "strat", "bizeval", "finimp", "monte", "funding", "pitch", "pplan", "pdesk"] },
+  { t: "ブランドを立て直す", d: "顧客の本音と自社の立ち位置から、ポジショニングと連想を決め、表現に落とす。", ids: ["insight", "bms", "bassoc", "concept", "logolab", "palette", "guideline", "wording", "titlelab", "content", "teaser", "brandval"] },
+  { t: "マーケティング運用を強くする", d: "言葉とコンテンツを決め、キーワードを検索意図で割り当て、検索・AI検索・広告・グロース・CRMで回す。", ids: ["insight", "wording", "titlelab", "content", "kis", "seo", "aeo", "paid", "growth", "crm"] },
+  { t: "刺さるタイトル・コピーを決める", d: "コンセプトと言葉の素材を集め、型でタイトル・キャッチコピーを量産・採点して決め、コンテンツ・動画・広報で届ける。", ids: ["concept", "wording", "titlelab", "content", "teaser", "paid", "pr"] },
+  { t: "ロゴ・ビジュアルアイデンティティをつくる", d: "顧客の本音とポジショニングからブリーフを書き、ロゴを複数案で探って採点し、配色・磨き込み・展開で確かめて、仕様書とガイドラインで運用ルールにする。", ids: ["insight", "bms", "concept", "logolab", "palette", "imgp", "guideline", "brandval"] },
+  { t: "店頭の棚で選ばれる", d: "顧客の本音から選ばれる理由を考え、パッケージの独自資産を棚卸しし、棚SEOで点検し、棚の写真のヒートマップと実測テストで見られ方を確かめ、棚割りを変えたときの売上・粗利を試算して、価格とパッケージに戻す。", ids: ["insight", "shelf", "shelfvision", "pricing", "palette", "logolab", "crm"] },
+  { t: "商品・ブランド動画をつくる", d: "コンセプトと言葉を決め、8コマのストーリーボードで画と一貫性を設計し、画像・動画生成AIで素材を作って、コンテンツと広告で届ける。", ids: ["concept", "wording", "titlelab", "storyboard", "imgp", "slate", "teaser", "content", "paid"] },
+  { t: "マーケティング組織を立ち上げる／立て直す", d: "事実を集めて見直しポイントを診断し、KPIと集客を試算して年間計画に落とし、チームとミーティングを回す。成果はMMMで測る。", ids: ["mms", "insight", "content", "kis", "paid", "crm", "mmm"] },
+  { t: "マーケティング投資を配分する", d: "各チャネルの実績から売上貢献とROIを測り（MMM）、ブランドの価値も金額で示して、予算と財務計画に戻す。", ids: ["seo", "aeo", "paid", "growth", "mmm", "brandval", "finimp"] },
+  { t: "サービス体験を設計する", d: "インサイトからジャーニー・サービス・画面まで一貫して設計する。", ids: ["insight", "journey", "svc", "uiux", "bassoc", "growth"] },
+  { t: "営業力を強くする", d: "仮説提案・説得・交渉を型で身につけ、顧客関係を管理する。", ids: ["hypo", "persuade", "nego", "conflict", "salesskill", "crm"] },
+  { t: "プロジェクトを成功させる", d: "計画書を書き、進捗を管理し、問題を早めに推定して手を打つ。", ids: ["pplan", "pdesk", "pdiag", "aitrain", "future"] },
+  { t: "組織・人材を強くする", d: "人事KPIで現状を見て、共感価値・キャリア・リーダー・対話・採用に手を打つ。", ids: ["hrkpi", "teamtrust", "ibrand", "career", "mkcareer", "execbrand", "no2", "future", "kanki", "recruit"] },
+  { t: "チームを立ち上げ、信頼で動かす", d: "発達段階と信頼の“ぐらつき”を見立て、習慣・会議・意思決定の役割を整え、対立を扱いながら、目標と対話で定着させる。", ids: ["teamtrust", "conflict", "goal", "future", "pdesk", "hrkpi"] },
+  { t: "調剤薬局のマネジメントを育てる", d: "薬局長・事務リーダーが自分の現在地を知り、店舗の数字と在庫、リスク、スタッフの定着、リーダーシップを学び、シフトと人員を整えて、人事KPIと目標で定着させる。", ids: ["pharmmgmt", "pharmacy", "teamtrust", "goal", "hrkpi", "future"] },
+  { t: "理念を組織に根づかせる", d: "理念・パーパスを共通言語に落とし、社員の共感と行動を育てて、目標と対話の場で定着させる。", ids: ["bms", "ibrand", "execbrand", "story", "future", "goal", "hrkpi"] },
+  { t: "人が辞めない組織をつくる", d: "離職率と兆候から辞める理由（9つのリーダーシップの失敗）を診断し、チームで手を打ち、成長計画とキャリア・理念浸透で定着させる。人への投資は人的資本ROIで測る。", ids: ["hrkpi", "teamtrust", "goal", "career", "ibrand", "story", "recruit"] },
+  { t: "物語で人を動かす（リーダーの発信）", d: "場面と聞き手に合う物語の型を選び、原稿を組み立てて点検・練習し、提案・変革・理念浸透・成果報告の場で伝える。", ids: ["story", "execbrand", "pitch", "persuade", "ibrand", "teamtrust", "pr"] },
+  { t: "名著から学び、実践に移す", d: "128冊の要点を読み、クイズとカードで身につけ、本のアクションを実践して、目標とプロセスの振り返りにつなげる。", ids: ["books", "booktrain", "process", "goal"] },
+  { t: "目標を設定し、人を育てる", d: "会社の方向性を自分の言葉にし、BSCで業績と成長の2軸の目標を決め、スキルと時間を整えて、四半期ごとに振り返る。", ids: ["goal", "hrkpi", "career", "future", "pdiag"] },
+  { t: "値上げ・価格を見直す", d: "SKUごとに価格への反応を仕分け、損益分岐を試算し、価値を言語化して、値上げを説明とセットで伝える。", ids: ["insight", "pricing", "fpa", "bms", "shelf", "pr"] },
+  { t: "投資家に伝える（IR）", d: "財務と競合を分析し、IR資料と発信のわかりやすさを高める。", ids: ["analyst", "fpa", "irdoc", "irread", "irtools", "pr"] },
+  { t: "M&A案件を仲介・助言する", d: "案件を受けて市場と事業を見立て、企業価値を評価し、買い手を探して交渉・条件を詰め、DDで財務影響を確かめて、統合後の計画・理念浸透・チームづくりまでつなぐ。", ids: ["maadv", "mstruct", "bizeval", "analyst", "fpa", "brandval", "crm", "game", "nego", "persuade", "finimp", "pplan", "pdesk", "ibrand", "teamtrust"] },
+];
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const href = p => encodeURI(p).replace(/#/g, "%23");
+const card = a => { const [id, name, path, , desc, tags = []] = a; return `<a class="app" id="app-${id}" data-id="${id}" href="${href(path)}" target="_blank" rel="noopener" data-text="${esc(name + " " + (JA[id] || "") + " " + desc)}"><span class="num"></span><b>${esc(name)}${JA[id] ? `<small class="ja">（${esc(JA[id])}）</small>` : ""}</b><span>${esc(desc)}</span>${tags.map(t => `<span class="tag ${t === "NEW" ? "new" : ""}">${esc(t)}</span>`).join(" ")}</a>`; };
+
+$("cycle").innerHTML = STAGES.map(s => `<div class="stage"><div class="sh"><div class="sn">STAGE ${s.n}</div><h3>${s.t}</h3><p class="q">${s.q}</p></div>${APPS.filter(a => a[3] === s.id).map(card).join("")}</div>`).join("");
+$("lanes").innerHTML = LANES.map(l => `<div class="lane" style="--lc:${l.c}"><div class="lh"><h3>${l.t}</h3><p>${l.d}</p></div><div class="apps">${APPS.filter(a => a[3] === l.id).map(card).join("")}
+  ${l.id === "asset" ? `<details class="more"><summary>書籍LP（Kindle）${LP_KINDLE.length}本／メソッドLP ${LP_METHOD.length}本を表示</summary><div class="list">${[...LP_METHOD, ...LP_KINDLE].map(([p, n]) => `<a href="${href(p)}" target="_blank" rel="noopener">・${esc(n)}</a>`).join("")}</div></details>` : ""}</div></div>`).join("");
+$("stats").innerHTML = [[APPS.length, "体系図のアプリ"], [STAGES.length, "価値を生む段階"], [LANES.length, "支えるレーン"], [LP_KINDLE.length + LP_METHOD.length, "書籍・メソッドLP"], [APPS.filter(a => (a[5] || []).includes("NEW")).length, "カタログ未掲載"]].map(([n, t]) => `<div><b>${n}</b><small>${t}</small></div>`).join("");
+$("scenBtns").innerHTML = FLOWS.map((f, i) => `<button class="btn" data-flow="${i}">${esc(f.t)}</button>`).join("");
+const nameOf = id => { const n = (APPS.find(a => a[0] === id) || [])[1] || id; return JA[id] ? `${n}（${JA[id]}）` : n; };
+const stageOf = id => { const a = APPS.find(x => x[0] === id); const s = STAGES.find(x => x.id === a[3]) || LANES.find(x => x.id === a[3]); return s ? s.t : ""; };
+$("flows").innerHTML = FLOWS.map((f, i) => `<div class="flow" data-flow="${i}"><h4>${esc(f.t)}</h4><p>${esc(f.d)}</p><ol>${f.ids.map(id => `<li>${esc(nameOf(id))} <small>― ${esc(stageOf(id))}</small></li>`).join("")}</ol></div>`).join("");
+
+let cur = -1;
+function drawLinks() {
+  const svg = $("links"), map = $("map"); svg.innerHTML = ""; if (cur < 0) return;
+  const mb = map.getBoundingClientRect(), ids = FLOWS[cur].ids;
+  const pts = ids.map(id => { const r = $("app-" + id).getBoundingClientRect(); return { x: r.left - mb.left + r.width / 2, y: r.top - mb.top + r.height / 2, w: r.width, h: r.height }; });
+  svg.setAttribute("width", map.scrollWidth); svg.setAttribute("height", map.scrollHeight);
+  let d = "";
+  for (let i = 1; i < pts.length; i++) {
+    const a = pts[i - 1], b = pts[i], dx = b.x - a.x, dy = b.y - a.y;
+    let sx = a.x, sy = a.y, ex = b.x, ey = b.y;
+    if (Math.abs(dx) > 40) { sx = a.x + Math.sign(dx) * a.w / 2; ex = b.x - Math.sign(dx) * b.w / 2; d += `<path d="M${sx} ${sy} C${sx + dx * .4} ${sy} ${ex - dx * .4} ${ey} ${ex} ${ey}"/>`; }
+    else { sy = a.y + Math.sign(dy) * a.h / 2; ey = b.y - Math.sign(dy) * b.h / 2; d += `<path d="M${sx} ${sy} L${ex} ${ey}"/>`; }
+  }
+  svg.innerHTML = `<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#8b7cf6"/></marker></defs><g fill="none" stroke="#8b7cf6" stroke-width="1.8" stroke-opacity=".85" marker-end="url(#ah)">${d}</g>`;
+}
+function setFlow(i) {
+  cur = cur === i ? -1 : i; const map = $("map");
+  document.querySelectorAll(".app").forEach(a => { a.classList.remove("hit"); a.querySelector(".num").textContent = ""; });
+  document.querySelectorAll("[data-flow]").forEach(b => b.classList.toggle("on", +b.dataset.flow === cur && b.tagName === "BUTTON"));
+  map.classList.toggle("focus", cur >= 0);
+  if (cur >= 0) {
+    const f = FLOWS[cur];
+    f.ids.forEach((id, k) => { const el = $("app-" + id); el.classList.add("hit"); const n = el.querySelector(".num"); n.textContent = n.textContent ? n.textContent + "," + (k + 1) : k + 1; });
+    $("scenDesc").innerHTML = `<b>${esc(f.t)}</b>：${esc(f.d)}（${f.ids.length}ステップ）`;
+  } else $("scenDesc").textContent = "シナリオを選ぶと、使う順番に番号と矢印が付きます。";
+  drawLinks();
+}
+document.addEventListener("click", e => { const f = e.target.closest("[data-flow]"); if (f) { setFlow(+f.dataset.flow); if (f.classList.contains("flow")) $("map").scrollIntoView({ behavior: "smooth", block: "start" }); } });
+$("q").addEventListener("input", e => {
+  const q = e.target.value.trim().toLowerCase(), map = $("map");
+  map.classList.toggle("search", !!q);
+  document.querySelectorAll(".app").forEach(a => a.classList.toggle("match", !!q && a.dataset.text.toLowerCase().includes(q)));
+});
+$("clear").onclick = () => { $("q").value = ""; $("map").classList.remove("search"); if (cur >= 0) setFlow(cur); };
+addEventListener("resize", () => drawLinks());
+$("map").parentElement.addEventListener("scroll", () => {});
+</script>
+</body>
+</html>
