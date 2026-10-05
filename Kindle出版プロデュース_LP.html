@@ -9,14 +9,15 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-  /* トンマナ：業務プロセス体系図（Project Desk／ConceptMaker tone）に合わせる */
+  /* パレット：Shadow Grey #212738 / Vibrant Coral #F97068 / Lemon Lime #D1D646 / Platinum #EDF2EF / Sky Aqua #57C4E5 */
   :root{
     color-scheme:dark;
-    --ground:#0c0e14; --surface:#151824; --surface-2:rgba(255,255,255,.045);
-    --ink:#f5f6fb; --soft:#a6abc0; --faint:#8a90a6;
+    --ground:#1A1F2C; --surface:#212738; --surface-2:rgba(255,255,255,.045);
+    --ink:#EDF2EF; --soft:#A9B1C2; --faint:#8C94A8;
     --line:rgba(255,255,255,.14); --line-strong:rgba(255,255,255,.22);
-    --accent:#8b7cf6; --accent-soft:rgba(139,124,246,.16); --on-accent:#0c0e14;
-    --lane-people:#3f8fc6; --lane-think:#8b7cf6; --lane-industry:#28b39f; --lane-asset:#d0609a;
+    --accent:#F97068; --accent-soft:rgba(249,112,104,.16); --on-accent:#212738;
+    --lime:#D1D646; --lime-soft:rgba(209,214,70,.14); --aqua:#57C4E5; --aqua-soft:rgba(87,196,229,.16);
+    --lane-people:var(--aqua); --lane-think:var(--lime); --lane-industry:var(--ink); --lane-asset:var(--accent);
     --head:"Manrope","Noto Sans JP",sans-serif; --sans:"Inter","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif; --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
     --r:6px;
   }
@@ -32,7 +33,7 @@
   h2{font-size:clamp(1.3rem,2.4vw,1.6rem);margin-bottom:8px}
   h2 .en{display:block;font-family:var(--mono);font-size:.66rem;color:var(--faint);font-weight:500;letter-spacing:.16em;text-transform:uppercase;margin-bottom:8px}
   .lead{color:var(--soft);margin-bottom:28px;font-size:.95rem}
-  .btn{display:inline-flex;align-items:center;gap:7px;background:var(--ink);border:1px solid var(--ink);color:var(--ground);font-weight:600;
+  .btn{display:inline-flex;align-items:center;gap:7px;background:var(--accent);border:1px solid var(--accent);color:var(--on-accent);font-weight:600;
     padding:11px 20px;border-radius:8px;text-decoration:none;font-size:.92rem;transition:opacity .12s,border-color .12s,background .12s}
   .btn:hover{opacity:.88}
   .btn.ghost{background:var(--surface);border-color:var(--line-strong);color:var(--ink)}
@@ -42,17 +43,17 @@
   .topbar{position:sticky;top:0;z-index:50;background:var(--ground);border-bottom:1.5px solid var(--line-strong);
     display:flex;align-items:center;gap:14px;padding:13px 24px}
   .brand{display:flex;gap:10px;align-items:center}
-  .brand .glyph{width:30px;height:30px;flex:none;border-radius:6px;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;font-family:var(--head);font-weight:800;font-size:.8rem}
+  .brand .glyph{width:30px;height:30px;flex:none;border-radius:6px;background:var(--lime);color:var(--on-accent);display:grid;place-items:center;font-family:var(--head);font-weight:800;font-size:.8rem}
   .brand b{font-family:var(--head);font-weight:700;font-size:.92rem;line-height:1.1;display:block}
   .brand small{font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
   .topbar .sp{flex:1}
-  .topbar a.cta{background:var(--ink);color:var(--ground);text-decoration:none;font-weight:600;padding:7px 13px;border-radius:8px;font-size:.82rem}
+  .topbar a.cta{background:var(--accent);color:var(--on-accent);text-decoration:none;font-weight:600;padding:7px 13px;border-radius:8px;font-size:.82rem}
   .topbar a.cta:hover{opacity:.88}
 
   /* hero */
   .hero{padding:28px 0 56px}
   .hero .panel{position:relative;padding:44px 40px 40px;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
-    background:radial-gradient(circle at 88% 20%,rgba(139,124,246,.18),transparent 52%),var(--surface)}
+    background:radial-gradient(circle at 88% 20%,rgba(249,112,104,.18),transparent 52%),radial-gradient(circle at 8% 100%,rgba(87,196,229,.10),transparent 45%),var(--surface)}
   .hero .eyebrow{font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;color:var(--faint);margin-bottom:12px}
   .hero h1{font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.35}
   .hero h1 .o{color:var(--accent)}
@@ -76,20 +77,21 @@
   /* hero: 本棚キービジュアル */
   .shelf{margin-top:36px;display:flex;justify-content:flex-start;align-items:flex-end;gap:14px;padding-bottom:14px;border-bottom:1.5px solid var(--line-strong);max-width:560px}
   .bk{width:128px;height:180px;background:var(--ground);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;flex:0 0 auto}
-  .bk .band{height:32px;background:var(--surface-2);border-bottom:1px solid var(--line)}
+  .bk .band{height:32px;background:var(--aqua-soft);border-bottom:1px solid var(--line)}
   .bk .ln{height:6px;background:var(--line);border-radius:3px;margin:12px 14px 0}
   .bk.you{width:160px;height:218px;border-color:var(--accent);background:linear-gradient(180deg,var(--accent-soft),var(--ground) 70%)}
   .bk.you .band{height:36px;background:transparent;color:var(--accent);font-size:.58rem;letter-spacing:.16em;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:600}
   .bk.you .ttl{text-align:center;font-family:var(--head);font-weight:700;font-size:1.05rem;line-height:1.5;margin-top:18px}
   .bk.you .ttl .o{color:var(--accent)}
   .bk.you .bar{width:44px;height:3px;background:var(--accent);margin:14px auto 0;border-radius:2px}
-  .card .num{display:block;font-family:var(--mono);color:var(--accent);font-weight:600;font-size:.66rem;letter-spacing:.14em;margin-bottom:4px}
+  .card .num{display:block;font-family:var(--mono);color:var(--aqua);font-weight:600;font-size:.66rem;letter-spacing:.14em;margin-bottom:4px}
 
   /* proof stats */
   .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:22px}
   .stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:13px 16px 12px}
   .stat:first-child{border-color:color-mix(in srgb,var(--accent) 40%,var(--line));background:linear-gradient(180deg,var(--accent-soft),var(--surface) 62%)}
   .stat .big{font-family:var(--mono);font-size:1.9rem;font-weight:500;line-height:1.1;font-variant-numeric:tabular-nums}
+  .stat.alt{border-color:color-mix(in srgb,var(--lime) 40%,var(--line));background:linear-gradient(180deg,var(--lime-soft),var(--surface) 62%)}
   .stat span{display:block;color:var(--soft);font-size:.78rem;font-weight:500;margin-top:2px}
 
   /* price variables */

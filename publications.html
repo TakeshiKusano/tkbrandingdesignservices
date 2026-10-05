@@ -10,6 +10,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Noto+Sans+JP:wght@400;500;700&family=Outfit:wght@400;600;800&family=Shippori+Mincho:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .palette-bar { display: flex; gap: 6px; justify-content: center; margin: 1.5rem auto 0; }
+    .palette-bar span { width: 44px; height: 4px; border-radius: 4px; }
+  </style>
 </head>
 <body>
   <div class="bg-mesh"></div>
@@ -31,10 +35,11 @@
           <span class="hero-tag" style="margin-bottom: 1rem;">Publications ― Room 08</span>
           <h2>出版物</h2>
           <p>Kindleにて出版した書籍の一覧です</p>
+          <div class="palette-bar" aria-hidden="true"><span style="background:#57C4E5"></span><span style="background:#D1D646"></span><span style="background:#F97068"></span><span style="background:#EDF2EF"></span></div>
         </div>
-        <div style="margin-bottom: 3rem;">
+        <div style="margin-bottom: 3rem; --accent: #57C4E5; --accent-glow: rgba(87, 196, 229, 0.35);">
           <h3 style="font-size: 1.25rem; color: var(--accent); margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem;">
-            State Design <span style="flex: 1; height: 1px; background: var(--glass-border);"></span>
+            State Design <span style="flex: 1; height: 1px; background: linear-gradient(90deg, var(--accent), var(--glass-border) 40%);"></span>
           </h3>
           <div class="grid-books">
             <a class="book-cover" href="KIndle/状態経済LP.html"><img src="KIndle/JOUraikeizai.jpg" alt="状態経済"></a>
@@ -45,9 +50,9 @@
           </div>
         </div>
 
-        <div style="margin-bottom: 3rem;">
+        <div style="margin-bottom: 3rem; --accent: #F97068; --accent-glow: rgba(249, 112, 104, 0.35);">
           <h3 style="font-size: 1.25rem; color: var(--accent); margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem;">
-            注目・注意 <span style="flex: 1; height: 1px; background: var(--glass-border);"></span>
+            注目・注意 <span style="flex: 1; height: 1px; background: linear-gradient(90deg, var(--accent), var(--glass-border) 40%);"></span>
           </h3>
           <div class="grid-books">
             <a class="book-cover" href="KIndle/思い出されるブランドのつくり方LP.html"><img src="KIndle/ブランドの作り方.jpg" alt="思い出されるブランドのつくり方"></a>
@@ -59,9 +64,9 @@
           </div>
         </div>
 
-        <div style="margin-bottom: 3rem;">
+        <div style="margin-bottom: 3rem; --accent: #D1D646; --accent-glow: rgba(209, 214, 70, 0.35);">
           <h3 style="font-size: 1.25rem; color: var(--accent); margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem;">
-            ビジネス・経済 <span style="flex: 1; height: 1px; background: var(--glass-border);"></span>
+            ビジネス・経済 <span style="flex: 1; height: 1px; background: linear-gradient(90deg, var(--accent), var(--glass-border) 40%);"></span>
           </h3>
           <div class="grid-books">
             <a class="book-cover" href="KIndle/未来を買う技術LP.html"><img src="KIndle/Miraiwokau.jpg" alt="未来を買う技術"></a>
@@ -74,9 +79,9 @@
           </div>
         </div>
 
-        <div style="margin-bottom: 3rem;">
+        <div style="margin-bottom: 3rem; --accent: #57C4E5; --accent-glow: rgba(87, 196, 229, 0.35);">
           <h3 style="font-size: 1.25rem; color: var(--accent); margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem;">
-            組織・人事・キャリア <span style="flex: 1; height: 1px; background: var(--glass-border);"></span>
+            組織・人事・キャリア <span style="flex: 1; height: 1px; background: linear-gradient(90deg, var(--accent), var(--glass-border) 40%);"></span>
           </h3>
           <div class="grid-books">
             <a class="book-cover" href="KIndle/AI時代の組織設計LP.html"><img src="KIndle/AI時代の組織設計.jpg" alt="会社という組織図はもう古い ―― AI時代の組織設計"></a>
@@ -93,9 +98,9 @@
           </div>
         </div>
 
-        <div style="margin-bottom: 3rem;">
+        <div style="margin-bottom: 3rem; --accent: #D1D646; --accent-glow: rgba(209, 214, 70, 0.35);">
           <h3 style="font-size: 1.25rem; color: var(--accent); margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem;">
-            その他 <span style="flex: 1; height: 1px; background: var(--glass-border);"></span>
+            その他 <span style="flex: 1; height: 1px; background: linear-gradient(90deg, var(--accent), var(--glass-border) 40%);"></span>
           </h3>
           <div class="grid-books">
             <a class="book-cover" href="KIndle/HUMANOSLP.html"><img src="KIndle/HUMANOS.jpg" alt="HUMAN OS 人生分析"></a>
@@ -108,9 +113,9 @@
           </div>
         </div>
 
-        <div style="margin-bottom: 3rem;">
+        <div style="margin-bottom: 3rem; --accent: #F97068; --accent-glow: rgba(249, 112, 104, 0.35);">
           <h3 style="font-size: 1.25rem; color: var(--accent); margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem;">
-            プロデュース <span style="flex: 1; height: 1px; background: var(--glass-border);"></span>
+            プロデュース <span style="flex: 1; height: 1px; background: linear-gradient(90deg, var(--accent), var(--glass-border) 40%);"></span>
           </h3>
           <div class="grid-books">
             <div class="book-cover"><img src="KIndle/Kindle表紙デザイン.jpg" alt="空から、地域を再設計する。 ― 北陸エア構想2030（株式会社ToBeドローン金沢）"></div>
@@ -128,26 +133,26 @@
           <p>20年以上のキャリアで実現した、大企業レベルの定量的な成果</p>
         </div>
         <div class="grid-3">
-          <div class="glass-card" style="text-align: center;">
-            <div class="card-icon" style="margin: 0 auto 1.5rem;"><i data-lucide="award"></i></div>
+          <div class="glass-card" style="text-align: center; --accent: #57C4E5; --accent-glow: rgba(87, 196, 229, 0.35); border-top: 3px solid var(--accent); background: linear-gradient(180deg, rgba(87, 196, 229, 0.08), transparent 45%), var(--glass-bg);">
+            <div class="card-icon" style="margin: 0 auto 1.5rem; background: color-mix(in srgb, var(--accent) 14%, transparent);"><i data-lucide="award"></i></div>
             <h3>ブランド・マーケティング</h3>
             <div style="font-size: 2.5rem; font-weight: 800; color: var(--accent); margin: 1rem 0;">3,500<span style="font-size: 1rem;">+ SKU/年</span></div>
             <p style="color: var(--text-sub); font-size: 0.9rem;">
               クリエイティブディレクションから大規模デザイン刷新まで、ブランドの成長を加速させる戦略を実行。
             </p>
           </div>
-          <div class="glass-card" style="text-align: center;">
-            <div class="card-icon" style="margin: 0 auto 1.5rem;"><i data-lucide="fast-forward"></i></div>
+          <div class="glass-card" style="text-align: center; --accent: #D1D646; --accent-glow: rgba(209, 214, 70, 0.35); border-top: 3px solid var(--accent); background: linear-gradient(180deg, rgba(209, 214, 70, 0.08), transparent 45%), var(--glass-bg);">
+            <div class="card-icon" style="margin: 0 auto 1.5rem; background: color-mix(in srgb, var(--accent) 14%, transparent);"><i data-lucide="fast-forward"></i></div>
             <h3>プロセス改革推進</h3>
-            <div style="font-size: 2.5rem; font-weight: 800; color: #F97068; margin: 1rem 0;">50<span style="font-size: 1rem;">% 削減</span></div>
+            <div style="font-size: 2.5rem; font-weight: 800; color: var(--accent); margin: 1rem 0;">50<span style="font-size: 1rem;">% 削減</span></div>
             <p style="color: var(--text-sub); font-size: 0.9rem;">
               制作業務時間を半減。¥5億のコスト削減実績。ITツール導入とワークフロー分析で生産性を極大化。
             </p>
           </div>
-          <div class="glass-card" style="text-align: center;">
-            <div class="card-icon" style="margin: 0 auto 1.5rem;"><i data-lucide="users"></i></div>
+          <div class="glass-card" style="text-align: center; --accent: #F97068; --accent-glow: rgba(249, 112, 104, 0.35); border-top: 3px solid var(--accent); background: linear-gradient(180deg, rgba(249, 112, 104, 0.08), transparent 45%), var(--glass-bg);">
+            <div class="card-icon" style="margin: 0 auto 1.5rem; background: color-mix(in srgb, var(--accent) 14%, transparent);"><i data-lucide="users"></i></div>
             <h3>組織・人材マネジメント</h3>
-            <div style="font-size: 2.5rem; font-weight: 800; color: #D1D646; margin: 1rem 0;">伴走型<span style="font-size: 1rem;">支援</span></div>
+            <div style="font-size: 2.5rem; font-weight: 800; color: var(--accent); margin: 1rem 0;">伴走型<span style="font-size: 1rem;">支援</span></div>
             <p style="color: var(--text-sub); font-size: 0.9rem;">
               部門方針策定、リーダー育成、組織開発思想に基づく持続的な文化醸成。社員がブランドの伝道師へ。
             </p>
@@ -166,7 +171,7 @@
         </div>
         <div class="grid-2" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2.5rem;">
           <!-- 略歴 -->
-          <div class="glass-card">
+          <div class="glass-card" style="--accent: #57C4E5; --accent-glow: rgba(87, 196, 229, 0.35); border-top: 3px solid var(--accent);">
             <h3 style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem; color: var(--accent);">
               <i data-lucide="briefcase"></i> 略歴
             </h3>
@@ -193,7 +198,7 @@
             </ul>
           </div>
           <!-- 資格等 -->
-          <div class="glass-card">
+          <div class="glass-card" style="--accent: #D1D646; --accent-glow: rgba(209, 214, 70, 0.35); border-top: 3px solid var(--accent);">
             <h3 style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem; color: var(--accent);">
               <i data-lucide="award"></i> 資格等
             </h3>

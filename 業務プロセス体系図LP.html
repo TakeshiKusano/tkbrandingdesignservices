@@ -9,21 +9,21 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
-:root{color-scheme:dark;--ground:#0c0e14;--surface:#151824;--s2:rgba(255,255,255,.045);--ink:#f5f6fb;--soft:#a6abc0;--faint:#8a90a6;--line:rgba(255,255,255,.12);--line2:rgba(255,255,255,.22);--accent:#8b7cf6;--accent-ink:#b3a8fa;--accent-soft:rgba(139,124,246,.16);--teal:#28b39f;--head:"Manrope","Noto Sans JP",sans-serif;--sans:"Inter","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;--mono:"JetBrains Mono",ui-monospace,Consolas,monospace}
+:root{color-scheme:dark;--ground:#1A1F2C;--surface:#212738;--s2:rgba(255,255,255,.045);--ink:#EDF2EF;--soft:#A9B1C2;--faint:#8C94A8;--line:rgba(255,255,255,.12);--line2:rgba(255,255,255,.22);--accent:#F97068;--accent-ink:#FB9A93;--accent-soft:rgba(249,112,104,.16);--teal:#D1D646;--head:"Manrope","Noto Sans JP",sans-serif;--sans:"Inter","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;--mono:"JetBrains Mono",ui-monospace,Consolas,monospace}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75;-webkit-font-smoothing:antialiased}
 a{color:inherit}
-.credit{text-align:center;color:#ff6b6b;font-weight:700;padding:.5rem;font-size:.95rem;border-bottom:1px solid var(--line)}
-.nav{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:14px;padding:12px clamp(16px,4vw,48px);background:rgba(12,14,20,.86);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.credit{text-align:center;color:#F97068;font-weight:700;padding:.5rem;font-size:.95rem;border-bottom:1px solid var(--line)}
+.nav{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:14px;padding:12px clamp(16px,4vw,48px);background:rgba(26,31,44,.86);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 .logo{display:flex;align-items:center;gap:10px;font-family:var(--head);font-weight:800;font-size:15px;text-decoration:none}
-.logo i{width:28px;height:28px;border-radius:6px;background:var(--accent);color:#0c0e14;display:grid;place-items:center;font-style:normal;font-size:13px}
+.logo i{width:28px;height:28px;border-radius:6px;background:#D1D646;color:#1A1F2C;display:grid;place-items:center;font-style:normal;font-size:13px}
 .nav .sp{flex:1}
 .nav a.lk{font-size:13px;color:var(--soft);text-decoration:none}
 .nav a.lk:hover{color:var(--ink)}
 .btn{display:inline-flex;align-items:center;gap:8px;border-radius:10px;padding:12px 20px;font-weight:700;font-size:15px;text-decoration:none;border:1.5px solid var(--line2);background:var(--surface);color:var(--ink);transition:transform .15s,opacity .15s}
 .btn:hover{transform:translateY(-1px)}
-.btn.pri{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+.btn.pri{background:var(--accent);color:var(--ground);border-color:var(--accent)}
 .btn.sm{padding:7px 14px;font-size:13px}
 .wrap{max-width:1180px;margin:0 auto;padding:0 clamp(16px,4vw,40px)}
 section{padding:88px 0;border-bottom:1px solid var(--line)}
@@ -32,25 +32,25 @@ h1,h2,h3{font-family:var(--head);letter-spacing:-.015em;text-wrap:balance}
 h2{font-size:clamp(26px,3.4vw,38px);line-height:1.3;margin:10px 0 14px}
 .lead{color:var(--soft);font-size:17px;max-width:46em;margin:0}
 /* hero */
-.hero{padding:76px 0 84px;background:linear-gradient(90deg,rgba(12,14,20,.94) 0%,rgba(12,14,20,.78) 45%,rgba(12,14,20,.35) 100%),linear-gradient(0deg,#0c0e14 0%,rgba(12,14,20,0) 30%),radial-gradient(circle at 15% 20%,rgba(139,124,246,.18),transparent 45%),radial-gradient(circle at 85% 70%,rgba(40,179,159,.12),transparent 45%),#0c0e14}
+.hero{padding:76px 0 84px;background:linear-gradient(90deg,rgba(26,31,44,.94) 0%,rgba(26,31,44,.78) 45%,rgba(26,31,44,.35) 100%),linear-gradient(0deg,#1A1F2C 0%,rgba(26,31,44,0) 30%),radial-gradient(circle at 15% 20%,rgba(249,112,104,.18),transparent 45%),radial-gradient(circle at 85% 70%,rgba(87,196,229,.12),transparent 45%),#1A1F2C}
 .hv{position:relative}
 .hv img{display:none;width:100%;aspect-ratio:1/1;object-fit:cover;object-position:94% 50%;-webkit-mask-image:radial-gradient(circle at 50% 50%,#000 58%,transparent 72%);mask-image:radial-gradient(circle at 50% 50%,#000 58%,transparent 72%)}
 .hv.ok img{display:block}
 .hv.ok .ring{display:none}
 .hv .badge{display:none;position:absolute;left:50%;top:47%;transform:translate(-50%,-50%);text-align:center;pointer-events:none}
 .hv.ok .badge{display:block}
-.hv .badge b{display:block;font-family:var(--head);font-weight:800;font-size:64px;line-height:1;color:#f5f6fb;text-shadow:0 4px 24px rgba(0,0,0,.8)}
-.hv .badge span{font-size:15px;color:#c9cbe0;text-shadow:0 2px 10px rgba(0,0,0,.9)}
+.hv .badge b{display:block;font-family:var(--head);font-weight:800;font-size:64px;line-height:1;color:#EDF2EF;text-shadow:0 4px 24px rgba(0,0,0,.8)}
+.hv .badge span{font-size:15px;color:#C5CBD6;text-shadow:0 2px 10px rgba(0,0,0,.9)}
 .hero .g{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
 .hero h1{font-size:clamp(32px,4.6vw,56px);line-height:1.2;margin:14px 0 18px;font-weight:800}
 .hero h1 em{font-style:normal;color:var(--accent-ink)}
 .hero p{color:var(--soft);font-size:18px;margin:0 0 26px;max-width:34em}
 .cta{display:flex;gap:12px;flex-wrap:wrap}
 .ring{width:100%;max-width:420px;display:block;margin:0 auto}
-.ring .rn{font-family:var(--mono);font-size:15px;font-weight:700;fill:#b3a8fa}
-.ring .rc{font-family:var(--sans);font-size:12px;fill:#a6abc0}
-.ring .rbig{font-family:var(--head);font-weight:800;font-size:64px;fill:#f5f6fb}
-.ring .rsub{font-family:var(--sans);font-size:15px;fill:#a6abc0}
+.ring .rn{font-family:var(--mono);font-size:15px;font-weight:700;fill:#FB9A93}
+.ring .rc{font-family:var(--sans);font-size:12px;fill:#A9B1C2}
+.ring .rbig{font-family:var(--head);font-weight:800;font-size:64px;fill:#EDF2EF}
+.ring .rsub{font-family:var(--sans);font-size:15px;fill:#A9B1C2}
 .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:44px}
 .stats div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
 .stats b{display:block;font-family:var(--mono);font-size:30px;font-weight:600;line-height:1.1}
@@ -61,13 +61,13 @@ h2{font-size:clamp(26px,3.4vw,38px);line-height:1.3;margin:10px 0 14px}
 .pain .q{font-family:var(--head);font-weight:700;font-size:18px;margin:0 0 8px}
 .pain p{margin:0;color:var(--soft);font-size:14.5px}
 .pain .n{font-family:var(--mono);font-size:12px;color:var(--accent-ink)}
-.answer{margin-top:28px;border:1px solid rgba(139,124,246,.45);background:var(--accent-soft);border-radius:14px;padding:20px 24px;font-size:17px}
+.answer{margin-top:28px;border:1px solid rgba(249,112,104,.45);background:var(--accent-soft);border-radius:14px;padding:20px 24px;font-size:17px}
 .answer b{color:var(--accent-ink)}
 /* stages */
 .stg{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:34px}
 .st{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;position:relative}
 .st-h{display:flex;align-items:center;gap:8px}
-.st-h .no{font-family:var(--mono);font-size:12px;font-weight:700;color:#0c0e14;background:var(--accent);border-radius:5px;padding:1px 6px}
+.st-h .no{font-family:var(--mono);font-size:12px;font-weight:700;color:#1A1F2C;background:var(--accent);border-radius:5px;padding:1px 6px}
 .st-h b{font-family:var(--head);font-size:15.5px;line-height:1.35}
 .st-h .ct,.ln .ct{margin-left:auto;white-space:nowrap;flex:none;font-family:var(--mono);font-size:12px;color:var(--soft)}
 .st .q{font-size:12.5px;color:var(--faint);margin:8px 0;line-height:1.55}
@@ -76,7 +76,7 @@ h2{font-size:clamp(26px,3.4vw,38px);line-height:1.3;margin:10px 0 14px}
 .st li small{display:block;font-size:11.5px;color:var(--faint);line-height:1.4}
 .st .more{display:block;margin-top:6px;font-family:var(--mono);font-size:11.5px;color:var(--accent-ink)}
 .loop{display:flex;align-items:center;gap:12px;margin:14px 0 0;font-family:var(--mono);font-size:12.5px;color:var(--faint)}
-.loop i{flex:1;border-top:1.5px dashed rgba(139,124,246,.6)}
+.loop i{flex:1;border-top:1.5px dashed rgba(249,112,104,.6)}
 .lanes{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:26px}
 .ln{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--lc);border-radius:12px;padding:14px 16px;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px}
 .ln b{font-family:var(--head);font-size:15px}
@@ -92,7 +92,7 @@ h2{font-size:clamp(26px,3.4vw,38px);line-height:1.3;margin:10px 0 14px}
 .demo .t{font-family:var(--head);font-weight:700;margin-bottom:6px}
 .steps{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:12px}
 .steps span{position:relative;background:var(--accent-soft);border:1px solid var(--accent);border-radius:8px;padding:6px 12px 6px 30px;font-size:13.5px}
-.steps span b{position:absolute;left:6px;top:50%;transform:translateY(-50%);width:19px;height:19px;border-radius:50%;background:var(--accent);color:#0c0e14;font-family:var(--mono);font-size:11px;display:grid;place-items:center}
+.steps span b{position:absolute;left:6px;top:50%;transform:translateY(-50%);width:19px;height:19px;border-radius:50%;background:var(--accent);color:#1A1F2C;font-family:var(--mono);font-size:11px;display:grid;place-items:center}
 .steps i{color:var(--accent);font-style:normal}
 /* flows */
 .flows{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:34px}
@@ -116,7 +116,7 @@ h2{font-size:clamp(26px,3.4vw,38px);line-height:1.3;margin:10px 0 14px}
 .faq details{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 18px}
 .faq summary{cursor:pointer;font-weight:700;font-family:var(--head)}
 .faq p{margin:8px 0 0;color:var(--soft);font-size:14.5px}
-.final{text-align:center;padding:96px 0;background:radial-gradient(circle at 50% 30%,rgba(139,124,246,.2),transparent 55%);border-bottom:0}
+.final{text-align:center;padding:96px 0;background:radial-gradient(circle at 50% 30%,rgba(249,112,104,.2),transparent 55%);border-bottom:0}
 .final h2{margin:10px auto 14px}
 .final .cta{justify-content:center;margin-top:26px}
 footer{padding:28px 0 40px;color:var(--faint);font-size:13px;text-align:center}
@@ -133,7 +133,7 @@ footer{padding:28px 0 40px;color:var(--faint);font-size:13px;text-align:center}
   <h1>90本のWEBアプリを、<br><em>ビジネスの8段階</em>で<br>引ける地図。</h1>
   <p>「いま、どの仕事をしているか」から、使うべきアプリが分かる。市場を知るところから、戦略・ブランド・体験設計・集客・営業・実行・測定まで。シナリオを選べば、使う順番に番号と矢印が付きます。</p>
   <div class="cta"><a class="btn pri" href="業務プロセス体系図.html">体系図をひらく →</a><a class="btn" href="開発WEBアプリ一覧.html">アプリ一覧（カタログ）</a></div>
- </div><div class="hv"><img src="assets/hero-lp.jpg" alt="" onload="this.parentNode.classList.add('ok')" onerror="this.remove()"><svg viewBox="0 0 380 380" class="ring" role="img" aria-label="8つの段階のサイクル"><circle cx="190" cy="190" r="150" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="1.5" stroke-dasharray="4 6"/><path d="M244.35366317150104,50.19413710491605 A150,150 0 0 1 277.2524634195825,67.98767428159394" fill="none" stroke="#8b7cf6" stroke-width="2.5" marker-end="url(#ah)"/><g><circle cx="190" cy="40" r="34" fill="#151824" stroke="#8b7cf6" stroke-width="1.5"/><text x="190" y="34" text-anchor="middle" class="rn">01</text><text x="190" y="53" text-anchor="middle" class="rc">7本</text></g><g><circle cx="296.06601717798213" cy="83.93398282201788" r="34" fill="#151824" stroke="#8b7cf6" stroke-width="1.5"/><text x="296.06601717798213" y="77.93398282201788" text-anchor="middle" class="rn">02</text><text x="296.06601717798213" y="96.93398282201788" text-anchor="middle" class="rc">13本</text></g><g><circle cx="340" cy="190" r="34" fill="#151824" stroke="#8b7cf6" stroke-width="1.5"/><text x="340" y="184" text-anchor="middle" class="rn">03</text><text x="340" y="203" text-anchor="middle" class="rc">7本</text></g><g><circle cx="296.06601717798213" cy="296.06601717798213" r="34" fill="#151824" stroke="#8b7cf6" stroke-width="1.5"/><text x="296.06601717798213" y="290.06601717798213" text-anchor="middle" class="rn">04</text><text x="296.06601717798213" y="309.06601717798213" text-anchor="middle" class="rc">4本</text></g><g><circle cx="190" cy="340" r="34" fill="#151824" stroke="#8b7cf6" stroke-width="1.5"/><text x="190" y="334" text-anchor="middle" class="rn">05</text><text x="190" y="353" text-anchor="middle" class="rc">16本</text></g><g><circle cx="83.93398282201788" cy="296.06601717798213" r="34" fill="#151824" stroke="#8b7cf6" stroke-width="1.5"/><text x="83.93398282201788" y="290.06601717798213" text-anchor="middle" class="rn">06</text><text x="83.93398282201788" y="309.06601717798213" text-anchor="middle" class="rc">7本</text></g><g><circle cx="40" cy="190.00000000000003" r="34" fill="#151824" stroke="#8b7cf6" stroke-width="1.5"/><text x="40" y="184.00000000000003" text-anchor="middle" class="rn">07</text><text x="40" y="203.00000000000003" text-anchor="middle" class="rc">4本</text></g><g><circle cx="83.93398282201785" cy="83.93398282201788" r="34" fill="#151824" stroke="#8b7cf6" stroke-width="1.5"/><text x="83.93398282201785" y="77.93398282201788" text-anchor="middle" class="rn">08</text><text x="83.93398282201785" y="96.93398282201788" text-anchor="middle" class="rc">6本</text></g><defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8b7cf6"/></marker></defs><text x="190" y="182" text-anchor="middle" class="rbig">90</text><text x="190" y="208" text-anchor="middle" class="rsub">本のアプリ</text></svg><div class="badge"><b>90</b><span>本のアプリ ／ 8つの段階</span></div></div></div>
+ </div><div class="hv"><img src="assets/hero-lp.jpg" alt="" onload="this.parentNode.classList.add('ok')" onerror="this.remove()"><svg viewBox="0 0 380 380" class="ring" role="img" aria-label="8つの段階のサイクル"><circle cx="190" cy="190" r="150" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="1.5" stroke-dasharray="4 6"/><path d="M244.35366317150104,50.19413710491605 A150,150 0 0 1 277.2524634195825,67.98767428159394" fill="none" stroke="#F97068" stroke-width="2.5" marker-end="url(#ah)"/><g><circle cx="190" cy="40" r="34" fill="#212738" stroke="#F97068" stroke-width="1.5"/><text x="190" y="34" text-anchor="middle" class="rn">01</text><text x="190" y="53" text-anchor="middle" class="rc">7本</text></g><g><circle cx="296.06601717798213" cy="83.93398282201788" r="34" fill="#212738" stroke="#F97068" stroke-width="1.5"/><text x="296.06601717798213" y="77.93398282201788" text-anchor="middle" class="rn">02</text><text x="296.06601717798213" y="96.93398282201788" text-anchor="middle" class="rc">13本</text></g><g><circle cx="340" cy="190" r="34" fill="#212738" stroke="#F97068" stroke-width="1.5"/><text x="340" y="184" text-anchor="middle" class="rn">03</text><text x="340" y="203" text-anchor="middle" class="rc">7本</text></g><g><circle cx="296.06601717798213" cy="296.06601717798213" r="34" fill="#212738" stroke="#F97068" stroke-width="1.5"/><text x="296.06601717798213" y="290.06601717798213" text-anchor="middle" class="rn">04</text><text x="296.06601717798213" y="309.06601717798213" text-anchor="middle" class="rc">4本</text></g><g><circle cx="190" cy="340" r="34" fill="#212738" stroke="#F97068" stroke-width="1.5"/><text x="190" y="334" text-anchor="middle" class="rn">05</text><text x="190" y="353" text-anchor="middle" class="rc">16本</text></g><g><circle cx="83.93398282201788" cy="296.06601717798213" r="34" fill="#212738" stroke="#F97068" stroke-width="1.5"/><text x="83.93398282201788" y="290.06601717798213" text-anchor="middle" class="rn">06</text><text x="83.93398282201788" y="309.06601717798213" text-anchor="middle" class="rc">7本</text></g><g><circle cx="40" cy="190.00000000000003" r="34" fill="#212738" stroke="#F97068" stroke-width="1.5"/><text x="40" y="184.00000000000003" text-anchor="middle" class="rn">07</text><text x="40" y="203.00000000000003" text-anchor="middle" class="rc">4本</text></g><g><circle cx="83.93398282201785" cy="83.93398282201788" r="34" fill="#212738" stroke="#F97068" stroke-width="1.5"/><text x="83.93398282201785" y="77.93398282201788" text-anchor="middle" class="rn">08</text><text x="83.93398282201785" y="96.93398282201788" text-anchor="middle" class="rc">6本</text></g><defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#F97068"/></marker></defs><text x="190" y="182" text-anchor="middle" class="rbig">90</text><text x="190" y="208" text-anchor="middle" class="rsub">本のアプリ</text></svg><div class="badge"><b>90</b><span>本のアプリ ／ 8つの段階</span></div></div></div>
  <div class="stats"><div><b>90</b><span>体系図のアプリ</span></div><div><b>8</b><span>価値を生む段階</span></div><div><b>4</b><span>支えるレーン</span></div><div><b>23</b><span>利用シナリオ</span></div><div><b>47</b><span>書籍・メソッドLP</span></div></div>
 </div></section>
 
@@ -153,7 +153,7 @@ footer{padding:28px 0 40px;color:var(--faint);font-size:13px;text-align:center}
   <div class="stg"><div class="st"><div class="st-h"><span class="no">01</span><b>環境・市場を知る</b><span class="ct">7本</span></div><p class="q">どこに機会があり、顧客は何に困っているか？</p><ul><li>羅針盤リサーチ</li><li>テーマスクリーニング</li><li>市場規模推定</li><li>市場構造診断</li></ul><span class="more">ほか 3本</span></div><div class="st"><div class="st-h"><span class="no">02</span><b>事業・戦略をつくる</b><span class="ct">13本</span></div><p class="q">どこで、どう勝ち、どれくらい儲かるか？</p><ul><li>新規事業ワークフロー</li><li>エフェクチュエーション</li><li>状態モデリング・アプローチ</li><li>ビジネスモデルキャンバス</li></ul><span class="more">ほか 9本</span></div><div class="st"><div class="st-h"><span class="no">03</span><b>ブランド・コンセプトをつくる</b><span class="ct">7本</span></div><p class="q">誰に、何を約束し、どう思い出されたいか？</p><ul><li>Brand Management Studio<small>ブランドマネジメント・スタジオ</small></li><li>ブランド連想の戦略</li><li>Concept Maker<small>コンセプトづくり</small></li><li>Logo Lab<small>ロゴ開発デスク</small></li></ul><span class="more">ほか 3本</span></div><div class="st"><div class="st-h"><span class="no">04</span><b>体験・サービスを設計する</b><span class="ct">4本</span></div><p class="q">顧客の体験と、それを支える仕組みをどうつくるか？</p><ul><li>Design Tools Hub<small>デザインツールの入口</small></li><li>UIUX Design Desk<small>画面・操作の設計デスク</small></li><li>Service Design Desk<small>サービスデザイン・デスク</small></li><li>Service Journey Designer<small>カスタマージャーニー設計</small></li></ul></div><div class="st"><div class="st-h"><span class="no">05</span><b>市場に届ける</b><span class="ct">16本</span></div><p class="q">どの言葉・コンテンツ・チャネルで届けるか？</p><ul><li>文言アプローチツール</li><li>One-Line Lab<small>タイトル・キャッチコピー作成デスク</small></li><li>Content Compass<small>コンテンツ戦略</small></li><li>Digital Marketing Suite<small>デジタルマーケティング・スイート</small></li></ul><span class="more">ほか 12本</span></div><div class="st"><div class="st-h"><span class="no">06</span><b>売る・関係を育てる</b><span class="ct">7本</span></div><p class="q">どう提案し、合意し、関係を長く続けるか？</p><ul><li>Counterpart<small>説得・交渉・営業の入口</small></li><li>顧客ジョブ×仮説検証 営業研修</li><li>説得の型ツール</li><li>交渉シミュレーター</li></ul><span class="more">ほか 3本</span></div><div class="st"><div class="st-h"><span class="no">07</span><b>実行する</b><span class="ct">4本</span></div><p class="q">計画どおりに進め、問題を早く見つけられるか？</p><ul><li>Marketing Management Suite<small>マーケティング組織の運営</small></li><li>Project Desk<small>プロジェクト管理</small></li><li>Project Plan Studio<small>計画書ビルダー</small></li><li>Project Diagnosis<small>プロジェクト診断</small></li></ul></div><div class="st"><div class="st-h"><span class="no">08</span><b>測る・報告する</b><span class="ct">6本</span></div><p class="q">成果を数字で示し、関係者に伝えられるか？</p><ul><li>MMM Studio<small>マーケティング効果の分析</small></li><li>ブランド資産価値算定</li><li>People Metrics Desk<small>人事KPIデスク</small></li><li>IR Tools<small>IRツールの入口</small></li></ul><span class="more">ほか 2本</span></div></div>
   <div class="loop"><span>08 測る</span><i></i><span>01 知る へ戻る（次のサイクル）</span></div>
   <div class="lanes-t">FOUNDATION LANES ― 全段階を支える</div>
-  <div class="lanes"><div class="ln" style="--lc:#3f8fc6"><b>組織・人材を育てる</b><span class="ct">12本</span><p>戦略を実行する人と組織をつくる。研修・キャリア・対話・採用。</p></div><div class="ln" style="--lc:#8b7cf6"><b>思考の土台</b><span class="ct">6本</span><p>どの段階でも使う、考え方と判断の型。</p></div><div class="ln" style="--lc:#28b39f"><b>業界パッケージ</b><span class="ct">5本</span><p>特定業界向けに、複数の段階をひとまとめにしたもの。</p></div><div class="ln" style="--lc:#d0609a"><b>自社の発信・集客資産</b><span class="ct">3本</span><p>サービスや書籍を知ってもらうためのLP・サイト。</p></div></div>
+  <div class="lanes"><div class="ln" style="--lc:#57C4E5"><b>組織・人材を育てる</b><span class="ct">12本</span><p>戦略を実行する人と組織をつくる。研修・キャリア・対話・採用。</p></div><div class="ln" style="--lc:#D1D646"><b>思考の土台</b><span class="ct">6本</span><p>どの段階でも使う、考え方と判断の型。</p></div><div class="ln" style="--lc:#EDF2EF"><b>業界パッケージ</b><span class="ct">5本</span><p>特定業界向けに、複数の段階をひとまとめにしたもの。</p></div><div class="ln" style="--lc:#F97068"><b>自社の発信・集客資産</b><span class="ct">3本</span><p>サービスや書籍を知ってもらうためのLP・サイト。</p></div></div>
 </div></section>
 
 <section id="how"><div class="wrap">

@@ -10,6 +10,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Noto+Sans+JP:wght@400;500;700&family=Outfit:wght@400;600;800&family=Shippori+Mincho:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .palette-bar { display: flex; gap: 6px; justify-content: center; margin: 1.75rem auto 0; }
+    .palette-bar span { width: 44px; height: 4px; border-radius: 4px; }
+  </style>
 </head>
 <body>
   <div class="bg-mesh"></div>
@@ -21,6 +25,7 @@
         <div class="hero-content" style="max-width: 720px; margin: 0 auto; text-align: center; padding-top: 0;">
           <h1 class="hero-logo"><img src="modernlogic.png" alt="modern logic" width="2386" height="675"></h1>
           <span class="hero-tag">Strategy, Backed by Logic</span>
+          <div class="palette-bar" aria-hidden="true"><span style="background:#57C4E5"></span><span style="background:#D1D646"></span><span style="background:#F97068"></span><span style="background:#EDF2EF"></span></div>
           <h2 class="hero-lede">
             AIの先にある競争力へ。<br>ブランド、組織、戦略、そしてAI。
           </h2>
@@ -32,36 +37,36 @@
     </section>
 
     <!-- Three Pillars Section -->
-    <section id="services" style="background: radial-gradient(ellipse at 50% 0%, rgba(249, 112, 104, 0.08), transparent 60%); padding-top: 30px;">
+    <section id="services" style="background: radial-gradient(ellipse at 15% 10%, rgba(87, 196, 229, 0.07), transparent 45%), radial-gradient(ellipse at 50% 0%, rgba(209, 214, 70, 0.05), transparent 45%), radial-gradient(ellipse at 85% 10%, rgba(249, 112, 104, 0.07), transparent 45%); padding-top: 30px;">
       <div class="container">
         <div class="section-title">
-          <h2 style="font-size: 2.2rem;"><span class="title-accent">３つ</span>のサービス</h2>
+          <h2 style="font-size: 2.2rem;"><span class="title-accent" style="background-image: linear-gradient(90deg, #57C4E5, #D1D646, #F97068);">３つ</span>のサービス</h2>
           <p>AI・出版・伴走支援を統合し、企業の価値を設計します</p>
         </div>
         <div class="grid-3">
-          <div class="glass-card" style="border-top: 3px solid var(--accent); position: relative; overflow: hidden;">
-            <div class="card-icon" style="width: 68px; height: 68px; background: rgba(249, 112, 104, 0.12); box-shadow: 0 8px 24px var(--accent-glow);"><i data-lucide="cpu" style="width: 28px; height: 28px;"></i></div>
+          <div class="glass-card" style="--accent: #57C4E5; --accent-glow: rgba(87, 196, 229, 0.35); border-top: 3px solid var(--accent); background: linear-gradient(180deg, rgba(87, 196, 229, 0.08), transparent 45%), var(--glass-bg); position: relative; overflow: hidden;">
+            <div class="card-icon" style="width: 68px; height: 68px; background: rgba(87, 196, 229, 0.14); box-shadow: 0 8px 24px var(--accent-glow);"><i data-lucide="cpu" style="width: 28px; height: 28px;"></i></div>
             <h3>AIで効率化</h3>
             <p style="color: var(--text-sub);">生成AIを業務プロセスに組み込み、意思決定のスピードと精度を高めます。属人的な業務を仕組み化し、限られたリソースで成果を最大化します。</p>
             <div style="display: flex; gap: 1.5rem; margin-top: 1rem;">
-              <a href="業務プロセス体系図.html" class="method-cta" style="display: inline-flex; color: #57C4E5;">実績 <i data-lucide="arrow-right"></i></a>
-              <a href="Claude戦略AI導入支援_LP.html" class="method-cta" style="display: inline-flex; color: #57C4E5;">ご提案 <i data-lucide="arrow-right"></i></a>
+              <a href="業務プロセス体系図.html" class="method-cta" style="display: inline-flex;">実績 <i data-lucide="arrow-right"></i></a>
+              <a href="Claude戦略AI導入支援_LP.html" class="method-cta" style="display: inline-flex;">ご提案 <i data-lucide="arrow-right"></i></a>
             </div>
           </div>
-          <div class="glass-card" style="border-top: 3px solid var(--accent); position: relative; overflow: hidden;">
-            <div class="card-icon" style="width: 68px; height: 68px; background: rgba(249, 112, 104, 0.12); box-shadow: 0 8px 24px var(--accent-glow);"><i data-lucide="book-open" style="width: 28px; height: 28px;"></i></div>
+          <div class="glass-card" style="--accent: #D1D646; --accent-glow: rgba(209, 214, 70, 0.35); border-top: 3px solid var(--accent); background: linear-gradient(180deg, rgba(209, 214, 70, 0.08), transparent 45%), var(--glass-bg); position: relative; overflow: hidden;">
+            <div class="card-icon" style="width: 68px; height: 68px; background: rgba(209, 214, 70, 0.14); box-shadow: 0 8px 24px var(--accent-glow);"><i data-lucide="book-open" style="width: 28px; height: 28px;"></i></div>
             <h3>出版ブランディング</h3>
             <p style="color: var(--text-sub);">著書や記事の発信を通じて、専門性と信頼を可視化します。言語化された知見が、価格競争に頼らない選ばれる理由をつくります。</p>
             <div style="display: flex; gap: 1.5rem; margin-top: 1rem;">
-              <a href="publications.html" class="method-cta" style="display: inline-flex; color: #D1D646;">実績 <i data-lucide="arrow-right"></i></a>
-              <a href="Kindle出版プロデュース_LP.html" class="method-cta" style="display: inline-flex; color: #D1D646;">ご提案 <i data-lucide="arrow-right"></i></a>
+              <a href="publications.html" class="method-cta" style="display: inline-flex;">実績 <i data-lucide="arrow-right"></i></a>
+              <a href="Kindle出版プロデュース_LP.html" class="method-cta" style="display: inline-flex;">ご提案 <i data-lucide="arrow-right"></i></a>
             </div>
           </div>
-          <div class="glass-card" style="border-top: 3px solid var(--accent); position: relative; overflow: hidden;">
-            <div class="card-icon" style="width: 68px; height: 68px; background: rgba(249, 112, 104, 0.12); box-shadow: 0 8px 24px var(--accent-glow);"><i data-lucide="handshake" style="width: 28px; height: 28px;"></i></div>
+          <div class="glass-card" style="--accent: #F97068; --accent-glow: rgba(249, 112, 104, 0.35); border-top: 3px solid var(--accent); background: linear-gradient(180deg, rgba(249, 112, 104, 0.08), transparent 45%), var(--glass-bg); position: relative; overflow: hidden;">
+            <div class="card-icon" style="width: 68px; height: 68px; background: rgba(249, 112, 104, 0.14); box-shadow: 0 8px 24px var(--accent-glow);"><i data-lucide="handshake" style="width: 28px; height: 28px;"></i></div>
             <h3>伴走型コンサルティング</h3>
             <p style="color: var(--text-sub);">戦略立案だけで終わらせず、実行フェーズまで共に伴走します。大企業レベルの知見を、貴社の実情に合わせて形にします。</p>
-            <p style="color: #F97068; font-size: 0.85rem; margin-top: 1rem;">下記のオフィスイメージをご参照ください。</p>
+            <p style="color: var(--accent); font-size: 0.85rem; margin-top: 1rem;">下記のオフィスイメージをご参照ください。</p>
           </div>
         </div>
 
